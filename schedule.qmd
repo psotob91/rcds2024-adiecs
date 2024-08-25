@@ -11,7 +11,7 @@ page-layout: full
 
 - **`Contenido`** ({{< fa book-open-reader >}}): Esta página contiene el enlace a las clases, diapositivas y conferencias grabadas de la semana. Lea y mire estos **antes** de nuestra reunión sincrónica.
 - **`Taller`** ({{< fa laptop-code >}}): Esta página contiene el enlace a los talleres que se realizan clase por clase.
-- **`Tarea`** ({{< fa pen-ruler >}}): Esta página contiene las instrucciones para cada tarea. Los informes deben entregarse antes del *11:59 p. m.* del día programado según cronograma. Existe *unas horas de tolerancia con penalización* para *entrega retrasada* de las tareas encomendadas.
+- **`Solucionario`** ({{< fa pen-ruler >}}): Esta página contiene los solucionarios del taller de código que se realizaron clase por clase.
 
 ```{r build-table, include=FALSE}
 library(tidyverse)
