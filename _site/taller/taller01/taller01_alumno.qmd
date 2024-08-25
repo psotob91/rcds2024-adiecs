@@ -1,0 +1,153 @@
+---
+title: "Taller 01"
+---
+
+## Introducción
+
+En este primer taller del curso, revisaremos como interactuar con `R` por primera vez a través de su entorno de desarrollo integrado `Rstudio`. Aprenderemos que el `proyecto` es el corazón de todo trabajo con `R` y `RStudio` y veremos cómo crearlos. Aprenderemos cuáles son las diferencias del uso del `#` en un `script de R` y en `Quarto`. Además, repasaremos las `operaciones aritméticas` de `vectores` en R mediante algunos problemas con contexto clínico. Por último, aprenderemos a importar datos desde formato `*.dta`, `*.csv`, `*.xlsx` y `*.sav`.
+
+## Secciones previas
+
+En las secciones previas no hay necesidad de usar esta plantilla. Con su instructor de aula van a crear desde cero un proyecto, un archivo R script y un Quarto y exploraran algunos aspectos de estos.
+
+## Operaciones aritméticas con R
+
+### ¿Cómo realizar cálculos aritméticos en R?
+
+Ahora practiquemos con los siguientes ejercicios propuestos:
+
+### Ejercicio 1 {.unnumbered}
+
+Multiplicar 12 por 14 (Renderizar el chunk de código)
+
+```{r}
+
+```
+
+### Ejercicio 2 {.unnumbered}
+
+Sume 34 más 47 (Renderizar el chunk de código)
+
+```{r}
+
+```
+
+### Ejercicio 3 {.unnumbered}
+
+Divida 39304 entre 21 (Renderizar el chunk de código)
+
+```{r}
+
+```
+
+### Ejercicio 4 {.unnumbered}
+
+Calcular cuánto es 34 elevado a 3 (Renderizar el chunk de código)
+
+```{r}
+
+```
+
+
+### Ejercicio 5 {.unnumbered}
+
+Sumar 2 más 8, al resultado restar 4, luego multiplicar por 8, dividir el resultado entre 6 y elevar a la potencia 4, ¿cuál es el resultado? (Renderizar el chunk de código)
+
+
+
+### Ejercicio 6 {.unnumbered}
+
+Los pesos de Juan, Esteban y María son 84, 78 y 70kg, respectivamente. Sus tallas son 1.74, 1.82 y 1.63m, respectivamente. Calcular el IMC para cada caso (Renderizar el chunk de código)
+
+
+
+### Ejercicio 7 {.unnumbered}
+
+Se requiere administrar Paracetamol a un niño de 6 años de 20kg de peso y 1.21m de altura que presenta fiebre y malestar. Sabemos que la dosis recomendada de paracetamol es de 10mg/Kg c/6h. Calcular la dosis a administrar y el IMC (Renderizar el chunk de código)
+
+
+
+### Ejercicio 8 {.unnumbered}
+
+Se tiene una niña de 7 años y 18.5Kg de peso con infección en los oídos a quien se le indica cefexime. Si la dosis recomendada es de 8mg/Kg/dia, calcular la dosis que se debe administar (Renderizar el chunk de código)
+
+
+
+### Ejercicio 9 {.unnumbered}
+
+Los pesos de Jhonatan, Rafael y Enrique son 92, 89 y 79kg. Sus tallas son 1.78, 1.91 y 1,69m, respectivamente. Calcular el IMC para cada caso y determinar si alguno tiene sobrepeso (Renderizar el chunk de código)
+
+
+
+### Ejercicio 10 {.unnumbered}
+
+Los pesos de Sara, Fiorella y Pamela son 68700, 71400 y 63200g. Sus tallas son 164, 159 y 168cm, respectivamente. Calcular el IMC para cada caso y determinar si alguna presenta sobrepeso (Renderizar el chunk de código)
+
+
+### Ejercicio 11 {.unnumbered}
+
+A un niño que pesa 15000g y mide 68cm se le indica 15mg/kg de paracetamol V.O. cada 8h. Calcular cuántos mg de paracetamol se le debe administrar al día y determinar si el niño presenta sobrepeso u obesidad. (Renderizar el chunk de código)
+
+
+
+## Instalar y cargar paquetes
+
+### Ejercicio 1 {.unnumbered}
+
+Instale el paquete `here` usando la consola
+
+### Ejercicio 2 {.unnumbered}
+
+ Cargue el paquete `here`.
+
+```{r}
+
+```
+
+### Ejercicio 3 {.unnumbered}
+
+Use la funcion `here()` del paquete `here`.
+
+```{r}
+
+```
+
+
+## Importar bases de datos con `{rio}`
+
+### Instalar y cargar paquetes
+
+Ahora sí, practiquemos:
+
+### Ejercicio 1 {.unnumbered}
+
+Importar la base de datos "data_enaho2017_v2" y guardarla como "data_ejm1". Renderizar el código.
+
+```{r}
+
+```
+
+
+### Ejercicio 2 {.unnumbered}
+
+Importar la base de datos "data_ejm" y guardarla como "data_ejm2". Renderizar el código.
+
+
+### Ejercicio 3 {.unnumbered}
+
+Importar la base de datos "data_ejercicio" y guardarla como "data_ejm3". Renderizar el código.
+
+
+### Ejercicio 4 {.unnumbered}
+
+Importar la base de datos "data_SPSS" y guardarla como "data_ejm4". Renderizar el código.
+
+
+### Ejercicio 5 {.unnumbered}
+
+Exportar con el mismo nombre pero en formato *.csv*, *.sav*, *.xlsx* y *.dta* todas las bases importadas, respectivamente. Renderizar el código.
+
+
+## Renderice todo el documeto quarto
+
+Al finalizar, renderice todo el documento quarto.

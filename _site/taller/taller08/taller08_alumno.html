@@ -1,0 +1,4105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Percy Soto Becerra">
+
+<title>Taller 8</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="taller08_alumno_files/libs/clipboard/clipboard.min.js"></script>
+<script src="taller08_alumno_files/libs/quarto-html/quarto.js"></script>
+<script src="taller08_alumno_files/libs/quarto-html/popper.min.js"></script>
+<script src="taller08_alumno_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="taller08_alumno_files/libs/quarto-html/anchor.min.js"></script>
+<link href="taller08_alumno_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="taller08_alumno_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="taller08_alumno_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="taller08_alumno_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="taller08_alumno_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Taller 8</h1>
+<p class="subtitle lead">Curso de R</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Percy Soto Becerra </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introducción" class="level1">
+<h1>Introducción</h1>
+<p>En este taller replicaremos algunas tablas y análisis de datos del siguiente artículo: <a href="https://www.sciencedirect.com/science/article/pii/S2590136223000529" class="uri">https://www.sciencedirect.com/science/article/pii/S2590136223000529</a></p>
+</section>
+<section id="parte-1" class="level1">
+<h1>Parte 1</h1>
+<p>En esta parte del taller continuaremos analizando los datos que analizamos en el taller pasado sobre el experimento aleatorizado de maca</p>
+<section id="cargar-paquetes" class="level2">
+<h2 class="anchored" data-anchor-id="cargar-paquetes">Cargar paquetes</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)                   <span class="co"># Varias funciones de tidyverse (dplyr, ggplot2, etc.)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio)                         <span class="co"># Navaja suiza de la importación de datos</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)                       <span class="co"># Análisis inicial de datos</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)                       <span class="co"># Análisis inicial de datos</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'Hmisc'
+
+The following objects are masked from 'package:dplyr':
+
+    src, summarize
+
+The following objects are masked from 'package:base':
+
+    format.pval, units</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)                     <span class="co"># Para identificar duplicados</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'janitor'
+
+The following objects are masked from 'package:stats':
+
+    chisq.test, fisher.test</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)                          <span class="co"># Gramatica de tablas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'gt'
+
+The following object is masked from 'package:Hmisc':
+
+    html</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)                   <span class="co"># Wrapper de gt para inv. biomedica</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)                   <span class="co"># Componer, fusionar, manipular graficos ggplot2</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)                       <span class="co"># Para usar algunos superpoderes de Quarto (include_graphics)</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'kableExtra'
+
+The following object is masked from 'package:dplyr':
+
+    group_rows</code></pre>
+</div>
+</div>
+</section>
+<section id="cargar-los-datos" class="level2">
+<h2 class="anchored" data-anchor-id="cargar-los-datos">Cargar los datos</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"data_derived_pf.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="explorar-datos" class="level2">
+<h2 class="anchored" data-anchor-id="explorar-datos">Explorar datos</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 76
+  record_id    age agecat agecat2 sex   nac   ingresos_per ingresos_fam prof_cat
+  &lt;labelled&gt; &lt;dbl&gt; &lt;fct&gt;  &lt;fct&gt;   &lt;fct&gt; &lt;fct&gt; &lt;fct&gt;        &lt;fct&gt;        &lt;fct&gt;   
+1 SA0001F2      33 20-44  (30,40] Male  Peru  &lt;NA&gt;         &lt;NA&gt;         Adminis…
+2 SA0002F2      54 45-59  (50,60] Fema… Peru  5581-9300    5581-9300    Nurses  
+3 SA0004F2      51 45-59  (50,60] Male  Peru  &gt;=9301       &gt;=9301       Pyshici…
+4 SA0007F2      64 60+    (60,70] Male  Peru  3721-5580    3721-5580    Pyshici…
+5 SA0008F2      69 60+    (60,70] Fema… Peru  &lt;NA&gt;         &lt;NA&gt;         Pyshici…
+6 SA0009F2      68 60+    (60,70] Male  Peru  5581-9300    5581-9300    Pyshici…
+# ℹ 67 more variables: hosp &lt;fct&gt;, area_cat &lt;fct&gt;, modal_cat &lt;fct&gt;,
+#   height &lt;dbl&gt;, weight &lt;int&gt;, bmi &lt;dbl&gt;, bmicat &lt;fct&gt;, ncomorb &lt;dbl&gt;,
+#   ncomorb2 &lt;fct&gt;, com_hta &lt;fct&gt;, com_diab &lt;fct&gt;, com_obes &lt;fct&gt;,
+#   com_epc &lt;fct&gt;, com_trasp &lt;fct&gt;, com_cancer &lt;fct&gt;, com_asma &lt;fct&gt;,
+#   com_desnut &lt;fct&gt;, com_hipot &lt;fct&gt;, com_vih &lt;fct&gt;, com_otro &lt;fct&gt;,
+#   inmunosup &lt;fct&gt;, infprev &lt;fct&gt;, inf2 &lt;fct&gt;, boost &lt;fct&gt;, boost_date &lt;date&gt;,
+#   boost_react &lt;fct&gt;, boost_react_dolor &lt;fct&gt;, boost_react_enroj &lt;fct&gt;, …</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 595
+Columns: 76
+$ record_id             &lt;labelled&gt; "SA0001F2", "SA0002F2", "SA0004F2", "SA0007…
+$ age                   &lt;dbl&gt; 33, 54, 51, 64, 69, 68, 41, 61, 29, 20, 61, 59, …
+$ agecat                &lt;fct&gt; 20-44, 45-59, 45-59, 60+, 60+, 60+, 20-44, 60+, …
+$ agecat2               &lt;fct&gt; "(30,40]", "(50,60]", "(50,60]", "(60,70]", "(60…
+$ sex                   &lt;fct&gt; Male, Female, Male, Male, Female, Male, Male, Ma…
+$ nac                   &lt;fct&gt; Peru, Peru, Peru, Peru, Peru, Peru, Peru, Peru, …
+$ ingresos_per          &lt;fct&gt; NA, 5581-9300, &gt;=9301, 3721-5580, NA, 5581-9300,…
+$ ingresos_fam          &lt;fct&gt; NA, 5581-9300, &gt;=9301, 3721-5580, NA, 5581-9300,…
+$ prof_cat              &lt;fct&gt; Administrative and Others, Nurses, Pyshicians, P…
+$ hosp                  &lt;fct&gt; Hospital Nacional G. Almenara Irigoyen, Hospital…
+$ area_cat              &lt;fct&gt; "Administ., apoyo al diagnostico y otros", "Admi…
+$ modal_cat             &lt;fct&gt; Presential/Mix, Presential/Mix, Presential/Mix, …
+$ height                &lt;dbl&gt; 165, 157, 159, 172, 163, 177, 170, 183, 168, 165…
+$ weight                &lt;int&gt; 67, 82, 62, 76, 100, 78, 72, 96, 68, 72, 72, 56,…
+$ bmi                   &lt;dbl&gt; 24.61, 33.27, 24.52, 25.69, 37.64, 24.90, 24.91,…
+$ bmicat                &lt;fct&gt; Normal interval, Obesity, Normal interval, Overw…
+$ ncomorb               &lt;dbl&gt; 0, 0, 1, 3, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, …
+$ ncomorb2              &lt;fct&gt; No comorbidities, No comorbidities, At least 1 c…
+$ com_hta               &lt;fct&gt; No, No, Yes, Yes, No, Yes, No, No, No, No, Yes, …
+$ com_diab              &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ com_obes              &lt;fct&gt; No, No, No, No, Yes, No, No, No, No, No, No, No,…
+$ com_epc               &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ com_trasp             &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ com_cancer            &lt;fct&gt; No, No, No, Yes, No, No, No, No, No, No, No, No,…
+$ com_asma              &lt;fct&gt; No, No, No, Yes, No, No, No, No, No, No, No, No,…
+$ com_desnut            &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ com_hipot             &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ com_vih               &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ com_otro              &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ inmunosup             &lt;fct&gt; Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes, Yes…
+$ infprev               &lt;fct&gt; No, No, Yes, No, No, No, No, No, No, No, No, No,…
+$ inf2                  &lt;fct&gt; No, No, Yes, No, No, No, No, No, No, No, No, No,…
+$ boost                 &lt;fct&gt; Pfizer, Pfizer, Pfizer, Pfizer, Pfizer, Pfizer, …
+$ boost_date            &lt;date&gt; 2021-10-16, 2021-11-11, 2021-10-15, 2021-10-15,…
+$ boost_react           &lt;fct&gt; Yes, Yes, Yes, Yes, Yes, No, Yes, Yes, Yes, Yes,…
+$ boost_react_dolor     &lt;fct&gt; Yes, No, Yes, Yes, Yes, No, Yes, Yes, Yes, Yes, …
+$ boost_react_enroj     &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ boost_react_inflam    &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ boost_react_malest    &lt;fct&gt; No, Yes, No, No, No, No, No, No, Yes, No, No, Ye…
+$ boost_react_cefalea   &lt;fct&gt; No, Yes, No, No, Yes, No, No, No, No, No, Yes, Y…
+$ boost_react_fatiga    &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, Yes,…
+$ boost_react_somno     &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, Yes,…
+$ boost_react_fiebre    &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ boost_react_escal     &lt;fct&gt; No, No, No, No, No, No, No, No, Yes, No, No, No,…
+$ boost_react_nausea    &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ boost_react_vomito    &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ boost_react_diarrea   &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ boost_react_dolmusc   &lt;fct&gt; No, No, Yes, No, No, No, No, No, No, No, No, No,…
+$ boost_react_dolart    &lt;fct&gt; No, Yes, No, No, No, No, No, No, No, No, No, No,…
+$ boost_react_alerg     &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ boost_react_hipotens  &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ boost_react_hipertens &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ boost_react_taquicard &lt;fct&gt; No, Yes, No, No, No, No, No, No, No, No, No, No,…
+$ boost_react_mareo     &lt;fct&gt; No, No, No, Yes, No, No, No, No, No, No, No, No,…
+$ boost_react_dolpecho  &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ boost_react_cansancio &lt;fct&gt; No, Yes, No, No, No, No, No, No, No, No, No, No,…
+$ boost_react_rinorrea  &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ boost_react_adenop    &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ boost_react_granuloma &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ boost_react_disfon    &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ boost_react_tos       &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ boost_react_dolgarg   &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ boost_react_uter      &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ boost_react_insomnio  &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ boost_react_urticaria &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ boost_react_inapet    &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ boost_react_tend      &lt;fct&gt; No, No, No, No, No, No, No, No, No, No, No, No, …
+$ date_dosis1           &lt;date&gt; 2021-02-19, 2021-03-10, 2021-02-11, 2021-03-01,…
+$ date_dosis2           &lt;date&gt; 2021-03-12, 2021-03-31, 2021-03-04, 2021-03-22,…
+$ date_igg              &lt;date&gt; 2021-12-02, 2021-12-09, 2021-11-24, 2021-11-23,…
+$ tfdos1boost           &lt;dbl&gt; 239, 246, 246, 228, 237, 231, 248, 246, 244, 240…
+$ tfdos2boost           &lt;dbl&gt; 218, 225, 225, 207, 216, 210, 227, 225, 223, 219…
+$ tfboostig             &lt;dbl&gt; 47, 28, 40, 39, 37, 54, 36, 44, 42, 37, 36, 38, …
+$ igg                   &lt;dbl&gt; 6290, 8970, 12700, 4600, 17800, 7310, 7130, 6910…
+$ logigg                &lt;dbl&gt; 8.746716, 9.101641, 9.449357, 8.433812, 9.786954…
+$ igg_pos               &lt;fct&gt; Positive, Positive, Positive, Positive, Positive…</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table style="width: auto;" class="table table-condensed">
+<caption>
+Data summary
+</caption>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Name
+</td>
+<td style="text-align:left;">
+data
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Number of rows
+</td>
+<td style="text-align:left;">
+595
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Number of columns
+</td>
+<td style="text-align:left;">
+76
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+_______________________
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Column type frequency:
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+character
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Date
+</td>
+<td style="text-align:left;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor
+</td>
+<td style="text-align:left;">
+61
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+________________________
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Group variables
+</td>
+<td style="text-align:left;">
+None
+</td>
+</tr>
+</tbody>
+
+</table>
+<p><strong>Variable type: character</strong></p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:right;">
+min
+</th>
+<th style="text-align:right;">
+max
+</th>
+<th style="text-align:right;">
+empty
+</th>
+<th style="text-align:right;">
+n_unique
+</th>
+<th style="text-align:right;">
+whitespace
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+record_id
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+595
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+
+</table>
+<p><strong>Variable type: Date</strong></p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:left;">
+min
+</th>
+<th style="text-align:left;">
+max
+</th>
+<th style="text-align:left;">
+median
+</th>
+<th style="text-align:right;">
+n_unique
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+boost_date
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2021-08-03
+</td>
+<td style="text-align:left;">
+2021-12-18
+</td>
+<td style="text-align:left;">
+2021-10-17
+</td>
+<td style="text-align:right;">
+38
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+date_dosis1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2021-02-09
+</td>
+<td style="text-align:left;">
+2021-04-19
+</td>
+<td style="text-align:left;">
+2021-02-13
+</td>
+<td style="text-align:right;">
+37
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+date_dosis2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2021-03-02
+</td>
+<td style="text-align:left;">
+2021-07-03
+</td>
+<td style="text-align:left;">
+2021-03-08
+</td>
+<td style="text-align:right;">
+42
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+date_igg
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+2021-11-15
+</td>
+<td style="text-align:left;">
+2022-01-18
+</td>
+<td style="text-align:left;">
+2021-11-26
+</td>
+<td style="text-align:right;">
+33
+</td>
+</tr>
+</tbody>
+
+</table>
+<p><strong>Variable type: factor</strong></p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:left;">
+ordered
+</th>
+<th style="text-align:right;">
+n_unique
+</th>
+<th style="text-align:left;">
+top_counts
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+agecat
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+20-: 269, 45-: 235, 60+: 91
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+agecat2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+(30: 173, (40: 167, (50: 132, (60: 81
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sex
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Fem: 425, Mal: 170
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nac
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Per: 590, For: 5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ingresos_per
+</td>
+<td style="text-align:right;">
+192
+</td>
+<td style="text-align:right;">
+0.68
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+372: 116, 558: 112, 279: 61, 186: 42
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ingresos_fam
+</td>
+<td style="text-align:right;">
+228
+</td>
+<td style="text-align:right;">
+0.62
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+558: 100, &gt;=9: 99, 372: 80, 279: 34
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+prof_cat
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+Pys: 187, Nur: 168, Tec: 146, Adm: 94
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+hosp
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+Hos: 257, Hos: 186, Hos: 118, Vil: 24
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+area_cat
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Hos: 162, Adm: 141, Eme: 118, UCI: 104
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+modal_cat
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Pre: 539, Lic: 56
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bmicat
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+Ove: 283, Nor: 215, Obe: 97
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ncomorb2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No : 411, At : 184
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+com_hta
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 531, Yes: 64
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+com_diab
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 568, Yes: 27
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+com_obes
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 554, Yes: 41
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+com_epc
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+No: 595, Yes: 0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+com_trasp
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+No: 595, Yes: 0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+com_cancer
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 583, Yes: 12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+com_asma
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 550, Yes: 45
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+com_desnut
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+No: 595, Yes: 0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+com_hipot
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 554, Yes: 41
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+com_vih
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 594, Yes: 1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+com_otro
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+No: 595, Yes: 0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+inmunosup
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Yes: 518, No: 77
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+infprev
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 358, Yes: 237
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+inf2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 358, Yes: 237
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+Pfi: 595, Ast: 0, Sin: 0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Yes: 483, No: 112
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_dolor
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Yes: 420, No: 175
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_enroj
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 585, Yes: 10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_inflam
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 575, Yes: 20
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_malest
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 446, Yes: 149
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_cefalea
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 486, Yes: 109
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_fatiga
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 561, Yes: 34
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_somno
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 539, Yes: 56
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_fiebre
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 526, Yes: 69
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_escal
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 565, Yes: 30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_nausea
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 578, Yes: 17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_vomito
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 588, Yes: 7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_diarrea
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 587, Yes: 8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_dolmusc
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 551, Yes: 44
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_dolart
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 569, Yes: 26
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_alerg
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 592, Yes: 3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_hipotens
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 594, Yes: 1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_hipertens
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+No: 595, Yes: 0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_taquicard
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 593, Yes: 2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_mareo
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 590, Yes: 5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_dolpecho
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 592, Yes: 3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_cansancio
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 593, Yes: 2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_rinorrea
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 593, Yes: 2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_adenop
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+No: 595, Yes: 0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_granuloma
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 594, Yes: 1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_disfon
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 594, Yes: 1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_tos
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 594, Yes: 1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_dolgarg
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 593, Yes: 2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_uter
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 594, Yes: 1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_insomnio
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 594, Yes: 1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_urticaria
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 594, Yes: 1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_inapet
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 594, Yes: 1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+boost_react_tend
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+No: 594, Yes: 1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+igg_pos
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+Pos: 595, Neg: 0
+</td>
+</tr>
+</tbody>
+
+</table>
+<p><strong>Variable type: numeric</strong></p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+sd
+</th>
+<th style="text-align:right;">
+p0
+</th>
+<th style="text-align:right;">
+p25
+</th>
+<th style="text-align:right;">
+p50
+</th>
+<th style="text-align:right;">
+p75
+</th>
+<th style="text-align:right;">
+p100
+</th>
+<th style="text-align:left;">
+hist
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+age
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+46.10
+</td>
+<td style="text-align:right;">
+11.11
+</td>
+<td style="text-align:right;">
+20.00
+</td>
+<td style="text-align:right;">
+37.00
+</td>
+<td style="text-align:right;">
+46.00
+</td>
+<td style="text-align:right;">
+54.00
+</td>
+<td style="text-align:right;">
+70.00
+</td>
+<td style="text-align:left;">
+▂▇▇▆▃
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+height
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+160.66
+</td>
+<td style="text-align:right;">
+8.41
+</td>
+<td style="text-align:right;">
+140.00
+</td>
+<td style="text-align:right;">
+155.00
+</td>
+<td style="text-align:right;">
+160.00
+</td>
+<td style="text-align:right;">
+166.00
+</td>
+<td style="text-align:right;">
+186.00
+</td>
+<td style="text-align:left;">
+▁▇▆▃▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+weight
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+69.06
+</td>
+<td style="text-align:right;">
+13.42
+</td>
+<td style="text-align:right;">
+45.00
+</td>
+<td style="text-align:right;">
+60.00
+</td>
+<td style="text-align:right;">
+67.00
+</td>
+<td style="text-align:right;">
+78.00
+</td>
+<td style="text-align:right;">
+158.00
+</td>
+<td style="text-align:left;">
+▇▇▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bmi
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+26.62
+</td>
+<td style="text-align:right;">
+3.84
+</td>
+<td style="text-align:right;">
+18.82
+</td>
+<td style="text-align:right;">
+24.33
+</td>
+<td style="text-align:right;">
+25.97
+</td>
+<td style="text-align:right;">
+28.44
+</td>
+<td style="text-align:right;">
+58.03
+</td>
+<td style="text-align:left;">
+▇▅▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ncomorb
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.39
+</td>
+<td style="text-align:right;">
+0.66
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:left;">
+▇▁▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tfdos1boost
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+244.37
+</td>
+<td style="text-align:right;">
+10.08
+</td>
+<td style="text-align:right;">
+159.00
+</td>
+<td style="text-align:right;">
+240.00
+</td>
+<td style="text-align:right;">
+246.00
+</td>
+<td style="text-align:right;">
+248.00
+</td>
+<td style="text-align:right;">
+306.00
+</td>
+<td style="text-align:left;">
+▁▁▇▅▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tfdos2boost
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+222.80
+</td>
+<td style="text-align:right;">
+11.17
+</td>
+<td style="text-align:right;">
+113.00
+</td>
+<td style="text-align:right;">
+219.00
+</td>
+<td style="text-align:right;">
+224.00
+</td>
+<td style="text-align:right;">
+227.00
+</td>
+<td style="text-align:right;">
+285.00
+</td>
+<td style="text-align:left;">
+▁▁▁▇▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tfboostig
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+41.51
+</td>
+<td style="text-align:right;">
+13.00
+</td>
+<td style="text-align:right;">
+20.00
+</td>
+<td style="text-align:right;">
+32.00
+</td>
+<td style="text-align:right;">
+38.00
+</td>
+<td style="text-align:right;">
+48.00
+</td>
+<td style="text-align:right;">
+157.00
+</td>
+<td style="text-align:left;">
+▇▂▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+igg
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+10446.99
+</td>
+<td style="text-align:right;">
+7699.77
+</td>
+<td style="text-align:right;">
+116.00
+</td>
+<td style="text-align:right;">
+5115.00
+</td>
+<td style="text-align:right;">
+8410.00
+</td>
+<td style="text-align:right;">
+13000.00
+</td>
+<td style="text-align:right;">
+41600.00
+</td>
+<td style="text-align:left;">
+▇▅▂▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+logigg
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+8.99
+</td>
+<td style="text-align:right;">
+0.79
+</td>
+<td style="text-align:right;">
+4.75
+</td>
+<td style="text-align:right;">
+8.54
+</td>
+<td style="text-align:right;">
+9.04
+</td>
+<td style="text-align:right;">
+9.47
+</td>
+<td style="text-align:right;">
+10.64
+</td>
+<td style="text-align:left;">
+▁▁▂▇▃
+</td>
+</tr>
+</tbody>
+
+</table>
+</div>
+</div>
+</section>
+<section id="replicar-tabla-1" class="level2">
+<h2 class="anchored" data-anchor-id="replicar-tabla-1">Replicar Tabla 1</h2>
+<section id="ejercicio-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-1">Ejercicio 1</h3>
+<p>Seleccione las variables para crear la tabla 1. Las variables son las siguientes: age, agecat2, sex, nac, ingresos_per, ingresos_fam, prof_cat, hosp, area_cat, modal_cat, height, weight, ncomorb, bmi, bmicat, com_hta, com_diab, com_epc:com_vih, inmunosup, infprev, boost, tfdos1boost, tfdos2boost, tfboostig, igg, igg_pos, boost_react (mantenga el orden). Usando gtsummary, cree la tabla 1 que mejor replique la presentada en el artículo.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span>  </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(age, agecat2, sex, nac, ingresos_per, ingresos_fam, </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>         prof_cat, hosp, area_cat, modal_cat, height, weight, </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>         ncomorb, bmi,  bmicat, com_hta, com_diab, com_epc<span class="sc">:</span>com_vih,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>         inmunosup, infprev, boost, tfdos1boost, tfdos2boost, </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>         tfboostig, igg, igg_pos, boost_react) <span class="sc">|&gt;</span> </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(<span class="at">statistic =</span> <span class="fu">list</span>(<span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">"{median} [{p25}, {p75}]"</span>, </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="st">"{n} ({p})"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bold_labels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="kzstuwfoep" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kzstuwfoep table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#kzstuwfoep thead, #kzstuwfoep tbody, #kzstuwfoep tfoot, #kzstuwfoep tr, #kzstuwfoep td, #kzstuwfoep th {
+  border-style: none;
+}
+
+#kzstuwfoep p {
+  margin: 0;
+  padding: 0;
+}
+
+#kzstuwfoep .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#kzstuwfoep .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#kzstuwfoep .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#kzstuwfoep .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#kzstuwfoep .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#kzstuwfoep .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kzstuwfoep .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#kzstuwfoep .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#kzstuwfoep .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#kzstuwfoep .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#kzstuwfoep .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#kzstuwfoep .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#kzstuwfoep .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#kzstuwfoep .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#kzstuwfoep .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#kzstuwfoep .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#kzstuwfoep .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#kzstuwfoep .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#kzstuwfoep .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kzstuwfoep .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#kzstuwfoep .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#kzstuwfoep .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#kzstuwfoep .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kzstuwfoep .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#kzstuwfoep .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#kzstuwfoep .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kzstuwfoep .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kzstuwfoep .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#kzstuwfoep .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kzstuwfoep .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#kzstuwfoep .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kzstuwfoep .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#kzstuwfoep .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kzstuwfoep .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#kzstuwfoep .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kzstuwfoep .gt_left {
+  text-align: left;
+}
+
+#kzstuwfoep .gt_center {
+  text-align: center;
+}
+
+#kzstuwfoep .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#kzstuwfoep .gt_font_normal {
+  font-weight: normal;
+}
+
+#kzstuwfoep .gt_font_bold {
+  font-weight: bold;
+}
+
+#kzstuwfoep .gt_font_italic {
+  font-style: italic;
+}
+
+#kzstuwfoep .gt_super {
+  font-size: 65%;
+}
+
+#kzstuwfoep .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#kzstuwfoep .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#kzstuwfoep .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#kzstuwfoep .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#kzstuwfoep .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#kzstuwfoep .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#kzstuwfoep .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="<strong>Characteristic</strong>"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>N = 595</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>"><strong>N = 595</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Age (years)</td>
+<td headers="stat_0" class="gt_row gt_center">46 [37, 54]</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Age group</td>
+<td headers="stat_0" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;[20,30]</td>
+<td headers="stat_0" class="gt_row gt_center">42 (7.1)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;(30,40]</td>
+<td headers="stat_0" class="gt_row gt_center">173 (29)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;(40,50]</td>
+<td headers="stat_0" class="gt_row gt_center">167 (28)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;(50,60]</td>
+<td headers="stat_0" class="gt_row gt_center">132 (22)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;(60,70]</td>
+<td headers="stat_0" class="gt_row gt_center">81 (14)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Sex</td>
+<td headers="stat_0" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Male</td>
+<td headers="stat_0" class="gt_row gt_center">170 (29)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Female</td>
+<td headers="stat_0" class="gt_row gt_center">425 (71)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Nationality</td>
+<td headers="stat_0" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Peru</td>
+<td headers="stat_0" class="gt_row gt_center">590 (99)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Foreign</td>
+<td headers="stat_0" class="gt_row gt_center">5 (0.8)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Personal income per month</td>
+<td headers="stat_0" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;&lt;930</td>
+<td headers="stat_0" class="gt_row gt_center">7 (1.7)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;931-1860</td>
+<td headers="stat_0" class="gt_row gt_center">24 (6.0)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;1861-2790</td>
+<td headers="stat_0" class="gt_row gt_center">42 (10)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;2791-3720</td>
+<td headers="stat_0" class="gt_row gt_center">61 (15)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;3721-5580</td>
+<td headers="stat_0" class="gt_row gt_center">116 (29)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;5581-9300</td>
+<td headers="stat_0" class="gt_row gt_center">112 (28)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;&gt;=9301</td>
+<td headers="stat_0" class="gt_row gt_center">41 (10)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Unknown</td>
+<td headers="stat_0" class="gt_row gt_center">192</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Familiar income per month</td>
+<td headers="stat_0" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;&lt;930</td>
+<td headers="stat_0" class="gt_row gt_center">8 (2.2)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;931-1860</td>
+<td headers="stat_0" class="gt_row gt_center">13 (3.5)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;1861-2790</td>
+<td headers="stat_0" class="gt_row gt_center">33 (9.0)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;2791-3720</td>
+<td headers="stat_0" class="gt_row gt_center">34 (9.3)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;3721-5580</td>
+<td headers="stat_0" class="gt_row gt_center">80 (22)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;5581-9300</td>
+<td headers="stat_0" class="gt_row gt_center">100 (27)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;&gt;=9301</td>
+<td headers="stat_0" class="gt_row gt_center">99 (27)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Unknown</td>
+<td headers="stat_0" class="gt_row gt_center">228</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Profession</td>
+<td headers="stat_0" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Administrative and Others</td>
+<td headers="stat_0" class="gt_row gt_center">94 (16)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Nurses</td>
+<td headers="stat_0" class="gt_row gt_center">168 (28)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Pyshicians</td>
+<td headers="stat_0" class="gt_row gt_center">187 (31)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Technical nurses</td>
+<td headers="stat_0" class="gt_row gt_center">146 (25)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Hospital</td>
+<td headers="stat_0" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Hospital Nacional E. Rebagliati Martins</td>
+<td headers="stat_0" class="gt_row gt_center">257 (43)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Hospital Nacional A. Sabogal Sologuren</td>
+<td headers="stat_0" class="gt_row gt_center">186 (31)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Hospital Nacional G. Almenara Irigoyen</td>
+<td headers="stat_0" class="gt_row gt_center">118 (20)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Villa Mongrut</td>
+<td headers="stat_0" class="gt_row gt_center">24 (4.1)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;H. Angamos</td>
+<td headers="stat_0" class="gt_row gt_center">4 (0.7)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Villa Panamericana</td>
+<td headers="stat_0" class="gt_row gt_center">2 (0.3)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Policlinico PIASA</td>
+<td headers="stat_0" class="gt_row gt_center">1 (0.2)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Unknown</td>
+<td headers="stat_0" class="gt_row gt_center">3</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Work area</td>
+<td headers="stat_0" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Administ., apoyo al diagnostico y otros</td>
+<td headers="stat_0" class="gt_row gt_center">141 (24)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Consulta externa/domic</td>
+<td headers="stat_0" class="gt_row gt_center">69 (12)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Emergencia</td>
+<td headers="stat_0" class="gt_row gt_center">118 (20)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Hospitalización</td>
+<td headers="stat_0" class="gt_row gt_center">162 (27)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;UCI</td>
+<td headers="stat_0" class="gt_row gt_center">104 (18)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Unknown</td>
+<td headers="stat_0" class="gt_row gt_center">1</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Work modality</td>
+<td headers="stat_0" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;License/Teleworking</td>
+<td headers="stat_0" class="gt_row gt_center">56 (9.4)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Presential/Mix</td>
+<td headers="stat_0" class="gt_row gt_center">539 (91)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Height (cm)</td>
+<td headers="stat_0" class="gt_row gt_center">160 [155, 166]</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Weight (kg)</td>
+<td headers="stat_0" class="gt_row gt_center">67 [60, 78]</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Number of comorbidities</td>
+<td headers="stat_0" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;0</td>
+<td headers="stat_0" class="gt_row gt_center">411 (69)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;1</td>
+<td headers="stat_0" class="gt_row gt_center">146 (25)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;2</td>
+<td headers="stat_0" class="gt_row gt_center">31 (5.2)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;3</td>
+<td headers="stat_0" class="gt_row gt_center">6 (1.0)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;5</td>
+<td headers="stat_0" class="gt_row gt_center">1 (0.2)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Body mass index (kg/m2)</td>
+<td headers="stat_0" class="gt_row gt_center">26.0 [24.3, 28.4]</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">BMI group</td>
+<td headers="stat_0" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Normal interval</td>
+<td headers="stat_0" class="gt_row gt_center">215 (36)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Overweight</td>
+<td headers="stat_0" class="gt_row gt_center">283 (48)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Obesity</td>
+<td headers="stat_0" class="gt_row gt_center">97 (16)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Hypertension</td>
+<td headers="stat_0" class="gt_row gt_center">64 (11)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Diabetes</td>
+<td headers="stat_0" class="gt_row gt_center">27 (4.5)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Chronic lung disease</td>
+<td headers="stat_0" class="gt_row gt_center">0 (0)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Organ transplant</td>
+<td headers="stat_0" class="gt_row gt_center">0 (0)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Cancer</td>
+<td headers="stat_0" class="gt_row gt_center">12 (2.0)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Asthma</td>
+<td headers="stat_0" class="gt_row gt_center">45 (7.6)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Undernourishment</td>
+<td headers="stat_0" class="gt_row gt_center">0 (0)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Hypothyroidism</td>
+<td headers="stat_0" class="gt_row gt_center">41 (6.9)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">HIV</td>
+<td headers="stat_0" class="gt_row gt_center">1 (0.2)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Immunosuppressive condition</td>
+<td headers="stat_0" class="gt_row gt_center">518 (87)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Previous infection</td>
+<td headers="stat_0" class="gt_row gt_center">237 (40)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Booster scheme</td>
+<td headers="stat_0" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Pfizer</td>
+<td headers="stat_0" class="gt_row gt_center">595 (100)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Astrazeneca</td>
+<td headers="stat_0" class="gt_row gt_center">0 (0)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Sinopharm</td>
+<td headers="stat_0" class="gt_row gt_center">0 (0)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Time from dosis 1 to boosting</td>
+<td headers="stat_0" class="gt_row gt_center">246 [240, 248]</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Time from dosis 2 to boosting</td>
+<td headers="stat_0" class="gt_row gt_center">224 [219, 227]</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Time from boosting to IgG measure</td>
+<td headers="stat_0" class="gt_row gt_center">38 [32, 48]</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Antibodies Anti-SARS-CoV-2 levels (BAU/mL)</td>
+<td headers="stat_0" class="gt_row gt_center">8,410 [5,115, 13,000]</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Seropositivity</td>
+<td headers="stat_0" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Negative</td>
+<td headers="stat_0" class="gt_row gt_center">0 (0)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Positive</td>
+<td headers="stat_0" class="gt_row gt_center">595 (100)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Reactogenicity</td>
+<td headers="stat_0" class="gt_row gt_center">483 (81)</td></tr>
+  </tbody>
+  
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="2"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> Median [IQR]; n (%)</td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-2" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-2">Ejercicio 2</h3>
+<p>Cree una tabla nueva (no presentada en el artículo) según la variable respuesta <code>rectogenicidad</code> (boost_react).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span>  </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(age, agecat2, sex, nac, ingresos_per, ingresos_fam, </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>         prof_cat, hosp, area_cat, modal_cat, height, weight, </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>         ncomorb, bmi,  bmicat, com_hta, com_diab, com_epc<span class="sc">:</span>com_vih,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>         inmunosup, infprev, boost, tfdos1boost, tfdos2boost, </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>         tfboostig, igg, igg_pos, boost_react) <span class="sc">|&gt;</span> </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(<span class="at">statistic =</span> <span class="fu">list</span>(<span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">"{median} [{p25}, {p75}]"</span>, </span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="st">"{n} ({p})"</span>), </span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">by =</span>  boost_react, </span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">percent =</span> <span class="st">"row"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bold_labels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="laaditmura" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#laaditmura table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#laaditmura thead, #laaditmura tbody, #laaditmura tfoot, #laaditmura tr, #laaditmura td, #laaditmura th {
+  border-style: none;
+}
+
+#laaditmura p {
+  margin: 0;
+  padding: 0;
+}
+
+#laaditmura .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#laaditmura .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#laaditmura .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#laaditmura .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#laaditmura .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#laaditmura .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#laaditmura .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#laaditmura .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#laaditmura .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#laaditmura .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#laaditmura .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#laaditmura .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#laaditmura .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#laaditmura .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#laaditmura .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#laaditmura .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#laaditmura .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#laaditmura .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#laaditmura .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#laaditmura .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#laaditmura .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#laaditmura .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#laaditmura .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#laaditmura .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#laaditmura .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#laaditmura .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#laaditmura .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#laaditmura .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#laaditmura .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#laaditmura .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#laaditmura .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#laaditmura .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#laaditmura .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#laaditmura .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#laaditmura .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#laaditmura .gt_left {
+  text-align: left;
+}
+
+#laaditmura .gt_center {
+  text-align: center;
+}
+
+#laaditmura .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#laaditmura .gt_font_normal {
+  font-weight: normal;
+}
+
+#laaditmura .gt_font_bold {
+  font-weight: bold;
+}
+
+#laaditmura .gt_font_italic {
+  font-style: italic;
+}
+
+#laaditmura .gt_super {
+  font-size: 65%;
+}
+
+#laaditmura .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#laaditmura .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#laaditmura .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#laaditmura .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#laaditmura .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#laaditmura .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#laaditmura .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="<strong>Characteristic</strong>"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>Yes</strong>, N = 483<span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>"><strong>Yes</strong>, N = 483<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>No</strong>, N = 112<span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>"><strong>No</strong>, N = 112<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Age (years)</td>
+<td headers="stat_1" class="gt_row gt_center">46 [37, 54]</td>
+<td headers="stat_2" class="gt_row gt_center">46 [36, 56]</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Age group</td>
+<td headers="stat_1" class="gt_row gt_center"></td>
+<td headers="stat_2" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;[20,30]</td>
+<td headers="stat_1" class="gt_row gt_center">29 (69)</td>
+<td headers="stat_2" class="gt_row gt_center">13 (31)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;(30,40]</td>
+<td headers="stat_1" class="gt_row gt_center">142 (82)</td>
+<td headers="stat_2" class="gt_row gt_center">31 (18)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;(40,50]</td>
+<td headers="stat_1" class="gt_row gt_center">141 (84)</td>
+<td headers="stat_2" class="gt_row gt_center">26 (16)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;(50,60]</td>
+<td headers="stat_1" class="gt_row gt_center">109 (83)</td>
+<td headers="stat_2" class="gt_row gt_center">23 (17)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;(60,70]</td>
+<td headers="stat_1" class="gt_row gt_center">62 (77)</td>
+<td headers="stat_2" class="gt_row gt_center">19 (23)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Sex</td>
+<td headers="stat_1" class="gt_row gt_center"></td>
+<td headers="stat_2" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Male</td>
+<td headers="stat_1" class="gt_row gt_center">139 (82)</td>
+<td headers="stat_2" class="gt_row gt_center">31 (18)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Female</td>
+<td headers="stat_1" class="gt_row gt_center">344 (81)</td>
+<td headers="stat_2" class="gt_row gt_center">81 (19)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Nationality</td>
+<td headers="stat_1" class="gt_row gt_center"></td>
+<td headers="stat_2" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Peru</td>
+<td headers="stat_1" class="gt_row gt_center">479 (81)</td>
+<td headers="stat_2" class="gt_row gt_center">111 (19)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Foreign</td>
+<td headers="stat_1" class="gt_row gt_center">4 (80)</td>
+<td headers="stat_2" class="gt_row gt_center">1 (20)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Personal income per month</td>
+<td headers="stat_1" class="gt_row gt_center"></td>
+<td headers="stat_2" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;&lt;930</td>
+<td headers="stat_1" class="gt_row gt_center">7 (100)</td>
+<td headers="stat_2" class="gt_row gt_center">0 (0)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;931-1860</td>
+<td headers="stat_1" class="gt_row gt_center">16 (67)</td>
+<td headers="stat_2" class="gt_row gt_center">8 (33)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;1861-2790</td>
+<td headers="stat_1" class="gt_row gt_center">25 (60)</td>
+<td headers="stat_2" class="gt_row gt_center">17 (40)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;2791-3720</td>
+<td headers="stat_1" class="gt_row gt_center">48 (79)</td>
+<td headers="stat_2" class="gt_row gt_center">13 (21)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;3721-5580</td>
+<td headers="stat_1" class="gt_row gt_center">100 (86)</td>
+<td headers="stat_2" class="gt_row gt_center">16 (14)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;5581-9300</td>
+<td headers="stat_1" class="gt_row gt_center">91 (81)</td>
+<td headers="stat_2" class="gt_row gt_center">21 (19)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;&gt;=9301</td>
+<td headers="stat_1" class="gt_row gt_center">32 (78)</td>
+<td headers="stat_2" class="gt_row gt_center">9 (22)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Unknown</td>
+<td headers="stat_1" class="gt_row gt_center">164</td>
+<td headers="stat_2" class="gt_row gt_center">28</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Familiar income per month</td>
+<td headers="stat_1" class="gt_row gt_center"></td>
+<td headers="stat_2" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;&lt;930</td>
+<td headers="stat_1" class="gt_row gt_center">8 (100)</td>
+<td headers="stat_2" class="gt_row gt_center">0 (0)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;931-1860</td>
+<td headers="stat_1" class="gt_row gt_center">7 (54)</td>
+<td headers="stat_2" class="gt_row gt_center">6 (46)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;1861-2790</td>
+<td headers="stat_1" class="gt_row gt_center">21 (64)</td>
+<td headers="stat_2" class="gt_row gt_center">12 (36)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;2791-3720</td>
+<td headers="stat_1" class="gt_row gt_center">27 (79)</td>
+<td headers="stat_2" class="gt_row gt_center">7 (21)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;3721-5580</td>
+<td headers="stat_1" class="gt_row gt_center">67 (84)</td>
+<td headers="stat_2" class="gt_row gt_center">13 (16)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;5581-9300</td>
+<td headers="stat_1" class="gt_row gt_center">88 (88)</td>
+<td headers="stat_2" class="gt_row gt_center">12 (12)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;&gt;=9301</td>
+<td headers="stat_1" class="gt_row gt_center">77 (78)</td>
+<td headers="stat_2" class="gt_row gt_center">22 (22)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Unknown</td>
+<td headers="stat_1" class="gt_row gt_center">188</td>
+<td headers="stat_2" class="gt_row gt_center">40</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Profession</td>
+<td headers="stat_1" class="gt_row gt_center"></td>
+<td headers="stat_2" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Administrative and Others</td>
+<td headers="stat_1" class="gt_row gt_center">74 (79)</td>
+<td headers="stat_2" class="gt_row gt_center">20 (21)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Nurses</td>
+<td headers="stat_1" class="gt_row gt_center">151 (90)</td>
+<td headers="stat_2" class="gt_row gt_center">17 (10)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Pyshicians</td>
+<td headers="stat_1" class="gt_row gt_center">159 (85)</td>
+<td headers="stat_2" class="gt_row gt_center">28 (15)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Technical nurses</td>
+<td headers="stat_1" class="gt_row gt_center">99 (68)</td>
+<td headers="stat_2" class="gt_row gt_center">47 (32)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Hospital</td>
+<td headers="stat_1" class="gt_row gt_center"></td>
+<td headers="stat_2" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Hospital Nacional E. Rebagliati Martins</td>
+<td headers="stat_1" class="gt_row gt_center">217 (84)</td>
+<td headers="stat_2" class="gt_row gt_center">40 (16)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Hospital Nacional A. Sabogal Sologuren</td>
+<td headers="stat_1" class="gt_row gt_center">147 (79)</td>
+<td headers="stat_2" class="gt_row gt_center">39 (21)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Hospital Nacional G. Almenara Irigoyen</td>
+<td headers="stat_1" class="gt_row gt_center">92 (78)</td>
+<td headers="stat_2" class="gt_row gt_center">26 (22)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Villa Mongrut</td>
+<td headers="stat_1" class="gt_row gt_center">21 (88)</td>
+<td headers="stat_2" class="gt_row gt_center">3 (13)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;H. Angamos</td>
+<td headers="stat_1" class="gt_row gt_center">2 (50)</td>
+<td headers="stat_2" class="gt_row gt_center">2 (50)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Villa Panamericana</td>
+<td headers="stat_1" class="gt_row gt_center">1 (50)</td>
+<td headers="stat_2" class="gt_row gt_center">1 (50)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Policlinico PIASA</td>
+<td headers="stat_1" class="gt_row gt_center">1 (100)</td>
+<td headers="stat_2" class="gt_row gt_center">0 (0)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Unknown</td>
+<td headers="stat_1" class="gt_row gt_center">2</td>
+<td headers="stat_2" class="gt_row gt_center">1</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Work area</td>
+<td headers="stat_1" class="gt_row gt_center"></td>
+<td headers="stat_2" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Administ., apoyo al diagnostico y otros</td>
+<td headers="stat_1" class="gt_row gt_center">116 (82)</td>
+<td headers="stat_2" class="gt_row gt_center">25 (18)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Consulta externa/domic</td>
+<td headers="stat_1" class="gt_row gt_center">51 (74)</td>
+<td headers="stat_2" class="gt_row gt_center">18 (26)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Emergencia</td>
+<td headers="stat_1" class="gt_row gt_center">103 (87)</td>
+<td headers="stat_2" class="gt_row gt_center">15 (13)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Hospitalización</td>
+<td headers="stat_1" class="gt_row gt_center">130 (80)</td>
+<td headers="stat_2" class="gt_row gt_center">32 (20)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;UCI</td>
+<td headers="stat_1" class="gt_row gt_center">82 (79)</td>
+<td headers="stat_2" class="gt_row gt_center">22 (21)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Unknown</td>
+<td headers="stat_1" class="gt_row gt_center">1</td>
+<td headers="stat_2" class="gt_row gt_center">0</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Work modality</td>
+<td headers="stat_1" class="gt_row gt_center"></td>
+<td headers="stat_2" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;License/Teleworking</td>
+<td headers="stat_1" class="gt_row gt_center">44 (79)</td>
+<td headers="stat_2" class="gt_row gt_center">12 (21)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Presential/Mix</td>
+<td headers="stat_1" class="gt_row gt_center">439 (81)</td>
+<td headers="stat_2" class="gt_row gt_center">100 (19)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Height (cm)</td>
+<td headers="stat_1" class="gt_row gt_center">160 [155, 166]</td>
+<td headers="stat_2" class="gt_row gt_center">160 [155, 165]</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Weight (kg)</td>
+<td headers="stat_1" class="gt_row gt_center">67 [59, 78]</td>
+<td headers="stat_2" class="gt_row gt_center">68 [61, 78]</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Number of comorbidities</td>
+<td headers="stat_1" class="gt_row gt_center"></td>
+<td headers="stat_2" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;0</td>
+<td headers="stat_1" class="gt_row gt_center">330 (80)</td>
+<td headers="stat_2" class="gt_row gt_center">81 (20)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;1</td>
+<td headers="stat_1" class="gt_row gt_center">121 (83)</td>
+<td headers="stat_2" class="gt_row gt_center">25 (17)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;2</td>
+<td headers="stat_1" class="gt_row gt_center">27 (87)</td>
+<td headers="stat_2" class="gt_row gt_center">4 (13)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;3</td>
+<td headers="stat_1" class="gt_row gt_center">5 (83)</td>
+<td headers="stat_2" class="gt_row gt_center">1 (17)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;5</td>
+<td headers="stat_1" class="gt_row gt_center">0 (0)</td>
+<td headers="stat_2" class="gt_row gt_center">1 (100)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Body mass index (kg/m2)</td>
+<td headers="stat_1" class="gt_row gt_center">26.1 [24.2, 28.5]</td>
+<td headers="stat_2" class="gt_row gt_center">25.8 [24.7, 28.4]</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">BMI group</td>
+<td headers="stat_1" class="gt_row gt_center"></td>
+<td headers="stat_2" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Normal interval</td>
+<td headers="stat_1" class="gt_row gt_center">180 (84)</td>
+<td headers="stat_2" class="gt_row gt_center">35 (16)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Overweight</td>
+<td headers="stat_1" class="gt_row gt_center">223 (79)</td>
+<td headers="stat_2" class="gt_row gt_center">60 (21)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Obesity</td>
+<td headers="stat_1" class="gt_row gt_center">80 (82)</td>
+<td headers="stat_2" class="gt_row gt_center">17 (18)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Hypertension</td>
+<td headers="stat_1" class="gt_row gt_center">51 (80)</td>
+<td headers="stat_2" class="gt_row gt_center">13 (20)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Diabetes</td>
+<td headers="stat_1" class="gt_row gt_center">23 (85)</td>
+<td headers="stat_2" class="gt_row gt_center">4 (15)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Chronic lung disease</td>
+<td headers="stat_1" class="gt_row gt_center">0 (NA)</td>
+<td headers="stat_2" class="gt_row gt_center">0 (NA)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Organ transplant</td>
+<td headers="stat_1" class="gt_row gt_center">0 (NA)</td>
+<td headers="stat_2" class="gt_row gt_center">0 (NA)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Cancer</td>
+<td headers="stat_1" class="gt_row gt_center">9 (75)</td>
+<td headers="stat_2" class="gt_row gt_center">3 (25)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Asthma</td>
+<td headers="stat_1" class="gt_row gt_center">36 (80)</td>
+<td headers="stat_2" class="gt_row gt_center">9 (20)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Undernourishment</td>
+<td headers="stat_1" class="gt_row gt_center">0 (NA)</td>
+<td headers="stat_2" class="gt_row gt_center">0 (NA)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Hypothyroidism</td>
+<td headers="stat_1" class="gt_row gt_center">34 (83)</td>
+<td headers="stat_2" class="gt_row gt_center">7 (17)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">HIV</td>
+<td headers="stat_1" class="gt_row gt_center">1 (100)</td>
+<td headers="stat_2" class="gt_row gt_center">0 (0)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Immunosuppressive condition</td>
+<td headers="stat_1" class="gt_row gt_center">421 (81)</td>
+<td headers="stat_2" class="gt_row gt_center">97 (19)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Previous infection</td>
+<td headers="stat_1" class="gt_row gt_center">194 (82)</td>
+<td headers="stat_2" class="gt_row gt_center">43 (18)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Booster scheme</td>
+<td headers="stat_1" class="gt_row gt_center"></td>
+<td headers="stat_2" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Pfizer</td>
+<td headers="stat_1" class="gt_row gt_center">483 (81)</td>
+<td headers="stat_2" class="gt_row gt_center">112 (19)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Astrazeneca</td>
+<td headers="stat_1" class="gt_row gt_center">0 (NA)</td>
+<td headers="stat_2" class="gt_row gt_center">0 (NA)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Sinopharm</td>
+<td headers="stat_1" class="gt_row gt_center">0 (NA)</td>
+<td headers="stat_2" class="gt_row gt_center">0 (NA)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Time from dosis 1 to boosting</td>
+<td headers="stat_1" class="gt_row gt_center">246 [240, 248]</td>
+<td headers="stat_2" class="gt_row gt_center">246 [240, 249]</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Time from dosis 2 to boosting</td>
+<td headers="stat_1" class="gt_row gt_center">224 [219, 227]</td>
+<td headers="stat_2" class="gt_row gt_center">225 [219, 227]</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Time from boosting to IgG measure</td>
+<td headers="stat_1" class="gt_row gt_center">38 [32, 48]</td>
+<td headers="stat_2" class="gt_row gt_center">40 [33, 50]</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Antibodies Anti-SARS-CoV-2 levels (BAU/mL)</td>
+<td headers="stat_1" class="gt_row gt_center">8,530 [5,270, 13,450]</td>
+<td headers="stat_2" class="gt_row gt_center">7,820 [4,743, 11,525]</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">Seropositivity</td>
+<td headers="stat_1" class="gt_row gt_center"></td>
+<td headers="stat_2" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Negative</td>
+<td headers="stat_1" class="gt_row gt_center">0 (NA)</td>
+<td headers="stat_2" class="gt_row gt_center">0 (NA)</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;Positive</td>
+<td headers="stat_1" class="gt_row gt_center">483 (81)</td>
+<td headers="stat_2" class="gt_row gt_center">112 (19)</td></tr>
+  </tbody>
+  
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="3"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> Median [IQR]; n (%)</td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="ejercicio-3" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-3">Ejercicio 3</h3>
+<p>Observe la Tabla 2 y haga una lectura crítica de esta. ¿Qué aspecto del análisis y presentación de resultados no aporta valor y es considerado una práctica que debe evitarse?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escriba el código aquí</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="replicar-figura-1" class="level2">
+<h2 class="anchored" data-anchor-id="replicar-figura-1">Replicar Figura 1</h2>
+<section id="ejercicio-4" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-4">Ejercicio 4</h3>
+<p>Trate de replicar cada uno de los gráficos de la Figura 1. Cree la Fig1A, Fig1B, etc por separado.</p>
+<ul>
+<li>Grafico de densidad</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> igg)) <span class="sc">+</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"red"</span>, <span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Density"</span>, <span class="at">y =</span> <span class="st">"IgG (BAU/ml)"</span>) <span class="sc">+</span> </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="ot">-&gt;</span> g0</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>g0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="taller08_alumno_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: viridisLite</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggsci)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'scales'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:viridis':
+
+    viridis_pal</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:purrr':
+
+    discard</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:readr':
+
+    col_factor</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>pd <span class="ot">&lt;-</span> <span class="fu">position_dodge</span>(<span class="fl">0.3</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>alfa <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Density plot----</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> </span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> igg) <span class="sc">+</span> </span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.25</span>, <span class="at">fill =</span> <span class="st">"red"</span>) <span class="sc">+</span> </span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Density"</span>, <span class="at">x =</span> <span class="st">"IgG (BAU/ml)"</span>) <span class="sc">+</span> </span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">""</span>)) <span class="sc">+</span> </span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.90</span>, <span class="fl">0.90</span>)) <span class="sc">+</span> </span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_lancet</span>() <span class="ot">-&gt;</span> g0; g0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="taller08_alumno_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Work/modality----</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>pd <span class="ot">&lt;-</span> <span class="fu">position_dodge</span>(<span class="fl">0.3</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>alfa <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">modal_cat =</span> <span class="fu">factor</span>(modal_cat, </span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"License/Teleworking"</span>, </span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>                                       <span class="st">"Presential/Mix"</span>), </span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Work leave/remote"</span>, </span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>                                       <span class="st">"Full/part-time in-person"</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(igg) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> modal_cat, <span class="at">y =</span> igg, <span class="at">group =</span> modal_cat, </span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> modal_cat, <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">group =</span> modal_cat), <span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span> </span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis</span>(<span class="at">discrete =</span> <span class="cn">TRUE</span>, <span class="at">alpha=</span><span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">color=</span><span class="st">"black"</span>, <span class="at">size=</span><span class="dv">1</span>, <span class="at">alpha=</span><span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position=</span><span class="st">"none"</span>,</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">11</span>)</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> pd, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"IgG after booster (BAU/mL)"</span>, </span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Working modality"</span>) <span class="sc">+</span></span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">trans =</span> <span class="st">"log"</span>, <span class="at">labels =</span> comma) <span class="sc">+</span> </span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_lancet</span>() <span class="ot">-&gt;</span> g1; g1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="taller08_alumno_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Previous infection----</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># infprev</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>pd <span class="ot">&lt;-</span> <span class="fu">position_dodge</span>(<span class="fl">0.3</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>alfa <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> </span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(igg) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> infprev, <span class="at">y =</span> igg, <span class="at">group =</span> infprev, </span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> infprev, <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">group =</span> infprev), <span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span> </span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis</span>(<span class="at">discrete =</span> <span class="cn">TRUE</span>, <span class="at">alpha=</span><span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">color=</span><span class="st">"black"</span>, <span class="at">size=</span><span class="dv">1</span>, <span class="at">alpha=</span><span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position=</span><span class="st">"none"</span>,</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">11</span>)</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> pd, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"IgG after booster (BAU/mL)"</span>, </span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Previous infection"</span>) <span class="sc">+</span></span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">trans =</span> <span class="st">"log"</span>, <span class="at">labels =</span> comma) <span class="sc">+</span> </span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_lancet</span>() <span class="ot">-&gt;</span> g2; g2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="taller08_alumno_files/figure-html/unnamed-chunk-10-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inmunosuprresive condition----</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># inmunosup</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>pd <span class="ot">&lt;-</span> <span class="fu">position_dodge</span>(<span class="fl">0.3</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>alfa <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> </span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(igg) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> inmunosup, <span class="at">y =</span> igg, <span class="at">group =</span> inmunosup, </span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> inmunosup, <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">group =</span> inmunosup), <span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span> </span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis</span>(<span class="at">discrete =</span> <span class="cn">TRUE</span>, <span class="at">alpha=</span><span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">color=</span><span class="st">"black"</span>, <span class="at">size=</span><span class="dv">1</span>, <span class="at">alpha=</span><span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position=</span><span class="st">"none"</span>,</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">11</span>)</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> pd, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"IgG after booster (BAU/mL)"</span>, </span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Immunosuppressive condition"</span>) <span class="sc">+</span></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">trans =</span> <span class="st">"log"</span>, <span class="at">labels =</span> comma) <span class="sc">+</span> </span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_lancet</span>() <span class="ot">-&gt;</span> g3; g3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="taller08_alumno_files/figure-html/unnamed-chunk-10-4.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Diabetes----</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># com_diab</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>pd <span class="ot">&lt;-</span> <span class="fu">position_dodge</span>(<span class="fl">0.3</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>alfa <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> </span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(igg) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> com_diab, <span class="at">y =</span> igg, <span class="at">group =</span> com_diab, </span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> com_diab, <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">group =</span> com_diab), <span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span> </span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis</span>(<span class="at">discrete =</span> <span class="cn">TRUE</span>, <span class="at">alpha=</span><span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">color=</span><span class="st">"black"</span>, <span class="at">size=</span><span class="dv">1</span>, <span class="at">alpha=</span><span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position=</span><span class="st">"none"</span>,</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">11</span>)</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> pd, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"IgG after booster (BAU/mL)"</span>, </span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Diabetes"</span>) <span class="sc">+</span></span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">trans =</span> <span class="st">"log"</span>, <span class="at">labels =</span> comma) <span class="sc">+</span> </span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_lancet</span>() <span class="ot">-&gt;</span> g4; g4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="taller08_alumno_files/figure-html/unnamed-chunk-10-5.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Profession----</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># prof_cat</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>pd <span class="ot">&lt;-</span> <span class="fu">position_dodge</span>(<span class="fl">0.3</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>alfa <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> </span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prof_cat =</span> <span class="fu">factor</span>(prof_cat, </span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>                           <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Administrative and Others"</span>, </span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"Nurses"</span>, </span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"Pyshicians"</span>, </span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"Technical nurses"</span>), </span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>                           <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Admin/Others"</span>, </span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"Nurses"</span>, </span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"Physicians"</span>, </span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"Technical nurses"</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(igg) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> prof_cat, <span class="at">y =</span> igg, <span class="at">group =</span> prof_cat, </span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> prof_cat, <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">group =</span> prof_cat), <span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span> </span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis</span>(<span class="at">discrete =</span> <span class="cn">TRUE</span>, <span class="at">alpha=</span><span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">color=</span><span class="st">"black"</span>, <span class="at">size=</span><span class="dv">1</span>, <span class="at">alpha=</span><span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position=</span><span class="st">"none"</span>,</span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">11</span>)</span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> pd, <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"IgG after booster (BAU/mL)"</span>, </span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Profession"</span>) <span class="sc">+</span></span>
+<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">trans =</span> <span class="st">"log"</span>, <span class="at">labels =</span> comma) <span class="sc">+</span> </span>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
+<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_lancet</span>() <span class="ot">-&gt;</span> g5; g5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="taller08_alumno_files/figure-html/unnamed-chunk-10-6.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>g0 <span class="sc">/</span> g1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="taller08_alumno_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>g0 <span class="sc">|</span> g1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="taller08_alumno_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>(g0 <span class="sc">/</span> g1) <span class="sc">|</span> (g2 <span class="sc">/</span> <span class="fu">plot_spacer</span>()) <span class="sc">|</span> ( <span class="fu">plot_spacer</span>() <span class="sc">/</span> g3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="taller08_alumno_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>(g0 <span class="sc">|</span> g1) <span class="sc">+</span> </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">tag_levels =</span> <span class="st">"A"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="taller08_alumno_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>plot_biv_cat <span class="ot">&lt;-</span> (g0 <span class="sc">|</span> g1 <span class="sc">|</span> g2) <span class="sc">/</span> (g3 <span class="sc">|</span> g4 <span class="sc">|</span> g5) <span class="sc">+</span> </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">tag_levels =</span> <span class="st">"A"</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>plot_biv_cat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="taller08_alumno_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"Grafico_Paper.jpg"</span>, </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">device =</span>  <span class="st">"jpg"</span>, </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">plot =</span> plot_biv_cat, </span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">scale =</span> <span class="dv">2</span>, </span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">3903</span>, </span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">height =</span> <span class="dv">1822</span>, </span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">units =</span> <span class="st">"px"</span>, </span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">dpi =</span> <span class="dv">600</span></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>       )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ejercicio-5" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-5">Ejercicio 5</h3>
+<p>Trate de replicar cada uno de los gráficos de la Figura 1. Cree la Fig1A, Fig1B, etc por separado.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escriba el código aquí</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ejercicio-6" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-6">Ejercicio 6</h3>
+<p>Fusione los gráficos usando el paquete {patchwork} para replicar a la Figura 1.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escriba el código aquí</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ejercicio-7" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-7">Ejercicio 7</h3>
+<p>Guarde el gráfico en formato “png”.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escriba el código aquí</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ejercicio-8" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-8">Ejercicio 8</h3>
+<p>Imprima el gráfico en foramto “png” dentro del archivo quarto.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escriba el código aquí</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">include_graphics</span>(<span class="st">"Grafico_Paper.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Grafico_Paper.png" class="img-fluid" width="3903"></p>
+</div>
+</div>
+</section>
+<section id="ejercicio-9" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-9">Ejercicio 9</h3>
+<p>Renderice todo el quarto. Cambie el nombre del archivo html generado.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escriba el código aquí</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ejercicio-10" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-10">Ejercicio 10</h3>
+<p>Modifique el YAML del Quarto para que la presentación de este mejore. Renderice el quarto final y compare con la primera versión del html generado en el ejercicio 9.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escriba el código aquí</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

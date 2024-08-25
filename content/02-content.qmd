@@ -1,0 +1,50 @@
+---
+title: "Día 02"
+date: "2024-03-23"
+---
+
+
+## Materiales
+
+::: panel-tabset
+
+### Videoclase grabada
+
+[Se subirá a más tardar el día siguiente de realizada la sesión]
+
+### Slides
+
+**Sesión 03**
+
+```{r slides-videos, echo=FALSE, include=FALSE}
+source(here::here("R", "slide-things.R"))
+```
+
+```{r show-slide-tabs1, echo=FALSE, results="asis"}
+slide_buttons("/slides/dia02/sesion03")
+```
+
+```{=html}
+<iframe width="780" height="500" src="../slides/dia02/sesion03.html" title="Sesión 3"></iframe>
+```
+
+**Sesión 04**
+
+```{r show-slide-tabs2, echo=FALSE, results="asis"}
+slide_buttons("/slides/dia02/sesion04")
+```
+
+```{=html}
+<iframe width="780" height="500" src="../slides/dia02/sesion04.html" title="Sesión 4"></iframe>
+```
+
+### Talleres
+
+|                              |                                                                                  |
+|----------------------|--------------------------------------------------|
+| Instructivo en línea         | [Aquí](../taller/taller02/taller02_instructivo.html)                                                 |
+| Instructivo con solucionario | [Aquí](../taller/taller02/taller02_instructivo_sol_xxx.html)                                                                       |
+| Quarto para alumnos          | [Aquí](../taller/taller02/taller02_alumno.qmd)                                                                       |
+| Toda la carpeta del taller   | [Aquí](https://drive.google.com/drive/folders/1f8rf0MwoVvN2RKaVkzmqJBWSgL8Q7ok9) |
+
+:::

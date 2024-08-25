@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Taller 01</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="taller01_alumno_files/libs/clipboard/clipboard.min.js"></script>
+<script src="taller01_alumno_files/libs/quarto-html/quarto.js"></script>
+<script src="taller01_alumno_files/libs/quarto-html/popper.min.js"></script>
+<script src="taller01_alumno_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="taller01_alumno_files/libs/quarto-html/anchor.min.js"></script>
+<link href="taller01_alumno_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="taller01_alumno_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="taller01_alumno_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="taller01_alumno_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="taller01_alumno_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Taller 01</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introducción" class="level2">
+<h2 class="anchored" data-anchor-id="introducción">Introducción</h2>
+<p>En este primer taller del curso, revisaremos como interactuar con <code>R</code> por primera vez a través de su entorno de desarrollo integrado <code>Rstudio</code>. Aprenderemos que el <code>proyecto</code> es el corazón de todo trabajo con <code>R</code> y <code>RStudio</code> y veremos cómo crearlos. Aprenderemos cuáles son las diferencias del uso del <code>#</code> en un <code>script de R</code> y en <code>Quarto</code>. Además, repasaremos las <code>operaciones aritméticas</code> de <code>vectores</code> en R mediante algunos problemas con contexto clínico. Por último, aprenderemos a importar datos desde formato <code>*.dta</code>, <code>*.csv</code>, <code>*.xlsx</code> y <code>*.sav</code>.</p>
+</section>
+<section id="secciones-previas" class="level2">
+<h2 class="anchored" data-anchor-id="secciones-previas">Secciones previas</h2>
+<p>En las secciones previas no hay necesidad de usar esta plantilla. Con su instructor de aula van a crear desde cero un proyecto, un archivo R script y un Quarto y exploraran algunos aspectos de estos.</p>
+</section>
+<section id="operaciones-aritméticas-con-r" class="level2">
+<h2 class="anchored" data-anchor-id="operaciones-aritméticas-con-r">Operaciones aritméticas con R</h2>
+<section id="cómo-realizar-cálculos-aritméticos-en-r" class="level3">
+<h3 class="anchored" data-anchor-id="cómo-realizar-cálculos-aritméticos-en-r">¿Cómo realizar cálculos aritméticos en R?</h3>
+<p>Ahora practiquemos con los siguientes ejercicios propuestos:</p>
+</section>
+<section id="ejercicio-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-1">Ejercicio 1</h3>
+<p>Multiplicar 12 por 14 (Renderizar el chunk de código)</p>
+<div class="cell">
+
+</div>
+</section>
+<section id="ejercicio-2" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-2">Ejercicio 2</h3>
+<p>Sume 34 más 47 (Renderizar el chunk de código)</p>
+<div class="cell">
+
+</div>
+</section>
+<section id="ejercicio-3" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-3">Ejercicio 3</h3>
+<p>Divida 39304 entre 21 (Renderizar el chunk de código)</p>
+<div class="cell">
+
+</div>
+</section>
+<section id="ejercicio-4" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-4">Ejercicio 4</h3>
+<p>Calcular cuánto es 34 elevado a 3 (Renderizar el chunk de código)</p>
+<div class="cell">
+
+</div>
+</section>
+<section id="ejercicio-5" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-5">Ejercicio 5</h3>
+<p>Sumar 2 más 8, al resultado restar 4, luego multiplicar por 8, dividir el resultado entre 6 y elevar a la potencia 4, ¿cuál es el resultado? (Renderizar el chunk de código)</p>
+</section>
+<section id="ejercicio-6" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-6">Ejercicio 6</h3>
+<p>Los pesos de Juan, Esteban y María son 84, 78 y 70kg, respectivamente. Sus tallas son 1.74, 1.82 y 1.63m, respectivamente. Calcular el IMC para cada caso (Renderizar el chunk de código)</p>
+</section>
+<section id="ejercicio-7" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-7">Ejercicio 7</h3>
+<p>Se requiere administrar Paracetamol a un niño de 6 años de 20kg de peso y 1.21m de altura que presenta fiebre y malestar. Sabemos que la dosis recomendada de paracetamol es de 10mg/Kg c/6h. Calcular la dosis a administrar y el IMC (Renderizar el chunk de código)</p>
+</section>
+<section id="ejercicio-8" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-8">Ejercicio 8</h3>
+<p>Se tiene una niña de 7 años y 18.5Kg de peso con infección en los oídos a quien se le indica cefexime. Si la dosis recomendada es de 8mg/Kg/dia, calcular la dosis que se debe administar (Renderizar el chunk de código)</p>
+</section>
+<section id="ejercicio-9" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-9">Ejercicio 9</h3>
+<p>Los pesos de Jhonatan, Rafael y Enrique son 92, 89 y 79kg. Sus tallas son 1.78, 1.91 y 1,69m, respectivamente. Calcular el IMC para cada caso y determinar si alguno tiene sobrepeso (Renderizar el chunk de código)</p>
+</section>
+<section id="ejercicio-10" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-10">Ejercicio 10</h3>
+<p>Los pesos de Sara, Fiorella y Pamela son 68700, 71400 y 63200g. Sus tallas son 164, 159 y 168cm, respectivamente. Calcular el IMC para cada caso y determinar si alguna presenta sobrepeso (Renderizar el chunk de código)</p>
+</section>
+<section id="ejercicio-11" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-11">Ejercicio 11</h3>
+<p>A un niño que pesa 15000g y mide 68cm se le indica 15mg/kg de paracetamol V.O. cada 8h. Calcular cuántos mg de paracetamol se le debe administrar al día y determinar si el niño presenta sobrepeso u obesidad. (Renderizar el chunk de código)</p>
+</section>
+</section>
+<section id="instalar-y-cargar-paquetes" class="level2">
+<h2 class="anchored" data-anchor-id="instalar-y-cargar-paquetes">Instalar y cargar paquetes</h2>
+<section id="ejercicio-1-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-1-1">Ejercicio 1</h3>
+<p>Instale el paquete <code>here</code> usando la consola</p>
+</section>
+<section id="ejercicio-2-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-2-1">Ejercicio 2</h3>
+<p>Cargue el paquete <code>here</code>.</p>
+<div class="cell">
+
+</div>
+</section>
+<section id="ejercicio-3-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-3-1">Ejercicio 3</h3>
+<p>Use la funcion <code>here()</code> del paquete <code>here</code>.</p>
+<div class="cell">
+
+</div>
+</section>
+</section>
+<section id="importar-bases-de-datos-con-rio" class="level2">
+<h2 class="anchored" data-anchor-id="importar-bases-de-datos-con-rio">Importar bases de datos con <code>{rio}</code></h2>
+<section id="instalar-y-cargar-paquetes-1" class="level3">
+<h3 class="anchored" data-anchor-id="instalar-y-cargar-paquetes-1">Instalar y cargar paquetes</h3>
+<p>Ahora sí, practiquemos:</p>
+</section>
+<section id="ejercicio-1-2" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-1-2">Ejercicio 1</h3>
+<p>Importar la base de datos “data_enaho2017_v2” y guardarla como “data_ejm1”. Renderizar el código.</p>
+<div class="cell">
+
+</div>
+</section>
+<section id="ejercicio-2-2" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-2-2">Ejercicio 2</h3>
+<p>Importar la base de datos “data_ejm” y guardarla como “data_ejm2”. Renderizar el código.</p>
+</section>
+<section id="ejercicio-3-2" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-3-2">Ejercicio 3</h3>
+<p>Importar la base de datos “data_ejercicio” y guardarla como “data_ejm3”. Renderizar el código.</p>
+</section>
+<section id="ejercicio-4-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-4-1">Ejercicio 4</h3>
+<p>Importar la base de datos “data_SPSS” y guardarla como “data_ejm4”. Renderizar el código.</p>
+</section>
+<section id="ejercicio-5-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejercicio-5-1">Ejercicio 5</h3>
+<p>Exportar con el mismo nombre pero en formato <em>.csv</em>, <em>.sav</em>, <em>.xlsx</em> y <em>.dta</em> todas las bases importadas, respectivamente. Renderizar el código.</p>
+</section>
+</section>
+<section id="renderice-todo-el-documeto-quarto" class="level2">
+<h2 class="anchored" data-anchor-id="renderice-todo-el-documeto-quarto">Renderice todo el documeto quarto</h2>
+<p>Al finalizar, renderice todo el documento quarto.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

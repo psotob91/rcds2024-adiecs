@@ -1,0 +1,114 @@
+---
+title: "Adicional"
+---
+
+```{r}
+datos <- data.frame(sexo = c(rep("femenino", 120), rep("masculino", 50)), 
+                    muerte = c(rep("muerte", 80), rep("vivo aun", 40), 
+                               rep("muerte", 20), rep("vivo aun", 30)))
+
+datos
+```
+
+
+```{r}
+datos |> 
+  ggplot(aes(x = sexo)) + 
+  geom_bar()
+```
+```{r}
+datos |> 
+  count(sexo) 
+```
+
+```{r}
+datos |> 
+  count(sexo) |> 
+  ggplot(aes(x = sexo, y = n)) + 
+  geom_col()
+```
+
+```{r}
+datos |> 
+  count(sexo) |> 
+  ggplot(aes(x = sexo, y = n)) + 
+  geom_bar(stat = "identity")
+```
+
+```{r}
+datos |> 
+  glimpse()
+```
+
+```{r}
+datos <- datos |> 
+  mutate(sexo2 = factor(sexo), 
+         sexo3 = factor(sexo, levels = c("masculino", "femenino")))
+datos |> 
+  glimpse()
+
+```
+
+```{r}
+levels(datos$sexo2)
+```
+
+```{r}
+levels(datos$sexo3)
+```
+
+
+```{r}
+datos |> 
+  count(sexo2) |> 
+  ggplot(aes(x = sexo2, y = n)) + 
+  geom_bar(stat = "identity")
+```
+
+```{r}
+datos |> 
+  count(sexo3) |> 
+  ggplot(aes(x = sexo3, y = n)) + 
+  geom_bar(stat = "identity")
+```
+
+```{r}
+datos |> 
+  count(sexo3) |> 
+  mutate(porcentaje = 100 * n / sum(n)) |> 
+  ggplot(aes(x = sexo3, y = porcentaje)) + 
+  geom_bar(stat = "identity")
+```
+
+```{r}
+datos |> 
+  tabyl(sexo3)  |> 
+  ggplot(aes(x = sexo3, y = 100 * percent)) + 
+  geom_bar(stat = "identity")
+```
+
+
+```{r}
+datos |> 
+  count(sexo3) |> 
+  ggplot(aes(x = "", y = n, fill = sexo3)) + 
+  geom_bar(stat = "identity", position = "stack")
+```
+
+
+```{r}
+datos |> 
+  count(sexo3) |> 
+  ggplot(aes(x = "", y = n, fill = sexo3)) + 
+  geom_bar(stat = "identity", position = "fill")
+```
+
+```{r}
+datos |> 
+  count(sexo3) |> 
+  ggplot(aes(x = "", y = n, fill = sexo3)) + 
+  geom_bar(stat = "identity", width = 1) + 
+  coord_polar("y", start = 0)
+```
+
+

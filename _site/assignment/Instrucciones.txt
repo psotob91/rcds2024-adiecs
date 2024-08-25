@@ -1,0 +1,8 @@
+En este taller replicaremos parcialmente los resultados de las tablas descriptivas. 
+También realizaremos algunos gráficos univariados.
+
+Artículo para replicar:
+https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0158570#sec021
+
+Datos: 
+Material suplementario: https://doi.org/10.1371/journal.pone.0158570.s002

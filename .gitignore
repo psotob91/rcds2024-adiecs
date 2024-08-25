@@ -1,0 +1,14 @@
+/.quarto/
+.Rproj.user
+/documents/
+/informe
+
+.pdf
+/videos
+videos
+/slides
+/taller
+/resource
+/R
+/assignment
+/_freeze

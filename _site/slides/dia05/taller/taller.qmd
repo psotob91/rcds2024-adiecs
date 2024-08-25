@@ -1,0 +1,229 @@
+---
+title: "Tablas reproducibles"
+---
+
+
+## Cargar paquetes
+
+```{r}
+# library(tidyverse)
+# library(rio)
+# library(labelled)
+# 
+# library(gtsummary) #tablas
+# library(knitr) #tablas
+# library(flextable) #tablas
+# library(huxtable) #tablas
+# library(gt) #tablas
+```
+
+```{r}
+if (!require("pacman")) install.packages("pacman")
+
+pacman::p_load(tidyverse, 
+               rio, 
+               labelled, 
+               gtsummary, 
+               knitr, 
+               flextable, 
+               huxtable, 
+               gt, 
+               here)
+```
+
+```{r}
+here()
+```
+
+
+```{r}
+here("Datos")
+```
+```{r}
+here("Datos", "Crudos")
+```
+
+## Importar datos
+
+```{r}
+datos <- import(here("Datos", "Crudos", "maca_meno_perclin.csv"))
+```
+
+
+## Tabla 1
+
+```{r}
+# Opcion 1
+datos |> 
+  select(tratamiento, protocolo, peso_inicial:album) |> 
+  tbl_summary(by = tratamiento) -> tabla1
+
+tabla1
+```
+
+```{r}
+# exportar a Word usando flextsble como intermedio
+tabla1 |> 
+  as_flex_table() |> 
+  save_as_docx(path = here("Tablas", "Tabla1_flex.docx"))
+```
+
+```{r}
+here("Tablas", "Tabla1_flex.docx")
+```
+
+```{r}
+# exportar a Word usando gt como intermedio
+tabla1 |> 
+  as_gt() |> 
+  gtsave(filename = "Tabla1_gt.docx")
+```
+
+```{r}
+# exportar a Excel usando huxtable como intermedio
+tabla1 |> 
+  as_hux_xlsx("Tabla1.xlsx")
+```
+
+
+```{r}
+# Opcion 2
+datos |> 
+  tbl_summary(include = c(tratamiento, protocolo, peso_inicial:album))
+```
+
+## Limpieza de datos
+
+```{r}
+datos2 <- datos |> 
+  mutate(protocolo2 = factor(protocolo, 
+                             levels = c("no ovx", "hemiovx",  "ovx"), 
+                             labels = c("No ovarectomización", 
+                                        "Hemiovarectomizacion", 
+                                        "Ovarectomización"))) |> 
+  set_variable_labels(peso_inicial = "Peso inicial (kg)", 
+                      peso_final = "Peso final (kg)", 
+                      chol = "Colesterol sérico (mg/dl)")
+```
+
+```{r}
+# Opcion 1
+datos2 |> 
+  select(tratamiento, protocolo, protocolo2, peso_inicial:album) |> 
+  tbl_summary(by = tratamiento, 
+              type = list(all_continuous() ~ "continuous2"),
+              statistic = list(all_continuous() ~ c("{mean} ± {sd}", 
+                                           "{median} ({p25}, {p75})", 
+                                           "{min}, {max}"), 
+                               c(protocolo, protocolo2) ~ "{n} / {N} ({p}%)"), 
+              digits = list(all_continuous() ~ 1, 
+                            all_categorical() ~ c(0, 0, 1)), 
+              missing_text = "Dato perdido", 
+              missing = "ifany") |> 
+  bold_labels() |> 
+  italicize_labels() |> 
+  modify_header(stat_1 ~ "**Trat. Control\nN = 5 (%)**", 
+                stat_2 ~ "**Trat. Maca\nN = 5 (%)**") |> 
+  add_p() -> tabla1
+
+tabla1
+```
+
+
+```{r}
+show_header_names(tabla1)
+```
+
+
+
+```{r}
+# Opcion 2
+datos2 |> 
+  tbl_summary(by = tratamiento, 
+              label = list(glucose ~ "Glucosa (mg/dl)", 
+                           tag ~ "Triglicéridos (mg/dl)"),
+              include = c(tratamiento, protocolo, peso_inicial:album))
+```
+
+
+
+```{r}
+## Regresion multivariable
+modelo <- lm(peso_final ~ tratamiento + chol + glucose, data = datos)
+```
+
+```{r}
+modelo |> 
+  tbl_regression() |> 
+  add_global_p() -> tabla2b
+
+tabla2b
+```
+
+
+```{r}
+datos |> 
+  select(peso_final, tratamiento, chol, glucose) |> 
+  tbl_uvregression(
+    method = lm, 
+    y = peso_final
+  ) |>  
+  add_global_p() -> tabla2a
+
+tabla2a
+```
+
+```{r}
+tbl_merge(list(tabla2a, tabla2b), 
+          tab_spanner = c("**Modelos crudos**", "**Modelo ajustado**")) -> tabla2
+
+tabla2 |> 
+  as_hux_xlsx("Tabla2.xlsx")
+
+tabla2
+```
+
+
+
+```{r}
+datos |> 
+  ggplot(aes(x = tratamiento, y = chol)) + 
+  geom_boxplot() + 
+  geom_jitter() + 
+  theme_bw() -> plot_cajas
+
+plot_cajas
+```
+
+```{r}
+ggsave(filename = "Plot_Grafico_Cajas.png", 
+       plot = plot_cajas, 
+       device = "png", 
+       scale = 2, 
+       width = 12, 
+       height = 9, 
+       units = "cm", 
+       dpi = 600, 
+       bg = "white")
+```
+
+
+```{r}
+include_graphics("Plot_Grafico_Cajas.png")
+```
+
+
+```{r}
+ggsave(filename = "Plot_Grafico_Cajas.pdf", 
+       plot = plot_cajas, 
+       device = "pdf", 
+       scale = 2, 
+       width = 12, 
+       height = 9, 
+       units = "cm", 
+       dpi = 600, 
+       bg = "white")
+```
+
+
+![](Plot_Grafico_Cajas.png)

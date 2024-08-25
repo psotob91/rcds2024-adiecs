@@ -1,0 +1,561 @@
+---
+title: "<font color='white'>Taller 1</font>"
+subtitle: "Análisis Estadístico de Datos en Salud"
+author: 
+  - Percy Soto-Becerra
+  - Anthony Ramos
+date: last-modified
+date-format: "DD-MM-YYYY"
+description: "PFC 2023 -– IETSI, EsSalud"
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: "Índice"
+    toc-location: right
+    embed-resources: true
+    number-sections: true
+    theme: cerulean
+    title-block-style: default
+    title-block-banner: true
+    section-divs: true
+    css: [include/webex.css, include/styles.css]
+    include-after-body: include/webex.js
+    code-block-border-left: false
+lang: es
+execute: 
+  message: false
+  warning: false
+---
+
+```{r}
+#| include: false
+library(webexercises)
+```
+
+## Introducción
+
+En este primer taller del curso, revisaremos como interactuar con `R` por primera vez a través de su entorno de desarrollo integrado `Rstudio`. Aprenderemos que el `proyecto` es el corazón de todo trabajo con `R` y `RStudio` y veremos cómo crearlos. Aprenderemos cuáles son las diferencias del uso del `#` en un `script de R` y en `Quarto`. Además, repasaremos las `operaciones aritméticas` de `vectores` en R mediante algunos problemas con contexto clínico. Por último, aprenderemos a importar datos desde formato `*.dta`, `*.csv`, `*.xlsx` y `*.sav`.
+
+## Reconocimiento de elementos de RStudio
+
+Antes de empezar a escribir código, es importante conocer y reconocer los distintos paneles que nos muestra `RStudio` y sus funciones: 
+
+**Identifique las secciones de la IDE de RStudio**
+
+```{r}
+#| echo: false
+knitr::include_graphics("img/rstudio_interfaz.png")
+```
+
+
+```{r}
+#| echo: false
+#| results: asis
+q1_res <- c("B", "D", answer = "C", "A")
+q2_res <- c(answer = "B", "A", "D", "C")
+q3_res <- c("C", answer = "A", "D", "B")
+q4_res <- c("A", "C", "B", answer = "D")
+```
+
+
+*Ventana de...*
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+- Consola: `r mcq(q1_res)`
+
+- Entorno: `r mcq(q2_res)`
+
+:::
+
+::: {.column width='50%'}
+
+- Editor: `r mcq(q3_res)`
+
+- Utilidades: `r mcq(q4_res)`
+
+:::
+
+::::
+
+**¿Qué secciones tiene `Rstudio`?**
+
+```{r}
+#| echo: false
+#| results: asis
+
+q1 <- "Donde escribimos y almacenamos código:"
+q2 <- "Donde ejecutamos el código:"
+q3 <- "Donde podemos ver todos los archivos u objetos que tenemos guardado en nuestro R"
+q4 <- "Donde tenemos varias pestañas con funciones diversas (p. ej., ayuda, archivos, etc"
+  
+q1_res <- c("Consola", "Entorno", answer = "Editor", "Utilidades")
+q2_res <- c(answer = "Consola", "Entorno", "Editor", "Utilidades")
+q3_res <- c("Consola", answer = "Entorno", "Editor", "Utilidades")
+q4_res <- c("Consola", "Entorno", "Editor", answer = "Utilidades")
+```
+
+*Es la sección donde...*
+
+-  ... escribimos y almacenamos código: `r mcq(q1_res)`
+
+- ... ejecutamos el código: `r mcq(q2_res)`
+
+- ... podemos ver todos los archivos u objetos que tenemos guardado en nuestro R: `r mcq(q3_res)`
+
+- ... tenemos varias pestañas con funciones diversas (p. ej., ayuda, archivos, etc): `r mcq(q4_res)`
+
+## Siempre crea un proyecto
+
+`RStudio` ofrece la posibilidad de trabajar con proyectos. Estos facilitan la reproducibilidad del flujo de trabajo (limpieza, análisis, visualización y reporte).
+
+Creememos un proyecto:
+
+
+::: {.panel-tabset}
+
+### Paso 1
+
+Cree una carpeta en donde Ud. guste. Póngale un nombre informativo que le permita recordar de qué trata esta carpeta. Por ejemplo, para este taller póngale de nombre `taller01`.
+
+```{r}
+#| echo: false
+knitr::include_graphics("img/config-proyecto1.gif")
+```
+
+### Paso 2
+
+Abra `Rstudio` 
+
+```{r}
+#| echo: false
+knitr::include_graphics("img/config-proyecto2.gif")
+```
+
+### Paso 3
+
+En `RStudio`, configure un `Proyecto` en la carpeta que creo inicialmente.
+
+```{r}
+#| echo: false
+knitr::include_graphics("img/config-proyecto3.gif")
+```
+
+```{r}
+#| echo: false
+knitr::include_graphics("img/config-proyecto4.gif")
+```
+
+:::
+
+## Trabaje directamente con la consola
+
+Una primera manera de interactuar con `R` a traves de `RStudio` es mediante la `consola`.
+
+Por ejemplo, en la consola escriba:
+
+```{r}
+"Hola mundo"
+```
+
+Tambien puedes escribir algunas sumas:
+
+```{r}
+5 + 5
+```
+
+```{r}
+#| echo: false
+#| results: asis
+q1_res <- c("No hay ningún problema.", "La consola puede cometer errores a veces.", answer = "No queda ningún registro reproducible del proceso.", "Usar consola es más lento.")
+```
+
+:::{.border}
+
+**Pregunta:**
+
+- ¿Cuál es el principal problema de analizar datos con R directamente a través de la consola? `r mcq(q1_res)`
+
+:::
+
+## Use un R script
+
+Otra opción es usar un `script` de `R`. La ventaja de este enfoque es que podemos almacenar código reproducible el cual puede volver a ejecutarse cuántas veces se desee y se obtendrían exactamente los mismos resultados. 
+
+```{r}
+#| echo: false
+knitr::include_graphics("img/primer-rscript.gif")
+```
+
+:::{.border}
+
+**Pregunta:**
+
+```{r}
+#| echo: false
+#| results: asis
+q1_res <- c("Ahorra trabajo repetitivo", 
+            "Automatiza procesos",
+            "Permite la transparencia y replicabilidad de la Ciencia", 
+            answer = "Todas las anteriores", 
+            "No es realmente necesario que el código sea reproducible")
+```
+
+- ¿Por qué es importante tener código reproducible? `r mcq(q1_res)`
+
+:::
+
+### Ejercicio {.unnumbered}
+
+- Cree un `RScript`.
+- Guárdelo como `mi_primer_rscript.r`
+- Cree texto humano comentado usando \#
+- Cree codigo en R y ejecutelo (p. ej., una suma simple).
+
+:::{.callout-tip collapse=true appearance='default' icon=true}
+## Atajos de teclado
+- <kbd>Ctrl</kbd> + <kbd>Enter</kbd> = Equivalente a dar click en `Run` <img src="img/run.png"> para ejecutar código el script.
+:::
+
+## Preferiblemente use Quarto Markdown
+
+El paradigma actual prefiere utilizar herramientas de `programación literaria` tales como `Quarto` o `RMarkdown`. Para esto, es importante crear un archivo `quarto`.
+
+::: {.panel-tabset}
+
+### Paso 1
+
+Crea un archivo quarto.
+
+```{r}
+#| echo: false
+knitr::include_graphics("img/primer-quarto1.gif")
+```
+
+### Paso 2
+
+Guarda el archivo quarto en la carpeta del proyecto.
+
+```{r}
+#| echo: false
+knitr::include_graphics("img/primer-quarto2.gif")
+```
+
+:::
+
+### Ejercicio 1 {.unnumbered}
+
+- Cree y guarde el archivo `Quarto`.
+- Identifique el `YAML` (no toque ni modifique este).
+- Identifique el `contenido` del documento quarto.
+
+    + ¿En qué parte se escribe texto humano?
+    + ¿En qué parte se escribe código en R?
+    
+- Renderice la plantilla de quarto dandole click a `Render` <img src="img/render.png">
+
+### Ejercicio 2 {.unnumbered}
+
+- Elimine el contenido de la plantilla y escriba su propia informacion.
+- Coloque un titulo con \#\#.
+- Inserte un `chunk` de codigo con la herramienta <img src="img/codigo.png">
+- Escriba una suma simple cualesquiera en el chunk de codigo y ejecutelo.
+- Renderice todo el documento.
+- Explore el archivo `.html` generado. ¿Qué ha pasado?
+
+:::{.callout-tip collapse=true appearance='default' icon=true}
+## Atajos de teclado sugeridos (para Microsoft)
+- <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>i</kbd> = equivalente a dar click en <img src="img/codigo.png">
+:::
+
+::: {.column-margin}
+
+`Renderizar el código` significa `crear` el archivo (html, Word, PDF, u otro formato), a partir del código y los datos. Para hacer esto, simplemente debemos *presionar el botón "Render" ubicado en la barra de herramientas que está justo encima del editor de texto.*
+
+:::
+
+## Distinga entre el \# en Quarto y en un Rscript/chunk de codigo
+
+### Ejercicio 1 {.unnumbered}
+
+- En un `Rscript` escriba un \# ¿Para qué sirve el \# en un `Rscript`?
+- En un `Quarto` escriba un \# ¿Para qué sirve el \#?
+- ¿Qué pasa si en un `Quarto` escribo \#, \#\#, \#\#\#, y así sucesivamente?
+- ¿Qué pasa si en un `chunk de código` dentro `Quarto` escribo \#, \#\#, \#\#\#, y así sucesivamente?
+ 
+### Ejercicio 2 {.unnumbered}
+
+El siguiente texto debe ser modificado en el modo `editor visual` de Quarto:
+
+```{r}
+#| echo: false
+knitr::include_graphics("img/editor_visual.png")
+```
+
+
+Modifique al azar las palabras poniéndolas en formato negrita, cursiva, subrayado o código:
+
+La investigación de calidad en salud es indispensable para que un sistema sanitario sea eficiente. Para mejorar la salud pública y comprender los aspectos económicos y la mecánica de los sistemas de salud, se requiere una amplia gama de métodos de investigación y de toma de decisiones basadas en evidencia.
+
+## En resumen, este es el flujo de trabajo
+
+Por tal motivo, lo primero que uno debe hacer cuando trabaje con R en RStudio es configurar el proyecto. Los pasos a continuación:
+
+```{mermaid}
+flowchart TD
+    A(1. Crea carpeta) --> B(2. Abre RStudio)
+    B --> C{3. Configura proyecto}
+    C -->|1| D[Use scripts]
+    C -->|2| E[Use quarto]
+    D --> F[Ejecute línea a línea con run]
+    E --> G[Renderice todo el documento]
+```
+
+## Operaciones aritméticas con R
+
+### ¿Cómo realizar cálculos aritméticos en R?
+
+Para esto, simplemente necesitamos saber cómo llamar a los operadores aritméticos en R, revisemos la siguiente lista:
+
+1. `+` $\rightarrow$ Suma
+2. `-` $\rightarrow$ Resta
+3. `*` $\rightarrow$ Multiplicación
+4. `/` $\rightarrow$ División
+5. `sqrt()` $\rightarrow$ Raíz cuadrada
+6. `^` $\rightarrow$ Potencia
+
+:::{.callout-tip collapse=true appearance='default' icon=true}
+## Atajos de teclado sugeridos (para Microsoft)
+- <kbd>Alt</kbd> + <kbd>94</kbd> = <kbd>^</kbd> (símbolo de potencia)
+
+- <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>c</kbd> =  comentar la línea o texto seleccionado
+:::
+
+Ahora practiquemos con los siguientes ejercicios propuestos:
+
+### Ejercicio 1 {.unnumbered}
+
+Multiplicar 12 por 14 (Renderizar el chunk de código)
+
+```{r}
+12 * 14
+```
+
+### Ejercicio 2 {.unnumbered}
+
+Sume 34 más 47 (Renderizar el chunk de código)
+
+```{r}
+34 + 47
+```
+
+### Ejercicio 3 {.unnumbered}
+
+Divida 39304 entre 21 (Renderizar el chunk de código)
+
+```{r}
+39304 / 21
+```
+
+### Ejercicio 4 {.unnumbered}
+
+Calcular cuánto es 34 elevado a 3 (Renderizar el chunk de código)
+
+```{r}
+34 ^ 3
+```
+
+### Ejercicio 5 {.unnumbered}
+
+Sumar 2 más 8, al resultado restar 4, luego multiplicar por 8, dividir el resultado entre 6 y elevar a la potencia 4, ¿cuál es el resultado? (Renderizar el chunk de código)
+
+```{r}
+((((2 + 8) - 4) * 8) / 6) ^ 4
+```
+
+### Ejercicio 6 {.unnumbered}
+
+Los pesos de Juan, Esteban y María son 84, 78 y 70kg, respectivamente. Sus tallas son 1.74, 1.82 y 1.63m, respectivamente. Calcular el IMC para cada caso (Renderizar el chunk de código)
+
+```{r}
+84 + 78 + 70
+```
+
+
+### Ejercicio 7 {.unnumbered}
+
+Se requiere administrar Paracetamol a un niño de 6 años de 20kg de peso y 1.21m de altura que presenta fiebre y malestar. Sabemos que la dosis recomendada de paracetamol es de 10mg/Kg c/6h. Calcular la dosis a administrar y el IMC (Renderizar el chunk de código)
+
+```r
+# Escribe código aquí
+
+```
+
+### Ejercicio 8 {.unnumbered}
+
+Se tiene una niña de 7 años y 18.5Kg de peso con infección en los oídos a quien se le indica cefexime. Si la dosis recomendada es de 8mg/Kg/dia, calcular la dosis que se debe administar (Renderizar el chunk de código)
+
+```r
+# Escribe código aquí
+
+```
+
+### Ejercicio 9 {.unnumbered}
+
+Los pesos de Jhonatan, Rafael y Enrique son 92, 89 y 79kg. Sus tallas son 1.78, 1.91 y 1,69m, respectivamente. Calcular el IMC para cada caso y determinar si alguno tiene sobrepeso (Renderizar el chunk de código)
+
+```r
+# Escribe código aquí
+
+```
+
+### Ejercicio 10 {.unnumbered}
+
+Los pesos de Sara, Fiorella y Pamela son 68700, 71400 y 63200g. Sus tallas son 164, 159 y 168cm, respectivamente. Calcular el IMC para cada caso y determinar si alguna presenta sobrepeso (Renderizar el chunk de código)
+
+```r
+# Escribe código aquí
+
+```
+
+### Ejercicio 11 {.unnumbered}
+
+A un niño que pesa 15000g y mide 68cm se le indica 15mg/kg de paracetamol V.O. cada 8h. Calcular cuántos mg de paracetamol se le debe administrar al día y determinar si el niño presenta sobrepeso u obesidad. (Renderizar el chunk de código)
+
+```r
+# Escribe código aquí
+
+```
+
+## Instalar y cargar paquetes
+
+- En R, se pueden instalar paquetes usando la funcion `install.packages()`. En la **consola** (ojo, no en quarto!!) escriba lo siguiente:
+
+```r
+install.packages("paquete")
+```
+
+- Que un paquete este instalado no significa que podamos usarlo. Debemos cargarlo primero con la funcion `library()`. Esto puede hacerse en el `quarto`, `rscript` y tambien en la `consola`.
+
+```r
+library(paquete)
+```
+
+### Ejercicio 1 {.unnumbered}
+
+Instale el paquete `here`.
+
+```r
+# Escribe código aquí
+
+```
+
+### Ejercicio 2 {.unnumbered}
+
+Cargue el paquete `here`.
+
+```r
+# Escribe código aquí
+
+```
+
+### Ejercicio 3 {.unnumbered}
+
+Use la funcion `here()` del paquete `here`.
+
+```r
+# Escribe código aquí
+
+```
+
+- ¿Qué nos dice esta función? (ver página web del paquete: <https://here.r-lib.org/>)
+
+:::{.callout-important collapse=false appearance='default' icon=true}
+## En Quarto no usaremos install.packages()
+Cuando se trabaja con `Quarto` es preferible no usar `install.packages("rio")`. En el curso vamos a trabajar cargando el paquete directamente con `library()`. Por defecto, `RStudio` reconoce si un paquete no esta instalado y te emite un anuncion de instalacion como el mostrado lineas abajo:
+
+```{r}
+#| echo: false
+knitr::include_graphics("img/instalar_paquete.png")
+```
+:::
+
+## Importar bases de datos con `{rio}`
+
+### Instalar y cargar paquetes
+
+Antes de aprender a importar datos en R, debemos instalar y cargar *paquetes* (conjunto de funciones orientadas a cumplir tareas relacionadas o específicas).
+
+Recuerde que si trabaja desde `Quarto`, solo debe escribir `library(paquete)` en un chunk de codigo, guardar el `Quarto` y esperar que le salga el aviso de instalacion. Haga la instalacion primero antes de correr `libary`.
+
+```r
+library(rio)              # Cargar el paquete para poder utilizarlo
+```
+
+### Algunas recomendaciones
+
+Para importar correctamente una base de datos, verificar dos aspectos:
+
+1. **Su ubicación:** ¿en qué carpeta la tenemos guardada? Esto nos permitirá llamarla sin problemas mediante el URL del archivo. Recordar que es recomendable que las bases de datos que vamos a usar se encuentren en la misma carpeta que el proyecto (Rproject).   
+
+2. **Su formato:** ¿la data es un archivo csv? dta? xlsx? Esto nos permitirá utilizar la función de importación de manera adecuada.
+
+Sintaxis de la función `import()` de rio:
+
+```r
+nombre_datos -> import("url_del_archivo.extensión")
+```
+
+Ahora sí, practiquemos:
+
+### Ejercicio 1 {.unnumbered}
+
+Importar la base de datos "data_enaho2017_v2" y guardarla como "data_ejm1". Renderizar el código.
+
+```r
+# Escribe código aquí
+
+```
+
+### Ejercicio 2 {.unnumbered}
+
+Importar la base de datos "data_ejm" y guardarla como "data_ejm2". Renderizar el código.
+
+```r
+# Escribe código aquí
+
+```
+
+### Ejercicio 3 {.unnumbered}
+
+Importar la base de datos "data_ejercicio" y guardarla como "data_ejm3". Renderizar el código.
+
+```r
+# Escribe código aquí
+
+```
+
+### Ejercicio 4 {.unnumbered}
+
+Importar la base de datos "data_SPSS" y guardarla como "data_ejm4". Renderizar el código.
+
+
+```r
+# Escribe código aquí
+
+```
+
+### Ejercicio 5 {.unnumbered}
+
+Exportar con el mismo nombre pero en formato *.csv*, *.sav*, *.xlsx* y *.dta* todas las bases importadas, respectivamente. Renderizar el código.
+
+```r
+# Escribe código aquí
+
+```
+## Renderice todo el documeto quarto
+
+Al finalizar, renderice todo el documento quarto.

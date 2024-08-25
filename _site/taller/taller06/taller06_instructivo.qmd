@@ -1,0 +1,227 @@
+---
+title: "<font color='white'>Taller 6</font>"
+subtitle: "Análisis Estadístico de Datos en Salud"
+author: 
+  - Percy Soto-Becerra
+  - Anthony Romero
+date: last-modified
+date-format: "DD-MM-YYYY"
+description: "PFC 2023 -– IETSI, EsSalud"
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: "Índice"
+    toc-location: right
+    embed-resources: true
+    number-sections: true
+    theme: cerulean
+    title-block-style: default
+    title-block-banner: true
+    section-divs: true
+    css: [include/webex.css, include/styles.css]
+    include-after-body: include/webex.js
+    code-block-border-left: false
+lang: es
+execute: 
+  message: false
+  warning: false
+---
+
+```{r}
+#| include: false
+library(tidyverse)     # Varias funciones de tidyverse (dplyr, ggplot2, etc.)
+library(rio)           # Navaja suiza de la importación de datos
+library(haven)           # Importación de datos dta
+library(skimr)         # Análisis inicial de datos
+library(janitor)       # Funciones para manejo y limpieza de datos (p. ej, get_dupes)
+library(gtsummary)     # Tablas estadísticas reproducibles y listas para su publicación   
+library(gginference)
+library(rstatix)
+library(gt)
+```
+
+## Introducción
+
+En este sexto taller del curso terminaremos análisis descriptivo revisando descripción gráfica de datos categóricos para luego iniciar con el anális inferencial de datos mediante pruebas de hipótesis con paquetes como `rstatix`. Para este fin, vamos a trabajar con los datos de un diseño de experimento que buscó evaluar el efecto de un suplemento que contiene maca en algunos desenlaces relacionados a menopausia (imc, hormonas sexuales, etc.).
+
+
+## Cargar paquetes
+
+```{r}
+# Antes de cargar estos paquetes, se deben instalar desde la pestaña "Packages" en el panel de utilidades (inferior derecho).
+
+library(tidyverse)                   # Varias funciones de tidyverse (dplyr, ggplot2, etc.)
+library(rio)                         # Navaja suiza de la importación de datos
+library(skimr)                       # Análisis inicial de datos
+library(Hmisc)                       # Análisis inicial de datos
+library(janitor)                     # Para identificar duplicados
+library(gtsummary)                   # Para tablas estadísticas reproducibles
+library(rstatix)                     # Para pruebas de hipótesis 
+library(ggpubr)                      # Para gráficos que evalúan supuestos
+library(gt)                          # Para un reporte más elegante
+```
+
+## Análisis descriptivo gráfico de datos categóricos
+
+### Importar bases de datos
+
+Importemos las bases utilizadas en la sesión anterior para continuar analizando los datos categóricos, ahora mediante gráficos:
+
+```{r}
+#Importamos linelist_cleaned
+data_ebola <- import("linelist_cleaned.rds")
+
+#Importamos boost_inmuno
+data_inmuno <- import("boost_inmuno.dta")
+```
+
+Utilicemos `ggplot2` de `Tidyverse` con las funciones para elaborar gráficos de barra en sus distintas versiones y aspectos estéticos.
+
+### Ejercicio 1 {.unnumbered}
+
+Elabore un gráfico de barras con `geom_bar()` para presentar la variable "tipo_refuerzo" de `data_inmuno`. Use la forma de data individual y la forma de datos agregados:
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+```{r}
+# Escriba aquí el código
+```
+
+:::{.callout-note collapse=false appearance='default' icon=true}
+## Atajo a geom_bar() para datos agregados
+- Cuando se usa datos agregados también podemos usar un atajo de geom_bar() que se llama geom_col(). Este asume que se trabaja con datos agregados, así que no necesita stat = "identity".
+
+```{r}
+data_inmuno %>% 
+  count(tipo_refuerzo) %>%
+  ggplot(aes(x = tipo_refuerzo, y = n)) + 
+  geom_col() # No necesita stat = identity
+```
+
+:::
+
+
+### Ejercicio 2 {.unnumbered}
+
+Elabore un gráfico de barras con geom_bar() para presentar la variable "sexo" de `data_inmuno`. Haga una versión vertical y otra horizontal. Agregarle aspectos estéticos como color, etiqueta y explore distintos temas (minimal, classic, dark, linedraw, light) etc.:
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+```{r}
+# Escriba aquí el código
+```
+
+### Ejercicio 3 {.unnumbered}
+
+Con los datos del ejercicio anterior, haga un gráfico de frecuencias relativas con geom_bar() en posición vertical:
+
+```{r}
+# Escriba aquí el código
+```
+
+### Ejercicio 4 {.unnumbered}
+
+Elabore un gráfico de barras con geom_bar() para presentar la variable "outcome" de `data_ebola`, agregarle aspectos estéticos como color, etiqueta y explore distintos temas (minimal, classic, dark, linedraw, light) etc.:
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+```{r}
+# Escriba aquí el código
+```
+
+### Ejercicio 5 {.unnumbered}
+
+Elabore un gráfico de barras con geom_bar() apiladas para presentar la variable "outcome" de `data_ebola`, agregarle aspectos estéticos como color, etiqueta y explore distintos temas (minimal, classic, dark, linedraw, light) etc.:
+
+___Tip: Usar gráfico anterior y modificarlo___
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+```{r}
+# Escriba aquí el código
+```
+
+### Ejercicio 6 {.unnumbered}
+
+A partir del gráfico de barras del ejercicio 4, elabore un gráfico que compare la frecuencia absoluta del outcome según genero.
+
+
+```{r}
+# Escriba aquí el código
+```
+
+
+# Introducción a las pruebas de hipótesis
+
+Para esta parte de la sesión, vamos a importar la base de datos con el nombre `datos_maca` (utilice la función `characterize()`)
+
+```{r}
+datos_maca <- import("maca_meno_fase1.dta") %>% 
+  characterize()
+```
+
+
+```{r}
+# Escriba aquí el código de exploración de datosº
+```
+
+## Pruebas de hipótesis de un grupo
+
+### Ejercicio 7  {.unnumbered}
+
+Pruebe la hipótesis de que el promedio de peso es diferente de 65 kg en la medición basal. Evalúe los supuestos:
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+```{r}
+# Escriba aquí el código
+```
+
+:::{.callout-warning collapse=false appearance='default' icon=true}
+## Precaución con pruebas de normalidad
+- Las pruebas de hipótesis de normalidad son de poco valor con n muy pequeño (poca potencia).
+- Del mismo modo, con n muy grandes (todo es NO normal a pesar de desviaciones muy pequeñas). 
+
+- Además con n muy grandes, prueba es robusta incluso frente a desviaciones moderados de normalidad. 
+- El uso de pruebas de hipótesis de supuestos en la práctica bioestadística actual no es recomendado. Su uso debe ser cuidadosamente evaluado y, en el caso se decida usarlo, como complemento a las evaluaciones gráficas.
+:::
+
+
+### Ejercicio 8  {.unnumbered}
+
+Pruebe la hipótesis de que la mediana de talla es diferente de 1.3 m en la medición basal:
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+```{r}
+# Escriba aquí el código
+```
+
+## Pruebas de hipótesis de dos grupos
+
+### Ejercicio 9  {.unnumbered}
+
+Evalúe si existe un efecto del tratamiento 1 vs el 2 (obvie el 3) sobre peso al final del estudio.
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+```{r}
+# Escriba aquí el código
+```
+
+## Ejercicio 10  {.unnumbered}
+
+Evalúe si existe un efecto del tratamiento 1 vs el 2 (obvie el 3) sobre estradiol al final del estudio.
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+```{r}
+# Escriba aquí el código
+```
+

@@ -1,0 +1,88 @@
+---
+title: "Cronograma"
+sidebar: false
+toc: false
+page-layout: full
+---
+
+::: {.schedule-page}
+
+¡Aquí encontrará la hora de ruta para el curso!
+
+- **`Contenido`** ({{< fa book-open-reader >}}): Esta página contiene el enlace a las clases, diapositivas y conferencias grabadas de la semana. Lea y mire estos **antes** de nuestra reunión sincrónica.
+- **`Taller`** ({{< fa laptop-code >}}): Esta página contiene el enlace a los talleres que se realizan clase por clase.
+- **`Tarea`** ({{< fa pen-ruler >}}): Esta página contiene las instrucciones para cada tarea. Los informes deben entregarse antes del *11:59 p. m.* del día programado según cronograma. Existe *unas horas de tolerancia con penalización* para *entrega retrasada* de las tareas encomendadas.
+
+```{r build-table, include=FALSE}
+library(tidyverse)
+library(glue)
+library(knitr)
+library(kableExtra)
+
+# withr::with_dir(here::here(), {
+#   targets::tar_load(schedule_file)
+# })
+
+schedule_raw <- read.csv("data/schedule.csv", sep = ";", encoding = "latin1", na.strings = c("", "NA"))
+
+schedule <- schedule_raw %>%
+  mutate(group = fct_inorder(group)) %>%
+  mutate(subgroup = fct_inorder(subgroup)) %>%
+  mutate(var_title = ifelse(!is.na(content),
+                            glue('<span class="content-title">{title}</span>'),
+                            glue('{title}'))) %>%
+  mutate(var_deadline = ifelse(!is.na(deadline),
+                               glue('&emsp;&emsp;<small>(enviar antes de {deadline})</small>'),
+                               "")) %>%
+  mutate(var_content = ifelse(!is.na(content),
+                              glue('<a href="{content}"><i class="fa-solid fa-book-open-reader fa-lg"></i></a>'),
+                              glue('<font color="#e9ecef"><i class="fa-solid fa-book-open-reader fa-lg"></i></font>'))) %>%
+  mutate(var_example = ifelse(!is.na(example),
+                              glue('<a href="{example}"><i class="fa-solid fa-laptop-code fa-lg"></i></a>'),
+                              glue('<font color="#e9ecef"><i class="fa-solid fa-laptop-code fa-lg"></i></font>'))) %>%
+  mutate(var_assignment = ifelse(!is.na(assignment),
+                                 glue('<a href="{assignment}"><i class="fa-solid fa-pen-ruler fa-lg"></i></a>'),
+                                 glue('<font color="#e9ecef"><i class="fa-solid fa-pen-ruler fa-lg"></i></font>'))) %>%
+  mutate(col_date = ifelse(is.na(date_end),
+                           glue('<strong>{format(date, format = "%d/%m/%y")}</strong>'),
+                           glue('<strong>{format(date, format = "%d/%m/%y")}</strong>–<strong>{format(date_end, format = "%d/%m/%y")}</strong>'))) %>%
+  mutate(col_title = glue('{var_title}{var_deadline}')) %>%
+  mutate(col_content = var_content,
+         col_example = var_example,
+         col_assignment = var_assignment)
+
+schedule_nested <- schedule %>%
+  select(group, subgroup,
+         ` ` = col_date, `Título` = col_title, `Teoría` = col_content,
+         Taller = col_example, Tarea = col_assignment) %>%
+  group_by(group) %>%
+  nest() %>%
+  mutate(subgroup_count = map(data, ~count(.x, subgroup)),
+         subgroup_index = map(subgroup_count, ~{
+           .x %>% pull(n) %>% set_names(.x$subgroup)
+         }))
+
+show_table <- function(group_id) {
+  # Add a heading
+  cat(as.character(paste("\n\n###", schedule_nested$group[[group_id]], "\n\n")))
+
+  # Make the table
+  tbl <- schedule_nested$data[[group_id]] %>%
+    select(-subgroup) %>%
+    kbl(escape = FALSE, align = "rlccc", table.attr = 'class="schedule-table"') %>%
+    kable_styling() %>%
+    column_spec(1, width = "20%", extra_css = "padding-right: 20px;") %>%
+    column_spec(2, width = "50%") %>%
+    column_spec(3:5, width = "10%") %>%
+    pack_rows(index = schedule_nested$subgroup_index[[group_id]],
+              label_row_css = "border-bottom: 2px solid #000000;")
+
+  cat(tbl)
+}
+```
+
+```{r show-table, echo=FALSE, results="asis"}
+walk(seq(1, nrow(schedule_nested)), ~show_table(.x))
+```
+
+:::

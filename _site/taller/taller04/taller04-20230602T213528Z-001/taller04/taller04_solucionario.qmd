@@ -1,0 +1,312 @@
+---
+title: "Taller N°4"
+---
+
+## Introducción
+
+En este taller continuaremos con manejo de bases de datos con R mediante tidyverse y labelled.
+
+Atajos de teclado sugeridos:
+
+1\) `ctrl + shift + m` -\> `%>%` (operador pipe)
+
+2\) `alt + -` -\> `<-` (operador de asignación, solo funciona dentro de los chunks. Probarlo fuera)
+
+## Cargar paquetes
+
+```{r}
+#| label: instalar y cargar paquetes
+#| include: false
+# Antes de cargar los siguientes paquetes, se deben instalar desde la pestaña "Packages".
+library(tidyverse)                   # Varias funciones de tidyverse (dplyr, ggplot2, etc.)
+library(rio)                         # Navaja suiza de la importación de datos
+library(janitor)                     # Funciones para manejo y limpieza de datos (p. ej, get_dupes)
+library(labelled)                    # Funciones para manipular etiquetas: set_variable_labels()
+library(skimr)                       # Análisis inicial de datos
+library(Hmisc)
+```
+
+## PARTE 1: Manejo de datos con R 2 - case_when() y {labelled}
+
+### Ejercicio 1
+
+Importar la base de datos "data_enaho2017_v2" y guardarla como "data_enaho". 
+
+```{r}
+data_enaho <- import("data_enaho2017_v2.csv")
+```
+
+### Ejercicio 2
+
+Asignar valores a las categorías de la variable region de la siguiente manera:
+
+Costa Norte --> 1
+Costa Centro --> 2
+Costa Sur  --> 3
+4 --> Sierra Norte
+5 --> Sierra Centro
+6 --> Sierra Sur
+7 --> Selva
+8 --> Lima Metropolitana
+
+```{r}
+names(table(data_enaho$region))
+```
+
+
+```{r}
+data_enaho %>% 
+  mutate(
+    region2 = case_when(region == "Costa Norte" ~ 1, 
+                        region == "Costa Centro" ~ 2, 
+                        region == "Costa Sur" ~ 3, 
+                        region == "Sierra Norte" ~ 4, 
+                        region == "Sierra Centro" ~ 5, 
+                        region == "Sierra Sur" ~ 6, 
+                        region == "Selva" ~ 7, 
+                        region == "Lima Metropolitana" ~ 8, 
+                        TRUE ~ as.numeric(NA))
+  ) -> data_enaho_clean
+
+glimpse(data_enaho_clean)
+```
+
+
+```{r}
+data_enaho %>% 
+  mutate(
+    region2 = case_when(region == "Costa Norte" ~ "1", 
+                        region == "Costa Centro" ~ "2", 
+                        region == "Costa Sur" ~ "3", 
+                        region == "Sierra Norte" ~ "4", 
+                        region == "Sierra Centro" ~ "5", 
+                        region == "Sierra Sur" ~ "6", 
+                        region == "Selva" ~ "7", 
+                        region == "Lima Metropolitana" ~ "8", 
+                        TRUE ~ as.character(NA))
+  ) -> data_enaho_clean
+
+glimpse(data_enaho_clean)
+```
+
+### Ejercicio 3
+
+Crear una variable llamada "region2" cuyas categorías depende del valor de region de la siguiente manera:
+
+- Costa norte, costa centro y costa sur = "0"
+
+- Sierra norte, sierra centro y sierra sur = "1"
+
+- Selva = "2"
+
+- Lima Metropolitana = "3"
+
+```{r}
+names(table(data_enaho$region))
+```
+
+- Forma válida, pero poco eficiente: 
+
+```{r}
+data_enaho %>% 
+  mutate(
+    region2 = case_when(
+      region == "Costa Norte" | region == "Costa Centro" | 
+        region == "Costa Sur" ~ "0", 
+      region == "Sierra Sur" | region == "Sierra Centro" | 
+        region == "Sierra Sur" ~ "1", 
+      region == "Selva" ~ "2", 
+      region == "Lima Metropolitana" ~ "3", 
+      TRUE ~ as.character(NA)
+    )
+   ) -> data_enaho_clean
+```
+
+- Forma válida y eficiente: 
+
+```{r}
+data_enaho %>% 
+  mutate(
+    region2 = case_when(
+      region %in% c("Costa Norte", "Costa Centro", "Costa Sur") ~ "0", 
+      region %in% c("Sierra Sur", "Sierra Centro", "Sierra Sur") ~ "1", 
+      region == "Selva" ~ "2", 
+      region == "Lima Metropolitana" ~ "3", 
+      TRUE ~ as.character(NA)
+    )
+   ) -> data_enaho_clean1
+```
+
+### Ejercicio 4
+
+Asignar etiquetas a la variable region2 creada en el ejercicio anterior de la siguiente manera:
+
+0 = Costa, excepto Lima metropolitana
+1 = Sierra
+2 = Selva
+3 = Lima metropolitana
+
+```{r}
+data_enaho_clean1 %>% 
+  mutate(region2 = case_when(region2 == "0" ~ "Costa, excepto Lima metropolitana", 
+                             region2 == "1" ~ "Sierra", 
+                             region2 == "2" ~ "Selva", 
+                             region2 == "3" ~ "Lima Metropolitana", 
+                             TRUE ~ as.character(NA))) -> data_enaho_clean2
+```
+
+### Ejercicio 5
+
+Crear la variable indice de masa corporal y llarmala imc. 
+
+```{r}
+data_enaho_clean2 %>% 
+  mutate(imc = (jefe_peso_g / 1000) / (jefe_talla_cm / 100)^2) -> data_enaho_clean2
+```
+
+
+### Ejerecicio 6
+
+Crear una nueva variable llamada "imc_cat" cuyas categorías dependan de los valores de imc de la siguiente manera:
+
+- imc < 25 = "normal
+- 25 <= imc < 30 = "sobrepeso"
+- imc>=30 = "obesidad"
+
+```{r}
+data_enaho_clean2 %>% 
+  mutate(imc_cat = case_when(imc < 25 ~ "Normal", 
+                            imc >= 25 & imc < 30 ~ "Sobrepeso", 
+                            imc >= 30 ~ "Obesidad", 
+                            TRUE ~ as.character(NA))) -> data_enaho_clean2
+```
+
+
+### Ejercicio 7
+
+Recodificar la variable tiene_internet de tal manera que no=0 y si=1 y asignar como etiquetas no y si respectivamente. 
+
+```{r}
+
+```
+
+### Ejercicio 8
+
+Asignar valores a las categorías de la variable hog_tip de la siguiente manera:
+
+1 --> Casa independiente
+2 --> Departamento en edificio
+3 --> Vivienda en quinta
+4 --> Vivienda en casa de vecindad (Callejón, solar o corralón)
+5 --> Choza o cabaña
+6 --> Vivienda improvisada
+7 --> Local no destinado para habitación humana
+8 --> Otro
+
+```{r}
+
+```
+
+### Ejercicio 9
+
+Asignar las siguientes de variable:
+
+hog_nhab -> "Numero de habitantes en el hogar"
+alumbrado_medio -> "Medio de alumbrado"
+
+```{r}
+data_enaho_clean2 %>% 
+  set_variable_labels(
+    hog_nhab = "Numero de habitantes en el hogar", 
+    alumbrado_medio = "Medio de alumbrado"
+  ) -> data_enaho_clean2
+```
+
+
+## PARTE 2: AID/AED, segunda parte
+
+### Ejercicio 6
+
+Inspeccione de manera global los datos.
+
+- Eche un vistazo:
+
+```{r}
+data_enaho_clean2 %>%  
+  glimpse()
+```
+
+- Vea un resumen general (superficial) de todos los datos:
+
+```{r}
+data_enaho_clean2 %>%  
+  skim()
+```
+
+- Vea una descripción más detallada de cada variable:
+
+```{r}
+data_enaho_clean2 %>%  
+  describe()
+```
+
+
+### Ejercicio 7
+
+Identificar si en la base de datos existen filas duplicadas
+
+```{r}
+data_enaho_clean2 %>%  
+  get_dupes()
+```
+
+### Ejercicio 8
+
+También verificar si existen duplicados de ID.
+
+```{r}
+data_enaho_clean2 %>%  
+  get_dupes(codperso)
+```
+
+### Ejercicio 9
+
+Identificar si en la base de datos existen valores perdidos y en qué variables
+
+```{r}
+library(visdat)
+data_enaho_clean2 %>%  
+  vis_dat()
+```
+
+```{r}
+library(visdat)
+data_enaho_clean2 %>%  
+  vis_miss()
+```
+
+### Ejercicio 10
+
+Evaluar si los datos perdidos de cada variable se relacionan o vinculan entre sí con el de otras variables
+
+```{r}
+library(VIM)
+data_enaho_clean2 %>% 
+  aggr(numbers = TRUE)
+```
+
+```{r}
+library(naniar)
+data_enaho_clean2 %>% 
+  gg_miss_upset()
+```
+
+## Para la casa
+
+### Ejercicio 1
+
+Recodificar la variable region2 de tal manera que 0 = Lima metropolitana Costa, 1 = Selva, 2 = Sierra y 3 = Costa, excl Lima metropolitana
+
+```{r}
+
+```

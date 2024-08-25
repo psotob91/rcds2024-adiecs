@@ -1,0 +1,32 @@
+author: Percy Soto-Becerra
+
+lang: es
+
+instructor:
+  name: Percy Soto-Becerra, M.D., M.Sc(c)
+  name_no_title: Percy Soto-Becerra
+  email: "psotob@inkastats-academy.com"
+  url: "https://github.com/psotob91"
+  twitter: psotob91
+  github: psotob91
+  office: "Híbrido (presencial y virtual asincrónico)"
+  contact_policy: >-
+    E-mail y Whatssap son las mejores formas de ponerse en contacto conmigo. Intentaré responder a todos los correos electrónicos relacionados con el curso y los mensajes dentro de las 24 horas (*de verdad*), pero también recuerde que la vida puede ser ajetreada y caótica para todos (¡incluido yo!), así que si no respondo enseguida, no te preocupes!
+
+course:
+  number: "RCDS-2024"
+  semester: "Edición Especial para ADIECS"
+  days: "Presencial: Martes | Virtual asincrónico: Toda la semana"
+  time: "Presencial: 6:15-8:15 pm"
+  location: "Google Meet"
+  dates: "27 de agosto al 01 de octubre, 2024"
+  github: "https://github.com/psotob91/rcds2024-adiecs"
+  copyright_year: "2024"
+
+university:
+  name: ADIECS
+  url: (proximamente)
+
+school:
+  name: Desarrollo Interno - ADIECS
+  url: (proximamente)

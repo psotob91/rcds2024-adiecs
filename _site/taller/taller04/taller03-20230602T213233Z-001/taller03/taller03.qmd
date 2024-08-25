@@ -1,0 +1,194 @@
+---
+title: "Taller N°3"
+format: html
+editor: source
+---
+
+## Introducción
+
+En este taller revisaremos aspectos básicos sobre importación y exportación de bases de datos en formato .dta (Stata), .xlsx (Excel), .csv y .sav (SPSS) mediante el paquete `rio`. Además, practicaremos exploración y manejo inicial de datos con tidyverse.
+
+Atajos de teclado sugeridos:
+
+1\) `ctrl + shift + m` -\> `%>%` (operador pipe)
+
+2\) `alt + -` -\> `<-` (operador de asignación, solo funciona dentro de los chunks. Probarlo fuera)
+
+## Cargar paquetes
+
+```{r}
+#| label: instalar y cargar paquetes
+#| include: false
+# Antes de cargar los siguientes paquetes, se deben instalar desde la pestaña "Packages".
+library(tidyverse)                   # Varias funciones de tidyverse (dplyr, ggplot2, etc.)
+library(rio)                         # Navaja suiza de la importación de datos
+library(janitor)                     # Funciones para manejo y limpieza de datos (p. ej, get_dupes)
+library(labelled)                    # Funciones para manipular etiquetas: set_variable_labels()
+library(skimr)                       # Análisis inicial de datos
+```
+
+## PRIMERA PARTE: Importar/exportar bases de datos con `{rio}`
+
+### Ejercicio 1
+
+Importar la base de datos "data_enaho2017_v2" y guardarla como "data_ejm1". 
+
+```{r}
+
+```
+
+### Ejercicio 2
+
+Importar la base de datos "data_ejm" y guardarla como "data_ejm2". 
+
+```{r}
+
+```
+
+### Ejercicio 3
+
+Importar la base de datos "data_ejercicio" y guardarla como "data_ejm3". Usar la funcion characterize para conservar metadatos.
+
+```{r}
+
+```
+
+### Ejercicio 4
+
+Importar la base de datos "data_SPSS" y guardarla como "data_ejm4". 
+
+```{r}
+
+```
+
+### Ejercicio 5
+
+Exportar con el mismo nombre pero en formato *.csv*, *.sav*, *.xlsx* y *.dta* todas las bases importadas, respectivamente. 
+
+```{r}
+
+```
+
+## SEGUNDA PARTE: Principios de manejo de bases de datos con R
+
+Para esta parte trabajaremos con la base de datos "data_ejm1" que contiene datos de la ENAHO 2017. 
+
+### Ejercicio 6
+
+En la data, renombrar manualmente las siguientes variables y guardelas en un objeto llamado "data_clean":
+- codperso --> id
+- tiene_agua_potable --> agua_pot
+- acceso_agua --> agua_acc
+- cuantas_horas_si_agua --> agua_sihoras
+- procedencia_agua --> agua_proc
+
+
+```{r}
+
+```
+
+### Ejercicio 7
+
+En la data_clean, renombrar manualmente las siguientes variables:
+
+- necesid_basicas_insatisf_vivie --> nbi_vivie
+- necesid_basicas_insatist_hacin --> nbi_hacin
+- necesid_basicas_insatisf_sshh --> nbi_sshh
+- necesid_basicas_insatisf_noesc  --> nbi_noesc
+- necesid_basicas_insatisf_depec --> nbi_depec
+
+```{r}
+
+```
+
+### Ejercicio 8
+
+En data_clean, colocar la variable "id" al inicio de todas las variables 
+
+```{r}
+
+```
+
+
+### Ejercicio 9
+
+En data_clean, cree una nueva variable llamada "año" que contenga el valor 2017 para todas las observaciones
+
+```{r}
+
+```
+
+### Ejercicio 10
+
+En data_clean, cree una variable llamada "conectividad" que sea un duplicado de la variable "tiene_internet"
+
+```{r}
+
+```
+
+### Ejercicio 11
+
+En data_clean, crear una variable llamada "peso_kg" que sea igual a jefe_peso_g/1000. Además, crear una variable "talla_m" que sea igual a jefe_talla_cm/100
+
+```{r}
+
+```
+
+### Ejercicio 12
+
+En data_clean, seleccionar solo las variables que inicien con "nbi"
+
+```{r}
+
+```
+
+
+### Ejercicio 13
+
+En data_clean, recodificar todas las variables que inicien con "nbi", donde No = 0 y Si = 1
+
+```{r}
+
+```
+
+### Ejercicio 14
+
+En data_clean, recodificar todas las variables que inicien con "alum", donde los No ahora sean Sí, y viceversa
+
+```{r}
+
+```
+
+## TERCERA PARTE: Tidyselectores
+
+### Ejercicio 15
+
+En data_clean, seleccionar solo las variables que inicien con "agua" o "nbi"
+
+```{r}
+
+```
+
+### Ejercicio 16
+
+Seleccionar las variables que inician codperso, region y las variables que inician con "agua" en este orden: codperso, region, agua_pot, agua_acc, agua_proc, agua_sihoras 
+
+```{r}
+
+```
+
+## CUARTA PARTE: Análisis Inicial de DAtos
+
+### Ejercicio 17
+
+Explore la base de datos con las funciones glimpse() y skim().
+
+## Para la casa
+
+### Ejercicio 1
+
+Importar la base de datos "data_enaho2019" y usar characterize() para conservar metadatos. Explorar los datos y renderizar el código.
+
+```{r}
+
+```

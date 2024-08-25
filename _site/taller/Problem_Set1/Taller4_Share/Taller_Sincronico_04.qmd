@@ -1,0 +1,114 @@
+---
+title: "Taller RCDS - Semana 4: Réplica de Análisis"
+author: "Percy Soto Becerra"
+---
+
+## Introducción
+
+Analizaremos los datos del artículo titulado "Comorbid Depression and Heart Failure: A
+Community Cohort Study" y publicado en la revista Plos One (doi: <10.1371/journal.pone.0158570>). 
+
+La réplica en este taller será parcial, dado que aún no contamos con todas las herramientas y solo nos centraremos en análisis descriptivo.
+
+## Cargar paquetes
+
+```{r}
+library(tidyverse)     # Varias funciones de tidyverse (dplyr, ggplot2, etc.)
+library(rio)           # Navaja suiza de la importación de datos
+library(janitor)       # Funciones para manejo y limpieza de datos (p. ej, get_dupes)
+library(labelled)      # Funciones para manipular etiquetas
+library(skimr)         # Análisis inicial de datos
+library(gtsummary)     # Tablas reproducibles
+library(survival)      # Análisis de supervivencia
+library(ggsurvfit)     # Gráficos de análisis de supervivencia
+```
+
+## Importar datos
+
+```{r}
+datos_raw <- import("pone.0158570.s002.xlsx")
+```
+
+## Análisis Inicial de Datos
+
+- Vistazo a los datos:
+
+```{r}
+datos_raw %>% 
+  glimpse()
+```
+
+- Identificar duplicados de toda la fila:
+
+```{r}
+datos_raw %>% 
+  get_dupes()
+```
+
+- Identificar duplicados de id:
+
+```{r}
+datos_raw %>% 
+  get_dupes(id)
+```
+
+- Análisis descriptivo general de todos los datos:
+
+```{r}
+skim(datos_raw)
+```
+
+## Limpieza de datos
+
+- En un solo pipeline, haremos lo siguiente:
+
+    + Renombrar variables en estilo tidy
+    + Etiquetar valores de variables categóricas.
+    + Etiquetar a variables de acuerdo a como se presentan en tabla 1.
+
+```{r}
+datos_raw %>% 
+  rename(_____) %>% 
+  mutate(_____) %>% 
+  mutate(_____) %>% 
+  set_variable_labels(_____) -> datos_tidy
+
+datos_tidy
+```
+
+**Notas:** 
+
+- HF = Heart failure
+
+- Depresión no está disponible en la base de datos. De acuerdo con el artículo, el punto de corte fue de PHQ9 > 5 para *presencia de síntomas depresivos*.
+
+## Crear tabla reproducible
+
+```{r}
+datos_tidy %>% 
+  select(age, male, sbp, e_gfr, ej_frac, sod, el_bnp_nt, et_hf, dm) %>% 
+  tbl_summary(_____)
+```
+
+
+## Guardar tabla reproducible
+
+```{r}
+
+```
+
+## Crear gráfico de supervivencia
+
+### KM univariado
+
+```{r}
+
+```
+
+### KM bivariado
+
+```{r}
+
+```
+
+

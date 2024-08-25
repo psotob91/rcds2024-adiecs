@@ -1,0 +1,49 @@
+---
+title: "Fundamentos de R para Ciencia de Datos en Salud"
+subtitle: "Aprende con ADIECS a utilizar todo el poder de R para la Ciencia de Datos"
+details: |
+  RCDS-2024-1 • ADIECS <br>Virtual & Sincrónico
+sidebar: false
+toc: false
+page-layout: full
+format:
+  html:
+    template-partials:
+      - html/home/title-block.html
+course-logo: logo.jpg
+---
+
+::: {.home}
+
+::: {.grid .course-details}
+
+::: {.g-col-4}
+### Instructor
+
+- {{< fa user >}} &nbsp; [{{< var instructor.name >}}]({{< var instructor.url >}})
+- {{< fa university >}} &nbsp; {{< var instructor.office >}}
+- {{< fa envelope >}} &nbsp; [{{< var instructor.email >}}]({{< var instructor.email >}})
+- {{< fa brands twitter >}} &nbsp; [{{< var instructor.twitter >}}](https://www.twitter.com/{{< var instructor.twitter >}})
+- {{< fa calendar-check >}} &nbsp; [Agenda una reunión virtual]({{< var instructor.appointment_url >}})
+:::
+
+::: {.g-col-4}
+### Detalles del curso
+
+- {{< fa calendar >}} &nbsp; {{< var course.days >}}
+- {{< fa calendar-alt >}} &nbsp; {{< var course.dates >}}
+- {{< fa clock >}} &nbsp; {{< var course.time >}}
+- {{< fa location-dot >}} &nbsp; {{< var course.location >}}
+:::
+
+::: {.g-col-4 .contact-policy}
+### Contáctame
+
+{{< var instructor.contact_policy >}}
+:::
+
+:::
+
+![](files/img/flowchart_logo_sin_fondo.jpg)
+
+:::

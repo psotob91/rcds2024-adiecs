@@ -1,0 +1,331 @@
+---
+title: "Taller 03"
+author: "Percy Soto Becerra"
+format: 
+  html: 
+    df-print: paged
+    theme: journal
+execute: 
+  warning: false
+---
+
+## Introducción
+
+En este tercer taller del curso revisaremos las funciones básicas del paquete `Dplyr` de `Tidyverse` para manejo y preprocesamiento de datos con R. 
+
+## Secciones previas
+
+En las secciones previas no hay necesidad de usar es-ta plantilla.
+
+## Cargar paquetes
+
+```{r}
+library(tidyverse)
+library(labelled)
+library(palmerpenguins)
+```
+
+
+## Descargar base de datos
+
+```{r}
+data(penguins)
+```
+
+```{r}
+glimpse(penguins)
+```
+
+
+## Ejercicios con {dplyr}: Filtrar filas
+
+### Ejercicio 1 {.unnumbered}
+
+Filtrar la data para mostrar únicamente a los pingüinos de la especie "Chinstrap". Plantee una solucion sin pipe y otra con pipe (Renderizar el chunk de código).
+
+- Sin pipe:
+
+```{r}
+filter(penguins, species == "Chinstrap")
+```
+
+Tenemos 2 pipes:
+
+    - Pipe de tidyverse (paquete magritrr) %>%
+    - Pipe nativo (R base) |> 
+
+  Se puede usar CTL + SHIFT + M para obtenerlo.
+
+```{r}
+penguis_chinst <- penguins |> 
+  filter(species == "Chinstrap")
+
+penguis_chinst
+```
+
+### Ejercicio 2 {.unnumbered}
+
+Filtrar la data para mostrar únicamente a los pingüinos de las especies "Chinstrap" y "Gentoo". Plantee una solucion sin pipe y otra con pipe (Renderizar el chunk de código). (Renderizar el chunk de código)
+
+```{r}
+penguins %>% 
+  filter(species == "Chinstrap" | species == "Gento")
+```
+
+```{r}
+penguins %>% 
+  filter(species %in% c("Chinstrap", "Gento"))
+```
+
+### Ejercicio 3 {.unnumbered}
+
+Filtrar la data para mostrar únicamente a los pingüinos de la especie "Adelie" que sean de la isla "Dream". Plantee una solucion sin pipe y otra con pipe (Renderizar el chunk de código). (Renderizar el chunk de código)
+
+```{r}
+penguins %>%
+  filter(species == "Adelie", island == "Dream")
+```
+
+```{r}
+penguins %>%
+  filter(species == "Adelie" & island == "Dream")
+```
+
+### Ejercicio 4 {.unnumbered}
+
+Ordenar a todos los pinguinos segun su longitud de pico de `menor a mayor` y de `mayor a menor`. Guardar los datos como `penguins_ascend` y `penguins_descend`, respectivamente.
+
+```{r}
+penguins_ascend <- penguins |> 
+  arrange(bill_length_mm)
+
+penguins_ascend 
+```
+
+```{r}
+penguins_descend <- penguins |> 
+  arrange(desc(bill_length_mm))
+
+penguins_descend
+```
+
+
+### Ejercicio 5 {.unnumbered}
+
+Excluir a todos los pingüinos de la especie "Chinstrap" de la data (Renderizar el chunk de código)
+
+```{r}
+penguins |> 
+  filter(species != "Chinstrap")
+```
+
+
+
+### Ejercicio 6 {.unnumbered}
+
+Filtrar los datos para mostrar únicamente a los pingüinos cuya aleta tenga una longitud mayor a 200 mm (Renderizar el chunk de código)
+
+```{r}
+penguins %>% 
+  filter(flipper_length_mm >= 200)
+```
+
+
+### Ejercicio 7 {.unnumbered}
+
+Filtrar la data para mostrar únicamente a los pingüinos de la especie "Adelie" cuya cresta dorsal del pico sea mayor a 40mm (Renderizar el chunk de código)
+
+
+
+### Ejercicio 8 {.unnumbered}
+
+Filtrar la data para mostrar únicamente a los pingüinos cuya masa corporal sea, como máximo, 2900g. Luego, reordenar los datos segun longitud de pico, de menor a mayor. Hacerlo con y sin pipe. Discutir que ventajas proporciona el pipe en este contexto (Renderizar el chunk de código):
+
+```{r}
+penguins |> 
+  filter(body_mass_g <= 2900) -> base1
+
+base1 |> 
+  arrange(bill_length_mm)
+```
+
+```{r}
+penguins |> 
+  filter(body_mass_g <= 2900) |> 
+  arrange(bill_length_mm)
+```
+
+
+### Ejercicio 9 {.unnumbered}
+
+Se desea filtrar a todos pingüinos Gentoo con pico de mas de 15.5 mm de profundidad. Escriba el código para tal tarea. (Renderizar el chunk de código)
+
+
+### Ejercicio 10 {.unnumbered}
+
+Filtre a los pinguinos machos que fueron registrados en las islas "Biscoe" y "Dream". (Renderizar el chunk de código)
+
+
+### Ejercicio 11 {.unnumbered}
+
+Filter la data para mostrar a los pinguinos Adelie con una cresta dorsal de pico menor a 35mm que no sean machos. (Renderizar el chunk de código)
+
+
+## Ejercicios con {dplyr}: Seleccionar columnas
+
+### Ejercicio 12 {.unnumbered}
+
+Seleccione las variables species e island. Imprima pero no guarde. (Renderizar el chunk de código)
+
+```{r}
+penguins |> 
+  select(species, island)
+```
+
+### Ejercicio 13 {.unnumbered}
+
+Eliminar las variables sex e island. Imprima y guarde con el nombre de penguins_excluido (Renderizar el chunk de código)
+
+
+```{r}
+penguins |> 
+  select(-sex, -island) -> penguins_excluido
+
+penguins_excluido
+```
+
+
+```{r}
+penguins |> 
+  select(-c(sex, island)) -> penguins_excluido
+
+penguins_excluido
+```
+
+### Ejercicio 14 {.unnumbered}
+
+Seleccione las variables que contengan "length" en el nombre (Renderizar el chunk de código)
+
+```{r}
+penguins |> 
+  select(bill_length_mm, flipper_length_mm)
+```
+
+```{r}
+penguins |> 
+  select(contains("length"))
+```
+
+
+### Ejercicio 15 {.unnumbered}
+
+Seleccione las variables que contengan "length" en el nombre o inicien con "bill" (Renderizar el chunk de código)
+
+```{r}
+penguins |> 
+  select(starts_with("bill"), contains("length"))
+```
+
+
+
+### Ejercicio 16 {.unnumbered}
+
+Seleccione las variables desde especies hasta masa corporal usando el operador ":" (Renderizar el chunk de código)
+
+```{r}
+penguins |> 
+  select(species:body_mass_g)
+```
+
+
+
+### Ejercicio 17 {.unnumbered}
+
+Excluya la variable isla de la data (Renderizar el chunk de código)
+
+
+### Ejercicio 18 {.unnumbered}
+
+Seleccione las variables que inicien con "bill" (Renderizar el chunk de código)
+
+
+
+### Ejercicio 19 {.unnumbered}
+
+Seleccione el año, isla y especie de la data (Renderizar el chunk de código)
+
+
+## Ejercicios con {dplyr}: Mutar (crear o modificar) columnas
+
+### Ejercicio 20 {.unnumbered}
+
+Cree una variable que contenga a la masa corporal pero en kilogramos, llamela "body_mass_kg" y otra variable llamada "flipper_length_m" que contenga a la longitud de la aleta pero en metros (Renderizar el chunk de código)
+
+```{r}
+penguins %>% 
+  mutate(body_mass_kg = body_mass_g / 1000) |> 
+  mutate(flipper_length_m = flipper_length_mm / 1000)
+```
+
+```{r}
+penguins %>% 
+  mutate(body_mass_kg = body_mass_g / 1000, 
+         flipper_length_m = flipper_length_mm / 1000)
+```
+
+### Ejercicio 21 {.unnumbered}
+
+Seleccione a los pinguinos Gentoo y mantenga la isla de la que proviene, el sexo y la masa corporal (Renderizar el chunk de código)
+
+
+### Ejercicio 22 {.unnumbered}
+
+Seleccione a los pinguinos machos con longitud de pico mayor a 200 mm y mantenga a las variables que terminen con "mm" (Renderizar el chunk de código)
+
+
+
+## Ejercicios con {dplyr}: renombrar columnas
+
+### Ejercicio 23 {.unnumbered}
+
+Renombre la variable sex por sexo y body_mass_g por img. Guarda el data frame como penguis2 (Renderizar el chunk de código)
+
+```{r}
+penguins |> 
+  rename(sexo = sex) |> 
+  rename(img = body_mass_g)
+```
+
+
+```{r}
+penguins2 <- penguins |> 
+  rename(sexo = sex, 
+         img = body_mass_g) 
+penguins2
+```
+
+## Ejercicios con {labelled}: Metadatos de nombre de variable
+
+### Ejercicio 24 {.unnumbered}
+
+Sobre penguins2, etiquete las variables con sus respectivas etiquetas. Guardelo con el mismo nombre penguins2 para actualizar este data frame (Renderizar el chunk de código)
+
+| Variable | Etiqueta            |
+|----------|---------------------|
+| species  | Especie de pingüino |
+| island   | Isla especifica     |
+| sexo     | Sexo                |
+| year     | Año                 |
+
+
+
+Luego, haga un `View(penguins2)` para reconocer las etiquetas agregadas. Compare con `View(penguins)`¿En qué se diferencian `penguins` de `penguins2`?
+
+```{r}
+penguins2 <- penguins2 |> 
+  set_variable_labels(species = "Especie de pingüino", 
+                      island = "Isla especifica", 
+                      sexo = "Sexo", 
+                      year = "Año")
+```
+

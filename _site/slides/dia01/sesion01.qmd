@@ -1,0 +1,685 @@
+---
+format: 
+  revealjs: 
+    self-contained: true
+    theme: [default, theme/theme.scss]
+    footer: "Fundamentos R para Ciencia de Datos en Salud - Sesión 1"
+    logo: img/logo.png
+    transition: convex
+    background-transition: zoom
+    incremental: false
+    slide-number: c/t
+    preview-links: true
+    height: 900
+    width: 1600
+    # chalkboard: true
+    code-block-background: true
+    code-block-border-left: "#31BAE9"
+    highlight-style: ayu-dark
+    echo: true
+    multiplex: true
+    touch: true
+    auto-stretch: true
+    link-external-icon: true
+    link-external-newwindow: true
+    self-contained-math: true
+    
+from: markdown+emoji
+execute:
+  echo: true
+filters:
+  - reveal-auto-agenda
+auto-agenda:
+  bullets: numbered
+  heading: Agenda
+---
+
+\
+
+\
+
+<h1>Sesión 1</h1>
+
+<h2>[Curso: Fundamentos R para Ciencia de Datos en Salud]{.plo}</h2>
+
+<hr>
+
+<h3>[Percy Soto-Becerra, M.D., M.Sc(c)]{.negro}</h3>
+
+<h4>[InkaStats Academy | Latin Data Science Solutions S.A.C.]{.negro}</h4>
+
+`r fontawesome::fa("github", "black")` &nbsp; [https://github.com/psotob91](https://github.com/psotob91)
+
+![](img/logo_curso.png){.absolute top=340 left=980 width=35%}
+
+
+# Introducción a la Estadística y Ciencia de Datos
+
+```{r}
+#| echo: false
+#| output: false
+
+# Removing all objects including loaded libraries
+rm(list = ls(all = TRUE))
+gc()
+
+# Installing and loading packages
+if (!require("pacman")) {
+  install.packages("pacman")
+}
+
+pacman::p_unload("all") # Unloading all package except base
+
+pacman::p_load(tidyverse, 
+               tibble, 
+               pander, 
+               gt, 
+               kableExtra) # Loading packages
+```
+
+## Datos y mundo actual
+<hr>
+
+\
+
+::: r-stack
+![](img/fda-realworld.png){.fragment}
+
+![](img/nature-bigdata.png){.fragment}
+
+![](img/jama-machine.png){.fragment}
+
+![](img/cleveland-ibm.png){.fragment}
+:::
+
+## La crisis de replicabilidad de la Ciencia 
+<hr>
+
+<h2>(incluyendo Ciencias Médicas)</h2>
+
+![](img/replication.png)
+
+## Ciencia de Datos
+<hr>
+
+<h3>[En general]{.verde-h3}</h3>
+
+-   La Ciencia de Datos es una disciplina que se dedica al estudio y aplicación de técnicas diversas (estadística, informática, etc.) para convertir datos crudos en información y conocimiento.
+
+-   En este curso aprenderemos a hacer esto de manera ordenada.
+
+-   Este es un curso introductorio con énfasis en pensamiento estadístico.
+
+. . .
+
+<h3>[En salud]{.verde-h3}</h3>
+
+> Ciencia de Datos en Salud (Health Data Science en inglés) es la ciencia y el arte de generar soluciones basadas en datos a través de la comprensión de problemas de salud complejos del mundo real, empleando el pensamiento crítico y el análisis para derivar conocimiento de los (grandes) datos.[^1]
+
+[^1]: <https://cbdrh.med.unsw.edu.au/what-health-data-science>
+
+# Análisis de datos reproducible
+
+## Checklist de reproducibilidad
+<hr>
+
+> ¿Qué significa que un análisis de datos es "reproducible"?
+
+<h3>[A corto plazo]{.verde-h3}</h3>
+
+-   ¿Las tablas y figuras se pueden reproducir del código y datos?
+
+-   ¿El código realmenet hace lo que quieres que haga?
+
+-   ¿Es claro por qué el código hace lo que hace?
+
+<h3>[A largo plazo]{.verde-h3}</h3>
+
+-   ¿Puede el código ser usado con otros datos?
+
+-   ¿Puedes extender el código a otros usos?
+
+## Flujograma de ciencia de datos
+<hr>
+
+::: r-stack
+![](img/data-science-cycle.001.png){.fragment}
+
+![](img/data-science-cycle.002.png){.fragment}
+
+![](img/data-science-cycle.003.png){.fragment}
+
+![](img/data-science-cycle.004.png){.fragment}
+
+![](img/data-science-cycle.005.png){.fragment}
+
+![](img/data-science-cycle.006.png){.fragment}
+
+![](img/data-science-cycle.007.png){.fragment}
+
+![](img/data-science-cycle.008.png){.fragment}
+
+![](img/data-science-cycle.009.png){.fragment}
+:::
+
+## Kit de herramientas para reproducibilidad
+<hr>
+
+\ 
+
+. . .
+
+-   Flujo de trabajo reproducible
+
+    -   Scriptabilidad `r fontawesome::fa("arrow-right")` {{< fa brands r-project >}}
+
+    -   Programación literaria (código, narrativa, salida en un solo lugar) `r fontawesome::fa("arrow-right")` Markdown {{< fa brands markdown >}}
+
+    -   Versión de control `r fontawesome::fa("arrow-right")` Git / Github {{< fa brands github >}}
+
+. . .
+
+-   En este curso nos enfocaremos en `Scriptabilidad` y `Programación literaria`.
+
+# R y RStudio
+
+## R y RStudio
+<hr>
+
+\
+
+:::: {.columns}
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out.width: 30%
+knitr::include_graphics("img/R.png")
+```
+
+- [R](https://www.r-project.org/) es un `lenguaje de programación` estadística de código abierto.
+
+- R también es un entorno para computación estadística y gráfica.
+
+- Está potenciado con `paquetes`.
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out.width: 70%
+knitr::include_graphics("img/RStudio.png")
+```
+
+
+- [RStudio](https://www.rstudio.com/) es una interfaz para R denominada `IDE` (*integrated development environment*).
+
+- RStudio no es requerido para programar con R, pero es uno de los IDE más comúnmente utilizados.
+
+- Actualmente convirtiéndose en [posit](https://posit.co/).
+
+:::
+::::
+
+## El problema de R: su aspecto
+<hr>
+
+![](img/Rconsola.png){fig-align="center"}
+
+## RStudio: el chasis del carro
+<hr>
+
+![](img/RStudioConsola.png){fig-align="center"}
+
+## En resumen, R y RStudio
+<hr>
+
+\
+
+![](img/ryrstudio.png){fig-align="center"}
+
+## En resumen, R y RStudio
+<hr>
+
+![](img/rvsrstudio.png){fig-align="center"}
+
+
+## Jerga básica de R
+<hr>
+
+>`Objeto:` Cualquier abstracción en R. Los datos son objetos en R.
+
+>`Función:` Código capaz de realizar una acción específica con los datos. También es un objeto: un objeto que actúa sobre otros objetos.
+
+>`Paquetes:` *Library* en inglés. Conjunto de funciones que realizan acciones a menudo relacionadas en R.
+
+>`Paquetes de R base:` Conjunto de paquetes instalados por defecto en R.
+  
+>`Paquetes de R tidy:` Conjunto de paquetes que siguen el estilo tidy en R.
+
+## Paquetes de R
+<hr>
+
+\ 
+
+::: columns
+::: {.column width="60%"}
+- Los `paquetes` son las `unidades fundamentales` del código reproducible en R.
+
+- Al 13 de junio de 2022, hay `18 560 paquetes` disponibles.
+
+- ¡Trabajaremos con un pequeño (pero importante) conjunto de estos!
+
+- Cada paquete contiene una o más `funciones` que ejecutan tareas.
+
+- ¡Hay paquetes de todo tipo y para todos los gustos!
+:::
+
+:::{.column width="40%"}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out.width: 100%
+knitr::include_graphics("img/r-packages.png")
+```
+:::
+:::
+
+
+## R y sus paquetes
+<hr>
+
+\
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out.width: 200%
+knitr::include_graphics("img/r-rpackages.png")
+```
+
+::: aside
+<br> <FONT size='4'>*Tomado de Sesion 2. Introducción a R y RStudio. Valle Andree y Loyola Steev.* \[[Enlace](https://docs.google.com/presentation/d/1tadIMMxP6oy2JaXIBGIhWw2CNUXT9rNIbXbdBjP3Nrs/edit#slide=id.p)\]</FONT>
+:::
+
+## En resumen: R, RStudio y sus paquetes
+<hr>
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out.width: 90%
+knitr::include_graphics("img/r-rstudio-paq.png")
+```
+
+::: aside
+<br> <FONT size='4'>*Tomado de Sesion 2. Introducción a R y RStudio. Valle Andree y Loyola Steev.* \[[Enlace](https://docs.google.com/presentation/d/1tadIMMxP6oy2JaXIBGIhWw2CNUXT9rNIbXbdBjP3Nrs/edit#slide=id.p)\]</FONT>
+:::
+
+## tidyverse
+<hr>
+
+::: columns
+::: {.column width="40%"}
+
+\ \ 
+
+```{r}
+#| echo: false
+#| out.width: 99%
+knitr::include_graphics("img/tidyverse.png")
+```
+
+:::
+
+:::{.column width="60%"}
+
+<center><h2>[tidyverse.org](https://www.tidyverse.org/)</h2></center>
+
+- `Tidyverse` es una `colección grande de paquetes de R` diseñados para hacer ciencia de datos: Es un `metapaquete`.
+
+    - Todos los paquetes comparten una filosofía subyacente y una gramática común.
+
+- R, como todo lenguaje, tiene varios dialectos. 
+
+    - Dos dialectos predominan: `R base` y `R tidy`.
+
+    - `R tidy` se basa en la filosofía de tidyverse. 
+
+- Usaremos este enfoque predominantemente y `R base` cuando no tenga remplazo o sea más sencillo usarlo.
+
+:::
+:::
+
+# Aspectos elementales de R y Rstudio
+
+## Primero instale R, R Studio y R tools
+<hr>
+
+- Si aún no ha instalado R y RStudio, revise el tutorial de instalación de R que hemos preparado para el curso: 
+
+    + [Enlace aquí](https://rcds3.inkastats.es/resource/manual_installr/install).
+
+- Pause el video, instale y vuelva cuando todo esté listo.
+
+```{r}
+#| echo: false
+#| fig-align: center
+knitr::include_graphics("img/install-r.gif")
+```
+
+## `r fontawesome::fa("laptop-code", "white")` Nuestro turno {background-color="#000000"}
+
+<hr>
+
+\
+
+-   Ingrese al siguiente enlace <https://cloud.r-project.org/> y descargue R.
+
+- Ingrese al siguiente enlace <https://www.rstudio.com/products/rstudio/download/#download> y descargue RStudio.
+
+- ¿Es usuario de MS Windows? 
+
+    + Ingrese al siguiente enlace <https://cloud.r-project.org/> y descargue RTools.
+
+- ¿Es usuario de Mac o Linux? 
+
+    + No haga nada más.
+
+\
+\
+\
+
+```{r}
+#| echo: false
+library(countdown)
+countdown_timer <- function(
+    minutes = 1, 
+    play_sound = TRUE, 
+    font_size = "2em", 
+    ...
+) {
+  countdown(
+    minutes = minutes,
+    # Fanfare when it's over
+    play_sound = play_sound,
+    # Set timer theme to match solarized colors
+    color_border              = "#404041",
+    color_text                = "white",
+    color_background = "#000000",
+    color_running_background  = "#72994E",
+    color_running_text        = "white",
+    color_finished_background = "#EE6331",
+    color_finished_text       = "white",
+    font_size = font_size,
+    ...
+  )
+}
+
+```
+
+```{R}
+#| echo: false
+countdown_timer(10)
+```
+
+## Ventanas de RStudio
+<hr>
+
+\
+
+![](img/rstudio-partes.png){fig-align="center"}
+
+
+## Código en scripts de R
+
+<hr>
+
+::: columns
+::: {.column width="70%"}
+```{r}
+#| echo: false
+#| fig-align: center
+#| out.width: 90%
+knitr::include_graphics("img/r-script.png")
+```
+
+
+:::
+
+::: {.column width="30%"}
+
+\
+
+- El `código` se escribe en el `Script`, pero no se imprime.
+
+- Los `resultados` se imprimen en la `consola`.
+
+- Aunque es útil usar la consola, es preferible usar herramientas de programación literaria: 
+
+    + RMarkdown o Quarto.
+
+:::
+:::
+
+## R Markdown y Quarto
+<hr>
+
+\ 
+
+:::: columns
+::: {.column width="45%"}
+
+<center><h2>[rmarkdown.rstudio.com](https://rmarkdown.rstudio.com/)</h2></center>
+
+\ 
+
+- `rmarkdown` y `quarto` permiten a los usuarios de R escribir su código y prosa en documentos computacionales reproducibles. 
+
+- Por lo general, nos referimos a documentos R Markdown con la extensión `.Rmd` y a los documentos Quarto con la extensión `.qmd`.
+
+:::
+
+::: {.column width="55%"}
+
+\ 
+
+```{r}
+#| echo: false
+#| out.width: 100%
+#| fig-align: center
+knitr::include_graphics("img/rmarkdown.png")
+```
+
+:::
+
+::::
+
+## Archivo R Markdown (.Rmd) a PDF
+<hr>
+
+![](img/rmarkdown-pdf.png)
+
+## R Markdown evolucionó a Quarto
+<hr>
+
+::: columns
+::: {.column width="70%"}
+::: r-stack
+![](img/quarto.png)
+
+![](img/quarto2.png){.fragment}
+:::
+:::
+
+::: {.column width="30%"}
+-   Recientemente, RStudio presentó Quarto: <https://quarto.org/>.
+-   Quarto es la `versión mejorada` de RMarkdwon.
+-   Si usaste RMarkdown, puedes ejecutar tus códigos en Quarto sin ningún problema.
+-   Quarto permite ejecutar código Python, Julia y Observable.
+:::
+:::
+
+## R Markdown y Quarto son muy flexibles
+<hr>
+
+\ 
+
+-   Herramientas de `programación literaria`: 
+
+    +   Legibles para la computadora y para el ser humano.
+    
+-   Útiles para alcanzar `reproducibilidad`.
+
+-   También muy útiles para diversas actividades académicas: 
+
+    +   Presentaciones académicas
+    
+    +   Artículos científicos
+    
+    +   Diseño de blogs, web u otra herramienta de difusión de conocimiento. 
+
+## Quarto permite crear artículos
+<hr>
+
+![](img/quarto-articulos.png)
+
+
+## Quarto permite crear presentaciones
+<hr>
+
+<h3>[De hecho, los slides de este curso están hechas en Quarto]{.verde-h3}</h3>
+
+![](img/quarto-presentaciones.png)
+
+## Quarto permite crear Website
+<hr>
+
+<h3>[¡Sí!, la web de este curso también está hecha en Quarto]{.verde-h3}</h3>
+
+![](img/quarto-website.png)
+
+## Quarto permite crear Libros
+<hr>
+
+<h3>[Quizás para una futura edición del curso]{.verde-h3}</h3>
+
+![](img/quarto-website.png)
+
+## Programación Literaria
+<hr>
+
+![](img/prog-literaria.png){fig-align="center"}
+
+::: aside
+<FONT size='4'>*Tomado de Sesion 2. Introducción a R y RStudio. Valle Andree y Loyola Steev.* \[[Enlace](https://docs.google.com/presentation/d/1tadIMMxP6oy2JaXIBGIhWw2CNUXT9rNIbXbdBjP3Nrs/edit#slide=id.p)\]</FONT>
+:::
+
+## ¿Cómo usaremos Quarto en el curso?
+<hr>
+
+\
+
+- Cada ejercicio / reporte / proyecto / tarea / etc. será hecho en un documento R Markdown aumentado: Quarto. 
+
+- Siempre te proporcionaremos una `plantilla` de documento Quarto para iniciar.
+
+- Las plantillas irán modificándose conforme avancemos el curso. 
+
+- Las plantillas son simplemente eso, plantillas, para usarlas en su día a día no necesita pensar mucho en ellas ni entenderlas a detalle.
+
+- Yo entiendo menos del 20% de estas y aún así me sirven mucho para mi trabajo diario. ¡Sugiero comenzar haciendo lo mismo!
+
+## Partes de un documento Quarto / R Markdown
+<hr>
+
+![](img/tour-rmarkdown.png)
+
+::: aside
+<br> <FONT size='4'>*Meet the toolkit: programming. datasciencebox.org.* \[[Enlace](https://datasciencebox.org/course-materials/_slides/u1-d02-toolkit-r/u1-d02-toolkit-r.html#1)\]</FONT>
+:::
+
+## `r fontawesome::fa("mug-saucer", "white")` Hagamos una pausa {background-color="#00817E"}
+<hr>
+
+::: r-fit-text
+
+<center>
+
+Tomemos un descanso de `5 minutos`...
+
+Estire las piernas `r fontawesome::fa("person-walking", "white")`... 
+
+Deje de ver las pantallas `r fontawesome::fa("laptop", "white")`...
+
+... cualquier `r fontawesome::fa("laptop", "white")`, las del celular `r fontawesome::fa("mobile", "white")` también.
+
+</center>
+
+:::
+
+```{r}
+#| echo: false
+library(countdown)
+countdown_timer <- function(
+    minutes = 1, 
+    play_sound = TRUE, 
+    font_size = "2em", 
+    ...
+) {
+  countdown(
+    minutes = minutes,
+    # Fanfare when it's over
+    play_sound = play_sound,
+    # Set timer theme to match solarized colors
+    color_border              = "#404041",
+    color_text                = "white",
+    color_background = "#000000",
+    color_running_background  = "#72994E",
+    color_running_text        = "white",
+    color_finished_background = "#EE6331",
+    color_finished_text       = "white",
+    font_size = font_size,
+    ...
+  )
+}
+```
+
+```{r}
+#| echo: false
+countdown_timer(5)
+```
+
+## 
+
+::: r-fit-text
+<center>¡Gracias!</center>
+
+<center>¿Preguntas?</center>
+
+:::
+
+## 
+
+\
+
+\
+
+\
+
+::: r-fit-text
+
+<center>
+{{< fa brands twitter >}} @psotob91 
+
+{{< fa brands github >}} https://github.com/psotob91
+
+{{< fa inbox >}} psotob@inkastats-academy.com
+</center>
+
+:::

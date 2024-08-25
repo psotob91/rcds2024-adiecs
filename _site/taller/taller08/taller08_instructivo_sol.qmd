@@ -1,0 +1,386 @@
+---
+title: "<font color='white'>Taller 8</font>"
+subtitle: "Análisis Estadístico de Datos en Salud"
+author: 
+  - Percy Soto-Becerra
+  - Anthony Romero
+date: last-modified
+date-format: "21-06-2023"
+description: "PFC 2023 -– IETSI, EsSalud"
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: "Índice"
+    toc-location: right
+    embed-resources: true
+    number-sections: true
+    theme: cerulean
+    title-block-style: default
+    title-block-banner: true
+    section-divs: true
+    css: [include/webex.css, include/styles.css]
+    include-after-body: include/webex.js
+    code-block-border-left: false
+lang: es
+execute: 
+  message: false
+  warning: false
+---
+# Introducción
+
+En este taller replicaremos algunas tablas y análisis de datos del siguiente artículo: <https://www.sciencedirect.com/science/article/pii/S2590136223000529>
+
+# Parte 1
+
+En esta parte del taller continuaremos analizando los datos que analizamos en el taller pasado sobre el experimento aleatorizado de maca 
+
+## Cargar paquetes
+
+```{r}
+library(tidyverse)                   # Varias funciones de tidyverse (dplyr, ggplot2, etc.)
+library(rio)                         # Navaja suiza de la importación de datos
+library(skimr)                       # Análisis inicial de datos
+library(Hmisc)                       # Análisis inicial de datos
+library(janitor)                     # Para identificar duplicados
+library(gt)                          # Gramatica de tablas
+library(gtsummary)                   # Wrapper de gt para inv. biomedica
+library(patchwork)                   # Componer, fusionar, manipular graficos ggplot2
+library(knitr)                       # Para usar algunos superpoderes de Quarto (include_graphics)
+library(kableExtra)
+```
+
+
+## Cargar los datos
+
+```{r}
+data <- import("data_derived_pf.rds")
+```
+
+## Explorar datos
+
+```{r}
+head(data)
+```
+
+```{r}
+glimpse(data)
+```
+
+
+```{r}
+skim(data)
+```
+
+
+## Replicar Tabla 1
+
+### Ejercicio 1  {.unnumbered}
+
+Seleccione las variables para crear la tabla 1. Las variables son las siguientes: age, agecat2, sex, nac, ingresos_per, ingresos_fam,  prof_cat, hosp, area_cat, modal_cat, height, weight, ncomorb, bmi,  bmicat, com_hta, com_diab, com_epc:com_vih, inmunosup, infprev, boost, tfdos1boost, tfdos2boost, tfboostig, igg, igg_pos, boost_react (mantenga el orden). Usando gtsummary, cree la tabla 1 que mejor replique la presentada en el artículo.
+
+```{r}
+data |>  
+  select(age, agecat2, sex, nac, ingresos_per, ingresos_fam, 
+         prof_cat, hosp, area_cat, modal_cat, height, weight, 
+         ncomorb, bmi,  bmicat, com_hta, com_diab, com_epc:com_vih,
+         inmunosup, infprev, boost, tfdos1boost, tfdos2boost, 
+         tfboostig, igg, igg_pos, boost_react) |> 
+  tbl_summary(statistic = list(all_continuous() ~ "{median} [{p25}, {p75}]", 
+                               all_categorical() ~ "{n} ({p})")) |> 
+  bold_labels()
+```
+
+
+### Ejercicio 2  {.unnumbered}
+
+Cree una tabla nueva (no presentada en el artículo) según la variable respuesta `rectogenicidad` (boost_react). 
+
+```{r}
+data |>  
+  select(age, agecat2, sex, nac, ingresos_per, ingresos_fam, 
+         prof_cat, hosp, area_cat, modal_cat, height, weight, 
+         ncomorb, bmi,  bmicat, com_hta, com_diab, com_epc:com_vih,
+         inmunosup, infprev, boost, tfdos1boost, tfdos2boost, 
+         tfboostig, igg, igg_pos, boost_react) |> 
+  tbl_summary(statistic = list(all_continuous() ~ "{median} [{p25}, {p75}]", 
+                               all_categorical() ~ "{n} ({p})"), 
+              by =  boost_react, 
+              percent = "row") |> 
+  bold_labels()
+```
+
+### Ejercicio 3  {.unnumbered}
+
+Observe la Tabla 2 y haga una lectura crítica de esta. ¿Qué aspecto del análisis y presentación de resultados no aporta valor y es considerado una práctica que debe evitarse?
+
+```{r}
+# Escriba el código aquí
+```
+
+## Replicar Figura 1
+
+### Ejercicio 4  {.unnumbered}
+
+Trate de replicar cada uno de los gráficos de la Figura 1. Cree la Fig1A, Fig1B, etc por separado.
+
+- Grafico de densidad
+
+```{r}
+data |> 
+  ggplot(aes(x = igg)) + 
+  geom_density(fill = "red", alpha = 0.25) +
+  labs(x = "Density", y = "IgG (BAU/ml)") + 
+  theme_bw() -> g0
+
+g0
+```
+
+```{r}
+library(viridis)
+library(ggsci)
+library(scales)
+pd <- position_dodge(0.3)
+alfa <- 0.1
+# Density plot----
+data %>% 
+  ggplot() + 
+  aes(x = igg) + 
+  geom_density(alpha = 0.25, fill = "red") + 
+  labs(y = "Density", x = "IgG (BAU/ml)") + 
+  guides(fill = guide_legend(title = "")) + 
+  theme_bw() + 
+  theme(legend.position = c(0.90, 0.90)) + 
+  scale_fill_lancet() -> g0; g0
+
+# Work/modality----
+pd <- position_dodge(0.3)
+alfa <- 0.1
+data %>% 
+  mutate(modal_cat = factor(modal_cat, 
+                            levels = c("License/Teleworking", 
+                                       "Presential/Mix"), 
+                            labels = c("Work leave/remote", 
+                                       "Full/part-time in-person"))) %>% 
+  arrange(igg) %>% 
+  ggplot() +
+  aes(x = modal_cat, y = igg, group = modal_cat, 
+      color = modal_cat, alpha = 0.1) + 
+  geom_boxplot(aes(group = modal_cat), outlier.shape = NA) + 
+  scale_fill_viridis(discrete = TRUE, alpha=0.6) +
+  geom_jitter(color="black", size=1, alpha=0.9) +
+  theme(
+    legend.position="none",
+    plot.title = element_text(size=11)
+  ) +
+  geom_point(position = pd, size = 0.1) + 
+  labs(y = "IgG after booster (BAU/mL)", 
+       x = "Working modality") +
+  scale_y_continuous(trans = "log", labels = comma) + 
+  theme_bw() + 
+  theme(legend.position = "none") + 
+  scale_color_lancet() -> g1; g1
+
+# Previous infection----
+# infprev
+pd <- position_dodge(0.3)
+alfa <- 0.1
+data %>% 
+  arrange(igg) %>% 
+  ggplot() +
+  aes(x = infprev, y = igg, group = infprev, 
+      color = infprev, alpha = 0.1) + 
+  geom_boxplot(aes(group = infprev), outlier.shape = NA) + 
+  scale_fill_viridis(discrete = TRUE, alpha=0.6) +
+  geom_jitter(color="black", size=1, alpha=0.9) +
+  theme(
+    legend.position="none",
+    plot.title = element_text(size=11)
+  ) +
+  geom_point(position = pd, size = 0.1) + 
+  labs(y = "IgG after booster (BAU/mL)", 
+       x = "Previous infection") +
+  scale_y_continuous(trans = "log", labels = comma) + 
+  theme_bw() + 
+  theme(legend.position = "none") + 
+  scale_color_lancet() -> g2; g2
+
+
+# Inmunosuprresive condition----
+# inmunosup
+pd <- position_dodge(0.3)
+alfa <- 0.1
+data %>% 
+  arrange(igg) %>% 
+  ggplot() +
+  aes(x = inmunosup, y = igg, group = inmunosup, 
+      color = inmunosup, alpha = 0.1) + 
+  geom_boxplot(aes(group = inmunosup), outlier.shape = NA) + 
+  scale_fill_viridis(discrete = TRUE, alpha=0.6) +
+  geom_jitter(color="black", size=1, alpha=0.9) +
+  theme(
+    legend.position="none",
+    plot.title = element_text(size=11)
+  ) +
+  geom_point(position = pd, size = 0.1) + 
+  labs(y = "IgG after booster (BAU/mL)", 
+       x = "Immunosuppressive condition") +
+  scale_y_continuous(trans = "log", labels = comma) + 
+  theme_bw() + 
+  theme(legend.position = "none") + 
+  scale_color_lancet() -> g3; g3
+
+# Diabetes----
+# com_diab
+pd <- position_dodge(0.3)
+alfa <- 0.1
+data %>% 
+  arrange(igg) %>% 
+  ggplot() +
+  aes(x = com_diab, y = igg, group = com_diab, 
+      color = com_diab, alpha = 0.1) + 
+  geom_boxplot(aes(group = com_diab), outlier.shape = NA) + 
+  scale_fill_viridis(discrete = TRUE, alpha=0.6) +
+  geom_jitter(color="black", size=1, alpha=0.9) +
+  theme(
+    legend.position="none",
+    plot.title = element_text(size=11)
+  ) +
+  geom_point(position = pd, size = 0.1) + 
+  labs(y = "IgG after booster (BAU/mL)", 
+       x = "Diabetes") +
+  scale_y_continuous(trans = "log", labels = comma) + 
+  theme_bw() + 
+  theme(legend.position = "none") + 
+  scale_color_lancet() -> g4; g4
+
+# Profession----
+# prof_cat
+pd <- position_dodge(0.3)
+alfa <- 0.1
+data %>% 
+  mutate(prof_cat = factor(prof_cat, 
+                           levels = c("Administrative and Others", 
+                                      "Nurses", 
+                                      "Pyshicians", 
+                                      "Technical nurses"), 
+                           labels = c("Admin/Others", 
+                                      "Nurses", 
+                                      "Physicians", 
+                                      "Technical nurses"))) %>%
+  arrange(igg) %>% 
+  ggplot() +
+  aes(x = prof_cat, y = igg, group = prof_cat, 
+      color = prof_cat, alpha = 0.1) + 
+  geom_boxplot(aes(group = prof_cat), outlier.shape = NA) + 
+  scale_fill_viridis(discrete = TRUE, alpha=0.6) +
+  geom_jitter(color="black", size=1, alpha=0.9) +
+  theme(
+    legend.position="none",
+    plot.title = element_text(size=11)
+  ) +
+  geom_point(position = pd, size = 0.1) + 
+  labs(y = "IgG after booster (BAU/mL)", 
+       x = "Profession") +
+  scale_y_continuous(trans = "log", labels = comma) + 
+  theme_bw() + 
+  theme(legend.position = "none") + 
+  scale_color_lancet() -> g5; g5
+
+```
+
+```{r}
+library(patchwork)
+```
+
+```{r}
+g0 / g1
+```
+
+
+```{r}
+g0 | g1
+```
+
+
+```{r}
+(g0 / g1) | (g2 / plot_spacer()) | ( plot_spacer() / g3)
+```
+
+```{r}
+(g0 | g1) + 
+  plot_annotation(tag_levels = "A")
+```
+
+```{r}
+plot_biv_cat <- (g0 | g1 | g2) / (g3 | g4 | g5) + 
+  plot_annotation(tag_levels = "A")
+
+plot_biv_cat
+```
+
+```{r}
+ggsave(filename = "Grafico_Paper.jpg", 
+       device =  "jpg", 
+       plot = plot_biv_cat, 
+       scale = 2, 
+       width = 3903, 
+       height = 1822, 
+       units = "px", 
+       dpi = 600
+       )
+```
+
+
+### Ejercicio 5  {.unnumbered}
+
+Trate de replicar cada uno de los gráficos de la Figura 1. Cree la Fig1A, Fig1B, etc por separado.
+
+```{r}
+# Escriba el código aquí
+```
+
+### Ejercicio 6 {.unnumbered}
+
+Fusione los gráficos usando el paquete {patchwork} para replicar a la Figura 1.
+
+```{r}
+# Escriba el código aquí
+```
+
+### Ejercicio 7 {.unnumbered}
+
+Guarde el gráfico en formato "png".
+
+```{r}
+# Escriba el código aquí
+```
+
+### Ejercicio 8 {.unnumbered}
+
+Imprima el gráfico en foramto "png" dentro del archivo quarto.
+
+```{r}
+# Escriba el código aquí
+```
+
+```{r}
+include_graphics("Grafico_Paper.png")
+```
+
+
+### Ejercicio 9 {.unnumbered}
+
+Renderice todo el quarto. Cambie el nombre del archivo html generado.
+
+```{r}
+# Escriba el código aquí
+```
+
+### Ejercicio 10 {.unnumbered}
+
+Modifique el YAML del Quarto para que la presentación de este mejore. Renderice el quarto final y compare con la primera versión del html generado en el ejercicio 9. 
+
+```{r}
+# Escriba el código aquí
+```

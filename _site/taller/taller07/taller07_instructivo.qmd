@@ -1,0 +1,171 @@
+---
+title: "<font color='white'>Taller 7</font>"
+subtitle: "Análisis Estadístico de Datos en Salud"
+author: 
+  - Percy Soto-Becerra
+  - Anthony Romero
+date: last-modified
+date-format: "DD-MM-YYYY"
+description: "PFC 2023 -– IETSI, EsSalud"
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: "Índice"
+    toc-location: right
+    embed-resources: true
+    number-sections: true
+    theme: cerulean
+    title-block-style: default
+    title-block-banner: true
+    section-divs: true
+    css: [include/webex.css, include/styles.css]
+    include-after-body: include/webex.js
+    code-block-border-left: false
+lang: es
+execute: 
+  message: false
+  warning: false
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(rio)
+library(skimr)
+library(janitor)
+library(gtsummary)
+library(gginference)
+library(rstatix)
+library(gt)
+library(ggpubr)
+```
+
+# Introducción
+
+En este taller veremos algunas aplicaciones de la prueba ANOVA / Kruskall Wallis y de pruebas para datos categóricos.
+
+# Parte 1
+
+En esta parte del taller continuaremos analizando los datos que analizamos en el taller pasado sobre el experimento aleatorizado de maca 
+
+## Cargar paquetes
+
+```{r}
+library(tidyverse)                   # Varias funciones de tidyverse (dplyr, ggplot2, etc.)
+library(rio)                         # Navaja suiza de la importación de datos
+library(skimr)                       # Análisis inicial de datos
+library(Hmisc)                       # Análisis inicial de datos
+library(janitor)                     # Para identificar duplicados
+library(gtsummary)                   # Para tablas estadísticas reproducibles
+library(rstatix)                     # Para pruebas de hipótesis 
+library(ggpubr)                      # Atajos de gráficos en R
+library(gmodels)                     # Tablas de contingencia en formato SAS/SPSS
+library(gt)
+```
+
+
+## Cargar los datos
+
+```{r}
+datos_maca <- import("maca_meno_fase1.dta") %>% 
+  characterize()
+```
+
+## Pruebas de hipótesis de tres o más grupos
+
+### Ejercicio 1  {.unnumbered}
+
+Comparar las medias y desviaciones estándares de progesterona al final del estudio:
+
+
+```{r}
+# Escriba aquí el código
+```
+
+
+### Ejercicio 2  {.unnumbered}
+
+Haga un gráfico de cajas que comapre la dsitribución de progesteroan al final del estudio según tratamiento.
+
+
+```{r}
+# Escriba aquí el código
+```
+
+### Ejercicio 3  {.unnumbered}
+
+Explore si la distribución de progesterona en cada nivel de tratamiento se aproxima a una nuermal mediante gráficos quantile quantile. También explore la posibilidad de heterogeneida de varianzas:
+
+
+```{r}
+# Escriba aquí el código
+```
+
+
+### Ejercicio 4  {.unnumbered}
+
+Evalúe si existe un efecto del tratamiento sobre progesterona al final del estudio mediante un ANOVA de una via. Evalúe los supuestos. 
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+```{r}
+# Escriba aquí el código
+```
+
+
+
+# Parte 2
+
+En esta parte taller, exploraremos un experimento completamente aleatorizado que compara dos brazos de tratamiento: uno tratado y otro placebo. El objetivo es comparar la incidencia acumulada de diabetes y eventos adversos graves entre los dos grupos. Ambos desenlaces son binarios, lo que significa que podemos utilizar pruebas estadísticas adecuadas para analizar los datos. Para este taller, nos centraremos en el uso de la prueba de chi cuadrado de homogeneidad para evaluar la asociación entre el tratamiento y la incidencia de diabetes.
+
+## Cargar datos
+
+Primero, cargaremos los datos necesarios para el análisis. Utilizaremos un data.frame que contiene los dos desenlaces: incidencia de diabetes y eventos adversos graves.
+
+
+```{r}
+data <- import("ensayo_diabetes.rds")
+```
+
+En este data.frame, la columna "tratamiento" indica el brazo de tratamiento asignado a cada individuo, la columna "diabetes" indica si el individuo desarrolló diabetes (1) o no (0), y la columna "eventos_adversos" indica si el individuo experimentó un evento adverso grave (1) o no (0).
+
+## Ejercicio 1 {.unnumbered}
+
+Presente una tabla de contingencia del tratamiento y diabetes y del tratamiento y eventos adversos:
+
+
+```{r}
+# Escriba aquí el código
+```
+
+
+## Ejercicio 2 {.unnumbered}
+
+Realice una prueba de chi-cuadrado de homogeneidad para evaluar la asociación entre el tratamiento y la incidencia acumulada de diabetes.
+
+
+```{r}
+# Escriba aquí el código
+```
+
+
+## Ejercicio 3 {.unnumbered}
+
+Realice una prueba de chi-cuadrado de homogeneidad para evaluar la asociación entre el tratamiento y la incidencia acumulada de eventos adversos serios.
+
+
+```{r}
+# Escriba aquí el código
+```
+
+
+## Ejercicio 4 {.unnumbered}
+
+Con la tabla de contingencia del problema anterior, aplique la prueba de proporción y la prueba de fisher. Interprete los IC95%
+
+```{r}
+# Escriba aquí el código
+```
+

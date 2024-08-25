@@ -1,0 +1,3809 @@
+---
+format: 
+  revealjs: 
+    self-contained: false
+    theme: [default, theme/theme.scss]
+    footer: "Análisis Estadístico de Datos en Salud 2023 - Día 5"
+    logo: img/logo.png
+    transition: convex
+    background-transition: zoom
+    incremental: false
+    slide-number: c/t
+    preview-links: true
+    # width: 1920
+    # height: 1080
+    height: 900
+    width: 1600
+    # parallax-background-image: images/bg-ietsi-slide-first.png
+    # parallax-background-size: "1920px 1080px"
+    chalkboard: true
+    code-block-background: true
+    code-block-border-left: "#31BAE9"
+    highlight-style: ayu-dark
+    echo: true
+    multiplex: true
+    touch: true
+    auto-stretch: true
+    link-external-icon: true
+    link-external-newwindow: true
+    self-contained-math: true
+    
+from: markdown+emoji
+execute:
+  echo: true
+filters:
+  - reveal-auto-agenda
+auto-agenda:
+  bullets: numbered
+  heading: Agenda
+---
+\
+
+\
+
+<h1>Sesión 5</h1>
+
+<h2>[Curso: Análisis Estadístico de Datos en Salud]{.plo}</h2>
+
+<hr>
+
+<h3>[Percy Soto-Becerra, M.D., M.Sc(c)]{.negro}</h3>
+
+<h4>[DIS -- IETSI, EsSalud]{.negro}</h4>
+
+<h4>[2023-06-09]{.negro}</h4>
+
+`r fontawesome::fa("github", "black")` &nbsp; [https://github.com/psotob91](https://github.com/psotob91)
+
+![](img/logo.png){.absolute top=390 left=950 width="600"}
+
+
+```{r}
+#| echo: false
+#| output: false
+
+# Removing all objects including loaded libraries
+rm(list = ls(all = TRUE))
+gc()
+
+# Installing and loading packages
+if (!require("pacman")) {
+  install.packages("pacman")
+}
+
+pacman::p_unload("all") # Unloading all package except base
+
+pacman::p_load(tidyverse, 
+               tibble, 
+               labelled, 
+               pander, 
+               gt, 
+               kableExtra, 
+               DT, 
+               haven, 
+               skimr, 
+               Hmisc, 
+               janitor, 
+               rio, 
+               gtsummary, 
+               gt) # Loading packages
+
+datos_fase1 <- import("maca_meno_fase1.dta") %>% 
+  characterize()
+```
+
+
+# Medidas de resumen para variables numéricas
+
+## Análisis descriptivo de variable numérica {.scrollable}
+
+::: panel-tabset
+### Tend. Central
+-   Medias de tendencia central 
+    -   Media
+    -   Mediana (es también `medida de posición`) 
+    -   Moda (no es usual) 
+    
+
+### Posición 
+-   Medidas de posición 
+    -   Cuantiles (en general)
+    -   Mediana = percentil 50 (es también medida de `tendencia central`)
+    -   Percentil 25 (p25) 
+    -   Percentil 75 (p75) 
+    
+### Dispersión    
+-   Medidas de dispersión 
+    -   Rango (máximo - mínimo) 
+    -   Varianza / Desviación estándar
+    -   Rango intercuartílico (p75 - p25)   
+    
+### Forma
+
+:::: {.columns}
+
+::: {.column width='30%'}
+
+- De acuerdo a moda:
+    - Unimodal (una sola moda)
+    - Multimodal (p. ej, bimodal)
+    - Uniforme (no moda)
+    
+- De acuerdo a simetría
+    - Simétrica
+    - Asimétrica (o 'sesgada')
+      - Positiva (A la derecha) 
+      - Negativa (A la izquierda) 
+      
+- De acuerdo a curtosis:
+    - Leptocúrtica
+    - Mesocúrtica
+    - Platicúrtica
+:::
+
+::: {.column width='70%'}
+
+<br/> <br/>
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/distrib.png")
+```
+
+:::
+
+::::
+
+:::
+
+## Medidas de resumen
+
+>Para una variable de interés $X$, se tiene la muestra conformada por $n$ elementos $x_1, x_2, x_3, ..., x_n$ entonces podemos resumir esta muestra de valores mediante los siguientes estadísticos:
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+- Media aritmética: $\bar{x}$
+    
+- Media geométrica: $\bar{x}_g$
+    
+- Otras medias: truncada y armónica
+    
+- Mediana: $Med(x)$
+    
+- Moda: $Moda(x)$
+    
+:::
+
+::: {.column width='50%'}
+
+- Percentiles: $P25$ y $P75$
+    
+- Cuartiles: $Q1$, $Q2$ y $Q3$
+    
+- Varianza y desviación estándar: $Var(x)$ y $DE(x)$
+    
+- Rango
+    
+- Rango intercuartílico: $RIQ$
+    
+- Coeficiente de variación: $CV$
+
+:::
+
+::::
+
+## Medidas de resumen: Tendencia central {.scrollable}
+
+::: {.panel-tabset}
+
+### Media aritmética
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+- La media artimética de una lista de números, es la suma de estos números dividida por la cantidad de esto y está dada por la siguiente expresión:
+
+$$\bar{x} = \frac{x_1 + x_2 + x_3 + ... + x_n}{n} = \frac{\sum_{i = 1}^{n}x_i}{n}$$
+
+:::{.callout-note collapse=false appearance='default' icon=true}
+## Ejemplo
+Sean las siguientes edades en años: $36, 4, 75, 45, 50$, su media aritmética es
+
+$$\frac{36 + 4 + 75 + 45 + 50}{5} = \frac{210}{5} = 42$$
+:::
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/media.png")
+```
+
+:::
+
+::::
+
+### M. geométrica
+
+- Forma de promedio útil para conjuntos de números positivos que se desean interpretar de acuerdo a su producto en vez de su suma.
+
+- Es la raíz $n-ésima$ del producto de los números y está dada por la siguiente expresión:
+
+$$\bar{x}_{g} = \sqrt[n]{x_1x_2x_3...x_n} = (x_1x_2x_3...x_n)^{\frac{1}{n}} = (\prod_{i = 1}^{n}x_i)^{\frac{1}{n}}$$
+
+:::{.callout-note collapse=false appearance='default' icon=true}
+## Ejemplo
+Sean las siguientes edades en años: $36, 4, 75, 45, 50$, su media geométrica es
+
+$$(36 \times 4 \times 75 \times 45 \times 50) ^ {\frac{1}{5}} = \sqrt[5]{24300000} = 30$$
+:::
+
+### Otras
+
+[Media truncada]{.verde-h3}
+
+- Media truncada o recortada (en inglés trimmed mean) es una medida de tendencia central similar a la media aritmética que se calcula luego de descartar las partes de ambos extremos de la distribución.
+
+- Típicamente se descartan las mismas proporcions de datos en  los extremos.
+
+- En la mayoría de aplicaciones se descartan entre 5% a 25%.
+
+- En algunas regiones también la conocen como **media windsoriana**.
+
+- La usan mucho en eventos de competición para eliminar la influencia de las calificaciones extremas de los jueces
+
+[Media armónica]{.verde-h3}
+
+- Es un tipo de medida promedio conocida por ser una de las medias pitagóricas.
+
+- Se expresa como el recíproco de las medias aritméticas de los recíprocos de un conjunto dado de observaciones.
+
+$$H = \frac{n}{\frac{1}{x_1} + \frac{1}{x_2} + ... + \frac{1}{x_n}} = \frac{n}{\sum_{i=1}^{n}{\frac{1}{x_i}}} = (\frac{\sum_{i=1}^{n}x_i^{-1}}{n})^{-1} $$
+- Es más útil en situaciones donde se desea promediar tasas o estadístico similares basados en medidas de razón.
+
+### Mediana
+
+:::: {.columns}
+
+::: {.column width='60%'}
+
+- Sean $x_{(1)}, x_{(2)}, x_{(3)}, ..., x_{(i)},..., x_{(n)}$ estadísticos de orden, es decir cada $x_{(i)}$ representa al $i-ésimo$ valor más pequeño de la muestra,  entonces la mediana está dada por la siguiente expresión:
+
+$$
+Med(x) = 
+        \begin{cases}
+        x_{(n+1)/2} & \text{si n es impar} \\
+        \frac{x_{(n/2)}+x_{(n/2+1)}}{2} & \text{si n es par}
+        \end{cases}
+$$
+
+
+:::{.callout-note collapse=false appearance='default' icon=true}
+## Ejemplo
+Luego de ordenar de menor a mayor, tenemos $4, 36, 45, 50, 75$. Como $n = 5$ es impar, entonces
+
+$$Med(x) = x_{(5+1)/2} = x_{(3)} = 45$$
+:::
+
+:::
+
+::: {.column width='40%'}
+
+- En otras palabras, es el valor que separa la mitad superior de la mitad inferior de una muestra de datos.
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 80%
+knitr::include_graphics("img/mediana.png")
+```
+
+:::
+
+::::
+
+### Moda
+
+- Es el valor que aparece más frecuentemente  en los datos. 
+
+    - De poca utilidad en variables numéricas.
+
+- No necesariamente es única.
+
+\
+
+:::: {.columns}
+
+::: {.column width='33%'}
+[Unimodal]{.verde-h3}
+
+```{r}
+#| echo: false
+#| fig-align: left
+#| out-width: 80%
+knitr::include_graphics("img/unimodal.png")
+```
+
+:::
+
+::: {.column width='0.5%'}
+:::
+
+::: {.column width='33%'}
+[Multimodal]{.verde-h3}
+
+```{r}
+#| echo: false
+#| fig-align: left
+#| out-width: 100%
+knitr::include_graphics("img/bimodal.png")
+```
+
+:::
+
+::: {.column width='0.5%'}
+:::
+
+::: {.column width='33%'}
+[Multimodal extremo: Uniforme]{.verde-h3}
+
+```{r}
+#| echo: false
+#| fig-align: left
+#| out-width: 90%
+knitr::include_graphics("img/uniforme.png")
+```
+
+:::
+
+::::
+
+### Resumen
+
+
+- En resumen, la visualización geométrica de la media, mediana y moda para una distribución unimodal es la siguiente.
+
+    + `Moda:` Valor más frecuente (punta más alta de distribución)
+    
+    + `Mediana:` Valor que divide datos en 50% (mitad de la distribución)
+    
+    + `Media:` Centro de gravedad (punto en el que los "pesos" de ambos lados se igualan)
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 50%
+knitr::include_graphics("img/Visualisation_mode_median_mean.png")
+```
+
+### R base
+
+:::: {.columns}
+
+::: {.column width='33%'}
+
+[Funciones]{.verde-h3}
+
+- Funciones de R base:
+
+    - [mean()]{.verde-h3}
+    
+    - [mean(..., trim = ...)]{.verde-h3}
+    
+    - [median()]{.verde-h3}
+    
+- Funciones extras a R base:
+
+    - [geometric.mean() de {psych}]{.verde-h3}
+
+[Datos para los cálculos]{.verde-h3}
+
+- Sean el vector de edades:
+
+```{r}
+edad <- c(9, 12, 10, 8, 7, 6)
+edad
+```
+   
+- Sea el vector de hemoglobina:
+
+```{r}
+hb <- c(11.2, 10.4, 9.8, NA, 14, 8.1)
+hb
+```
+
+:::
+
+::: {.column width='33%'}
+
+[Media aritmética]{.verde-h3}
+
+- En vector con datos completos:
+
+```{r}
+mean(edad)
+```
+
+- En vector con datos incompletos:
+
+```{r}
+mean(hb)
+```
+
+- Es necesario agregar [na.rm = TRUE]{.verde-h3}
+
+```{r}
+mean(hb, na.rm = TRUE)
+```
+
+:::
+
+::: {.column width='33%'}
+
+[Media geométrica]{.verde-h3}
+
+- Manualemente
+
+```{r}
+exp(log(edad))
+```
+
+- Con librería psych
+
+```{r}
+library(psych)
+geometric.mean(edad)
+```
+
+[Media truncada]{.verde-h3}
+
+- Solo 5% de ambas colas
+
+```{r}
+mean(edad, trim = 0.05)
+```
+ 
+
+[Mediana]{.verde-h3}
+
+```{r}
+median(hb, na.rm = TRUE)
+```
+
+:::
+
+::: {.column width='1%'}
+
+:::
+
+::::
+
+:::
+
+## Medidas de resumen: Posición {.scrollable}
+
+::: {.panel-tabset}
+
+### Cuantiles
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+- Son los valores que funcionana como puntos de corte para dividir el rango de datos en intervalos continuos con igual frecuencia. 
+
+- El $k-ésimo$ $q-cuantil$ es el valor de los datos donde su función de distribución acumulada cruza $k/q$. 
+
+- Es decir, $x$ es el $k-ésimo$ $q-cuantil$ para una variable $X$ si:
+
+$$Pr[X < x] \leq k/q$$ 
+
+<center>y</center> 
+
+$$Pr[X \leq x] \geq k/q $$
+     
+:::
+
+::: {.column width='50%'}
+
+<br/><br/>
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/cuantil1.png")
+```
+
+:::
+
+::::
+
+### Memotecnia
+
+
+- El nombre del cuantil depende de cuántos grupos se forman. 
+
+- La cantidad de cuantiles es siempre 1 menos.
+
+     + Ejemplo, para formar 4 grupos, necesito solo 3 cortes: 3 cuartiles
+     
+     
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 70%
+knitr::include_graphics("img/cuantil2.png")
+```
+
+
+### Cuantiles notables
+
+:::: {.columns}
+
+::: {.column width='30%'}
+
+- Hay una lista bastante grande de cuantiles.
+
+- Los más famosos son: 
+
+    + Mediana
+    + Terciles
+    + Cuartiles
+    + Quintiles
+    + Deciles
+    + Percentiles.
+
+:::
+
+::: {.column width='70%'}
+
+```{r}
+#| echo: false
+quantiles_list <- data.frame(
+  q_quantile = c("2-cuantil", "3-cuantil", "4-cuantil", "5-cuantil", "6-cuantil", 
+                 "7-cuantil","8-cuantil","10-cuantil", "12-cuantil", "16-cuantil", 
+                 "20-cuantil", "100-cuantil", "1000-cuantil"), 
+  nombre = c("Mediana", "Terciles", "Cuartiles", "Quintiles", "Sextiles", 
+             "Septiles", "Octiles", "Deciles", "Dodeciles", "Hexadeciles", 
+             "Ventiles", "Percentiles", "Permiles o Mililes"), 
+  n_grupos =  c(2, 3, 4, 5, 6, 7, 8, 10, 12, 16, 20, 100, 1000), 
+  n_cuantiles = c(1, 2, 3, 4, 5, 6, 7, 9, 11, 15, 19, 99, 999)
+)
+
+quantiles_list %>% 
+  kbl(col.names = c("Q-cuantil", "Nombre del cuantil", "Número de grupos iguales", "Número de cuantiles")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                full_width = F, font_size = 30) 
+```
+
+:::
+
+::::
+
+
+### Cuartiles
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+- Los cuartiles dividen los datos en cuatro partes iguales
+    + Por lo tanto, hay 3 cuartiles. 
+
+- Los gráficos de cajas utilizan los cuartiles para realizar el dibujo de los elementos de la caja.
+
+    + El segundo cuartil es equivalente a la mediana porque contiene el 50% de los datos.
+    
+:::
+
+::: {.column width='60%'}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/cuartiles.png")
+```
+
+:::
+
+::::
+
+
+### Percentiles
+
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+- Los percentiles dividen los datos en 100 partes iguales
+
+    + Por lo tanto, son 99 percentiles.
+    
+- Se usan para construir infinidad de estadísticos: 
+
+    + Tablas de crecimiento, ranking de calificaciones, etc.
+
+- En inferencia estadística, se usan para establecer
+    + Nivel de confianza
+    + Nivel de significancia.
+    
+:::
+
+::: {.column width='60%'}
+
+<br/> 
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/cuantil3.png")
+```
+:::
+
+::::
+
+### R base
+
+:::: {.columns}
+
+::: {.column width='30%'}
+
+[Funciones]{.verde-h3}
+ 
+- Funciones de R base:
+
+    - [quantile(..., probs = ...)]{.verde-h3}
+    
+[Datos para los cálculos]{.verde-h3}
+
+- Sean el vector de edades:
+
+```{r}
+edad <- c(9, 12, 10, 8, 7, 6)
+edad
+```
+
+- Sea el vector de hemoglobina:
+
+```{r}
+hb <- c(11.2, 10.4, 9.8, NA, 14, 8.1)
+hb
+```
+
+:::
+
+::: {.column width='35%'}
+
+
+[Cuartiles]{.verde-h3}
+
+- Cuartil 1 (25%)
+
+```{r}
+quantile(edad, probs = c(0.25))
+```
+
+- Cuartil 3 (75%)
+
+```{r}
+quantile(edad, probs = c(0.75))
+```
+
+- Cuartiles 1, 2 y 3
+
+```{r}
+quantile(edad, probs = c(0.25, 0.5, 0.75))
+```
+
+:::
+
+::: {.column width='35%'}
+
+[Percentiles]{.verde-h3}
+
+- Percentil 67
+
+```{r}
+quantile(edad, probs = c(0.67))
+```
+
+- Percentiles del 1 al 99
+
+```{r}
+quantile(edad, probs = seq(0, 0.99, 0.01))
+```
+
+:::
+
+::::
+
+:::
+
+## Medidas de resumen: Dispersión {.scrollable}
+
+::: {.panel-tabset}
+
+### Desviación Estándar
+
+:::: {.columns}
+
+::: {.column width='60%'}
+
+- Medida de la cantidad de variación o dispersión de los datos. 
+
+    + Mide dispersión según alejamiento de la media.
+
+- Es la raíz cuadrada de la varianza.
+
+- Está en las mismas unidades que la variable.
+
+- Fórmula:
+
+Sea $\bar{x}$ la media de los $n$ datos $x_1, x_2, ..., x_n$, entonces la varianza está definida por:
+
+$$Var(x) = \frac{\sum_{i = 1}^{n}{(x_i - \bar{x})^2}}{n - 1} $$
+Entonces, la desviación estándar de la muestra es:
+
+$$
+DE(x) = \sqrt[]{Var(x)}
+$$
+
+:::
+
+::: {.column width='40%'}
+
+[Varianza muestral]{.verde-h3}
+
+- Con datos completos: 
+
+```{r}
+var(edad)
+```
+
+- Con datos perdidos:
+
+```{r}
+var(hb, na.rm = TRUE)
+```
+
+[Desviación estándar muestral]{.verde-h3}
+
+
+- Con datos completos:
+
+```{r}
+sd(edad)
+```
+
+- Con datos faltantes:
+
+```{r}
+sd(hb, na.rm = TRUE)
+```
+
+
+
+:::
+
+::::
+
+### Rango
+
+::::{.columns}
+
+::: {.column width='33%'}
+
+- Es el tamaño del intervalo más pequeño que contiene a todos los datos.
+
+- Diferencia entre el valor mínimo y máximo.
+
+- Fórmula
+
+$$
+Rango = min(X) - max(X)
+$$
+
+:::
+
+::: {.column width='0.5%'}
+
+:::
+
+::: {.column width='33%'}
+
+[Manualmente]{.verde-h3}
+
+- Con datos completos: 
+
+```{r}
+min(edad)
+```
+
+```{r}
+max(edad)
+```
+
+```{r}
+max(edad) - min(edad)
+```
+
+:::
+
+::: {.column width='0.5%'}
+
+:::
+
+::: {.column width='33%'}
+
+[Usando función]{.verde-h3}
+
+- Con datos completos:
+
+```{r}
+range(edad)
+```
+
+- Con datos faltantes:
+
+```{r}
+range(hb, na.rm = TRUE)
+```
+
+:::
+
+::::
+
+### Rango intercuartílico
+
+::::{.columns}
+
+::: {.column width='33%'}
+
+- Medida de la cantidad de variación de los datos.
+
+- Es la diferencia entre los percentiles 75 y 25 de los datos.
+
+- Contiene el 50% central de los datos.
+
+- El ancho de la caja de un gráfico de cajas es el IQR.
+
+- Fórmula:
+
+$$
+RIQ = Percentil~75 - Percentil~25
+$$
+
+:::
+
+::: {.column width='0.5%'}
+
+:::
+
+::: {.column width='33%'}
+
+[Manualmente]{.verde-h3}
+
+- Calculándolo manualmente
+
+```{r}
+quantile(edad, probs = c(0.25, 0.75))
+```
+
+```{r}
+9.75 - 7.25
+```
+
+- Usando algunos atajos:
+
+Podemos almacenar los resultados en objetos 
+
+```{r}
+p25 <- quantile(edad, probs = c(0.25))
+p25
+```
+
+```{r}
+p75 <- quantile(edad, probs = c(0.75))
+p75
+```
+
+:::
+
+::: {.column width='0.5%'}
+
+:::
+
+::: {.column width='33%'}
+
+Luego podemos usar los objetos par hacer el cálculo final:
+
+```{r}
+p75 - p25
+```
+
+[Usando función]{.verde-h3}
+
+- Con datos completos:
+
+```{r}
+IQR(edad)
+```
+
+- Con datos faltantes:
+
+```{r}
+IQR(hb, na.rm = TRUE)
+```
+
+:::
+
+::::
+
+### Coeficiente de variación
+
+
+:::: {.columns}
+
+::: {.column width='33%'}
+
+- También conocido como desviación estándar relativa.
+
+- Medida estandarizada de dispersión expresada como  porcentaje.
+
+- Es la razón de la desviación estandar sobre la media y mide la extensión de la variabilidad en relación a la media
+
+$$
+CV = \frac{DE(x)}{\bar{x}}
+$$
+:::
+
+::: {.column width='0.5%'}
+
+:::
+
+::: {.column width='33%'}
+
+[Manualmente]{.verde-h3}
+
+
+- Directo
+
+```{r}
+100 * sd(edad) / mean(edad)
+```
+
+- Paso a paso
+
+Media: 
+
+```{r}
+media <- mean(edad)
+```
+
+
+DE: 
+
+```{r}
+sd <- sd(edad)
+```
+
+CV en %
+
+```{r}
+100 * (sd / media)
+```
+
+
+:::
+
+::: {.column width='0.5%'}
+
+:::
+
+::: {.column width='33%'}
+
+[Usando función]{.verde-h3}
+
+- No función específica disponible.
+
+- Existe en funciones que generan varias variables de resumen.
+
+:::
+
+::::
+
+:::
+
+
+## Análisis descriptivo de variable numérica - recomendaciones{.scrollable}
+
+::: panel-tabset
+
+
+### ¿Media versus mediana? (round 1)
+
+- `Media y mediana no son dos medidas que deban entrar en disputa`.
+
+    + Ambas cuentan dos historias complementarias sobre el "centro" de los datos.
+    
+    + Ambas representan a los datos a su manera.
+    
+- `Piensa en lo que quieres hacer`
+
+::: {.panel-tabset}
+
+### Describir
+
+[¿Quiero describir mis datos con el "mejor representante" posible?]{.verde-h3}
+      
+- Recuerda el mantra: `"Media es más sensible a valores extremos"`. La distribución de los datos puede ayudar a elegir.
+        
+- Distribuciones sesgadas: La `mediana` y `medidas de posición` suelen `representar mejor` los datos en términos `descriptivos`.
+        
+- Distribuciones simétricas: `Mediana` y `media` son `buenas`, la `media se prefiere` por sus `propiedades estadísticas` e `interpretación intuitiva`.
+    
+
+### Explicar
+
+[¿Quiero comparar medidas de tendencia central para inferir efectos?]{.verde-h3}
+    
+- La media es una buena candidata, sean las distribuciones sesgadas o no.
+        
+- La mediana no es una mala candidata, sin embargo, sus propiedades estadísticas y menor teoría desarrollada limitan actualmente su uso.
+
+### Predecir
+
+[¿Quiero usar una medida de resumen para establecer predicciones?]{.verde-h3}
+    
+- La media es una de las más usadas, sean las distribuciones sesgadas o no.
+        
+- La mediana tiene teoría menos desarrollada, pero existen algunas aplicaciones.
+
+:::
+
+
+        
+### ¿Media versus mediana? (round 2)
+
+- `¿Tenemos que elegir?`
+
+|                     [No, no tenemos que elegir!!]{.bigtext5}
+
+- En ensayos clínicos es preferible `reportar ambos` es `más transparente` y proporciona `más información`.
+
+    + Si hay `limitaciones de espacio` y tablas en cuerpo del artículo, se suele reportar en `anexos`.
+    + Se sugiere `hacer lo mismo en estudios observacionales`. 
+    + ¿Por qué no? ¡Todas las revistas permiten anexos! No hay excusas.
+    
+- Tengo limitaciones de espacio y debo elegir una medida en la tabla principal:
+    
+    + Elige la opción que mejor se adecue a tu objetivo: `describir`, `explicar`, `predecir`.
+    
+    + `RECUERDA:` Pon en anexos las demás medidas. Es información que podría ser útil para otros fines (p. ej., para calcular tamaño de muestra, evaluar comparabilidad de poblaciones, etc.)
+    
+
+### ¿Qué reportar?
+
+[Si objetivo es **DESCRIBIR**...]{.verde-h3}
+
+- Siempre reporte `máximo` y `mínimo`, preferentemente en `tabla principal` o texto.
+
+    - Es mejor que rango, provee más información.
+    
+    - Si problemas de espacio, usar `tabla anexa`.
+
+- `Media` +/- `Desviación estándar`
+
+    - Cuando meta es describir y la distribución es `simétrica` y `variabilidad es relativamente baja`. 
+    - La distribución normal es un ejemplo de distribución simétrica. 
+    
+- `Mediana` (`percentil 25` - `percentil 75`) 
+
+    - Cuando meta es describir y la distribución es  `asimétrica` o `variabilidad es relativamente alta`. 
+    - Mejor `percentiles 25 y 75` en vez de rango intercuartílico (`más información`de los primeros) 
+
+:::
+
+## Análisis de varias variables numéricas {.scrollable}
+
+::: panel-tabset
+
+### ¿Paquetes?
+
+- Hay varias opciones en R.
+
+- Las más personalizables se basan en [{R base}]{.verde-h3} y [{dplyr}]{.verde-h3} (funciones [summarise()]{.verde-h3}), pero requieren más código.
+
+    + Usar estas si se necesitan elaborar tablas ad hoc para reportes repropducibles muy *sui generis*.
+    
+    + También son necesarias para gráficos en [{ggplot2}]{.verde-h3}
+
+- Las opciones que requieren poco código y son directas tienen el problema de que no son personalizables: 
+
+    + [{summarytools}]{.verde-h3}
+    + [{DescTools}]{.verde-h3} 
+    + [{Hmisc}]{.verde-h3}
+
+    + Usar estas si solo se requiere inspeccionar los datos pero no se hará ningún reporte reproducibl *sui generis*.
+
+### R base
+
+
+```{r}
+#| echo: false
+bd_inmuno <- import("boost_inmuno.dta") %>% 
+  characterize()
+```
+
+
+- El problema con R base es que solo permite generar medidas de resumen una a la vez. 
+
+- Cuando inspeccionamos datos o los describimos necesitamos hacerlo con varias variables simultáneamnente.
+
+
+- Podemos hacerlo con otras funciones de R. 
+
+- Hay muchas opciones, veremos algunas que se sustentan en R tidy
+
+
+### {dplyr}
+
+- Podemos usar la función [summarise()]{.verde-h3} para solicitar estadísticos de resumen. Se requiere llamar las funciones de R base para medidas de resumen.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Sin etiquetado]{.verde-h3}
+
+```{r}
+bd_inmuno %>% 
+  summarise(mean(edad))
+```
+
+:::
+
+::: {.column width='50%'}
+
+[Mejor con etiquetado]{.verde-h3}
+
+```{r}
+bd_inmuno %>% 
+  summarise(Media = mean(edad))
+```
+
+:::
+
+::::
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Varios estadísticos pueden obtenerse]{.verde-h3}
+
+```{r}
+bd_inmuno %>% 
+  summarise(
+    Media = mean(edad), 
+    DE = sd(edad), 
+    Mediana = median(edad), 
+    `Percentil 25` = quantile(edad, 0.25), 
+    `Percentil 75` = quantile(edad, 0.75) 
+    )
+```
+
+:::
+
+::: {.column width='50%'}
+
+[Varias variables pueden analizarse]{.verde-h3}
+
+```{r}
+bd_inmuno %>% 
+  summarise(
+    `Media de edad` = mean(edad), 
+    `DE de edad` = sd(edad), 
+    `Mediana de edad` = median(edad),
+    Mediana_IgG_Final = median(IgG_Basal, na.rm = TRUE), 
+    RIQ_IgG_Final = IQR(IgG_Basal, na.rm = TRUE)
+    )
+```
+
+:::
+
+::::
+
+
+### {summarytools}
+
+- Genera un resumen descriptivo bastante detallado de las variables numéricas.
+
+```{r}
+library(summarytools)
+```
+
+- La función que describe variables numéricas es [descr()]{.verde-h3}
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Una sola variable numérica]{.verde-h3}
+
+```{r}
+bd_inmuno %>% 
+  descr(edad)
+```
+
+:::
+
+::: {.column width='50%'}
+
+[Todas las variables numéricas]{.verde-h3}
+
+```{r}
+bd_inmuno %>% 
+  descr()
+```
+
+:::
+
+::::
+
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Solo algunas variables numéricas]{.verde-h3}
+
+```{r}
+bd_inmuno %>% 
+  select(edad, IgG_Basal) %>% 
+  descr()
+```
+
+:::
+
+::: {.column width='50%'}
+
+[Solo algunos estadísticos]{.verde-h3}
+
+```{r}
+bd_inmuno %>% 
+  descr(edad, 
+        stats = c("mean", "sd", "min", "max"))
+```
+
+:::
+
+::::
+
+### {Hmisc}
+
+- El paquete [{Hmisc}]{.verde-h3} genera un reporte de resultados similar al de summarytools.
+
+```{r}
+library(Hmisc)
+```
+
+- La función [describe()]{.verde-h3} del paquete [{Hmisc}]{.verde-h3} genera un reporte con los principales estadísticos de resumen:
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Modo R base]{.verde-h3}
+
+```{r}
+describe(bd_inmuno$edad)
+```
+
+:::
+
+::: {.column width='50%'}
+
+[Modo R tidy]{.verde-h3}
+
+```{r}
+bd_inmuno %>% 
+  pull(edad) %>% 
+  describe()
+```
+
+:::
+
+::::
+
+### Más info
+
+Más información sobre el análisis de variables numéricas con...
+
++ Tablas para epi: <https://epirhandbook.com/en/descriptive-tables.html>
+     
++ [{dplyr}]{.verde-h3}: <https://dplyr.tidyverse.org/reference/group_by.html>
+    
++ [{janitor}]{.verde-h3}: <http://sfirke.github.io/janitor/articles/tabyls.html>
+    
++ [{summarytools}]{.verde-h3}: <https://htmlpreview.github.io/?https://github.com/dcomtois/summarytools/blob/master/doc/introduction.html>
+    
++ [{Hmisc}]{.verde-h3}: <https://hbiostat.org/rflow/descript.html>
+
+:::
+
+
+## ¿Cómo interpretar .... {.scrollable}
+
+::: panel-tabset
+
+### ... media?
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+- La [media aritmética]{.verde-h3} es una medida que trata de resumir los datos de una variable numérica en un solo valor. 
+
+    + La idea de la media es que este valor [represente]{.verde-h3} o sea el [delegado]{.verde-h3} de todos los datos.
+    + Podemos pensar la media como el [valor más probable que tendría cada individuo si no supieramos qué valores realmente tienen]{.verde-h3}: "si no sabes qué valor tiene, apuesta por el promedio".
+
+- [Propiedad interesante:]{.verde-h3} Es la medida que [más cerca está]{.verde-h3} de  todos los datos.
+
+    + En promedio, el desvío de la media respecto a los datos es nulo.
+    
+:::
+
+::: {.column width='2%'}
+
+:::
+
+::: {.column width='48%'}
+
+- En la práctica, solo se reporta como promedio, sin más interpretación (esta es tácita).
+
+|        [*"La edad media fue de 34 años (...)"*]{.verd1}
+
+[Ejemplo]{.verde-h3}
+
+- Tenemos cuatro notas del curso de Bioestadística: 15, 20, 17 y 12.
+
+```{r}
+#| echo: false
+notas <- c(15, 20, 17, 12)
+```
+
+- El promedio de estas notas es `r mean(notas)`.
+
+- Cada nota se desvía del promedio en lo siguiente:
+
+```{r}
+#| echo: false
+desvio_notas <- notas - mean(notas)
+
+datos <- data.frame(
+  notas = notas, 
+  promedio_notas = mean(notas), 
+  desvio_notas = desvio_notas, 
+  desvio_promedio = mean(desvio_notas)
+)
+
+datos %>% 
+  kbl() %>% 
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                full_width = T, font_size = 20) 
+```
+
+
+:::
+
+::::
+
+
+### ... percentiles?
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Mediana]{.verde-h3}
+
+- Puede dejarse tácita la interpretación (lo más común):
+
+|          [*"La mediana de edad fue de 35 años (...)"*]{.verd1}
+
+- Como representa el 50% de los datos, también puede interpretarse como (para enfatizar un hallazgo relevante):
+
+|          [*"La mitad de los participantes tuvieron niveles de*]{.verd1} 
+|          [*hemoglobina por debajo de 10.2 mg/dl (...)"*]{.verd1}
+
+:::
+
+::: {.column width='50%'}
+
+[Percentiles 25 y 75]{.verde-h3}
+
+- Puede dejarse tácita la interpretación (lo más común):
+
+|          [*"La mediana de edad fue de 35 años*]{.verd1}
+|          [*(20 años - 54 años) (...)"*]{.verd1}
+
+- Como representan % conocidos, también puede interpretarse como (para enfatizar un hallazgo relevante):
+
+|          [*"El 25% de los participantes tuvieron menos de 20*]{.verd1}
+|          [*años y el 75% menos de 54 años (...)"*]{.verd1}
+
+:::
+
+::::
+
+
+### ... variabilidad? 
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Varianza]{.verde-h3}
+
+- No se suele interpertar.
+
+- Debido a que está en unidades al cuadrado no se suele reportar, se prefiere a la desviación estándar.
+
+[Desviación estándar]{.verde-h3}
+
+- No se suele interpretar, solo reportar.
+
+- Lo que implica que su interpretación/significado es tácito.
+
+- Es la medida de dispersión que acompaña por defecto a la media:
+
+|          [*"La edad media (desviación estándar) fue de 35*]{.verd1}
+|          [*años (23 años) (...)"*]{.verd1}
+
+[Rango]{.verde-h3}
+
+- Es preferible reportar los valores mínimo y máximo.
+
+- A menudo se parafrasea:
+
+|          [*"La edad media (desviación estándar) fue de 35*]{.verd1}
+|          [*años (23 años) y varió entre 19 y 54 años (...)"*]{.verd1}    
+
+:::
+
+::: {.column width='50%'}
+
+[Rango intercuartílico]{.verde-h3}
+
+- Es preferible reportar el percentil 25 y 75, no la diferencia: Da más información.
+
+- Se parafrasea como el ejemplo de los percentiles 25 y 75.
+
+- También se puede parafrasear de la siguiente manera:
+
+|          [*"La mediana de edad fue de 35 años*]{.verd1}
+|          [*y la mitad de los participantes tuvo*]{.verd1}
+|          [*entre 20 años y 54 años (...)"*]{.verd1}
+
+[Coeficiente de variación]{.verde-h3}
+
+- Cuando se reporta, no se suele interpretar (es tácito).
+
+- Sin embargo, podemos hacer una valoración 'cualitativa' del valor para algun interpretación.
+
+- Algunas reglas del pulgar (según INEI, Perú):
+    + $CV < 5\%$ : Poca variabilidad
+    + $5\% \leq CV \leq 10\%$: Variabilidad regular
+    + $CV > 10\%$: Alta variabilidad (aquí podría ser mejor describir usando medidas de posición)
+:::
+
+::::
+
+:::
+
+# Análisis descriptivo de variables categóricas 
+
+## Medidas de frecuencia {.scrollable}
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[¿Qué describir de los datos categóricos?]{.verde-h3}
+
+- Frecuencia absoluta 
+
+- Frecuencia relativa
+
+    + Proporción
+        + Entre 0 y 1
+    
+    + Porcentaje
+    
+        + Entre 0% y 100% = Proporción * 100 %
+        
+[El tamaño importa]{.verde-h3}
+
+- Si n es pequeño (< 100, habitualmente)
+
+    + Mejor solo reportar frecuencias absolutas.
+    
+    + Porcentajes pueden ser contraintuitivos.
+    
+- Si n es mayor que 100
+
+    + Frecuencias absolutas + relativas (en %, a menudo).
+:::
+
+::: {.column width='50%'}
+
+[Algunos proporciones tienen nombres propios]{.verde-h3}
+    
+- Frecuencias relativas de eventos de interés (problemas de salud, estados de salud, enfermedades, etc.) suelen tener nombres específicas en Epidemiología Clínica y Bioestadística.
+
+- El nombre depende de cómo se construye la proporción.
+
+    - Prevalencia
+    - Incidencia Acumulada o Proporción de Incidencia
+    - Odds
+        + Prevalente
+        + Incidente
+        
+- Algunos diseños de estudio permiten su cálculo, otros, los vuelven imposibles.
+
+:::
+
+::::
+
+## Frecuencias Relativas en Bioestadística y Epi Clínica {.scrollable}
+
+::: {.panel-tabset}
+
+### Prevalencia
+
+> Proporción de una población específica que está afectada por un evento de salud de interés (típicamente una enfermedad o factor de riesgo, pero también puede ser factor benéfico) en un tiempo específico.
+
+$$Prevalencia = \frac{\text{Nº de eventos en t}}{\text{Nº de eventos + Nº sin evento en t}}$$
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+- El tiempo específico puede ser un punto, un periodo o toda una vida.
+
+- Puede calcularse en una muestra cualquiera, pero a menudo interesan prevalencias de poblaciones relevantes.
+
+    + Hablaremos de esto mejor en la sección de estimación.
+  
+:::
+
+::: {.column width='50%'}
+
+- Tipos de prevalencia: Dependen de qué es $t$
+    + Prevalencia puntual: $t$ es solo un momento.
+    + Prevalencia de intervalo: $t$ es un intervalo definido de tiempo.
+    + Prevalencia de vida: $t$ es todo el intervalo de la vida del sujeto (desde que ocurrió alguna vez el evento).
+    
+:::
+
+::::
+
+### Incidencia Acumulada
+
+> Proporción de incidencia o incidencia acumulada es la probabilidad de que ocurra un nuevo evento  particular (tal como una enfermedad) antes de un tiempo dado.
+
+- El cáculo es directo si no han habido pérdidas en el seguimiento de los individuos y la fórmula es la siguiente:
+
+$$
+\text{Incidencia Acumulada} = \frac{\text{Nº eventos nuevos durante periodo t}}{\text{Nº de individuos sin evento en risgo al inicio del periodo t}}
+$$
+
+- El cálculo no es directo si hay pérdidas de seguimiento (lo conversaremos en otra clase).
+
+
+### Prev vs. IA
+
+:::{.callout-important collapse=false appearance='default' icon=true}
+## Prevalencia versus Incidencia Acumulada
+
+```{r}
+#| echo: false
+prev_inc <- data.frame(
+  Caracteristica = c("Numerador", "Denominador", "¿Probabilidad de qué...?", "Notas"), 
+  Prevalencia = c("Eventos existentes en t", "Todos los individuos (con y sin eventos) en t", "Probabilidad de tener el evento", "Solo requiere un punto en el tiempo. A menudo se busca poblaciones relevantes y usa muestras probabilísticas."), 
+  Incidencia = c("Eventos nuevos durante el periodo t", "Individuos sin evento al inicio del periodo t", "Probabilidad de desarrolalr evento nuevo", "Requiere al menos dos puntos de tiempo. Puede estimarse en poblaciones relevantes. A menudo se usan muestras no probabilísticas en las que es factible el seguimiento (p. ej., pacientes)")
+  )
+
+prev_inc %>% 
+  kbl(col.names = c("", "Prevalencia", "Incidencia Acumulada")) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                full_width = T, 
+                font_size = 40) 
+```
+
+:::
+
+### Odds
+
+> Es la razón de la probabilidad del evento entre la probabilidad del no evento. 
+
+$$Odds = \frac{Pr(evento)}{Pr(\text{no evento})} = \frac{Pr(evento)}{1 - Pr(\text{evento})}$$
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+- Es solo una forma diferente de escribir la probabilidad del evento.
+
+    + Análogo a expresar en céntimos y no en soles el precio de algo.
+    + Por tanto, es una forma diferente de expresar lo mismo: 
+        - La frecuencia relativa de un evento y, a través de esta, su incertidumbre asociada.
+ 
+:::
+
+::: {.column width='50%'}
+
+- Si probabilidad de ganar es de 0.8 (~80%), entonces el odds es 4. El odds se interpretaría como:
+
+|                     *La probabilidad de ganar es 4*  
+|                   *veces la probabilidad de perder.*
+
+- Odds y probabilidad son diferentes, pero tienen valores muy similares cuando la probabilidad del evento es muy pequeña.
+
+
+:::
+
+::::
+
+
+### Odds vs Probabilidad
+
+:::: {.columns}
+
+::: {.column width='35%'}
+
+```{r}
+#| echo: false
+options(scipen=999)
+odd_prob <- data.frame(
+  Probabilidad = c(0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.8, 0.9, 0.99, 0.999)
+  ) %>% 
+  mutate(
+    Odds = Probabilidad / (1 - Probabilidad), 
+    Diferencia = Odds - Probabilidad
+  )
+
+odd_prob %>% 
+  kbl() %>% 
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                full_width = T, 
+                font_size = 30) 
+```
+
+:::
+
+::: {.column width='65%'}
+
+```{r}
+#| echo: false
+
+odd_prob2 <- data.frame(
+  Probabilidad = seq(0, 0.999, 0.001)
+  ) %>% 
+  mutate(
+    Odds = Probabilidad / (1 - Probabilidad), 
+    Diferencia = Odds - Probabilidad
+  )
+```
+
+<br/><br/>
+
+::: {.r-stack}
+
+:::{.fragment}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+odd_prob2 %>%
+  filter(Probabilidad < 0.3) %>% 
+  ggplot(aes(x = Probabilidad, y = Odds)) +
+  geom_line(colour = "blue") + 
+  scale_x_continuous(breaks = seq(0, 0.45, 0.05), limits = c(0, 0.45)) + 
+  scale_y_continuous(breaks = seq(0, 0.45, 0.05), limits = c(0, 0.45)) + 
+  ggtitle("Odds y probabilidades son similares cuando la probabilidad es pequeña") + 
+  theme_bw() -> plot1
+
+plot1
+
+# plot1 %>% 
+#   ggplotly()
+```
+
+:::
+
+:::{.fragment}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+odd_prob2 %>%
+  ggplot(aes(x = Probabilidad, y = Odds)) +
+  geom_line(colour = "blue") + 
+  scale_x_continuous(breaks = seq(0, 1, 0.05), limits = c(0, 1)) + 
+  scale_y_continuous(breaks = seq(0, 1000, 100), limits = c(0, 1000)) +
+  ggtitle("Conforme la probabilidad aumenta, los odds crecen exponencialmente") + 
+  theme_bw() -> plot2
+
+plot2
+
+# plot2 %>% 
+#   ggplotly()
+```
+
+:::
+
+:::
+
+:::
+
+::::
+
+
+### Odds en Epi/Bio
+
+- Los odds no se usan mucho en epidemiología para expresar frecuencias; pero una medida derivada de esta sí se usa mucho para expresar asociación: la razón de odds (OR). 
+
+- En epidemiología, las proporciones o probabilidades puede ser incidencias acumuladas o prevalencias, por lo que tenemos dos tipos de Odds:
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+<center>[Odds prevalente]{.verde-h3}</center>
+
+$$Odds_{Prevalente} = \frac{Prevalencia}{1 - Prevalencia}$$
+:::
+
+::: {.column width='50%'}
+
+<center>[Odds incidente]{.verde-h3}</center>
+
+$$Odds_{Incidente} = \frac{\text{Incidencia Acumulada}}{1 - \text{Incidencia Acumulada}}$$
+
+:::
+
+::::
+
+:::
+
+
+# Medidas de resumen de variables categóricas con R
+
+## Análisis con R {.scrollable}
+
+::: {.panel-tabset}
+
+### ¿Paquetes?
+
+- Hay varias opciones en R.
+
+- Las más personalizables se basan en [{dplyr}]{.verde-h3} y [{janitor}]{.verde-h3} (funciones [summarise()]{.verde-h3}), pero requieren más código.
+
+    + Usar estas si se necesitan elaborar tablas ad hoc para reportes repropducibles muy *sui generis*.
+    
+    + También son necesarias para gráficos en [{ggplot2}]{.verde-h3}
+
+- Las opciones que requieren poco código y son directas tienen el problema de que no son personalizables: 
+
+    + [{summarytools}]{.verde-h3}
+    + [{DescTools}]{.verde-h3} 
+
+    + Usar estas si solo se requiere inspeccionar los datos pero no se hará ningún reporte reproducibl *sui generis*.
+
+### R base 
+
+>La función [table()]{.verde-h3} y [prop.table()]{.verde-h3}es la más usada. Sin embargo, genera tablas "sucias" que requieren mucho código para personalizarse. 
+
+- Tabla de frecuencias absolutas
+
+```{r}
+#| echo: false
+bd_inmuno <- read_stata("boost_inmuno.dta") %>% 
+  as_factor()
+```
+
+```{r}
+table(bd_inmuno$sexo)
+```
+
+- Tabla de frecuencias relativas
+
+```{r}
+prop.table(table(bd_inmuno$sexo))
+```
+
+- Tabla de frecuencias incluyendo los datos faltantes
+
+```{r}
+table(bd_inmuno$sexo, useNA = "always")
+```
+
+### {dplyr}
+
+>Podemos combinar la funcion [group_by()]{.verde-h3} con [summarise()]{.verde-h3} para generar una tabla de frecuencias de la variable de interés. Podemos también tomar un atajo con [count]{.verde-h3}
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+- Frecuencias absolutas: Forma larga
+
+```{r}
+bd_inmuno %>% 
+  group_by(sexo) %>% 
+  summarise(n = n())
+```
+
+- Frecuencias absolutas + relativas: Forma larga
+
+```{r}
+library(scales) # Para agregar escalas, p. ej., porcentajes %
+bd_inmuno %>% 
+  group_by(sexo) %>% 
+  summarise(n = n()) %>% 
+  mutate(
+    Porcentaje = scales::percent(n / sum(n))
+  )
+```
+
+:::
+
+::: {.column width='50%'}
+
+- Frecuencias absolutas: Atajo con count()
+
+```{r}
+bd_inmuno %>% 
+  count(sexo)
+
+```
+
+- Frecuencias absolutas + relativas: Atajo con count()
+
+```{r}
+library(scales) # Para agregar escalas, p. ej., porcentajes %
+bd_inmuno %>% 
+  count(sexo) %>% 
+  mutate(
+    Porcentaje = scales::percent(n / sum(n))
+  )
+
+```
+
+:::
+
+::::
+
+### {janitor}
+
+>El paquete [{janitor}]{.verde-h3}, a través de su función [tabyl(){.verde-h3}], ofrece atajos y funciones pre-definidas para realizar tablas basadas en funciones de [{dplyr}]{.verde-h3}.
+
+- [{janitor}]{.verde-h3} ejecuta internamente [summarise()]{.verde-h3}, [group_by()]{.verde-h3} y otras funciones más, simplificando notoriamente el código.
+
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+- Hay que instalar el paquete [{janitor}]{.verde-h3} y luego cargarlo
+
+```{r}
+library(janitor)
+```
+
+[Tabla simple generada por tabyl()]{.verde-h3}
+
+```{r}
+bd_inmuno %>% 
+  tabyl(sexo)
+```
+
+[Puedes "adornar" la tabla usando más funciones de {janitor}]{.verde-h3}
+
+Cambiar formato de porcentaje a %
+
+```{r}
+bd_inmuno %>% 
+  tabyl(sexo, show_na = FALSE) %>% 
+  adorn_pct_formatting()
+```
+
+:::
+
+::: {.column width='50%'}
+
+- Puedes suprimir los datos perdidos
+
+```{r}
+bd_inmuno %>% 
+  tabyl(sexo, show_na = FALSE)
+```
+
+[Agregar totales]{.verde-h3}
+
+```{r}
+bd_inmuno %>% 
+  tabyl(sexo, show_na = FALSE) %>% 
+  adorn_pct_formatting() %>% 
+  adorn_totals()
+```
+
+[Configurar precisión decimal]{.verde-h3}
+
+```{r}
+bd_inmuno %>% 
+  tabyl(sexo, show_na = FALSE) %>% 
+  adorn_pct_formatting(digits = 2) %>% 
+  adorn_totals() 
+```
+
+:::
+
+::::
+
+
+### {summarytools}
+
+>Si queremos una evaluación rápida de varias variables puede ser obtenida usando la función [freq()]{.verde-h3} del paquete [{summarytools}]{.verde-h3}
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+- Una sola variable:
+
+```{r}
+bd_inmuno %>% 
+  select(sexo) %>% 
+  freq()
+```
+
+- Solo las seleccioandas
+
+```{r}
+bd_inmuno %>% 
+  select(sexo, comorb) %>% 
+  freq()
+```
+:::
+
+::: {.column width='50%'}
+
+- Todas las variables categóricas
+
+```{r}
+bd_inmuno %>% 
+   freq()
+```
+
+- Eliminando los datos perdidos y otras caracteristicas: 
+
+```{r}
+bd_inmuno %>% 
+   freq(report.nas = FALSE, 
+        totals = FALSE,
+        cumul = FALSE, 
+        headings= FALSE)
+```
+
+
+:::
+
+::::
+
+
+### Más info
+
+Más información sobre el análisis de variables categóricas con...
+
++ Tablas para epi: <https://epirhandbook.com/en/descriptive-tables.html>
+     
++ [{dplyr}]{.verde-h3}: <https://dplyr.tidyverse.org/reference/group_by.html>
+    
++ [{janitor}]{.verde-h3}: <http://sfirke.github.io/janitor/articles/tabyls.html>
+    
++ [{summarytools}]{.verde-h3}: <https://htmlpreview.github.io/?https://github.com/dcomtois/summarytools/blob/master/doc/introduction.html>
+    
+:::
+
+## 
+
+## Análisis descriptivo de variable categórica - recomendaciones {.scrollable}
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+- Se estila reportar los resultados como números en tablas.
+
+- En el texto, se puede resaltar los resultados de una o más variables de interés.
+
+- Un ejemplo de esto sería: 
+
+```{r}
+bd_inmuno %>% 
+  select(sexo, ant_COV) %>% 
+   freq(report.nas = FALSE, 
+        totals = FALSE,
+        cumul = FALSE, 
+        headings= FALSE)
+```
+
+:::
+
+::: {.column width='50%'}
+
+- Interpretación tentativa para sexo:
+
+|         *"El 66.6% de los participantes fueron mujeres. (...)"*
+
+- Algunos sugieren agregar la información de las frecuencias absolutas:
+
+|         *"El 66.6% (189 / 284) de los participantes fueron* 
+|         *mujeres. (...)"*
+
+-    Para el caso de eventos de salud, se estila usar los términos `prevalencia` o `incidencia acumulada` si el diseño lo permite. Por tanto, una interpretación tentativa para antecedente de infección por COVID-19:
+
+|        *"La prevalencia de antecedente de infección previa por* 
+|        *COVID-19 fue de 29.47% (84 / 285). (...)"*
+
+:::
+
+::::
+
+
+# Gráficos de variables numéricas con R
+
+## Intro sobre gráficos de variables numéricas {.scrollable}
+
+<br/>
+
+- Permiten visualizar la distribución de la variable numérica en la muestra de datos.
+
+- Hay varios tipos de gráficos que pueden hacerse para inspeccionar la variable numérica.
+
+- Hay que distinguir dos tipos de gráficos:
+
+    + Los de inspección: Deben ser rápidos de generar y leer, aunque no sean tan personalizables o elegantes. Usar funciones `wrapper()` de otros paquetes ayuda mucho. Usaremos [{ggpubr}]{.plo}
+    
+    + Los de reporte: Deben ser elegantes y super personalizados., aunque se demoren en generarse. ¡[{ggplot2}]{.plo} es fenomenal para estos!
+    
+
+## Histogramas de frecuencias {.scrollable}
+
+::: {.panel-tabset}
+
+### ggplot2
+
+>Podemos crear histogramas usando la geometría `geom_histogram()`.
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+```{r}
+#| code-line-numbers: "1|2|3|"
+#| eval: false
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_histogram()
+```
+
+:::
+
+::: {.column width='60%'}
+
+```{r}
+#| fig-align: center
+#| out-width: 100%
+#| message: true
+#| echo: false
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_histogram() 
+```
+
+:::
+
+::::
+
+
+### binwidth
+
+>Se puede configurar el ancho de las barras (*bins* e inglés).
+
+:::: {.columns}
+
+::: {.column width='33.33%'}
+
+```{r}
+#| fig-align: center
+#| out-width: 100%
+#| message: true
+#| code-line-numbers: "1,2|3|"
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_histogram(binwidth = 5) 
+```
+
+
+:::
+
+::: {.column width='33.33%'}
+
+```{r}
+#| fig-align: center
+#| out-width: 100%
+#| message: true
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_histogram(binwidth = 50) 
+```
+
+:::
+
+::: {.column width='33.33%'}
+
+```{r}
+#| fig-align: center
+#| out-width: 100%
+#| message: true
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_histogram(binwidth = 200) 
+```
+
+:::
+
+::::
+
+### personalizar
+
+> Podemos personalizar el gráfico agregando capas. Por ejemplo, podemos usar `labs()` y `theme_`:
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+```{r}
+#| code-line-numbers: "1,2,3|4|5|6|4,5,6|7|"
+#| eval: false
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_histogram(binwidth = 5) + 
+  labs(x = "Ig G al inicio del estudio", 
+       y = "Frecuencia", 
+       title = "Distribución de la IgG") + 
+  theme_bw()
+```
+
+:::
+
+::: {.column width='60%'}
+
+```{r}
+#| fig-align: center
+#| out-width: 100%
+#| message: true
+#| echo: false
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_histogram(binwidth = 5) + 
+  labs(x = "Ig G al inicio del estudio", 
+       y = "Frecuencia", 
+       title = "Distribución de la IgG") + 
+  theme_bw()
+```
+
+:::
+
+::::
+
+### más info
+
+<br/><br/>
+[Más información en el siguiente enlace:]{.big-text1}
+
+[<https://ggplot2.tidyverse.org/reference/geom_histogram.html>]{.big-text1}
+
+:::
+
+## Histogramas de densidades {.scrollable}
+
+::: {.panel-tabset}
+
+### ggplot2
+
+>Podemos usar densidades en vez de frecuencias absolutas o relativas en los histogramas. En variables continuas, las densidades se aproximan mejor a la idea de densidad de probabilidad
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+```{r}
+#| code-line-numbers: "1,2|3|"
+#| eval: false
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_histogram(aes(y = ..density..))
+```
+
+:::
+
+::: {.column width='60%'}
+
+```{r}
+#| fig-align: center
+#| out-width: 100%
+#| message: true
+#| echo: false
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_histogram(aes(y = ..density..))
+```
+:::
+
+::::
+
+
+### binwidth
+
+>Se puede configurar el ancho de las barras (*bins* e inglés).
+
+:::: {.columns}
+
+::: {.column width='33.33%'}
+
+```{r}
+#| fig-align: center
+#| out-width: 100%
+#| message: true
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_histogram(aes(y = ..density..), 
+                 binwidth = 5)
+```
+
+:::
+
+::: {.column width='33.33%'}
+
+```{r}
+#| fig-align: center
+#| out-width: 100%
+#| message: true
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_histogram(aes(y = ..density..), 
+                 binwidth = 50)
+```
+
+:::
+
+::: {.column width='33.33%'}
+
+```{r}
+#| fig-align: center
+#| out-width: 100%
+#| message: true
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_histogram(aes(y = ..density..), 
+                 binwidth = 200)
+```
+
+:::
+
+::::
+
+### personalizar
+
+> Podemos personalizar el gráfico agregando capas. Por ejemplo, podemos usar `labs()` y `theme_`:
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+```{r}
+#| code-line-numbers: "1,2,3|4|5|6|4,5,6|7|"
+#| eval: false
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_histogram(aes(y = ..density..), binwidth = 5) + 
+  labs(x = "Ig G al inicio del estudio", 
+       y = "Frecuencia", 
+       title = "Distribución de la IgG") + 
+  theme_bw()
+```
+
+:::
+
+::: {.column width='60%'}
+
+```{r}
+#| fig-align: center
+#| out-width: 100%
+#| message: true
+#| echo: false
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_histogram(aes(y = ..density..), binwidth = 5) + 
+  labs(x = "Ig G al inicio del estudio", 
+       y = "Frecuencia", 
+       title = "Distribución de la IgG") + 
+  theme_bw()
+```
+
+:::
+
+::::
+
+### más info
+
+<br/><br/>
+[Más información en el siguiente enlace:]{.big-text1}
+
+[<https://ggplot2.tidyverse.org/reference/geom_histogram.html>]{.big-text1}
+
+
+:::
+
+## Densidad {.scrollable}
+
+
+::: {.panel-tabset}
+
+### ggplot2
+
+>En vez de graficar histogramas, podemos dibujar gráfico de densidades cuyas curvas están suavizadas imitando el aspecto de una distribución de probabilidad. Usamo la geometría `geom_density()`.
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+```{r}
+#| code-line-numbers: "1,2|3|"
+#| eval: false
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_density()
+```
+
+:::
+
+::: {.column width='60%'}
+
+```{r}
+#| fig-align: center
+#| out-width: 100%
+#| message: true
+#| echo: false
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_density()
+```
+:::
+
+::::
+
+### adjust
+
+>Se puede configurar el parámetro de suavización adjust
+
+:::: {.columns}
+
+::: {.column width='33.33%'}
+
+```{r}
+#| fig-align: center
+#| out-width: 100%
+#| message: true
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_density(adjust = 0.1)
+```
+
+
+:::
+
+::: {.column width='33.33%'}
+
+```{r}
+#| fig-align: center
+#| out-width: 100%
+#| message: true
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_density(adjust = 0.5)
+```
+
+:::
+
+::: {.column width='33.33%'}
+
+```{r}
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_density(adjust = 2)
+```
+
+:::
+
+::::
+
+### Personalizar
+
+> Podemos personalizar el gráfico agregando capas. Por ejemplo, podemos usar `labs()` y `theme_`:
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+```{r}
+#| eval: false
+#| code-line-numbers: "1,2,3|4,5,6|7|"
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_density(adjust = 1) + 
+  labs(x = "Ig G al inicio del estudio", 
+       y = "Densidad", 
+       title = "Distribución de la IgG") + 
+  theme_bw()
+```
+
+:::
+
+::: {.column width='60%'}
+
+```{r}
+#| fig-align: center
+#| out-width: 100%
+#| message: true
+#| echo: false
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_density(adjust = 1) + 
+  labs(x = "Ig G al inicio del estudio", 
+       y = "Densidad", 
+       title = "Distribución de la IgG") + 
+  theme_bw()
+```
+
+
+:::
+
+::::
+
+### más info
+
+<br/><br/>
+[Más información en el siguiente enlace:]{.big-text1}
+
+[<https://ggplot2.tidyverse.org/reference/geom_density.html>]{.big-text1}
+
+:::
+
+
+## Gráfico de cajas {.scrollable}
+
+::: {.panel-tabset}
+
+### ggplot2
+
+>Podemos crear gráficos de cajas usando la geometría `geom_boxplot()`.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Cajas horizontales]{.hl}
+
+```{r}
+#| code-line-numbers: "1|2|3|"
+#| fig-align: center
+#| out-width: 100%
+#| message: true
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_boxplot()
+```
+
+:::
+
+::: {.column width='50%'}
+
+[Cajas verticales]{.hl}
+
+```{r}
+#| code-line-numbers: "1|2|3|"
+#| fig-align: center
+#| out-width: 100%
+#| message: true
+bd_inmuno %>% 
+  ggplot(aes(y = IgG_Basal)) + 
+  geom_boxplot()
+```
+
+:::
+
+::::
+
+### personalizar
+
+> Podemos personalizar el gráfico agregando capas. Por ejemplo, podemos usar `labs()` y `theme_`. También podemos eliminar los números y guiones del eje x usando `theme()`.
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+```{r}
+#| code-line-numbers: "1,2,3|4|5|6|3,5,6|7|4,5,6|7|8|7,8|"
+#| eval: false
+bd_inmuno %>% 
+  ggplot(aes(y = IgG_Basal)) + 
+  geom_boxplot() + 
+  labs(x = NULL, 
+       y = "IgG basal (AU/mL)", 
+       title = "Gráfico de cajas de IgG basal") + 
+  theme(axis.ticks.x = element_blank(),
+        axis.text.x = element_blank())
+```
+
+:::
+
+::: {.column width='60%'}
+
+```{r}
+#| fig-align: center
+#| out-width: 100%
+#| message: true
+#| echo: false
+bd_inmuno %>% 
+  ggplot(aes(y = IgG_Basal)) + 
+  geom_boxplot() + 
+  labs(x = NULL, 
+       y = "IgG basal (AU/mL)", 
+       title = "Gráfico de cajas de IgG basal") + 
+  theme(axis.ticks.x = element_blank(),
+        axis.text.x = element_blank())
+```
+
+:::
+
+::::
+
+### partes
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+- Anatomía:
+
+    + `Bordes de caja`: percentil 25 (cuartil 1) y 75 (cuartil 3)
+    
+    + `Linea horizontal dentro de caja`: percentil 50 (cuartil 2 o mediana)
+    
+    + `Rango intercuartílico (IQR)`: percentil 75- percentil 25
+    
+    + `Bigotes`: ± 1.5 IQR
+    
+    + `Puntos fuera de bigotes`: Outliers según regla de Tukey
+    
+:::
+
+::: {.column width='60%'}
+
+```{r}
+#| echo: false
+#| out-width: 100%
+#| fig-align: center
+bd_inmuno %>% 
+  ggplot(aes(y = edad)) + 
+  geom_boxplot() + 
+  labs(x = NULL, 
+       y = "Edad (años)", 
+       title = "Gráfico de cajas de Edad") +  
+  theme(axis.ticks.x = element_blank(),
+        axis.text.x = element_blank()) +
+  annotate("text", x = 0.2, y = 62, label = "Percentil 75 = Cuartil 3", color = "red") + 
+  annotate("text", x = 0.2, y = 49, label = "Percentil 50 = Cuartil 2 = Mediana", color = "red") + 
+  annotate("text", x = 0.2, y = 39, label = "Percentil 25 = Cuartil 1", color = "red") + 
+  annotate("text", x = 0.16, y = 90, label = "Extremo superior (p75 + 1.5 * IQR)", color = "red") + 
+  annotate("text", x = 0.15, y = 25, label = "Extremo inferior (p75 - 1.5 * IQR)", color = "red") + 
+  annotate("text", x = 0.13, y = 95, label = "Datos extremos ('outliers')", color = "red") 
+```
+
+
+:::
+
+::::
+
+
+### notas 
+
+- Aunque se puede usar en gráficos univariados, no es un muy gráfico para estos fines.
+
+    - ¡Es mejor para realizar comparaciones en análisis bivariados!
+
+- Los "outliers" o valores extremos son solo referenciales.
+
+- Las cajas sugieren simetría de distribución, pero no permiten ver la forma directamente: 
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Distribución simétrica]{.hl}
+
+```{r}
+#| echo: false
+set.seed(123)
+datos <- data.frame(
+  simetrico = rnorm(100), 
+  asimetrico = rexp(100, 0.5)
+)
+```
+
+```{r}
+#| echo: false
+datos %>%  
+  ggplot(aes(x = simetrico)) +  
+  geom_boxplot()
+```
+
+
+:::
+
+::: {.column width='50%'}
+
+[Distribución asimétrica]{.hl}
+
+```{r}
+#| echo: false
+datos %>%  
+  ggplot(aes(x = asimetrico)) +  
+  geom_boxplot()
+```
+
+:::
+
+::::
+
+
+
+### más info
+
+<br/><br/>
+[Más información en el siguiente enlace:]{.big-text1}
+
+[<https://ggplot2.tidyverse.org/reference/geom_boxplot.html>]{.big-text1}
+
+:::
+
+## Violin {.scrollable}
+
+::: {.panel-tabset}
+
+### ggplot2
+
+>Gráficos de violin son similares a gráficos de caja, excepto porque también muestran la densidad de probabilidad.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Cajas horizontales]{.hl}
+
+```{r}
+#| code-line-numbers: "1|2|3|"
+#| fig-align: center
+#| out-width: 100%
+#| message: true
+bd_inmuno %>% 
+  ggplot(aes(x = 1, y = IgG_Basal)) + 
+  geom_violin()
+```
+
+:::
+
+::: {.column width='50%'}
+
+[Cajas verticales]{.hl}
+
+```{r}
+#| code-line-numbers: "1|2|3|"
+#| fig-align: center
+#| out-width: 100%
+#| message: true
+bd_inmuno %>% 
+  ggplot(aes(x = 1, y = IgG_Basal)) + 
+  geom_violin()
+```
+
+:::
+
+::::
+
+### personalizar
+
+> Podemos personalizar el gráfico agregando capas. Por ejemplo, podemos usar `labs()` y `theme_`. También podemos eliminar los números y guiones del eje x usando `theme()`.
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+```{r}
+#| code-line-numbers: "1,2,3|4|5|6|3,5,6|7|4,5,6|7|8|9|8,9|"
+#| eval: false
+bd_inmuno %>% 
+  ggplot(aes(x = 1, y = IgG_Basal)) + 
+  geom_violin() + 
+  labs(x = NULL, 
+       y = "IgG basal (AU/mL)", 
+       title = "Gráfico de violin de IgG basal") + 
+  theme_bw() + 
+  theme(axis.ticks.x = element_blank(),
+        axis.text.x = element_blank()) 
+```
+
+:::
+
+::: {.column width='60%'}
+
+```{r}
+#| fig-align: center
+#| out-width: 100%
+#| message: true
+#| echo: false
+bd_inmuno %>% 
+  ggplot(aes(x = 1, y = IgG_Basal)) + 
+  geom_violin() + 
+  labs(x = NULL, 
+       y = "IgG basal (AU/mL)", 
+       title = "Gráfico de violin de IgG basal") + 
+  theme_bw() + 
+  theme(axis.ticks.x = element_blank(),
+        axis.text.x = element_blank()) 
+```
+
+:::
+
+::::
+
+### notas 
+
+- A menudo se reportan combinado con un gráfico de cajas, puntos o ambos.
+
+- Los gráficos de violin combinados dan mucha más información, por lo que se debería preferir usar.
+
+- Contraindicación: Si se cuentan con pocos datos, los gráficos de kernel no son confiables.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Distribución simétrica]{.hl}
+
+```{r}
+#| echo: false
+set.seed(123)
+datos <- data.frame(
+  simetrico = rnorm(100), 
+  asimetrico = rexp(100, 0.5)
+)
+```
+
+```{r}
+#| echo: false
+datos %>%  
+  ggplot(aes(x = 1, y = simetrico)) +  
+  geom_violin() + 
+  theme_bw() + 
+  theme(axis.ticks.x = element_blank(),
+        axis.text.x = element_blank()) 
+```
+
+
+:::
+
+::: {.column width='50%'}
+
+[Distribución asimétrica]{.hl}
+
+```{r}
+#| echo: false
+datos %>%  
+  ggplot(aes(x = 1, y = asimetrico)) +  
+  geom_violin() + 
+  theme_bw() + 
+  theme(axis.ticks.x = element_blank(),
+        axis.text.x = element_blank()) 
+```
+
+:::
+
+::::
+
+
+
+### más info
+
+<br/><br/>
+[Más información en el siguiente enlace:]{.big-text1}
+
+[<https://ggplot2.tidyverse.org/reference/geom_violin.html>]{.big-text1}
+
+:::
+
+## Combinación de gráficos {.scrollable}
+
+>Se sugiere reportar gráficos descriptivos que sean informativos. Estos pueden obtenerse de combinar gráficos existentes. Veremos algunos ejemplos.
+
+::: {.panel-tabset}
+
+### histograma+densidad
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Sin personalizar]{.hl}
+
+```{r}
+#| code-line-numbers: "1|2|3|4|"
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_histogram(aes(y = ..density..)) + 
+  geom_density()
+```
+
+:::
+
+::: {.column width='50%'}
+
+[Personalizado]{.hl}
+
+```{r}
+#| code-line-numbers: "1|2|3|4|"
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  ggplot(aes(x = IgG_Basal)) + 
+  geom_histogram(aes(y = ..density..), colour = "black", fill = "white") + 
+  geom_density(fill = 4, alpha = 0.25) + 
+  theme_minimal()
+```
+
+:::
+
+::::
+
+### caja+dotplot
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Sin personalizar]{.hl}
+
+```{r}
+#| code-line-numbers: "1|2|3|4|"
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  ggplot(aes(x = 1, y = IgG_Basal)) + 
+  geom_boxplot() + 
+  geom_dotplot(binaxis = "y", stackdir = "center") 
+```
+
+:::
+
+::: {.column width='50%'}
+
+[Personalizado]{.hl}
+
+```{r}
+#| code-line-numbers: "1|2|3|4|1,2,3,4|5|6|7,8|"
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  ggplot(aes(x = 1, y = IgG_Basal)) + 
+  geom_boxplot() + 
+  geom_dotplot(binaxis = "y", stackdir = "center") + 
+  labs(x = NULL, y = "IgG basal (AU/ml)") + 
+  theme_minimal() + 
+  theme(axis.ticks.x = element_blank(),
+        axis.text.x = element_blank()) 
+
+```
+
+:::
+
+::::
+
+### cajas+puntos
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Sin personalizar]{.hl}
+
+```{r}
+#| code-line-numbers: "1|2|3|4|"
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  ggplot(aes(x = 1, y = IgG_Basal)) + 
+  geom_boxplot() +
+  geom_jitter()
+```
+
+:::
+
+::: {.column width='50%'}
+
+[Personalizado]{.hl}
+
+```{r}
+#| code-line-numbers: "1|2|3|4|5,6,7,8|"
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  ggplot(aes(x = 1, y = IgG_Basal)) + 
+  geom_boxplot() +
+  geom_jitter() + 
+  labs(x = NULL, y = "IgG basal (AU/ml)") + 
+  theme_bw() + 
+  theme(axis.ticks.x = element_blank(),
+        axis.text.x = element_blank()) 
+
+```
+
+:::
+
+::::
+
+### violin+caja
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Sin personalizar]{.hl}
+
+```{r}
+#| code-line-numbers: "1|2|3|4|"
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  ggplot(aes(x = 1, y = IgG_Basal)) + 
+  geom_violin() +
+  geom_boxplot(width = 0.1)
+```
+
+:::
+
+::: {.column width='50%'}
+
+[Personalizado]{.hl}
+
+```{r}
+#| code-line-numbers: "1|2|3|4|5,6,7,8|"
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  ggplot(aes(x = 1, y = IgG_Basal)) + 
+  geom_violin() +
+  geom_boxplot(width = 0.1) + 
+  labs(x = NULL, y = "IgG basal (AU/ml)") + 
+  theme_bw() + 
+  theme(axis.ticks.x = element_blank(),
+        axis.text.x = element_blank()) 
+
+```
+
+:::
+
+::::
+
+
+### todo
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Sin personalizar]{.hl}
+
+```{r}
+#| code-line-numbers: "1|2|3|4|5|"
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  ggplot(aes(x = 1, y = IgG_Basal)) + 
+  geom_violin() +
+  geom_boxplot(width = 0.1, outlier.color = "white") + 
+  geom_jitter()
+```
+
+:::
+
+::: {.column width='50%'}
+
+[Personalizado]{.hl}
+
+```{r}
+#| code-line-numbers: "1|2|3|4|5|6,7,8,9|"
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  ggplot(aes(x = 1, y = IgG_Basal)) + 
+  geom_violin() +
+  geom_boxplot(width = 0.1, outlier.color = "white") + 
+  geom_jitter(color = "blue") + 
+  labs(x = NULL, y = "IgG basal (AU/ml)") + 
+  theme_bw() + 
+  theme(axis.ticks.x = element_blank(),
+        axis.text.x = element_blank()) 
+
+```
+
+:::
+
+::::
+
+:::
+
+
+# Gráficas de variables categóricas con R
+
+## ¿Qué graficos podemos hacer para visualizar variables categóricas? {.scrollable}
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+- Se pueden hacer una infinidad de estos.
+
+- El más común para investigación científica es el `gráfico de barras`.
+
+- Una gráfico menos usado en investigación científica, pero sí en reportes o presentaciones podría ser el `gráfico de pái`. 
+
+- Otros gráficos interesantes: 
+
+![](img/lollipop.png){.absolute top=600 left=0 width="400" height="400"}
+
+:::
+
+::: {.column width='60%'}
+
+![](img/circular-barplot.png){.absolute top=600 left=600 width="400" height="400"}
+
+![](img/barplot.png){.absolute top=100 left=1000 width="400" height="400"}
+
+![](img/pie.png){.absolute top=100 left=1500 width="400" height="400"}
+
+
+![](img/treemap.png){.absolute top=600 left=1200 width="400" height="400"}
+
+
+:::
+
+::::
+
+# Gráfico de barras
+
+## Estructura de datos para gráfico de barras {.scrollable}
+
+<br/>
+
+<center>[Datos individuales:]{.big-text3}</center>
+
+<center>[geom_bar()]{.big-text2}</center>
+
+<center>[vs.]{.big-text3}</center>
+
+<center>[Datos agrupados:]{.big-text3}</center>
+
+<center>[geom_bar(stat = "identity") o]{.big-text2}</center>
+
+<center>[geom_col()]{.big-text2}</center>
+
+## Gráfico de barras de frecuencias absolutas {.scrollable}
+
+::: {.panel-tabset}
+
+### datos
+
+> Para estos gráficos vamos a trabajar con los datos de pacientes hospitalizados durante una pandemia de Ébola. Los datos pertenecen al libro [The Epidemiologist Handbook](https://epirhandbook.com/en/index.html) descrito en la sección del Syllabus.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+- Importamos y exploramos los datos que están en formato de R: *.rds
+
+```{r}
+ebola_data <- import("linelist_cleaned.rds")
+ebola_data %>% 
+  glimpse()
+```
+
+:::
+
+::: {.column width='50%'}
+
+- Distribución de pacientes según hospital [tabyl()]{.plo}
+
+```{r}
+ebola_data %>% 
+  tabyl(hospital)
+```
+
+
+- Distribución de pacientes sin datos faltantes [tabyl()]{.plo}
+
+```{r}
+ebola_data %>% 
+  filter(hospital != "Missing") %>% 
+  tabyl(hospital)
+```
+
+:::
+
+::::
+
+### geom_bar()
+
+> Usamos [geom_bar()]{.plo} cuando queremos que la altura de la barra refleje el número de filas relevantes en los datos. Por defecto, las barras son de frecuencias absolutas y se llaman count.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Barplot vertical]{.hl}
+
+```{r}
+ebola_data %>% 
+  ggplot(aes(x = hospital)) + 
+  geom_bar()
+```
+
+:::
+
+::: {.column width='50%'}
+
+[Barplot horizontal]{.hl}
+
+```{r}
+ebola_data %>% 
+  ggplot(aes(y = hospital)) + 
+  geom_bar()
+```
+
+:::
+
+::::
+
+### geom_col()
+
+> Usamos [geom_col()]{.plo} cuando queremos que la altura de la barra refleje valores pre-calculados que existen en los datos. A menudo, los datos son agregads y pueden obtenerse mediante la combinación summarise() y group_by(). 
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+- Te proprocionan una tabla de datos agregada (no tienes valores individuales), solo los totales de casos y6 su prevalencia:
+
+```{r}
+#| echo: false
+datos_agregados <- data.frame(
+  nivel_dolor = c("Leve", "Moderado", "Severo"), 
+  casos = c(234, 123, 21), 
+  prevalencia = c(61.9, 32.5, 5.6)
+)
+
+datos_agregados
+```
+
+
+:::
+
+::: {.column width='50%'}
+
+- Puedes graficarlo usando [geom_col()]{.plo} que no requiere datos individuales.
+
+```{r}
+datos_agregados %>% 
+  ggplot(aes(x = nivel_dolor, y = casos)) + 
+  geom_col()
+```
+
+
+:::
+::::
+
+### _col vs. _bar()
+
+>geom_col() y geom_bar() son equivalentes.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{r}
+datos_agregados %>% 
+  ggplot(aes(x = nivel_dolor, y = casos)) + 
+  geom_col()
+```
+
+
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+datos_agregados %>% 
+  ggplot(aes(x = nivel_dolor, y = casos)) + 
+  geom_bar(stat = "identity")
+```
+
+:::
+
+::::
+
+
+### agregar datos
+
+>Si tenemos datos individuales, podemos agregarlos y así resulta más fácil pensar en los gráficos de barras desde ggplot()
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{r}
+ebola_data %>% 
+  group_by(hospital) %>% 
+  count() %>% 
+  ggplot(aes(x = n, y = hospital)) + 
+  geom_col()
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+ebola_data %>% 
+  group_by(hospital) %>% 
+  count() %>% 
+  ggplot(aes(x = n, y = hospital)) + 
+  geom_bar(stat = "identity")
+```
+
+:::
+
+::::
+
+### personalizar
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Cambiar el orden de las barras arbitrariamente]{.hl}
+
+```{r}
+ebola_data %>% 
+  mutate(
+    hospital = fct_relevel(hospital, 
+                           "St. Mark's Maternity Hospital (SMMH)", 
+                           "Port Hospital", 
+                           "Central Hospital",
+                           "Military Hospital",
+                           "Other",
+                           "Missing")
+    ) %>% 
+  ggplot(aes(y = hospital)) + 
+  geom_bar()
+```
+
+:::
+
+::: {.column width='50%'}
+
+[Editar etiquetas y tema]{.hl}
+
+```{r}
+ebola_data %>% 
+  mutate(
+    hospital = fct_relevel(hospital, 
+                           "St. Mark's Maternity Hospital (SMMH)", "Port Hospital", 
+                           "Central Hospital", "Military Hospital", "Other",
+                           "Missing")
+    ) %>% 
+  ggplot(aes(y = hospital)) + 
+  geom_bar() + 
+  labs(x = "Frecuencia absoluta", y = "Hospitales") + 
+  theme_bw()
+```
+
+:::
+
+::::
+
+:::
+
+
+## Gráfico de barras de frecuencias relativas {.scrollable}
+
+::: {.panel-tabset}
+
+### porcentajes
+
+> Las frecuencias relativas necesitan ser calculadas para reportarse. La forma más fácil de hacerlo es agregando los datos mediante el uso de [count()]{.plo}. Luego usamos [mutate()]{.plo} para crear las proporciones o porcentajes. También podemos trabajar con datos individuales, pero el código puede verse un poco más duro.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+- Agregamos los datos de hospitalizados
+
+```{r}
+ebola_data %>% 
+  count(hospital)
+```
+
+:::
+
+::: {.column width='50%'}
+
+- Creamos la columna de porcentaje:
+
+```{r}
+ebola_data %>% 
+  count(hospital) %>% 
+  mutate(porcentaje = 100 * n / sum(n))
+```
+
+:::
+
+::::
+
+
+### geom_bar()
+
+> Podemos usar geom_bar() con datos agregados y no agregados para obtener prorporciones. El código puede ser un poco más "extraño" con datos individuales, pero la idea es copiar/pegar y adaptar.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Agregando datos]{.hl}
+
+```{r}
+#| fig-align: center
+ebola_data %>% 
+  count(hospital) %>% 
+  mutate(porcentaje = 100 * n / sum(n)) %>% 
+  ggplot(aes(x = hospital, y = porcentaje)) + 
+  geom_bar(stat = "identity")
+```
+
+
+:::
+
+::: {.column width='50%'}
+
+[Con datos individuales]{.hl}
+
+```{r}
+#| fig-align: center
+ebola_data %>% 
+  ggplot(aes(x = hospital)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))
+```
+
+:::
+::::
+
+### geom_col()
+
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Orden por defecto]{.hl}
+
+```{r}
+#| fig-align: center
+ebola_data %>% 
+  count(hospital) %>% 
+  mutate(porcentaje = 100 * n / sum(n)) %>% 
+  ggplot(aes(x = hospital, y = porcentaje)) + 
+  geom_col()
+```
+
+
+
+:::
+
+::: {.column width='50%'}
+
+[Orden arbitrario]{.hl}
+
+```{r}
+#| fig-align: center
+ebola_data %>% 
+  mutate(
+    hospital = fct_relevel(hospital, 
+                           "St. Mark's Maternity Hospital (SMMH)", 
+                           "Port Hospital", 
+                           "Central Hospital",
+                           "Military Hospital",
+                           "Other",
+                           "Missing")
+    ) %>% 
+  count(hospital) %>% 
+  mutate(porcentaje = 100 * n / sum(n)) %>% 
+  ggplot(aes(x = hospital, y = porcentaje)) + 
+  geom_col()
+```
+
+:::
+
+::::
+
+
+### reordenar barras
+
+>Podemos querer reordenar las barras de mayor a menoro o viceversa. geom_col() y geom_bar() tiene su propia forma de hacerlo.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Reordenar con geom_bar()]{.hl}
+
+```{r}
+#| fig-align: center
+ebola_data %>% 
+  ggplot(aes(x = fct_infreq(hospital))) + 
+  geom_bar()
+```
+
+:::
+
+::: {.column width='50%'}
+
+[Reordenar con geom_col()]{.hl}
+
+```{r}
+#| fig-align: center
+ebola_data %>% 
+  group_by(hospital) %>% 
+  count() %>% 
+  ggplot(aes(x = n, y = fct_reorder(hospital, n))) + 
+  geom_col()
+```
+
+:::
+
+::::
+
+### etiquetas
+
+>Podemos etiquetar los gráficos usando la función labs() y sus argumentos.
+
+```{r}
+#| fig-align: center
+ebola_data %>% 
+  count(hospital) %>% 
+  mutate(porcentaje = n / sum(n)) %>% 
+  ggplot(aes(x = porcentaje, y = fct_reorder(hospital, porcentaje))) + 
+  geom_col() + 
+  labs(x = "Porcentaje (%)", 
+       y = "Hospital", 
+       title = "Distribución de hospitalizaciones de pacientes de Ébola")
+```
+
+### colores
+
+>También podemos hacer que los colores cambien en base a alguna otra variable
+
+```{r}
+#| fig-align: center
+ebola_data %>% 
+  count(hospital) %>% 
+  mutate(porcentaje = n / sum(n)) %>% 
+  ggplot(aes(x = porcentaje, 
+             y = fct_reorder(hospital, porcentaje), 
+             fill = hospital)) + 
+  geom_col() + 
+  labs(x = "Porcentaje (%)", 
+       y = "Hospital", 
+       title = "Distribución de hospitalizaciones de pacientes de Ébola", 
+       fill = "Hospital") 
+```
+
+### leyenda
+
+> Podemos eliminar la leyenda fácilmente con una capa adicional llamada theme(legend.position="none")
+
+```{r}
+#| fig-align: center
+ebola_data %>% 
+  count(hospital) %>% 
+  mutate(porcentaje = n / sum(n)) %>% 
+  ggplot(aes(x = porcentaje, 
+             y = fct_reorder(hospital, porcentaje), 
+             fill = hospital)) + 
+  geom_col() + 
+  labs(x = "Porcentaje (%)", 
+       y = "Hospital", 
+       title = "Distribución de hospitalizaciones de pacientes de Ébola", 
+       fill = "Hospital")  + 
+  theme(legend.position = "none")
+```
+
+
+
+:::
+
+
+# Otros gráficos
+
+## Gráfico de barras apilada {.scrollable}
+
+> En vez de graficar varias barras de manera horizontal, las apilamos todas en una sola barra.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Grafico de barras apiladas de frecuencias absolutas]{.hl}
+
+```{r}
+#| fig-align: center
+ebola_data %>% 
+  count(hospital) %>% 
+  ggplot(aes(x = "", y = n, fill = hospital)) + 
+  geom_bar(stat = "identity", position = "stack")
+```
+
+:::
+
+::: {.column width='50%'}
+
+[Grafico de barras apiladas de frecuencias relativas]{.hl}
+
+```{r}
+#| fig-align: center
+ebola_data %>% 
+  count(hospital) %>% 
+  ggplot(aes(x = "", y = n, fill = hospital)) + 
+  geom_bar(stat = "identity", position = "fill")
+```
+
+:::
+
+::::
+
+
+## Gráfico de pie {.scrollable}
+
+> Es un gráfico de barras empaquetado como una torta o pái; por lo que el código en ggplot primero crea el gráfico de barras y luego lo convierte en torta.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Grafico de barras apiladas de frecuencias absolutas]{.hl}
+
+```{r}
+#| fig-align: center
+ebola_data %>% 
+  count(hospital) %>% 
+  ggplot(aes(x = "", y = n, fill = hospital)) + 
+  geom_bar(stat = "identity", width = 1) + 
+  coord_polar("y", start = 0)
+```
+:::
+
+::: {.column width='50%'}
+
+[Grafico de barras apiladas de frecuencias relativas]{.hl}
+
+```{r}
+#| fig-align: center
+ebola_data %>% 
+  count(hospital) %>% 
+  ggplot(aes(x = "", y = n, fill = hospital)) + 
+  geom_bar(stat = "identity", position = "fill", width = 1) + 
+  coord_polar("y", start = 0)
+```
+
+:::
+
+::::
+
+## Lollipop plot {.scrollable}
+
+> Gráficos que parecen chupetines ("lollipop"). Son equivalentes a las barras. Pueden usarse también para describir la distribución de variables numéricas discretas y deberían preferirse a los histogramas en este caso.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{r}
+#| fig-align: center
+ebola_data %>% 
+  count(hospital) %>% 
+  ggplot(aes(x = hospital, y = n)) + 
+  geom_segment(aes(x = hospital, xend = hospital, y = 0, yend = n)) + 
+  geom_point() + 
+  theme_minimal()
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| fig-align: center
+ebola_data %>% 
+  count(hospital) %>% 
+  ggplot(aes(x = hospital, y = n)) + 
+  geom_segment(aes(x = hospital, xend = hospital, y = 0, yend = n), color = "skyblue") + 
+  geom_point(color = "blue", alpha = 0.6, size = 4) + 
+  theme_light() + 
+  coord_flip() + 
+  theme(
+  panel.grid.major.y = element_blank(),
+  panel.border = element_blank(),
+  axis.ticks.y = element_blank()
+  )
+```
+
+:::
+
+::::
+
+## Treemap {.scrollable}
+
+> Es un gráfico básico que muestra mosaicos. El área de cada polígono refleja su frecuencia absoluta o relativa. Se debe usar el paquete {treemap}
+
+```{r}
+#| fig-align: center
+library(treemap)
+ebola_data %>% 
+  count(hospital) %>% 
+  treemap(index = "hospital", 
+          vSize = "n", 
+          type = "index")
+```
+
+## Más gráficos {.scrollable}
+
+> Revisar la web "The R Graph Gallery":
+
+```{r}
+#| echo: false
+#| fig-align: center
+knitr::include_graphics("img/r-gallery.png")
+```
+
+ <center>[Ver más: <https://r-graph-gallery.com/index.html>]{.bigtext2}</center>
+
+## `r fontawesome::fa("mug-saucer", "white")` Hagamos una pausa {background-color="#00817E"}
+<hr>
+
+::: r-fit-text
+
+<center>
+
+Tomemos un descanso de `5 minutos`...
+
+Estire las piernas `r fontawesome::fa("person-walking", "white")`... 
+
+Deje de ver las pantallas `r fontawesome::fa("laptop", "white")`...
+
+... cualquier `r fontawesome::fa("laptop", "white")`, las del celular `r fontawesome::fa("mobile", "white")` también.
+
+</center>
+
+:::
+
+```{r}
+#| echo: false
+library(countdown)
+countdown_timer <- function(
+    minutes = 1, 
+    play_sound = TRUE, 
+    font_size = "2em", 
+    ...
+) {
+  countdown(
+    minutes = minutes,
+    # Fanfare when it's over
+    play_sound = play_sound,
+    # Set timer theme to match solarized colors
+    color_border              = "#404041",
+    color_text                = "white",
+    color_background = "#000000",
+    color_running_background  = "#72994E",
+    color_running_text        = "white",
+    color_finished_background = "#EE6331",
+    color_finished_text       = "white",
+    font_size = font_size,
+    ...
+  )
+}
+```
+
+```{r}
+#| echo: false
+countdown_timer(5)
+```
+
+## 
+
+::: r-fit-text
+<center>¡Gracias!</center>
+
+<center>¿Preguntas?</center>
+
+:::
+
+## 
+
+\
+
+\
+
+\
+
+::: r-fit-text
+
+<center>
+{{< fa brands twitter >}} @psotob91 
+
+{{< fa brands github >}} https://github.com/psotob91
+
+{{< fa inbox >}} percys1991@gmail.com
+</center>
+
+:::

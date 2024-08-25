@@ -1,0 +1,455 @@
+---
+title: "<font color='white'>Examen Final</font>"
+subtitle: "Análisis Estadístico de Datos en Salud"
+author: 
+  - Percy Soto-Becerra
+date: last-modified
+date-format: "DD-MM-YYYY"
+description: "PFC 2023 -– IETSI, EsSalud"
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: "Índice"
+    toc-location: right
+    embed-resources: true
+    number-sections: true
+    theme: cerulean
+    title-block-style: default
+    title-block-banner: true
+    section-divs: true
+    css: [include/webex.css, include/styles.css]
+    include-after-body: include/webex.js
+    code-block-border-left: false
+lang: es
+execute: 
+  message: false
+  warning: false
+---
+
+## Introducción
+
+Para este examen final, procesaremos los datos del artículo titulado **"Comorbid Depression and Heart Failure: A Community Cohort Study"** y publicado en la revista Plos One (doi: <https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0158570>). 
+
+ 
+:::{.callout-warning collapse=false appearance='default' icon=true}
+## Sobre los datos que usaremos
+- Hemos modificado ligeramente los datos originales para agregarles algunos problemas que permitan enfrentar problemas de calidad de datos.
+- Los ejercicios 1-9 usarán los datos modificados. 
+- Los ejercicios 10-12 usarán los datos originales. 
+- Tener en cuenta esto es muy importante para el examen.
+:::
+
+En este examen final nos centraremos solo en manejo de datos y análisis incicial de datos incluyendo gráficos. Todos los ejercicios requieren que usted haga algún tipo de comentario personal, ya sea describir los resultados observados o comentar el proceso / razonamiento seguido. 
+
+:::{.callout-warning collapse=false appearance='default' icon=true}
+## Sobre sus respuestas
+Es importante que se respondan con comentarios, no solo código! La pregunta que no tiene comentarios solo valdrá 25% del puntaje total.
+
+:::
+
+## Entregable
+
+Enviar este trabajo a más tardar el `lunes 03 de julio a las 23:59 horas`. 
+
+Use la plantilla denominada: **Examen_Final_ApellidoPaterno_ApellidoMaterno_Nombre.qmd** ubicada en la carpeta compartida [Enlace aquí](https://drive.google.com/drive/folders/1yamc85FZ91IGSzqNJyNLndfJgh61SgZw). 
+
+Deberá enviar al siguiente correo electrónico <percys1991@gmail.com> una carpeta comprimida o compartida por Drive / Onedrive /Dropbox con los siguientes archivos:
+
+:::{.callout-important}
+
+- **Examen_Final_ApellidoPaterno_ApellidoMaterno_Nombre.Rproj** (configure el proyecto como aprendimos al inicio)
+
+- **Examen_Final_ApellidoPaterno_ApellidoMaterno_Nombre.qmd**
+
+- **Examen_Final_ApellidoPaterno_ApellidoMaterno_Nombre.html** (resultado de renderizar)
+
+:::
+
+La carpeta comprimida o compartida por nube (Drive/Onedrive/Dropbox) deberá llamarse según las especificaciones siguientes: 
+
+:::{.callout-important}
+
+**Examen_Final_Grupo#**.
+
+Ejemplo:
+
+**Examen_Final_Grupo1**
+
+:::
+
+:::{.callout-warning}
+
+- Se descontará 1 punto por no seguir las instrucciones de nombrado de carpeta.
+
+- Se descontará 3 puntos si la carpeta no tiene el archivo **.Rproj**.
+
+- Se descontará 2 puntos si el código en el archivo **.qmd** no reproduce exactamente lo mostrado en el **.html**.
+
+:::
+
+## Alumnos:
+
+A continuación listará todos los nombres de los estudiantes del curso que participaron en la resolución de este trabajo. 
+
+- [Agregar nombre completo  de alumno aquí]
+
+- [Agregar nombre completo  de alumno aquí]
+
+
+## Ejercicios
+
+### Ejercicio 0: Configure su proyecto {.unnumbered}
+
+- Esta sección no requiere que Ud. escriba código.
+- Descargue la carpeta `Examen Final`. Note que no tiene configurado ningún proyecto de RStudio (no hay archivo `*.Rproj`).
+- Cambie el nombre de esta carpeta por el siguiente: `examen_final_grupo#`. 
+- Configure el proyecto de RStudio en esta carpeta.
+- Renderice este `qmd` para verificar que todo funciona correctamente.
+
+
+### Ejercicio 1: Cargue los paquetes que usará. Comentar con # al lado de cada paquete un resumen breve de para qué lo usarán {.unnumbered}
+
+*Nota: Todos los paquetes que usará deberán estar en este chunk, no en otro chunk posterior*
+
+```r
+# Escriba aquí el código
+
+```
+
+### Ejercicio 2: Importe los datos  {.unnumbered}
+
+**Los datos se denominan `"pone.0158570.s002_modified.xlsx"` y se encuentran en la siguiente carpeta compartida [Enlace aquí](https://drive.google.com/drive/folders/1Kav2xJP_hYAmenSlsPeUemLe2VfZS8Kc). Llame a los datos importados: "datos_crudos_grupo#".**
+
+:::{.callout-warning collapse=false appearance='default' icon=true}
+## Sobre el nombre de sus datos
+- Cada grupo tiene un número asignado. 
+- Usted deberá remplazar el símbolo de michi numeral # por el de su número.
+- Por ejemplo, si somos el grupo 4, deberá llamarse `datos_crudos_grupo4`.
+
+:::
+
+```r
+# Escriba aquí el código
+
+```
+
+### Ejercicio 3: Haga un inspección global de los datos {.unnumbered}
+
+- **Dé un vistazo a los datos. Describa brevemente sus resultados.**
+
+```r
+# Escriba aquí el código
+
+```
+
+- **Obtenga un resumen global superficial de los datos. Describa brevemente sus resultados.**
+
+```r
+# Escriba aquí el código
+
+```
+
+- **Obtenga una descripción un poco más detallada variable por variable de los datos. Describa brevementesus resultados.**
+
+```r
+# Escriba aquí el código
+
+```
+
+### Ejercicio 4: Procese los datos según el siguiente diccionario {.unnumbered}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("codebook.png")
+```
+
+- En un solo pipeline, haga lo siguiente:
+
+    + (1) Renombre variables.
+    + (2) Recodifique las etiquetas de las variables categóricas.
+    + (3) Cree las nuevas variables.
+    + (4) Etiquete a las variables.
+
+- Debe guardar los datos finales (que hayan seguido los procesos indicados) como `datos_proc`.
+
+```r
+# Colocar aquí el pipeline (borrar este comentario)
+
+
+```
+
+### Ejercicio 5: Identifique duplicados {.unnumbered}
+
+En estos ejercicos deberá trabajar sobre los datos procesados previamente.
+
+- **Identifique duplicados de fila. Describa brevementesus resultados.**
+
+```r
+# Escriba aquí el código
+
+```
+
+- **Identifique duplicados de id. Describa brevemente sus resultados.**
+
+```r
+# Escriba aquí el código
+
+```
+
+- **Solo si hubo duplicados de fila, elimine los duplicados de fila, quedándose solo con una versión de cada observación. Comente el proceso/razonamiento.** 
+
+*Tip: Puedes usar distinct()*
+
+```r
+# Escriba aquí el código
+
+```
+
+- **Solo si hubo duplicados de id, elimine el duplicado de fila que menos información completa tenga. Comente el proceso/razonamiento.**
+
+*Tip: Puedes usar slice() o filter()*
+
+```r
+# Escriba aquí el código
+
+```
+
+- **Debe guardar los datos que hayan sido limpiados de duplicados como `datos_nodup`.**
+
+### Ejercicio 6: Identifique datos perdidos {.unnumbered}
+
+En estos ejercicos deberá trabajar sobre los datos procesados previamente.
+
+- **Presente el número de datos perdidos y tasa de completitud variable por variable en una sola salida. Describa los resultados relacionados a datos perdidos.**
+
+```r
+# Escriba aquí el código
+
+```
+
+- **Muestre gráficos de datos perdidos y como se agrupan entre variables.Describa los resultados relacionados a datos perdidos.**
+
+```r
+# Escriba aquí el código
+
+```
+- **Debe guardar los datos que hayan sido limpiados de datos perdidos como `datos_limpios`.**
+
+### Ejercicio 7: Haga las siguientes consultas ("queries") con los datos limpios (renombrados, etiquetados y sin duplicados) {.unnumbered}
+
+- **Seleccione las variables id, age y phq-9. Muestre los participantes que tienen edades entre 50 y 55 años**
+
+```r
+# Escriba aquí el código
+
+```
+
+- **Seleccione las variables id, ej_Frac, sod, bun y et_hf. Luego, muestre a los participantes que tiene etiología isquémica.**
+
+```r
+# Escriba aquí el código
+
+```
+
+- **¿Quiénes fueron los pacientes mujeres que sobrevivieron y tuvieron un phq-9 > 10?**
+
+```r
+# Escriba aquí el código
+
+```
+
+- **¿Cuáles fueron los valores de tiempo a muerte en los pacientes varones que murieron, que tuvieron etiología isquémica y un puntaj de phq-9 > 10?**
+
+```r
+# Escriba aquí el código
+
+```
+
+### Ejercicio 8: Haga los siguientes gráficos {.unnumbered}
+
+En estos ejercicos deberá trabajar sobre los datos procesados previamente.
+
+- **Mediante un gráfico de cajas, compare los valores de ejection fraction (%) entre los pacientes con etiología isquémica versus sin etiología isquémica. Muestre el resultado más simple posible.**
+
+```r
+# Escriba aquí el código
+
+```
+
+- **Mediante un gráfico de cajas, compare los valores de ejection fraction (%) entre los pacientes con etiología isquémica versus sin etiología isquémica. Muestre el resultado más elaborado posible: Elija un tema de su agrado, agregue etiquetas (título general, título de eje X, título de eje Y, etiquetas de leyenda si aplica), modifique la escala de colores, etc. Guarde este gráfico como `plot1` e imprima su resultado**
+
+```r
+# Escriba aquí el código
+
+```
+
+- **Use un gráfico de cajas y puntos dispersos (combinelos), para mostrar el nivel de bun según sexo. Muestre el resultado más simple posible.**
+
+*Tip: use geom_jitter() para los puntos dispersos. Más info aquí: <https://ggplot2.tidyverse.org/reference/geom_jitter.html>*
+
+```r
+# Escriba aquí el código
+
+```
+
+- **Use un gráfico de cajas y puntos (combinelos), para mostrar el nivel de bun según sexo. Muestre el resultado más elaborado posible: Elija un tema de su agrado, agregue etiquetas (título general, título de eje X, título de eje Y, etiquetas de leyenda si aplica), modifique la escala de colores, etc. Guarde el gráfico como `plot2` e imprimalo**
+
+*Tip: use geom_jitter() para los puntos dispersos. Más info aquí: <https://ggplot2.tidyverse.org/reference/geom_jitter.html>*
+
+```r
+# Escriba aquí el código
+
+```
+
+
+- **Fusione `plot1` y `plot2` de tal form que plot1 esté encima de plot2.**
+
+*Tip: use funciones de patchwork para esamblar gráficos: <https://patchwork.data-imaginist.com/index.html>*
+
+```r
+# Escriba aquí el código
+
+```
+
+- **Fusione plot1 y plot2 de tal form que plot1 esté al costado y a la izquierda de plot2. Agreguele una letra mayúscula a cada plot (p. ej., A, B). Guarde esto como `plot_final`.**
+
+*Tip: use funciones de patchwork para esamblar gráficos: <https://patchwork.data-imaginist.com/index.html>*
+
+```r
+# Escriba aquí el código
+
+```
+
+- **Guarde el gráfico `plot_final` de manera reproducible usando ggsave(). El gráfico debe tener 12 cm x 12 cm y 900 dpi. Ajustar la escala de tal manera que se vea visualmente apropiado. El formato debe ser png.**
+
+*Tip: use funciones de patchwork para esamblar gráficos: <https://patchwork.data-imaginist.com/index.html>*
+
+```r
+# Escriba aquí el código
+
+```
+
+- **Imprima el png guardado usando la función de {knitr} denominda include_graphics()**
+
+```r
+# Escriba aquí el código
+
+```
+
+### Ejercicio 9: Exporte los datos a los siguientes formatos. Llame a los datos exportados: "datos_limpios" {.unnumbered}
+
+- Formato de R: ".rds"
+
+```r
+# Escriba aquí el código
+
+```
+
+- Formato de Excel: ".xlsx"
+
+```r
+# Escriba aquí el código
+
+```
+
+- Formato de archivo plano: ".csv"
+
+```r
+# Escriba aquí el código
+
+```
+
+- Formato de Stata: ".dta"
+
+```r
+# Escriba aquí el código
+
+```
+
+
+### Ejercicio 10: Recicle código reproducible {.unnumbered}
+
+En estos ejercicos deberá trabajar con un nuevo conjunto de datos.
+
+- **Importe los datos denominados `"pone.0158570.s002_modified.xlsx"` que se encuentran en la siguiente carpeta compartida [Enlace aquí](https://drive.google.com/drive/folders/1Kav2xJP_hYAmenSlsPeUemLe2VfZS8Kc). Llame a los datos importados: "datos_original".**
+
+```r
+# Escriba aquí el código
+
+```
+
+- **Recicle el código creado en el `ejercicio 4` para procesar los datos. Guarde los datos como `datos_limpios2`. Recuerde que  todo debe estar en un solo pipeline**
+
+```r
+# Escriba aquí el código
+
+```
+
+
+### Ejercicio 11: Replique la tabla 1 del artículo {.unnumbered}
+
+- **Replique la Tabla 1 del artículo publicado. Su tabla debe tener las mismas variables, las mismas etiquetas de variables y debe también usar los mismos estadísticos de resumen que usaron.**
+
+- La tabla puede encontrarse en el artículo original: <https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0158570>. La colocamos en esta sección por comodidad:
+
+```{r}
+#| echo: false
+knitr::include_graphics("pone.0158570.t001.png")
+```
+
+```r
+# Escriba aquí el código
+
+```
+
+### Ejercicio 11: Mejore la tabla 1 del artículo {.unnumbered}
+
+Haga las siguientes mejoras:
+
+- Agregue una columna de total adicional.
+- Haga que todas las variables numéricas reporten `mean ± SD`, `median (25th, 75th percentile)` y `min, max`. Cada una de estas en filas diferentes. 
+- Agregue las variables `e_gfr_kdigo` y `ej_frac_quintil` a las tabla 1. Cada una de estas variables debe estar debajo de su respectivamente variable numérica. Por ejemplo, `e_gfr_kdigo` debe estar debajo de `e_gfr`. Asegurarse que las categorías reportadas en la tabla sigan el orden de menor a mayor valor de categorías.
+- Elimine los valores p.
+
+```r
+# Escriba aquí el código
+
+```
+
+### Ejercicio 12: Exporte la tabla {.unnumbered}
+
+Haga las siguientes mejoras:
+
+- Exporte la tabla a un archivo MS Word
+
+```r
+# Escriba aquí el código
+
+```
+
+- Exporte la tabla a un archivo MS Excel
+
+```r
+# Escriba aquí el código
+
+```
+
+### Ejercicio 13: Reflexione y responda {.unnumbered}
+
+- **Revise las recomendaciones STROBE acerca de cómo describir las características de los participantes <https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.0040297> (13. Descriptive Data, página 15 y 16 del PDF). Respecto al uso de valores p en tablas comparativas descriptivas de estudios observacionales, ¿deberían usarse o no?.**
+
+
+*[Elimine esto y remplacelo por su respuesta]*
+
+- **¿Por qué cree Ud. que, a pesar de ser una mala práctica reportar valores p en tablas descriptivas comparativas, esta sigue siendo una práctica muy frecuente en publicaciones biomédicas? ¿Qué se podría hacer para mejor esto?**
+
+
+*[Elimine esto y remplacelo por su respuesta]*
+
+
+### Ejercicio 14: Renderice el archivo .qmd final {.unnumbered} 
+
+**Comparta la carpeta entera comprimida según las instrucciones dadas al inicio de este instructivo. Recuerde que su carpeta debe tener el código .qmd, así como su salida renderizada en `*.html`.**

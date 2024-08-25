@@ -1,0 +1,51 @@
+---
+title: "Sesión 08"
+date: "2022-10-19"
+---
+
+## Objetivos
+
+- Reproducibilidad de resultados.
+
+- Tablas reproducibles con {gtsummary}.
+
+- Gráficos reproducibles.
+
+## Materiales
+
+::: {.panel-tabset}
+
+### Teoría y práctica grabada
+
+- Anotaciones extra en quarto: [Aquí](../slides/sesion08/adicional.qmd) 
+- Datos para código de anotaciones extra: [Aquí](../slides/sesion08/maca_meno_fase1.data) 
+
+### Práctica grabada
+
+
+### Slides
+
+```{r slides-videos, echo=FALSE, include=FALSE}
+source(here::here("R", "slide-things.R"))
+```
+
+```{r show-slide-tabs1, echo=FALSE, results="asis"}
+slide_buttons("/slides/sesion08/sesion08")
+```
+
+```{=html}
+<iframe width="780" height="500" src="../slides/sesion08/sesion08.html" title="Sesión 8 - Reporte Reproducible con R"></iframe>
+```
+
+### Talleres
+
+|                              |                                                                                  |
+|----------------------|--------------------------------------------------|
+| Instructivo en línea         | [Aquí](../taller/taller08/taller08_instructivo.html)                                                 |
+| Instructivo con solucionario | [Aquí](../taller/taller08/taller08_instructivo_sol.html)                                                                       |
+| Quarto para alumnos          | [Aquí](../taller/taller08/taller08_alumno.qmd)                                                                       |
+| Toda la carpeta del taller   | [Aquí](https://drive.google.com/drive/folders/1WP3nuhVb7104YPsByhkQwl81UMOtH4Mu) |
+
+:::
+
+

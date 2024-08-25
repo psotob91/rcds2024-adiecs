@@ -1,0 +1,472 @@
+---
+title: "<font color='white'>Taller 4</font>"
+subtitle: "Análisis Estadístico de Datos en Salud"
+author: 
+  - Percy Soto-Becerra
+  - Anthony Romero
+date: last-modified
+date-format: "DD-MM-YYYY"
+description: "PFC 2023 -– IETSI, EsSalud"
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: "Índice"
+    toc-location: right
+    embed-resources: true
+    number-sections: true
+    theme: cerulean
+    title-block-style: default
+    title-block-banner: true
+    section-divs: true
+    css: [include/webex.css, include/styles.css]
+    include-after-body: include/webex.js
+    code-block-border-left: false
+lang: es
+execute: 
+  message: false
+  warning: false
+---
+
+```{r}
+#| include: false
+library(webexercises)
+library(tidyverse)
+library(labelled)
+library(visdat)
+```
+
+## Introducción
+
+En este tercer taller del curso revisaremos algunas funciones adicionales del paquete `{dplyr}` para el manejo de datos. Asimismo, revisaremos cómo podemos realizar un `análisis inicial de datos` y un análisis descriptivo de estos.
+
+## Cargar paquetes
+
+```{r}
+#| label: instalar y cargar paquetes
+# Antes de cargar los siguientes paquetes, se deben instalar desde los paquetes.
+library(tidyverse)                   # Varias funciones de tidyverse (dplyr, ggplot2, etc.)
+library(rio)                         # Navaja suiza de la importación de datos 
+library(labelled)                    # Proporciona look_for()
+library(skimr)                       # Análisis inicial de datos
+library(Hmisc)                       # Análisis inicial de datos
+library(janitor)                     # Para identificar duplicados
+library(visdat)                      # Inspección de datos perdidos
+library(VIM)                         # Inspección de datos perdidos
+library(naniar)                      # Inspección de datos perdidos
+```
+
+## Repaso de clases anteriores
+
+### Ejercicio 1
+
+Importar la base de datos "data_enaho2017_v2" y guardarla como "data_enaho". 
+
+::: {.callout-caution collapse="true"}
+
+## Solución
+
+```{r}
+data_enaho <- import("data_enaho2017_v2.csv")
+```
+
+:::
+
+### Ejercicio 2
+
+En la data, renombrar manualmente las siguientes variables y guardelas en un objeto llamado "data_clean":
+
+- `codperso` $\rightarrow$ `id`
+- `tiene_agua_potable` $\rightarrow$ `agua_pot`
+- `acceso_agua` $\rightarrow$  agua_acc`
+- `cuantas_horas_si_agua` $\rightarrow$ `agua_sihoras`
+- `procedencia_agua` $\rightarrow$ `agua_proc`
+
+::: {.callout-caution collapse="true"}
+
+## Solución
+
+```{r}
+data_enaho %>% 
+  rename(
+    id = codperso, 
+    agua_pot = tiene_agua_potable, 
+    agua_acc = acceso_agua, 
+    agua_sihoras = cuantas_horas_si_agua, 
+    agua_proc = procedencia_agua
+  ) -> data_clean
+
+data_clean
+```
+
+:::
+
+### Ejercicio 3
+
+En la data_clean, renombrar manualmente las siguientes variables:
+
+- `necesid_basicas_insatisf_vivie` $\rightarrow$ `nbi_vivie`
+- `necesid_basicas_insatist_hacin` $\rightarrow$ `nbi_hacin`
+- `necesid_basicas_insatisf_sshh` $\rightarrow$ `nbi_sshh`
+- `necesid_basicas_insatisf_noesc`  $\rightarrow$ `nbi_noesc`
+- `necesid_basicas_insatisf_depec` $\rightarrow$ `nbi_depec`
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+data_clean %>% 
+  rename(nbi_vivie = necesid_basicas_insatisf_vivie, 
+         nbi_hacin = necesid_basicas_insatist_hacin, 
+         nbi_sshh = necesid_basicas_insatisf_sshh, 
+         nbi_noesc = necesid_basicas_insatisf_noesc, 
+         nbi_depec = necesid_basicas_insatisf_depec) -> data_clean
+
+
+data_clean
+```
+
+:::
+
+### Ejercicio 4
+
+En data_clean, colocar la variable "id" al inicio de todas las variables 
+
+::: {.callout-caution collapse="true"}
+
+## Solución
+
+```{r}
+data_clean %>% 
+  select(id, everything())
+```
+:::
+
+### Ejercicio 5
+
+En data_clean, cree una nueva variable llamada "año" que contenga el valor 2017 para todas las observaciones
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+data_clean %>% 
+  mutate(año = 2017) -> data_clean
+
+data_clean
+```
+
+:::
+
+### Ejercicio 6
+
+En data_clean, cree una variable llamada "conectividad" que sea un duplicado de la variable "tiene_internet"
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+data_clean %>% 
+  mutate(conectividad = tiene_internet) -> data_clean
+
+data_clean
+```
+
+:::
+
+
+### Ejercicio 7
+
+En data_clean, seleccionar solo las variables que inicien con "nbi"
+
+
+::: {.callout-caution collapse="true"}
+
+## Solución
+
+- Opción larga:
+
+```{r}
+data_clean %>% 
+  select(nbi_vivie, nbi_hacin, nbi_sshh, nbi_noesc)
+```
+
+- Opción eficiente con helper de tidy:
+
+```{r}
+data_clean %>% 
+  select(starts_with("nbi_"))
+```
+
+::: 
+
+## Manejo de datos 2
+
+### Ejercicio 8
+
+En data_clean, recodificar todas las variables que inicien con "nbi", donde No = 0 y Si = 1
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+- Veamos qué valores asume la variable:
+
+```{r}
+data_clean %>% 
+  count(nbi_vivie)
+```
+
+- Hagamos la recodificación:
+
+```{r}
+data_clean %>% 
+  mutate(nbi_vivie = case_match(nbi_vivie, 
+                                "no" ~ 0, 
+                                "si" ~ 1), 
+         nbi_hacin = case_match(nbi_hacin, 
+                                "no" ~ 0, 
+                                "si" ~ 1),
+         nbi_sshh = case_match(nbi_sshh, 
+                               "no" ~ 0, 
+                               "si" ~ 1), 
+         nbi_noesc = case_match(nbi_noesc, 
+                                "no" ~ 0, 
+                                "si" ~ 1)) -> data_clean
+
+data_clean
+```
+
+:::
+
+### Ejercicio 9
+
+Asignar valores a las categorías de la variable region de la siguiente manera:
+
+- Costa Norte --> 1
+- Costa Centro --> 2
+- Costa Sur  --> 3
+- 4 --> Sierra Norte
+- 5 --> Sierra Centro
+- 6 --> Sierra Sur
+- 7 --> Selva
+8 --> Lima Metropolitana
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+- Veamos qué valores asume la variable:
+
+```{r}
+data_clean |> 
+  count(region)
+```
+
+```{r}
+data_clean %>% 
+  mutate(
+    region2 = case_match(region, 
+                        "Costa Norte" ~ 1, 
+                        "Costa Centro" ~ 2, 
+                        "Costa Sur" ~ 3, 
+                        "Sierra Norte" ~ 4, 
+                        "Sierra Centro" ~ 5, 
+                        "Sierra Sur" ~ 6, 
+                        "Selva" ~ 7, 
+                        "Lima Metropolitana" ~ 8, 
+                        NA ~ as.numeric(NA))
+  ) -> data_clean
+
+glimpse(data_clean)
+```
+
+:::
+
+
+### Ejercicio 10
+
+Crear una variable llamada "region3" cuyas categorías depende del valor de region de la siguiente manera:
+
+- Costa norte, costa centro y costa sur = "0"
+
+- Sierra norte, sierra centro y sierra sur = "1"
+
+- Selva = "2"
+
+- Lima Metropolitana = "3"
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+- Veamos qué valores asume la variable:
+
+```{r}
+data_clean |> 
+  count(region)
+```
+
+- Forma válida, pero poco eficiente: 
+
+```{r}
+data_clean %>% 
+  mutate(
+    region3 = case_match(region, 
+      c("Costa Norte", "Costa Centro", "Costa Sur") ~ "0", 
+      c("Sierra Sur", "Sierra Centro", "Sierra Sur") ~ "1", 
+      "Selva" ~ "2", 
+      "Lima Metropolitana" ~ "3", 
+      NA ~ as.character(NA)
+    )
+   ) -> data_clean
+
+glimpse(data_clean)
+```
+
+:::
+
+
+### Ejercicio 11
+
+Crear la variable indice de masa corporal y llarmala imc. 
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+data_clean %>% 
+  mutate(
+    peso_kg = jefe_peso_g / 1000, 
+    talla_m =jefe_talla_cm / 100, 
+    imc = peso_kg / talla_m^2
+    ) -> data_clean
+```
+
+:::
+
+### Ejercicio 12
+
+Crear una nueva variable llamada "imc_cat" cuyas categorías dependan de los valores de imc de la siguiente manera:
+
+- imc < 25 = "normal
+- 25 <= imc < 30 = "sobrepeso"
+- imc>=30 = "obesidad"
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+data_clean %>% 
+  mutate(imc_cat = case_when(imc < 25 ~ "Normal", 
+                            imc >= 25 & imc < 30 ~ "Sobrepeso", 
+                            imc >= 30 ~ "Obesidad", 
+                            TRUE ~ as.character(NA))) -> data_enaho_clean2
+```
+
+:::
+
+
+
+## Análisis Inicial de DAtos
+
+### Ejercicio 13
+
+Inspeccione de manera global a `data_clean()`. Compare los resultados que dan. Discuta sus ventajas y desventajas. ¿Alguna es mejor que otra?
+
+::: {.callout-caution collapse="true"}
+
+## Solución
+
+- Eche un vistazo:
+
+```{r}
+data_clean %>% 
+  glimpse()
+```
+
+- Vea un resumen general (superficial) de todos los datos:
+
+```{r}
+data_clean %>% 
+  skim()
+```
+
+- Vea una descripción más detallada de cada variable:
+
+```{r}
+#| error: true
+data_clean %>% 
+  describe()
+```
+
+- Todas aportan algún grado de información que la otra no. Si se necesita una inspección más detallada, probablemente `skim()` o `describe()` sean más útiles.
+
+- En cambio, si se necesita rápidamente conocer las variables y qué estructura general tienen, `glimpse()` es mucho más concreto para esto.
+:::
+
+### Ejercicio 14
+
+Identificar si en la base de datos existen filas duplicadas
+
+::: {.callout-caution collapse="true"}
+
+## Solución
+
+```{r}
+data_clean %>%  
+  get_dupes()
+```
+
+:::
+
+### Ejercicio 15
+
+También verificar si existen duplicados de ID.
+
+::: {.callout-caution collapse="true"}
+
+## Solución
+
+```{r}
+data_clean %>%  
+  get_dupes(id)
+```
+
+:::
+
+### Ejercicio 16
+
+Identificar si en la base de datos existen valores perdidos y en qué variables
+
+::: {.callout-caution collapse="true"}
+
+## Solución
+
+```{r}
+data_clean %>%  
+  vis_dat()
+```
+
+```{r}
+data_clean %>%  
+  vis_miss()
+```
+
+:::
+
+### Ejercicio 17
+
+Evaluar si los datos perdidos de cada variable se relacionan o vinculan entre sí con el de otras variables
+
+::: {.callout-caution collapse="true"}
+
+## Solución
+```{r}
+data_clean %>% 
+  aggr(numbers = TRUE)
+```
+
+```{r}
+data_clean %>% 
+  gg_miss_upset()
+```
+
+:::

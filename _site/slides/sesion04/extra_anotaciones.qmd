@@ -1,0 +1,133 @@
+---
+title: "Clase 4 - extra teoría"
+format: html
+---
+
+
+## Cargar paquetes
+
+```{r}
+library(tidyverse)
+```
+
+## Datos 
+
+```{r}
+datos <- data.frame(
+  precios = c(1230, 3234, 4413, 313 , 3423, 3143), 
+  hospital = c("A", "A", "B", "C", "C", "B")
+)
+```
+
+## Crear una variable nueva categorizada
+
+- Crear una variable llamada precios_bin que valga 1 si precios > 3000 y 0 si es precios < 3000
+
+```r
+if_else(condicion, 
+        Valor si condicion es verdadera,
+        Valor si condicion es falsa
+        )
+```
+
+```{r}
+datos |> 
+  mutate(precios_bin = if_else(precios > 3000, 1, 0))
+```
+
+```{r}
+datos |> 
+  mutate(precios_bin = if_else(precios > 3000, # Condicion
+                               1, # Valor que toma condicion V
+                               0))# Valor que toma condicion F
+```
+
+```{r}
+datos |> 
+  mutate(precios_bin = case_when(precios > 3000 ~ 1, 
+                                 precios <= 3000 ~ 0,
+                                 TRUE ~ as.numeric(NA)))
+```
+
+- Crear una variable llamada precios_bin que valga "Caro" si precios > 3000 y "Barato" si es precios < 3000
+
+```{r}
+datos |> 
+  mutate(precios_bin = if_else(precios > 3000, "Caro", "Barato"))
+```
+
+```{r}
+datos |> 
+  mutate(precios_bin = case_when(precios > 3000 ~ "Caro", 
+                                 precios <= 3000 ~ "Barato",
+                                 TRUE ~ as.character(NA)))
+```
+
+- Crear una variable llamada precios_bin que valga 2 si precios > 3000 y 1 si esta entre 3000 y 1000 y 0 si es precios < 1000:
+
+```{r}
+# Engorroso!! Peligroso porque hay más riesgo de error!!
+datos |> 
+  mutate(precios_bin = if_else(precios > 3000, 2, 
+                               if_else(precios >= 1000 & 
+                                         precios <= 3000, 1, 0)))
+```
+
+```{r}
+datos |> 
+  mutate(precios_bin = case_when(
+    precios > 3000 ~ 2, 
+    precios <= 3000 & precios >= 1000 ~ 1,
+    precios < 1000 ~ 0, 
+    TRUE ~ as.numeric(NA))
+    )
+```
+
+## Duplicados
+
+```{r}
+library(janitor)
+datos2 <- data.frame(x = c(1, 1, 4, 5, 6), 
+                     y = c(3, 3, 5, 6, 8))
+
+datos2
+```
+
+
+```{r}
+datos2 |> 
+  get_dupes()
+```
+
+```{r}
+datos3 <- datos2 |> 
+  distinct(.keep_all = TRUE)
+
+datos3
+```
+
+```{r}
+datos4 <- data.frame(id = c("1", "2", "3", "3", "4"), 
+                     x = c(1, 1, 4, 5, 6), 
+                     y = c(3, 3, 5, 6, 8))
+
+datos4
+```
+
+```{r}
+datos4 |> 
+  get_dupes()
+```
+
+```{r}
+datos4 |> 
+  get_dupes(id)
+```
+
+```{r}
+datos5 <- datos4 |> 
+  distinct(id, .keep_all = TRUE)
+
+datos5
+```
+

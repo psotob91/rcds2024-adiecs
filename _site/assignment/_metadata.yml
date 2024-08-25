@@ -1,0 +1,9 @@
+date-heading:
+  content: "Vence a las 11:59 PM del"
+  class: "bg-assignment"
+date-format: "full"
+
+format:
+  html:
+    template-partials:
+      - ../html/title-block.html

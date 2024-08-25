@@ -1,0 +1,129 @@
+/*-- scss:defaults --*/
+$orange-logo: #FE9F01 !default;
+$red-logo: #FE0441 !default;
+$lightblue-logo: #0182C5 !default;
+$verde-h3: #00817E !default;
+
+$body-bg: #FFFFFF;
+$body-color: #000000;
+$link-color: $lightblue-logo;
+$presentation-heading-color: $lightblue-logo;
+
+$code-color: $orange-logo;
+
+/*-- scss:rules --*/
+.reveal .slides > section > section {
+  text-align:left;
+}
+
+.verde-h3 {
+  color: $verde-h3;
+}
+
+.hl {
+  color: #E9AFA3;
+}
+
+.negro {
+  color: #000000;
+}
+.verd1 {
+  color: #8FADA7;
+}
+
+.verd2 {
+  color: #2D5459;
+}
+
+
+.plo {
+  color: #9DA7A7;
+}
+
+.ros {
+  color: #ff79c6;
+}
+
+.viol {
+  color: #bd93f9;
+}
+
+.amar {
+  color: #f1fa8c;
+}
+
+.verdrac {
+  color: #50fa7b;
+}
+
+.reveal .slide blockquote {
+  text-align: left;
+  width: 100%;
+  border-left-color: $orange-logo;
+  box-shadow: none;
+  background: lighten($orange-logo, 45%);
+}
+
+#box-yellow {
+  text-align: left;
+  width: 100%;
+  border-left-color: $orange-logo;
+  box-shadow: none;
+  background: lighten($orange-logo, 45%);
+}
+
+#mark-yellow {
+  background-color: #FAFFAF;
+  color: black;
+}
+
+#mark-yellowh {
+  background-color: #D5FE00;
+  color: black;
+}
+
+#mark-black {
+  background-color: black;
+}
+
+#mark-red {
+  background-color: #fa551b;
+}
+
+.big-text1 {
+  font-size: 60px;
+  color: white;
+}
+
+.big-text2 {
+  font-size: 100px;
+  color: white;
+}
+
+.big-text3 {
+  font-size: 120px;
+  color: white;
+}
+
+.big-text4 {
+  font-size: 150px;
+  color: white;
+}
+
+.big-text5 {
+  font-size: 200px;
+  color: white;
+}
+
+.big-text6 {
+  font-size: 220px;
+  color: white;
+}
+
+kbd {
+  border-radius: 3px;
+  padding: 1px 2px 0;
+  border: 1px solid black;
+}
+
+

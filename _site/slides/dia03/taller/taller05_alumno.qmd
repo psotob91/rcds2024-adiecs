@@ -1,0 +1,426 @@
+---
+title: "Taller 5"
+---
+
+## Introducción
+
+En este quinto taller del curso continuaremos revisando funciones para el análisis descriptivo de datos con paquetes como `Dplyr` y `Janitor` de `Tidyverse`, además revisaremos los paquetes `gtsummary`, `gmodels` y `Hmisc`. 
+
+-Lectura sugerida: [Link](https://bookdown.org/content/b298e479-b1ab-49fa-b83d-a57c2b034d49/ranking.html)
+
+## Cargar paquetes
+
+```{r}
+# Antes de cargar estos paquetes, se deben instalar desde la pestaña "Packages" en el panel de utilidades (inferior derecho).
+library(tidyverse)                   # Varias funciones de tidyverse (dplyr, ggplot2, etc.)
+library(rio)                         # Navaja suiza de la importación de datos
+library(skimr)                       # Análisis inicial de datos
+library(Hmisc)                       # Análisis inicial de datos
+library(janitor)                     # Para identificar duplicados
+library(gtsummary)                   # Para tablas estadísticas reproducibles
+library(gmodels)                     # Para tablas de contingencia detalladas
+library(summarytools)
+```
+
+## Análisis descriptivo univariado de datos numéricos
+
+### Ejercicio 1 {.unnumbered}
+
+Calcular la media "IgG_Basal":
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+```{r}
+#escribir el código aquí
+```
+
+### Ejercicio 2 {.unnumbered}
+
+Calcular la mediana y desviación estándar de la IgG_Final:
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+```{r}
+#escribir el código aquí
+```
+
+### Ejercicio 3 {.unnumbered}
+
+Calcular la media, desviación estándar, mediana, P25 y P75 del tiempo de dosis de refuerzo:
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+```{r}
+#escribir el código aquí
+```
+
+### Ejercicio 4 {.unnumbered}
+
+Calcular la media, desviación estándar, mediana, P25 y P75 de la variable "edad":
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+```{r}
+#escribir el código aquí
+```
+
+
+### Ejercicio 5 {.unnumbered}
+
+Calcula la media, mediana y desviación estándar de edad y de IgG_Final:
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+```{r}
+#escribir el código aquí
+```
+
+### Ejercicio 6 {.unnumbered}
+
+Calcula la media, mediana y desviación estándar de edad y del tiempo de dosis de refuerzo:
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+```{r}
+#escribir el código aquí
+```
+
+## Análisis descriptivo bivariado de datos numéricos
+
+### Ejercicio 7 {.unnumbered}
+
+Utilice el código de la pregunta 4 y modifíquelo de tal manera que podamos comparar las medidas estadísticas calculadas entre varones y mujeres:
+
+:::{.callout-tip collapse="true"}
+## Recordatorio!
+
+Como buenas prácticas en programación en R, si usamos la función `group_by()` **es obligatorio usar la función `ungroup()` después del `summarise()`.** Esto permite deshacer el agrupamiento inicial y mantener la data en su versión original. 
+
+Veamos un ejemplo sencillo
+
+```{r}
+#| eval: false
+
+data %>% 
+  group_by(sexo) %>%      # Agrupamos según sexo 
+  summarise(media_edad = mean(edad, na.rm=TRUE),
+            mediana_edad = median(edad, na.rm=TRUE)) %>% 
+  ungroup()     # Deshacemos el agrupamiento para volver a la data original
+```
+:::
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+```{r}
+#escribir el código aquí
+```
+
+### Ejercicio 8 {.unnumbered}
+
+Utilice el código de la pregunta 2 y modifíquelo de tal manera que se comparen las medidas estadísticas calculadas entre los que recibieron tipo de refuerzo heterólogo y los que recibieron refuerzo homólogo:
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+```{r}
+#escribir el código aquí
+```
+
+### Ejercicio 9 {.unnumbered}
+
+Utilice el código de la pregunta 3 y modifíquelo de tal manera que se comparen las medidas estadísticas calculadas según antecedente de COVID-19:
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+```{r}
+#escribir el código aquí
+```
+
+### Ejercicio 10 {.unnumbered}
+
+Utilice el código de la pregunta 6 y modifíquelo de tal manera que se comparen las medidas estadísticas calculadas según antecedente de COVID-19:
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+```{r}
+#escribir el código aquí
+```
+
+## Análisis descriptivo univariado de datos categóricos
+
+### Ejercicio 11 {.unnumbered}
+
+Crear una tabla con las frecuencias absolutas usando {dplyr}. Luego cree una tabla con frecuencias absolutas y relativas usando {janitor} y relativa del sexo, primero con los NA y luego excluyendo los NA: 
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+```{r}
+#escribir el código aquí
+```
+
+
+### Ejercicio 12 {.unnumbered}
+
+Genere una tabla descriptiva para comorbilidades usando {dplyr}, {janitor} y {summarytools}:
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+
+```{r}
+#escribir el código aquí
+```
+
+
+### Ejercicio 13 {.unnumbered}
+
+Genere una tabla descriptiva para el tipo de refuerzo recibido que presente frecuencias absolutas y relativas, excluya los NA:
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+
+
+
+```{r}
+#escribir el código aquí
+```
+
+
+### Ejercicio 14 {.unnumbered}
+
+Genere una tabla descriptiva para antecedente de COVID-19:
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+
+
+
+```{r}
+#escribir el código aquí
+```
+
+
+## Análisis descriptivo bivariado de datos categóricos
+
+### Ejercicio 15 {.unnumbered}
+
+Genere una tabla bivariada con el sexo y el antecedente de COVID-19:
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+
+
+
+```{r}
+#escribir el código aquí
+```
+
+
+### Ejercicio 16 {.unnumbered}
+
+Genere una tabla bivariada entre sexo y tipo de refuerzo recibido:
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+
+
+
+```{r}
+#escribir el código aquí
+```
+
+
+### Ejercicio 17 {.unnumbered}
+
+Genere una tabla bivariada entre comorbilidades y tipo de refuerzo recibido
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+
+
+
+```{r}
+#escribir el código aquí
+```
+
+
+### Ejercicio 18 {.unnumbered}
+
+Ahora utiliza data_ebola y genera tablas bivariadas entre gender y fever, chills, cough, aches y vomit (una tabla por cada par de variables: ejm gender y fever, gender y chills, etc)
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+
+
+
+```{r}
+#escribir el código aquí
+```
+
+```{r}
+#escribir el código aquí
+```
+
+```{r}
+#escribir el código aquí
+```
+
+```{r}
+#escribir el código aquí
+```
+
+```{r}
+#escribir el código aquí
+```
+
+
+## Gráficos comparativos para datos numéricos y categóricos
+
+### Ejercicio 19 {.unnumbered}
+
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+
+
+
+```{r}
+#escribir el código aquí
+```
+
+
+### Ejercicio 20 {.unnumbered}
+
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+
+
+
+```{r}
+#escribir el código aquí
+```
+
+
+### Ejercicio 21 {.unnumbered}
+
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+
+
+
+```{r}
+#escribir el código aquí
+```
+
+
+### Ejercicio 22 {.unnumbered}
+
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+
+
+
+```{r}
+
+```
+
+
+## Análisis descriptivo univariado de datos numéricos
+
+### Ejercicio 1 {.unnumbered}
+
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+
+
+```{r}
+
+```
+
+
+### Ejercicio 1 {.unnumbered}
+
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+
+
+
+```{r}
+
+```
+
+
+### Ejercicio 1 {.unnumbered}
+
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+
+
+
+```{r}
+
+```
+
+
+### Ejercicio 1 {.unnumbered}
+
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+
+
+
+
+```{r}
+
+```
+
+
+
+## Gráficos comparativos para datos numéricos y categóricos
+
+### Ejercicio 19 {.unnumbered}
+
+Cree un gráfico de cajas comparando el IgG Final según tipo de refuero recibido. Guardelo como p1. Luego, agregue un gráfico de puntos con ruido (jittered) y guárdelo como p2. Por último, cambie la geometrái de caja por la de violin y guárdelo como p3. En todos los casos use tema minimal. 
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+_Compare p1, p2 y p3_
+
+```{r}
+#escribir el código aquí
+```
+
+
+### Ejercicio 20 {.unnumbered}
+
+Cree un gráfico de histograma del número de días desde el inicio de síntomas hasta la hospitalización de pacientes con ébola (days_onset_hosp). Controle los bins a 10. También cree un gráfico de densidad adicional.
+
+_¿Cómo interpretarías los resultados encontrados? (discutirlo en la sesión)_
+
+```{r}
+#escribir el código aquí
+```
+
+

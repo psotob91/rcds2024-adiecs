@@ -1,0 +1,585 @@
+---
+title: "<font color='white'>Taller 2 - Solucionario</font>"
+subtitle: "Análisis Estadístico de Datos en Salud"
+author: 
+  - Percy Soto-Becerra
+  - Anthony Ramos
+date: last-modified
+date-format: "DD-MM-YYYY"
+description: "PFC 2023 -– IETSI, EsSalud"
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: "Índice"
+    toc-location: left
+    embed-resources: true
+    number-sections: true
+    theme: cerulean
+    title-block-style: default
+    title-block-banner: true
+    section-divs: true
+    css: [include/webex.css, include/styles.css]
+    include-after-body: include/webex.js
+    code-block-border-left: false
+lang: es
+execute: 
+  message: false
+  warning: false
+---
+
+```{r}
+#| include: false
+library(webexercises)
+```
+
+## Introducción
+
+En este segundo taller del curso vamos a aprender a crear gráficos a partir de una base de datos de [Gapminder](https://www.gapminder.org/).
+
+::: {.callout-important collapse="true" appearance="default" icon="true"}
+## Atajos de teclado sugeridos (para Microsoft):
+
+-   <kbd>alt</kbd> + <kbd>-</kbd> $\rightarrow$ <kbd>\<-</kbd> (operador **asignar**)
+:::
+
+## Instalar/cargar paquetes
+
+Esta vez vamos a trabajar con el paquete nuevo `{ggplot}` del (meta)paquete `{tidyverse}`. Podemos instalar directamente el paquete `{ggplot}`, pero es mejor instalar `{tidyverse}` (<https://www.tidyverse.org/>), ya que este viene con un conjunto más grandes de paquetes que también usaremos más adelante.
+
+El otro paquete nuevo que usaremos es `{dslabs}` cuya única función es almacenar bases de datos. Puedes ver qué bases de datos tiene y su documentación asociada en el repositorio oficial del CRAN: <https://cran.r-project.org/web/packages/dslabs/index.html>.
+
+Por último, también usaremos los paquetes aprendidos en la clase previa: `{rio}` y `{here}`.
+
+```{r}
+library(tidyverse)  # Tiene {ggplot2}                 
+library(dslabs)     # Tiene bases de datos: gapminder                
+library(rio)        
+library(here)       
+```
+
+::: column-margin
+Recuerden que hay varias formas de instalar paquetes de R. Una forma es usar `install.packages()`. Si utiliza `R Script` esta es una buena manera de hacerlo. Sin embargo, como estamos usando `Quarto` sugerimos no usar la función `install.packages()`. Lo mejor en este caso es escribir el código que cargue los paquetes (`library(nombre_paquete)`) y guardar el quarto para que este reconozca que existen paquetes sin instalar.
+
+El aviso de RStudio para instalar el paquete nuevo deberá ser similar al siguiente:
+
+![](img/instalar_paquete.png)
+
+Más adelante les enseñaremos una forma completamente reproducible de instalar y cargar paquetes cuando se use `Quarto`.
+:::
+
+```{r}
+#| echo: false
+#| results: asis
+q1_res <- c("Tiene funciones para manipular datos", "Para crear gráficos", answer = "Importar, exportar y convertir datos entre formatos diversos", "No es un paquete de R")
+
+q2_res <- c("import", answer = "export", "convert", "transform")
+q3_res <- c(answer = "import", "export", "convert", "transform")
+q4_res <- c("import", "export", answer = "convert", "transform")
+q5_res <- c(answer = "import", "export", "convert", "transform")
+q6_res <- c("import", "export", answer = "convert", "transform")
+q7_res <- c("import", answer = "export", "convert", "transform")
+```
+
+**Preguntas:**
+
+-   ¿Para qué sirve el paquete `{rio}`?: `r mcq(q1_res)`
+
+-   ¿Vincule la descripción con la respectiva función? *Tip: Use ?nombre_funcion si no está seguro*.
+
+    -   Guarda datos desde R a Stata: `r mcq(q2_res)`
+    -   Carga datos desde Excel a R: `r mcq(q3_res)`
+    -   Transforma datos planos a SPSS: `r mcq(q4_res)`
+    -   Carga datos desde SPSS a R: `r mcq(q5_res)`
+    -   Transforma SPSS a Stata: `r mcq(q6_res)`
+    -   Guarda datos desde R a SAS: `r mcq(q7_res)`
+
+## Importación e inspección de datos
+
+Para esta práctica, vamos a trabajar con tres bases de datos. Las dos primeras son bases da datos `juguetes` que ya se encuentran disponibles en el paquete `{dslabs}`. La última base de datos es externa, está en formato MS Excel (`*.xlsx`) y se denomina `maca_meno_perclin.xlsx`.
+
+**Importar datos juguete:**
+
+Los datos juguetes del paquete `{dslabs}` se pueden descargar usando la función `data()`, colocando el nombre de la base datos e indicando el paquete de procedencia.
+
+Aquí mostramos el ejemplo de los datos `gapminder` descargados:
+
+```{r}
+data(gapminder, package = "dslabs")  
+```
+
+::: column-margin
+Si queremos entender esta base de datos, podemos usar la función de ayuda `?` para que RStudio nos muestre la documentación en la ventana de `utilidades`, sección `Help`:
+
+```{r}
+?gapminder
+```
+:::
+
+¿Cómo saber qué más bases de datos tiene el paquete `{dslabs}`? Podemos revisar la documentación del CRAN. En `Google` se puede buscar lo siguiente:
+
+![](img/google_package.png)
+
+::: column-margin
+::: {.callout-important collapse="false" appearance="default" icon="true"}
+## Nota acerca de búsqueda en Google para ayuda en R
+
+-   Es preferible usar `Rstat` en vez de `R` al buscar en Google.
+
+-   Solo hay que poner palabras claves:
+
+    -   nombre de paquete
+    -   nombre de función
+    -   qué acción se busca hacer
+:::
+:::
+
+Una vez en el `CRAN` de R, podemos ver que tiene un `Manual de Referencia` el cual abriremos:
+
+![](img/cran.png)
+
+El enlace del manual es el siguiente: <https://cran.r-project.org/web/packages/dslabs/dslabs.pdf>
+
+Si revisamos en el manual, veremos que hay diversas bases de datos. La base de datos `murders` es la que usaremos también:
+
+```{r}
+data(murders, package = "dslabs") 
+```
+
+**Importar datos de Stata:**
+
+En la carpeta compartida tenemos el archivo de Microsoft Excel (extensión `*.xlsx`): `maca_meno_preclin.xlsx`.
+
+```{r}
+maca_datos <- import("maca_meno_preclin.xlsx")
+```
+
+## Explorar datos importados
+
+Podemos explorar los datos con dos funciones básicas: `head()` de R base y `glimpse()` de `{tidyverse}`.
+
+-   Veamos para el caso de los datos `murders`:
+
+```{r}
+head(murders)
+glimpse(murders)
+```
+
+-   Hagamos lo mismo para gapminder
+
+```{r}
+head(gapminder)
+glimpse(gapminder)
+```
+
+-   Y para maca_data:
+
+```{r}
+head(maca_datos)
+glimpse(maca_datos)
+```
+
+**Preguntas:**
+
+```{r}
+#| echo: false
+#| results: asis
+q1_res <- c("Muestra las 7 últimas filas del data frame", "Muestra las 6 últimas filas del data frame", answer = "Muestra las 6 primeras filas del data frame", "Muestra las 7 primeras filas del data frame")
+
+q2_res <- c("10545 filas y 8 columnas", answer = "10545 filas y 9 columnas", "10545 columnas y 9 filas", "10545 columnas y 8 filas")
+q3_res <- c(answer = "maca_datos", "murders", "gapminder", "tratamiento")
+q4_res <- c("tratamiento", "gapminder", answer = "maca_datos$peso_final", "murders")
+q5_res <- c(answer = "'peso_final <- maca_datos$peso_final'", "'peso_final == maca_datos$peso_final'", "'peso <- maca_datos$peso_final'")
+```
+
+-   ¿Qué hace la función `head()`? `r mcq(q1_res)`
+
+-   ¿Cuántas filas y columnas tienen los datos `gapminder`? `r mcq(q2_res)`
+
+-   ¿La columna tratamiento en qué data frame está? `r mcq(q3_res)`
+
+-   ¿Con qué código podemos extraer la columna `peso_final`? `r mcq(q4_res)`
+
+-   ¿Con qué código puedo guardar la columna extraida en un vector llamado `peso_final`? `r mcq(q5_res)`
+
+## Visualización de datos con ggplot
+
+### Secuencia para crear gráficos con R:
+
+::: panel-tabset
+### Paso 1
+
+<h3>Creemos el objeto ggplot</h3>
+
+```{r}
+ggplot(murders)
+```
+
+### Paso 2
+
+<h3>Creemos la primera capa: 'aesthetic mapping'</h3>
+
+```{r}
+ggplot(murders, aes(x = population, y = total)) 
+```
+
+### Paso 3
+
+<h3>Creemos la segunda capa: 'geoms' (geometrías)</h3>
+
+-   Una sola capa de puntos:
+
+```{r}
+ggplot(murders, aes(x = population, y = total)) + 
+  geom_point() # Puntos
+```
+
+-   Una sola capa de líneas:
+
+```{r}
+ggplot(murders, aes(x = population, y = total)) + 
+  geom_line() # Líneas
+```
+
+-   También podemos agregar muchas capas (puntos y líneas):
+
+```{r}
+ggplot(murders, aes(x = population, 
+                    y = total, 
+                    label = abb)) + 
+  geom_point() +
+  geom_text()
+```
+
+### Paso 4
+
+<h3>Retoques en `aes` y `geoms`</h3>
+
+```{r}
+ggplot(murders, aes(x = population, 
+                    y = total, 
+                    label = abb, 
+                    color = region)) + 
+  geom_point() +
+  geom_text()
+```
+
+```{r}
+ggplot(murders, aes(x = population, 
+                    y = total, 
+                    label = abb, 
+                    color = region)) + 
+  geom_point(size = 3) +
+  geom_text()
+```
+
+```{r}
+ggplot(murders,  aes(x = population, 
+                     y = total, 
+                     label = abb, 
+                     color = region)) + 
+  geom_point(size = 3) +
+  geom_text(nudge_x = 1500000)
+```
+
+```{r}
+ggplot(murders, aes(x = population / 10 ^ 6,
+                    y = total, 
+                    label = abb, 
+                    color = region)) + 
+  geom_point(size = 3) +
+  geom_text(nudge_x = 1.5)
+```
+:::
+
+::: column-margin
+Los argumentos de la función `ggplot()` son los siguientes:
+
+```r
+ggplot(data = murders, mapping = aes(x = population, y = total))
+```
+
+Sin embargo, si mantenemos el orden de los argumentos, podemos no escribir el nombre del argumento y escribir una versión más simplificada:
+
+```r
+ggplot(murders, aes(x = population, y = total))
+```
+
+También podemos hacer saltos de código sin que la estructura y función se rompan:
+
+```r
+ggplot(murders, 
+       aes(x = population, 
+           y = total))
+```
+:::
+
+## Ejercicios
+
+### Ejercicio 1 {.unnumbered}
+
+Crear un gráfico de puntos que muestre cómo la mortalidad infantil ha cambiado a través del tiempo.
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+ggplot(gapminder, 
+       aes(x = year, y = infant_mortality)) + 
+    geom_point()
+```
+
+:::
+
+::: column-margin
+::: {.callout-warning collapse="false" appearance="default" icon="true"}
+## Salto de línea con + de ggplot()
+
+-   Cuando escribes código uno puede optar por escribir todo en una sola línea:
+
+```r
+ggplot(datos, aes(x = var1, y = var2)) + geom_point()
+```
+
+-   Sin embargo, en R se recomienda realizar saltos de línea para que el código sea más claro y ordenado.
+
+-   Cuando el salto de línea ocurre dentro de un comando escrito en `ggplot()`, este debe ser hecho después del signo `+`:
+
+```r
+# Esto es correcto
+ggplot(datos, aes(x = var1, y = var2)) + 
+    geom_point()
+```
+
+-   Es erróneo hacerlo antes del signo más
+
+```r
+# Esto está mal
+ggplot(datos, aes(x = var1, y = var2)) 
+    + geom_point() 
+```
+:::
+:::
+
+### Ejercicio 2 {.unnumbered}
+
+Crear un gráfico de puntos que muestre cómo la esperanza de vida ha cambiado a través del tiempo y que cada continente tenga un color distinto. Guarde el gráficos como grafico1. Imprímalo.
+
+::: {.callout-caution collapse="true"}
+
+## Solución
+
+```{r}
+grafico1 <- ggplot(gapminder, 
+                   aes(x = year, 
+                       y = life_expectancy, 
+                       color = continent)) + 
+  geom_point()
+
+grafico1
+```
+
+::: 
+
+### Ejercicio 3 {.unnumbered}
+
+En grafico1 ahora que *x* tenga la etiqueta "Años", *y* tenga la etiqueta "Esperanza de vida" y el título sea "Esperanza de vida en el tiempo". Guardelo como graico2 e imprimalo.
+
+::: {.callout-caution collapse="true"}
+
+## Solución
+
+```{r}
+grafico2 <- grafico1 + 
+  labs(x = "Años", y = "Esperanza de vida")
+
+grafico2
+```
+
+:::
+
+### Ejercicio 4 {.unnumbered}
+
+Crear un gráfico de dispersión con datos del año 1990 de las variables fertilidad y esperanza de vida. Guarda el grafico como data90
+
+::: {.callout-caution collapse="true"}
+
+## Solución
+
+```{r}
+# Este código filtra 1990. La próxima clase lo estudiaremos
+data_1990 <- gapminder %>%
+  filter(year == 1990)
+```
+
+```{r}
+data90 <- ggplot(data_1990, 
+                 aes(x = fertility, 
+                     y = life_expectancy)) +
+  geom_point() +
+  xlab("Fertilidad") +
+  ylab("Esperanza de vida")
+```
+
+:::
+
+### Ejercicio 5 {.unnumbered}
+
+Con el mismo gráfico de la pregunta 6, ahora queremos diferenciar los continentes agregándoles un color distinto a cada uno, ¿cómo lo hacemos?
+
+::: {.callout-caution collapse="true"}
+
+## Solución
+
+```{r}
+ggplot(data_1990, aes(x = fertility, 
+                      y = life_expectancy, 
+                      color = continent)) +
+  geom_point() +
+  xlab("Fertilidad") +
+  ylab("Esperanza de vida")
+```
+
+:::
+
+### Ejercicio 6 {.unnumbered}
+
+Crear un gráfico de puntos que cruce las variables fertilidad(eje x) y esperanza de vida(eje y) solo del continente americano. Además, que cada region del continente tenga un color distinto.
+
+::: {.callout-caution collapse="true"}
+
+## Solución
+
+```{r}
+# Este código filtra Américas. La próxima clase lo estudiaremos
+data_americas <- gapminder %>%
+  filter(continent == "Americas")
+```
+
+```{r}
+ggplot(data_americas, aes(x = fertility, 
+                          y = life_expectancy, 
+                          color = region)) +
+  geom_point() +
+  xlab("Fertilidad") +
+  ylab("Esperanza de vida")
+```
+
+:::
+
+### Ejercicio 7 {.unnumbered}
+
+Cambie los temas completos de los gráficos ggplot. Elija 3 temas que le gusten de esta página web: <https://ggplot2.tidyverse.org/reference/ggtheme.html>
+
+::: {.callout-caution collapse="true"}
+
+## Solución
+
+-   Tema 1 de elección:
+
+```{r}
+ggplot(data_americas, aes(x = fertility, 
+                          y = life_expectancy, 
+                          color = region)) +
+  geom_point() +
+  xlab("Fertilidad") +
+  ylab("Esperanza de vida") + 
+  theme_bw()
+```
+
+-   Tema 2 de elección:
+
+```{r}
+ggplot(data_americas, aes(x = fertility, 
+                          y = life_expectancy, 
+                          color = region)) +
+  geom_point() +
+  xlab("Fertilidad") +
+  ylab("Esperanza de vida") + 
+  theme_classic()
+```
+
+-   Tema 3 de elección:
+
+```{r}
+ggplot(data_americas, aes(x = fertility, 
+                          y = life_expectancy, 
+                          color = region)) +
+  geom_point() +
+  xlab("Fertilidad") +
+  ylab("Esperanza de vida") + 
+  theme_dark()
+```
+
+:::
+
+### Ejercicio 8 {.unnumbered}
+
+Con los datos `maca_datos`, cree un gráfico de cajas que compare a la glucosa entre los niveles de tratamiento. Haga que el color dependa del tratamiento. Busque la geometría apropiada para este tipo de gráfico en el siguiente enlace: <https://ggplot2.tidyverse.org/reference/>
+
+::: {.callout-caution collapse="true"}
+
+## Solución
+
+```{r}
+ggplot(maca_datos, aes(x = tratamiento, y = glucose, color = tratamiento)) + 
+  geom_boxplot()
+```
+
+:::
+
+
+### Ejercicio 9 {.unnumbered}
+
+-   Con el gráfico anterior, agregue una geometría de puntos:
+
+::: {.callout-caution collapse="true"}
+
+## Solución
+
+```{r}
+ggplot(maca_datos, aes(x = tratamiento, y = glucose, color = tratamiento)) + 
+  geom_boxplot() + 
+  geom_point()
+```
+
+:::
+
+-   ¿Qué pasaría si agrego la geometría de puntos primero y la de cajas después? Discuta con sus compañeros las diferencias encontradas y el por qué de estas.
+
+::: {.callout-caution collapse="true"}
+
+## Solución
+
+```{r}
+ggplot(maca_datos, aes(x = tratamiento, y = glucose, color = tratamiento)) + 
+  geom_point() + 
+  geom_boxplot() 
+```
+
+:::
+
+### Ejercicio 10 {.unnumbered}
+
+Elija un tema que le guste y agréguelo al gráfico. Edite las etiquetas correspondientes de los ejes, títulos, leyendas, etc.
+
+::: {.callout-caution collapse="true"}
+
+## Solución
+
+```{r}
+ggplot(maca_datos, aes(x = tratamiento, y = glucose, color = tratamiento)) + 
+  geom_boxplot() + 
+  geom_point() + 
+  labs(y = "Glucosa (mg/dL)", 
+       x = "", # Para dejar en blanco el eje x
+       color = "Tratamiento recibido", 
+       title = "Niveles de glucosa según tratamiento") + 
+  theme_light()
+```
+
+:::
+
+## Renderizar
+
+Renderice todo el Quarto.

@@ -1,0 +1,276 @@
+---
+format: 
+  revealjs: 
+    self-contained: true
+    theme: [default, theme/theme.scss]
+    footer: "Fundamentos R para Ciencia de Datos en Salud"
+    logo: img/logo.jpg
+    transition: convex
+    background-transition: zoom
+    incremental: false
+    slide-number: c/t
+    preview-links: true
+    # width: 1920
+    # height: 1080
+    height: 900
+    width: 1600
+    # parallax-background-image: images/bg-ietsi-slide-first.png
+    # parallax-background-size: "1920px 1080px"
+    # chalkboard: true
+    code-block-background: true
+    code-block-border-left: "#31BAE9"
+    highlight-style: ayu-dark
+    echo: true
+    multiplex: true
+    touch: true
+    auto-stretch: true
+    link-external-icon: true
+    link-external-newwindow: true
+    self-contained-math: true
+    
+from: markdown+emoji
+execute:
+  echo: true
+filters:
+  - reveal-auto-agenda
+auto-agenda:
+  bullets: numbered
+  heading: Agenda
+---
+
+\
+
+\
+
+<h1>Sesión 0</h1>
+
+<h2>[Curso: Fundamentos R para Ciencia de Datos en Salud]{.plo}</h2>
+
+<hr>
+
+<h3>[Percy Soto-Becerra, M.D., M.Sc(c)]{.negro}</h3>
+
+<h4>[ADIECS]{.negro}</h4>
+
+<h4>[2024-08-17]{.negro}</h4>
+
+`r fontawesome::fa("github", "black")` &nbsp; [https://github.com/psotob91](https://github.com/psotob91)
+
+![](img/logo_curso.jpg){.absolute top=340 left=980 width=35%}
+
+```{r}
+#| echo: false
+#| output: false
+
+# Removing all objects including loaded libraries
+rm(list = ls(all = TRUE))
+gc()
+
+# Installing and loading packages
+if (!require("pacman")) {
+  install.packages("pacman")
+}
+
+pacman::p_unload("all") # Unloading all package except base
+
+pacman::p_load(tidyverse, 
+               tibble, 
+               pander, 
+               gt, 
+               kableExtra) # Loading packages
+```
+
+## Bienvenido al curso
+<hr>
+
+\
+
+![](img/curso-portada.jpg)
+
+## Horario
+<hr>
+
+-   Clases  **teóricas** virtuales y asincrónicas en local de ADIECS:
+
+    -  Se colgarán todos los miércoles
+    
+-   Clases **prácticas** presenciales en local de ADIECS:
+
+    -   Martes 6:15-7:15 pm.
+
+-   Trabajo final 
+
+```{r}
+#| echo: false
+#| output: asis
+tibble::tribble(
+                      ~Componente, ~Horas.Cronológicas, ~Horas.Académicas,
+                  "Teoría",                 12L,               16L,
+                "Práctica",                 12L,               16L,
+  "Trabajo final*",                 12L,               16L
+  ) %>%
+  pandoc.table(justify = "lcc", missing = "—", 
+               col.names = c("Componente", "Horas Cronológicas", "Horas Académicas"))
+```
+
+::: aside
+\*Resolución de *problem sets*
+:::
+
+## Programación del curso
+<hr>
+
+![](img/eval-hires-flowchart-insnsb.png) - Cronograma detallado: {{< fa calendar >}} [Aquí](https://r-insnsb.netlify.app/schedule.html)
+
+## Instructor
+<hr>
+
+![](img/instructor.png)
+
+## Web del curso
+<hr
+
+-   Todo el contenido será subido a la web del curso: <https://rcds2024-adiecs.netlify.app/>
+
+-   La web así como todos los slides tienen derechos de autor y licencia `r fontawesome::fa("creative-commons")`.
+
+-   Siempre y cuando sea para fines `no comerciales`, ustedes pueden...
+
+    -   Pueden reutilizar los slides y compartirlos (¡son libres en la web!).
+
+    -   También el código fuente que los genera (lo puedes encontrar [aquí](https://github.com/psotob91/rcds2024-adiecs)).
+
+    -   En todos los casos, deben `citar la fuente`.
+
+##  {background-iframe="https://rcds2024-adiecs.netlify.app/"}
+
+## Evaluación
+<hr>
+
+-  Exposición final de casos de análisis
+
+-   Calificación:
+
+```{r}
+#| include: false
+assignments <- tribble(
+  ~Puntos,   ~Tarea,
+  3 * 36,    "Exposición final (3 × 36)",
+  12,    "Asistencia a clases"
+) %>%
+  mutate(Porcentaje = Puntos / sum(Puntos),
+         Porcentaje = scales::percent(Porcentaje))
+
+grading <- tribble(
+  ~Nota, ~Rango, ~Nota, ~Rango,
+  "A",  "93–100%", "C",  "73–76%",
+  "A−", "90–92%", "C−", "70–72%",
+  "B+", "87–89%", "D+", "67–69%",
+  "B",  "83–86%", "D",  "63–66%",
+  "B−", "80–82%", "D−", "60–62%",
+  "C+", "77–79%", "F",  "< 60%"
+)
+```
+
+```{r}
+#| echo: false
+#| output: asis
+assignments_total <- tibble(Tarea = "Total",
+                            Puntos = sum(assignments$Puntos),
+                            Porcentaje = NA)
+
+bind_rows(assignments, assignments_total) %>%
+  select(Tarea, Puntos, Porcentaje) %>%
+  pandoc.table(justify = "lcc", missing = "—")
+```
+
+## Constancias
+<hr>
+
+\
+
+::: columns
+::: {.column width="50%"}
+::: {.callout-tip icon="false"}
+## Constancia de aprobado
+
+A quienes cumplan los siguientes requisitos:
+
+-   Cumplir con el requisito de asistencia del entrenamiento de 9/12 sesiones académicas (75% de clases impartidas), Y
+-   Aprobar el examen final (calificación mayor o igual a 14.0 en promedio final)
+:::
+:::
+
+::: {.column width="50%"}
+::: {.callout-note icon="false"}
+## Constancia de participación
+
+A quienes cumplan el siguiente requisito:
+
+-   Cuando no tenga nota aprobatoria habiendo cumplido con las actividades programadas según lo establecido en el syllabus, pero sí haya asistido al menos a 9/12 sesiones académicas (75% de clases impartidas).
+:::
+:::
+:::
+
+## FAQ del curso
+<hr>
+
+\
+
+#### `P - ¿Qué nivel previo de estadística asume este curso?`
+
+R - Este curso asume que los alumnos no han tenido ninguna experiencia previa usando programas de análisis estadístico o de programación web.
+
+#### `P - ¿Es este un curso introductorio de Estadística?`
+
+R - No.
+
+#### `P - ¿Haremos computación?`
+
+R - Sí.
+
+## FAQ del curso
+<hr>
+
+\
+
+#### `P - ¿Este es un curso introductorio de programación?`
+
+R - No.
+
+#### `P - ¿Qué lenguaje aprenderemos?`
+
+R- R.
+
+#### `P - ¿Por qué no otro lenguaje?`
+
+R- Lo discutiremos en su momento :coffee:.
+
+## 
+
+::: r-fit-text
+<center>¡Gracias!</center>
+
+<center>¿Preguntas?</center>
+
+:::
+
+## 
+
+\
+
+\
+
+\
+
+::: r-fit-text
+
+<center>
+{{< fa brands twitter >}} @psotob91 
+
+{{< fa brands github >}} https://github.com/psotob91
+
+{{< fa inbox >}} percys1991@gmail.com
+</center>
+
+:::

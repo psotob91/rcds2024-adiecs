@@ -1,0 +1,745 @@
+---
+format: 
+  revealjs: 
+    self-contained: true
+    theme: [default, theme/theme.scss]
+    footer: "Análisis Estadístico de Datos en Salud 2023 - Día 7"
+    logo: img/logo.png
+    transition: convex
+    background-transition: zoom
+    incremental: false
+    slide-number: c/t
+    preview-links: true
+    # width: 1920
+    # height: 1080
+    height: 900
+    width: 1600
+    # parallax-background-image: images/bg-ietsi-slide-first.png
+    # parallax-background-size: "1920px 1080px"
+    # chalkboard: true
+    code-block-background: true
+    code-block-border-left: "#31BAE9"
+    highlight-style: ayu-dark
+    echo: true
+    multiplex: true
+    touch: true
+    auto-stretch: true
+    link-external-icon: true
+    link-external-newwindow: true
+    self-contained-math: true
+    
+from: markdown+emoji
+execute:
+  echo: true
+filters:
+  - reveal-auto-agenda
+auto-agenda:
+  bullets: numbered
+  heading: Agenda
+---
+\
+
+\
+
+<h1>Sesión 7</h1>
+
+<h2>[Curso: Análisis Estadístico de Datos en Salud]{.plo}</h2>
+
+<hr>
+
+<h3>[Percy Soto-Becerra, M.D., M.Sc(c)]{.negro}</h3>
+
+<h4>[DIS -- IETSI, EsSalud]{.negro}</h4>
+
+<h4>[2023-06-16]{.negro}</h4>
+
+`r fontawesome::fa("github", "black")` &nbsp; [https://github.com/psotob91](https://github.com/psotob91)
+
+![](img/logo.png){.absolute top=390 left=950 width="600"}
+
+```{r}
+#| echo: false
+#| output: false
+
+# Removing all objects including loaded libraries
+rm(list = ls(all = TRUE))
+gc()
+
+# Installing and loading packages
+if (!require("pacman")) {
+  install.packages("pacman")
+}
+
+pacman::p_unload("all") # Unloading all package except base
+
+pacman::p_load(tidyverse, 
+               tibble, 
+               labelled, 
+               pander, 
+               gt, 
+               kableExtra, 
+               DT, 
+               haven, 
+               skimr, 
+               Hmisc, 
+               janitor, 
+               rio, 
+               gtsummary, 
+               gt, 
+               flextable, 
+               kableExtra, 
+               readxl, 
+               rstatix, 
+               medicaldata, 
+               summarytools, 
+               gmodels) # Loading packages
+```
+
+```{r}
+#| echo: false
+library(haven)
+datos <- read_dta("maca_meno_fase1.dta") %>% 
+  as_factor() %>% 
+  filter(time == "3 months")
+```
+
+# Estimación y Pruebas de Hipótesis para Variables Respuesta Numéricas: Tres o más grupos
+
+## Una motivación para comenzar
+
+-   Se desea comparar `3 tratamientos` (A, B y C) para evaluar su efecto en el `IMC`.
+
+-   Una opción es comparar los `promedios de IMC` al final de la intervención.
+
+-   Las `3 pruebas t de Student` con sus `valores p` se muestran:
+
+    -   <FONT size='5'> A vs B (p = 0.032) </FONT>
+
+    -   <FONT size='5'> B vs C (p = 0.062) </FONT>
+
+    -   <FONT size='5'> A vs C (p = 0.047) </FONT>
+
+## Una motivación para comenzar (cont.)
+
+-   ¿Con un nivel de significancia de 5%, podemos concluir que existe asociación entre el tratamiento y el IMC? ¿Entre qué tratamientos el IMC promedio es diferente?
+
+-   Asumiremos que `controlar la probabilidad de error tipo 1` es una `cuestión fundamental` en este estudio.
+
+    -   <FONT size='6'> Hay un debate filósfico/estadístico de en qué circunstancias este control no es apropiado. </FONT>
+
+    -   <FONT size='6'> Corregir por la probabilidad de error tipo 1 no es la única opción para obtener inferencias válidas. </FONT>
+
+## Probabilidad de error tipo 1
+
+![](img/errores.png)
+
+-   Probabilidad de error tipo 1 es también conocido como `nivel de significancia`.
+
+-   $1 - Pr(\beta)$ es conocida como `Potencia` o `Poder` estadístico.
+
+## ¡Alerta! A más pruebas, más error
+
+-   Si cada prueba t de Student tiene un `nivel de significancia prefijado` de 5% ($\alpha = 0.05$), la `probabilidad de error tipo 1` `global` (de todas las pruebas en conjunto) no necesariamente será de 0.05.
+
+-   Asumamos que las tres hipótesis son independientes entre sí, entonces tendríamos lo siguiente:
+
+## A más pruebas, más error (cont.)
+
+-   Pruebas de hipótesis para `comparar 3 o más grupos` permiten `mantener` la `probabilidad` de `error tipo 1 global` por `debajo de un nivel pre-fijado`.
+
+![<FONT size='4'>Imagen tomada de: Lee S; et al. What is the proper way to apply the multiple comparison test? Korean Joournal of Anesthesiology 2018; 71(5): 353-360. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6193594/#!po=73.0769</FONT>](img/multiples-comparasiones.png)
+
+## Soluciones al problema de la probabilidad de error tipo 1
+
+-   `No` hay `consenso` entre expertos.
+
+-   Las `agencias reguladoras` (p. ej., EMA, FDA, IETSI) optan por el `ajuste` de `comparaciones múltiples`.
+
+    -   <FONT size='6'> Una opción es usar una `secuencia ANOVA`, luego `pruebas de comparaciones múltiples`.</FONT>
+    -   <FONT size='6'> Otras soluciones, más populares que la secuencia de ANOVA, las discutiremos al final.</FONT>
+
+## Pruebas globables que controlan la probabilidad de error tipo 1 {.scrollable}
+
+-   Podemos probar hipótesis acerca de `parámetros` de `3 o más` grupos.
+
+-   El enfoque `similar` que para `dos poblaciones`, pero las `hipótesis nula` y `alterna` son las siguientes:
+
+> **H0:** Todas las poblaciones tienen iguales `medias`\|`proporciones`\|`medianas`\|`tasas` de la variable respuesta son iguales.
+
+> **HA:** Al menos dos poblaciones tienen diferentes `medias`\|`proporciones`\|`medianas`\|`tasas` de la variable respuesta.
+
+## Análisis de Varianza de una vía
+
+-   También llamada: `one-way ANOVA`
+
+-   Permite probar la hipótesis de `diferencia de medias` entre `dos o más poblaciones`.
+
+    -   <FONT size='6'>Los usamos comúnmente para probar diferencia de medias entre 3+.</FONT>
+
+-   Nombre del método hace referencia a que `analiza la variabilidad` (`“varianza”`):
+
+    -   <FONT size='6'>Variabilidad de la variable numérica dentro de cada grupo y entre los grupos.</FONT>
+    -   <FONT size='6'>Si se cumplen ciertos supuestos, las varianzas permiten comparar medias.</FONT>
+
+## Hipótesis estadísticas del ANOVA one-way
+
+-   **H0:** Todas las `medias poblacionales` son `iguales` entre los grupos.
+
+-   **Ha:** Al `menos dos medias poblacionales` son `diferentes` entre los grupos.
+
+## Lógica de ANOVA (1/4)
+
+![](img/logica-anova1.png)
+
+<FONT size='6'>Mismas `varianzas entre grupos` ($Var_{EG} = \triangle{X} = 10$) entre escenarios, pero diferente `varianza intragrupo` ($VAR_{IG}$) entre escenarios)</FONT>
+
+## Lógica de ANOVA (2/4)
+
+![](img/logica-anova2.png)
+
+## Lógica de ANOVA (3/4)
+
+![](img/logica-anova3.png)
+
+<FONT size='6'>Diferentes `varianzas entre grupos` ($Var_{EG}$) entre escenarios, pero misma `varianza intragrupo` ($VAR_{IG} = \triangle{X} = 15$) entre escenarios)</FONT>
+
+## Lógica de ANOVA (4/4)
+
+![](img/logica-anova4.png)
+
+## En resumen: ANOVA
+
+![](img/logica-anova5.png)
+
+## Distribución y estadístico F
+
+![](img/prueba-f.png)
+
+## Particionando la variabilidad en ANOVA one-way
+
+![](img/anova-partition.png)
+
+## ANOVA one-way en R {.scrollable}
+
+-   Usaremos función `anova_test()` del paquete `{rstatix}`.
+
+-   Esta función permite el uso de otros tipos de ANOVA: <https://rpkgs.datanovia.com/rstatix/reference/anova_test.html>
+
+```{r}
+#| echo: false
+library(haven)
+datos <- read_dta("maca_meno_fase1.dta") %>% 
+  as_factor() 
+```
+
+::: panel-tabset
+### Caso 1
+
+```{r}
+library(rstatix)
+datos %>% 
+  anova_test(weight ~ treat, detailed = TRUE)
+```
+
+-   La prueba ANOVA one-way no genera resultados puntuales, debemos generarlos con otra función:
+
+```{r}
+datos %>% 
+  group_by(treat) %>% 
+  get_summary_stats(weight, type = "mean_sd")
+```
+
+-   También es bueno visualizar los patrones mediante gráfico de cajas:
+
+```{r}
+library(ggpubr)
+datos %>% 
+  ggboxplot(x = "treat", y = "weight")
+```
+
+::: callout-note
+## Supuestos
+
+-   Aleatorización
+
+-   Indenpendencia de observaciones
+
+-   Normalidad
+
+    -   Supuesto de normalidad condicional: $Y_i \sim Normal$, es decir $Y|x \sim Normal$
+
+```{r}
+library(ggpubr)
+datos %>% 
+  ggqqplot("weight", facet.by = "treat")
+```
+
+    + Una mejor forma de evaluar la normalidad es usando los residuos.
+
+-   Homogeneidad de varianzas (\*)
+
+    -   Se podría evaluar si las rectas de los gráficos qqplot normal son paralelas o aproximadamente paralelas:
+
+```{r}
+datos %>% 
+  ggqqplot("weight", color = "treat")
+```
+
+-   Otra opción es evaluar los residuales. Esto lo veremos en regresión lineal.
+
+-   Es preferible `asumir` que `no hay homocedaticidad` y realizar un `ajuste robusto` a `heterogeneidad de varianzas`.
+
+```{r}
+datos %>% 
+  anova_test(weight ~ treat, detailed = TRUE, white.adjust = TRUE)
+```
+
+-   No valores extremos.
+
+(\*) Este supuesto puede flexibilizarse:
+
+1)  Usando algún método robusto de estimación de varianza.
+
+2)  Usando remuestreo (Prueba de permutación o Bootstrapping)
+:::
+
+### Caso 2
+
+```{r}
+datos %>% 
+  anova_test(lh ~ treat, detailed = TRUE)
+```
+
+-   La prueba ANOVA one-way no genera resultados puntuales, debemos generarlos con otra función:
+
+```{r}
+datos %>% 
+  group_by(treat) %>% 
+  get_summary_stats(lh, type = "mean_sd")
+```
+
+-   También es bueno visualizar los patrones mediante gráfico de cajas:
+
+```{r}
+datos %>% 
+  ggboxplot(x = "treat", y = "lh")
+```
+
+::: callout-note
+## Supuestos
+
+-   Aleatorización
+
+-   Indenpendencia de observaciones
+
+-   Normalidad
+
+    -   Supuesto de normalidad condicional: $Y_i \sim Normal$, es decir $Y|x \sim Normal$
+
+```{r}
+library(ggpubr)
+datos %>% 
+  ggqqplot("lh", facet.by = "treat")
+```
+
+    + Una mejor forma de evaluar la normalidad es usando los residuos.
+
+-   Homogeneidad de varianzas (\*)
+
+    -   Se podría evaluar si las rectas de los gráficos qqplot normal son paralelas o aproximadamente paralelas:
+
+```{r}
+datos %>% 
+  ggqqplot("lh", color = "treat")
+```
+
+-   Otra opción es evaluar los residuales. Esto lo veremos en regresión lineal.
+
+-   A veces es preferible `asumir` que `no hay homocedaticidad` y realizar un `ajuste robusto` a `heterogeneidad de varianzas`.
+
+```{r}
+datos %>% 
+  anova_test(lh ~ treat, detailed = TRUE, white.adjust = TRUE)
+```
+
+-   No valores extremos.
+
+(\*) Este supuesto puede flexibilizarse:
+
+1)  Usando algún método robusto de estimación de varianza.
+
+2)  Usando remuestreo (Prueba de permutación o Bootstrapping)
+:::
+:::
+
+## Kruskal Wallis test {.scrollable}
+
+-   Alternativa `no paramétrica` de `ANOVA one-way`.
+
+-   Si supuestos se cumplen, compara `medianas`.
+
+-   Usaremos función `kruska_test()` del paquete `{rstatix}`.
+
+-   Esta función permite el uso de otros tipos de ANOVA: <https://rpkgs.datanovia.com/rstatix/reference/kruskal_test.html>
+
+```{r}
+datos %>% 
+  kruskal_test(weight ~ treat)
+```
+
+-   La prueba Kruskal Wallis no genera resultados puntuales, debemos generarlos con otra función:
+
+```{r}
+datos %>% 
+  group_by(treat) %>% 
+  get_summary_stats(weight, type = "median_iqr")
+```
+
+-   También es bueno visualizar las distribuciones
+
+```{r}
+library(ggpubr)
+datos %>% 
+  ggboxplot(y = "weight", x = "treat")
+```
+
+::: callout-note
+## Supuestos
+
+-   Aleatorización
+
+-   Indenpendencia de observaciones
+
+-   Misma distribución salvo por la mediana:
+
+    -   Esto significa que Kruskal Wallis también es perjudicado en cierto modo por la heterogeneidad de varianzas porque afecta el supuesto de igualdad de distribuciones
+
+    -   Podemos usar gráfico de densidades:
+
+```{r}
+library(ggpubr)
+datos %>% 
+  ggdensity(x = "weight", 
+            y = "..density..", 
+            fill = "treat", 
+            color = "treat", 
+            add = "median")
+```
+
+    + Podemos usar gráfico de violin: Combina cajas y densidad
+
+```{r}
+library(ggpubr)
+datos %>% 
+  ggviolin(x = "treat", 
+            y = "weight", 
+            color = "treat", 
+            add = "boxplot")
+```
+:::
+
+## Comparaciones múltiples {.scrollable}
+
+-   Hay varios enfoques de comparaciones múltiples.
+
+-   Algunas son pre-hoc y otras post-hoc.
+
+-   Veremos solo un par para ejemplificar:
+
+::: panel-tabset
+### Post-hoc ANOVA
+
+-   Para ANOVA one-way clásico:
+
+```{r}
+aov(weight ~ treat, data = datos) %>% 
+  tukey_hsd()
+```
+
+-   Si homogeneidad de varianzas no se cumple:
+
+```{r}
+datos %>% 
+  games_howell_test(weight ~ treat)
+```
+
+-   En epidemiología e investigación clínica se prefiere ajustes más conservadores. Uno de ellos es el ajuste de Bonferroni (uno de los más conservadores)
+
+```{r}
+library(emmeans)
+datos %>% 
+  emmeans_test(weight ~ treat, p.adjust.method = "bonferroni")
+```
+
+### Post-hoc KW
+
+```{r}
+datos %>% 
+  dunn_test(weight ~ treat)
+```
+:::
+
+# Pruebas de hipótesis para variables respuesta categóricas
+
+```{r}
+#| echo: false
+datos_fum <- data.frame(fumar = c(rep("Fuma", 100), rep("No fuma", 450)), 
+                        cancer = c(rep("Cancer", 20), 
+                                   rep("No cancer", 100 - 20), 
+                                   rep("Cancer", 35), 
+                                   rep("No cancer", 450 - 35)))
+
+datos_fum2 <- data.frame(
+  grupo = c(rep("Grupo 1", 106), 
+            rep("Grupo 2", 113), 
+            rep("Grupo 3", 156), 
+            rep("Grupo 4", 102)), 
+  fumar = c(rep("Fuma", 50), rep("No fuma", 106 - 50), 
+            rep("Fuma", 100), rep("No fuma", 113 - 100), 
+            rep("Fuma", 139), rep("No fuma", 156 - 139), 
+            rep("Fuma", 80), rep("No fuma", 102 - 80))
+)
+```
+
+## Tablas de contingencia
+
+- Las tablas de contingencia nos permiten describir la distribución de frecuencias de dos variables categóricas.
+
+    + Proporciones marginales, fila y columna.
+
+```{r}
+CrossTable(datos_fum$fumar, datos_fum$cancer)
+```
+
+## Prueba de hipótesis para una proporción {.scrollable}
+
+- A menudo, queremos probar hipótesis u obtener estimados acerca de la proporción del valor de una variable categórica.
+
+- Por ejemplo, queremos probar la hipótesis de que la proporción de fumadores es mayor a 20% en la población de estudio.
+
+```{r}
+datos_fum %>% 
+  tabyl(fumar) 
+```
+- Tenemos varias opciones para probar hipótesis o estimar intervalos de confianza:
+
+::: {.panel-tabset}
+
+### Prueba de proporción
+
+- Dos colas:
+
+```{r}
+prop_test(x = 100, n = 550, p = 0.2, detailed = TRUE) %>% 
+  gt()
+```
+
+- Cola superior:
+
+```{r}
+prop_test(x = 100, n = 550, p = 0.2, alternative = "greater", 
+          detailed = TRUE) %>% 
+  gt()
+```
+
+### Prueba binomial exacta
+
+- Dos colas:
+
+```{r}
+binom_test(x = 100, n = 550, p = 0.2, detailed = TRUE) %>% 
+  gt()
+```
+
+- Cola superior:
+
+```{r}
+binom_test(x = 100, n = 550, p = 0.2, detailed = TRUE) %>% 
+  gt()
+```
+
+
+:::
+
+## Pruebas de hipótesis para dos variables categóricas {.scrollable}
+
+- Otras veces podemos estar interesados en probar alguna hipótesis sobre la relación de dos variables categóricas.
+
+::: {.panel-tabset}
+
+### Prueba de la proporción
+
+```{r}
+datos_fum2 %>%
+  tabyl(grupo, fumar)
+```
+
+```{r}
+datos_fum2 %>%
+  tabyl(grupo, fumar) %>% 
+  select(-1) %>%
+  row_wise_prop_test(detailed = TRUE) %>% 
+  gt()
+```
+
+### Prueba Chi cuadrado {.scrollable}
+
+- Se crea la tabla de contingencia:
+
+```{r}
+datos_fum2 %>% 
+  tabyl(grupo, fumar) 
+```
+
+- Se elimina la primera columna desde la izquierda:
+
+```{r}
+datos_fum2 %>% 
+  tabyl(grupo, fumar) %>%
+  select(-1)
+```
+
+- Se aplica la prueba de hipótesis:
+
+```{r}
+datos_fum2 %>% 
+  tabyl(grupo, fumar) %>%
+  select(-1) %>%
+  chisq_test() %>%
+  gt()
+```
+- Se pueden visualizar algunas medidas de interés como las `frecuencias esperadas`:
+
+```{r}
+datos_fum2 %>% 
+  tabyl(grupo, fumar) %>%
+  select(-1) %>%
+  chisq_test() %>%  
+  chisq_descriptives() %>%
+  gt()
+```
+
+- TAmbién se peude obtener con gmodels
+
+```{r}
+CrossTable(datos_fum2$grupo, datos_fum2$fumar, chisq = TRUE)
+```
+
+### Prueba exacta de Fisher 
+
+- Cuando el número de celdas con frecuencais esperadas < 5 es mayor a 20% del total de celdas, la prueba Chi-2 no es válida.
+
+- En estos casos, se puede optar por la prueba Fisher como una alternativa más robusta.
+
+- Se crea la tabla de contingencia:
+
+```{r}
+datos_fum2 %>% 
+  tabyl(grupo, fumar) 
+```
+
+- Se elimina la primera columna desde la izquierda:
+
+```{r}
+datos_fum2 %>% 
+  tabyl(grupo, fumar) %>%
+  select(-1)
+```
+
+- Se aplica la prueba de hipótesis:
+
+```{r}
+datos_fum2 %>% 
+  tabyl(grupo, fumar) %>%
+  select(-1) %>%
+  fisher_test() %>%
+  gt()
+```
+
+- También podemos usar gmodels:
+
+```{r}
+CrossTable(datos_fum2$grupo, datos_fum2$fumar, fisher = TRUE)
+```
+
+:::
+
+## `r fontawesome::fa("mug-saucer", "white")` Hagamos una pausa {background-color="#00817E"}
+<hr>
+
+::: r-fit-text
+
+<center>
+
+Tomemos un descanso de `5 minutos`...
+
+Estire las piernas `r fontawesome::fa("person-walking", "white")`... 
+
+Deje de ver las pantallas `r fontawesome::fa("laptop", "white")`...
+
+... cualquier `r fontawesome::fa("laptop", "white")`, las del celular `r fontawesome::fa("mobile", "white")` también.
+
+</center>
+
+:::
+
+```{r}
+#| echo: false
+library(countdown)
+countdown_timer <- function(
+    minutes = 1, 
+    play_sound = TRUE, 
+    font_size = "2em", 
+    ...
+) {
+  countdown(
+    minutes = minutes,
+    # Fanfare when it's over
+    play_sound = play_sound,
+    # Set timer theme to match solarized colors
+    color_border              = "#404041",
+    color_text                = "white",
+    color_background = "#000000",
+    color_running_background  = "#72994E",
+    color_running_text        = "white",
+    color_finished_background = "#EE6331",
+    color_finished_text       = "white",
+    font_size = font_size,
+    ...
+  )
+}
+```
+
+```{r}
+#| echo: false
+countdown_timer(5)
+```
+
+## 
+
+::: r-fit-text
+<center>¡Gracias!</center>
+
+<center>¿Preguntas?</center>
+
+:::
+
+## 
+
+\
+
+\
+
+\
+
+::: r-fit-text
+
+<center>
+{{< fa brands twitter >}} @psotob91 
+
+{{< fa brands github >}} https://github.com/psotob91
+
+{{< fa inbox >}} percys1991@gmail.com
+</center>
+
+:::

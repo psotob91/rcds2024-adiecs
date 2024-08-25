@@ -1,0 +1,155 @@
+---
+title: Syllabus
+---
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+#| include: false
+library(dplyr)
+library(tibble)
+library(pander)
+library(gt)
+library(kableExtra)
+```
+
+::: {.grid .course-details .course-details-smaller}
+
+::: {.g-col-6}
+### Instructor
+
+- {{< fa user >}} &nbsp; [{{< var instructor.name >}}]({{< var instructor.url >}})
+- {{< fa university >}} &nbsp; {{< var instructor.office >}}
+- {{< fa envelope >}} &nbsp; [{{< var instructor.email >}}]({{< var instructor.email >}})
+- {{< fa brands twitter >}} &nbsp; [{{< var instructor.twitter >}}](https://www.twitter.com/{{< var instructor.twitter >}})
+
+:::
+
+::: {.g-col-6}
+### Detalles del curso
+
+- {{< fa calendar >}} &nbsp; {{< var course.days >}}
+- {{< fa calendar-alt >}} &nbsp; {{< var course.dates >}}
+- {{< fa clock >}} &nbsp; {{< var course.time >}}
+- {{< fa location-dot >}} &nbsp; {{< var course.location >}}
+:::
+
+:::
+
+## ASPECTOS GENERALES
+
+Curso dirgido a profesionales que quieran aprender los fundamentos de R (a través de RStudio) para la Ciencia de Datos en Salud. Alineados con los enfoques modernos de enseñanza y práctica de R, este curso no busca solo brindar técnicas de análisis estadístico de datos a los participantes, también desarrollará competencias fundamentales en Ciencia de Datos en Salud, tales como reporte reproducible con Quarto markdown y generación de tablas y gráficos automatizados y de alta calidad. 
+
+
+## COMPETENCIAS DEL PROGRAMA
+
+- Usar R y RStudio para el manejo y limpieza de base de datos de estudios de investigación en salud.
+
+- Realizar un análisis descriptivo e inferencial con un paquete estadístico de datos para la investigación en salud.
+
+- Responder preguntas de modelado descriptivo mediante regresión lineal y logística.
+
+- Generar tablas y reporte reproducibles de estos mediante el uso de markdown a través de Quarto en R/RStudio.
+
+
+## RESULTADOS DE APRENDIZAJE
+
+Al finalizar las unidades, los profesionales serán capaces de:
+
+- **Módulo 1:** Manejar y pre-procesar datos con R.
+
+- **Módulo 2:** Realizar un análisis descriptivo de los datos
+
+- **Módulo 3:** Realizar procedimientos de inferencia estadística a través de pruebas de hipótesis y estimación de intervalos de confianza.
+
+## CONTENIDOS
+
+::: {.panel-tabset}
+
+### Módulo 1
+
+**Manejo de datos con R**
+
+    - Importar y exportar datos.
+    - Seleccionar columnas y filas.
+    - Transformar columnas y filas.
+    - Insertar y modificar metadatos.
+
+
+### Módulo 2 
+
+**Análisis descriptivo de datos con R**
+
+    - Inspección inicial de datos.
+    - Descripción de datos numéricos
+    - Descripción de datos categóricos
+    - Descripción de la covariación de datos
+    
+### Módulo 3
+
+**Inferencia estadística con R**
+
+    - Pruebas de hipótesis paramétricas y no paramétricas.
+    - Estimación de intervalo de confianza
+
+:::
+
+## ESTRATEGIAS DIDÁCTICAS
+
+- **Clases teóricas:** Los alumnos recibirán las clases teóricas de manera virtual. Inicialmente, los docentes dictarán las sesiones académicas, y los participantes brindarán comentarios respecto al tema. Posteriormente, se entregarán las diapositivas de las sesiones académicas por correo electrónico que serán leídas por los participantes. Las ponencias serán grabadas y se almacenarán en un repositorio académico virtual que será compartido a los participantes. Los participantes recibirán material de lectura complementario que ayudará a consolidar las sesiones teóricas.
+
+- **Clases prácticas (Talleres):** Los alumnos recibirán las clases prácticas de manera virtual. Previamente, se hará entrega de conjunto de datos de estudios reales publicados en repositorios abiertos o por el profesor investigador. Durante las clases prácticas, guiados por el docente a cargo, se realizará el análisis de los datos aplicando los métodos enseñados durante la sesión. Los talleres serán grabados y se almacenarán en un repositorio académico virtual que será compartido a los participantes. Los conjuntos de datos y el código de análisis de datos estarán disponible en un repositorio abierto en Github. Adicionalmente, se dispondrá de 15 minutos adicionales por cada clase práctica para poder hacer preguntas directas al docente a cargo, para solucionar cualquier duda o consulta, o si es que algún alumno lo solicita, hacer una revisión específica de algún aspecto del análisis de datos.
+
+- **Conjunto de datos para analizar en casos aplicados:** Siempre que sea posible, trabajaremos con conjunto de datos reales u obtenidos mediante simulación de estudios reales. También haremos uso del conjunto de datos del paquete “medicaldata” de R.
+
+- **EXAMEN FINAL**
+
+Al final del curso habrá un conjunto de datos problema que corresponderán a un conjunto de datos con una pregunta de investigación y objetivo de modelado preestablecido. Los alumnos tendrán una semana para realizar los análisis solicitados y presentarlos como tarea calificada. Asimismo, se compartirá un solucionario al final del cierre de cada entrega.
+
+## EVALUACIÓN
+
+Para efectos de evaluar la asistencia, los participantes deberán haber asistido a mínimo 7/10 sesiones académicas. La nota mínima aprobatoria para que el participante apruebe el entrenamiento es de 13.00 (trece) en el sistema vigesimal.
+
+Para aprobar el entrenamiento, los participantes deberán cumplir con dos requisitos:
+
+- Cumplir con el requisito de asistencia del entrenamiento (13/16 sesiones académicas).
+
+- Aprobar el examen final del entrenamiento (calificación mayor o igual a 13.0 en el examen final).
+
+Se otorgará constancia de participación a quienes asistan mínimo al 80% de clases (equivalente a 13 de las 16 sesiones), y un certificado válido por 1 crédito académico a quienes adicionalmente aprueben la evaluación final.
+
+## BIBLIOGRAFÍA
+
+- Measurement scales and their summary statistics. BMJ Evidence-Based Medicine 2004;9:164-166. Enlace: [https://ebm.bmj.com/content/9/6/164.2.citation-tools](https://ebm.bmj.com/content/9/6/164.2.citation-tools)
+
+- Baillie M, le Cessie S, Schmidt CO, Lusa L, Huebner M, for the Topic Group “Initial Data Analysis” of the STRATOS Initiative (2022) Ten simple rules for initial data analysis. PLoS Comput Biol 18(2): e1009819. [https://doi.org/10.1371/journal.pcbi.1009819](https://doi.org/10.1371/journal.pcbi.1009819)
+
+- Cummings P, Rivara FP. Reporting Statistical Information in Medical Journal Articles. Arch Pediatr Adolesc Med. 2003;157(4):321–324. [doi:10.1001/archpedi.157.4.321](doi:10.1001/archpedi.157.4.321)
+
+- Batra, Neale, et al. The Epidemiologist R Handbook. 2021. DOI 10.5281/zenodo.4752646. Capítulos 17. Enlace: [https://epirhandbook.com/en/index.html](https://epirhandbook.com/en/index.html)
+
+- Greenland, S., Senn, S.J., Rothman, K.J. et al. Statistical tests, P values, confidence intervals, and power: a guide to misinterpretations. Eur J Epidemiol 31, 337–350 (2016). [https://doi.org/10.1007/s10654-016-0149-3](https://doi.org/10.1007/s10654-016-0149-3)
+
+- Altman, N., Krzywinski, M. P values and the search for significance. Nat Methods 14, 3–4 (2017). [https://doi.org/10.1038/nmeth.4120](ttps://doi.org/10.1038/nmeth.4120)
+
+- Are confidence intervals better termed “uncertainty intervals”? BMJ 2019; 366 doi: [https://doi.org/10.1136/bmj.l5381](https://doi.org/10.1136/bmj.l5381)
+
+- Valentin Amrhein, David Trafimow & Sander Greenland (2019) Inferential Statistics as Descriptive Statistics: There Is No Replication Crisis if We Don’t Expect Replication, The American Statistician, 73:sup1, 262-270, DOI: [10.1080/00031305.2018.1543137](10.1080/00031305.2018.1543137)
+
+- Hawkins AT, Samuels LR. Use of Confidence Intervals in Interpreting Nonstatistically Significant Results. JAMA. 2021;326(20):2068–2069. doi: [10.1001/jama.2021.16172](10.1001/jama.2021.16172)
+
+- Amrhein V, Greenland S, McShane B. Scientists rise up against statistical significance. Nature. marzo de 2019;567(7748):305-7. [https://www.nature.com/articles/d41586-019-00857-9](https://www.nature.com/articles/d41586-019-00857-9)
+
+## Plana Docente
+
+:::{.callout-note collapse=false appearance='default' icon=false}
+## **Percy Soto Becerra, M.D., M.Sc(c)**
+
+Investigador RENACYT con publicaciones en revistas científicas indizadas a SCOPUS, Medline y Web of Science. Médico cirujano por la Universidad Nacional Mayor de San Marcos (UNMSM),  egresado de la Maestría en Ciencias en Investigación Epidemiológica de la Universidad Peruana Cayetano Heredia (UPCH) y maestrando de la maestría de Estadística de la Universidad Nacional Agraria La Molina (UNALM). Cuenta con más de tres años de experiencia en la formulación, implementación, y gestión de proyectos de investigación científica en salud. Posee una sólida formación en métodos cuantitativos para la investigación epidemiológica y redacción científica, asimismo, ha realizado entrenamiento avanzado y cuenta con experiencia en bioestadística y ciencia de datos. Ha obtenido financiamiento internacional como investigador principal junior; así como participar en investigaciones en salud con la aplicación de métodos avanzados en análisis de datos. Ha sido becario del Centro Internacional Fogarty de los Institutos Nacionales de Salud de los Estados Unidos mediante el proyecto D43 TW007393 Peru Epidemiology Research Training Consortium, el cual le permitió recibir entrenamiento en investigación biomédica. Ha colaborado como investigador en el Centro de Investigaciones Económicas y Sociales de la Universidad San Ignacio de Loyola (USIL), el Instituto de Evaluación de Tecnologías en Salud e Investigación (IETSI) del Seguro Social (EsSalud), el Centro Nacional de Salud Ocupacional (CENSOPAS) y el Centro Nacional de Salud Pública (CNSP) del Instituto Nacioanl de Salud (INS)  y el Centro de Salud Global de la UPCH. Actualmente y es investigador asociado a la Universidad Continental. Interesado en aplicar métodos cuantitativos modernos para inferencia causal en epidemiología (efectividad clínica comparativa y evaluación de impacto de programas de salud), investigación clínica pronóstica y diagnóstica con especial énfasis en aplicaciones a medicina de precisión.
+
+- Google Scholar: <https://scholar.google.com/citations?user=lYRCQzYAAAAJ&hl=en> 
+- Github: <https://github.com/psotob91>
+- E-mail: <psotob@inkastats-academy.com>  
+:::
+

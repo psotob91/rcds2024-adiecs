@@ -1,0 +1,270 @@
+---
+title: "Taller N°3"
+format: html
+editor: source
+---
+
+## Introducción
+
+En este taller revisaremos aspectos básicos sobre importación y exportación de bases de datos en formato .dta (Stata), .xlsx (Excel), .csv y .sav (SPSS) mediante el paquete `rio`. Además, practicaremos exploración y manejo inicial de datos con tidyverse.
+
+Atajos de teclado sugeridos:
+
+1\) `ctrl + shift + m` -\> `%>%` (operador pipe)
+
+2\) `alt + -` -\> `<-` (operador de asignación, solo funciona dentro de los chunks. Probarlo fuera)
+
+## Cargar paquetes
+
+```{r}
+#| label: instalar y cargar paquetes
+#| include: false
+# Antes de cargar los siguientes paquetes, se deben instalar desde la pestaña "Packages".
+library(tidyverse)                   # Varias funciones de tidyverse (dplyr, ggplot2, etc.)
+library(rio)                         # Navaja suiza de la importación de datos
+library(skimr)                       # Análisis inicial de datos
+library(Hmisc)
+```
+
+## PRIMERA PARTE: Importar/exportar bases de datos con `{rio}`
+
+### Ejercicio 1
+
+Importar la base de datos "data_enaho2017_v2" y guardarla como "data_ejm1". 
+
+```{r}
+data_ejm1 <- import("data_enaho2017_v2.csv")
+
+data_ejm1
+```
+
+### Ejercicio 2
+
+Importar la base de datos "linelist_raw_v2" y guardarla como "data_ejm2". 
+
+```{r}
+data_ejm2 <- import("linelist_raw_v2.xlsx")
+```
+
+### Ejercicio 3
+
+Importar la base de datos "data_ejercicio" y guardarla como "data_ejm3". Usar la funcion characterize para conservar metadatos.
+
+```{r}
+data_ejm3 <- import("data_ejercicio.dta") %>% 
+  characterize()
+```
+
+### Ejercicio 4
+
+Importar la base de datos "data_SPSS" y guardarla como "data_ejm4". 
+
+```{r}
+data_ejm4 <- import("data_SPSS.sav") %>% 
+  characterize()
+```
+
+### Ejercicio 5
+
+Exportar con el mismo nombre pero en formato *.csv*, *.sav*, *.xlsx* y *.dta* todas las bases importadas, respectivamente. 
+
+```{r}
+export(data_ejm1, "data_practica.csv")
+```
+
+```{r}
+export(data_ejm1, "data_practica.xlsx")
+```
+
+```{r}
+export(data_ejm1, "data_practica.dta")
+```
+
+```{r}
+export(data_ejm1, "data_practica.sav")
+```
+
+```{r}
+export(data_ejm1, "data_practica.rds") # Formato de R (recomendado!!)
+```
+
+## SEGUNDA PARTE: Principios de manejo de bases de datos con R
+
+Para esta parte trabajaremos con la base de datos "data_ejm1" que contiene datos de la ENAHO 2017. 
+
+### Ejercicio 6
+
+En la data, renombrar manualmente las siguientes variables y guardelas en un objeto llamado "data_clean":
+- codperso --> id
+- tiene_agua_potable --> agua_pot
+- acceso_agua --> agua_acc
+- cuantas_horas_si_agua --> agua_sihoras
+- procedencia_agua --> agua_proc
+
+
+```{r}
+data_ejm1 %>% 
+  rename(
+    id = codperso, 
+    agua_pot = tiene_agua_potable, 
+    agua_acc = acceso_agua, 
+    agua_sihoras = cuantas_horas_si_agua, 
+    agua_proc = procedencia_agua
+  ) -> data_clean
+
+data_clean
+```
+
+### Ejercicio 7
+
+En la data_clean, renombrar manualmente las siguientes variables:
+
+- necesid_basicas_insatisf_vivie --> nbi_vivie
+- necesid_basicas_insatist_hacin --> nbi_hacin
+- necesid_basicas_insatisf_sshh --> nbi_sshh
+- necesid_basicas_insatisf_noesc  --> nbi_noesc
+- necesid_basicas_insatisf_depec --> nbi_depec
+
+```{r}
+data_clean %>% 
+  rename(nbi_vivie = necesid_basicas_insatisf_vivie, 
+         nbi_hacin = necesid_basicas_insatist_hacin, 
+         nbi_sshh = necesid_basicas_insatisf_sshh, 
+         nbi_noesc = necesid_basicas_insatisf_noesc, 
+         nbi_depec = necesid_basicas_insatisf_depec) -> data_clean
+
+
+data_clean
+```
+
+### Ejercicio 8 (pendiente)
+
+En data_clean, colocar la variable "id" al inicio de todas las variables 
+
+```{r}
+data_clean %>% 
+  select(id, everything())
+```
+
+
+### Ejercicio 9
+
+En data_clean, cree una nueva variable llamada "año" que contenga el valor 2017 para todas las observaciones
+
+```{r}
+data_clean %>% 
+  mutate(año = 2017) -> data_clean
+
+data_clean
+```
+
+### Ejercicio 10
+
+En data_clean, cree una variable llamada "conectividad" que sea un duplicado de la variable "tiene_internet"
+
+```{r}
+data_clean %>% 
+  mutate(conectividad = tiene_internet) -> data_clean
+
+data_clean
+```
+
+### Ejercicio 11
+
+En data_clean, crear una variable llamada "peso_kg" que sea igual a jefe_peso_g/1000. Además, crear una variable "talla_m" que sea igual a jefe_talla_cm/100
+
+```{r}
+data_clean %>% 
+  mutate(peso_kg = jefe_peso_g / 1000) -> data_clean 
+
+data_clean
+```
+
+### Ejercicio 12
+
+En data_clean, seleccionar solo las variables que inicien con "nbi"
+
+```{r}
+data_clean %>% 
+  select(nbi_vivie, nbi_hacin, nbi_sshh, nbi_noesc)
+```
+
+
+### Ejercicio 13
+
+En data_clean, recodificar todas las variables que inicien con "nbi", donde No = 0 y Si = 1
+
+```{r}
+data_clean %>% 
+  mutate(nbi_vivie = recode(nbi_vivie, "no" = 0, "si" = 1), 
+         nbi_hacin = recode(nbi_hacin, "no" = 0, "si" = 1),
+         nbi_sshh = recode(nbi_sshh, "no" = 0, "si" = 1), 
+         nbi_noesc = recode(nbi_noesc, "no" = 0, "si" = 1)) -> data_clean
+
+data_clean
+```
+
+### Ejercicio 14
+
+En data_clean, recodificar todas las variables que inicien con "alum", donde los No ahora sean Sí, y viceversa
+
+```{r}
+
+```
+
+## TERCERA PARTE: Tidyselectores
+
+### Ejercicio 15
+
+En data_clean, seleccionar solo las variables que inicien con "agua" o "nbi"
+
+```{r}
+data_clean %>%  
+  select(agua_pot, agua_acc, agua_sihoras, nbi_vivie, nbi_hacin, nbi_sshh, nbi_noesc)
+```
+
+```{r}
+data_clean %>%  
+  select(starts_with("agua"), starts_with("nbi"))
+```
+
+### Ejercicio 16 (tarea para casa)
+
+Seleccionar las variables que inician codperso, region y las variables que inician con "agua" en este orden: codperso, region, agua_pot, agua_acc, agua_proc, agua_sihoras 
+
+```{r}
+
+```
+
+## CUARTA PARTE: Análisis Inicial de DAtos
+
+### Ejercicio 17
+
+Explore la base de datos con las funciones glimpse() y skim().
+
+```{r}
+data_clean %>% 
+  glimpse()
+```
+
+
+```{r}
+data_clean %>% 
+  skim()
+```
+
+```{r}
+#| error: true
+data_clean %>% 
+  describe()
+```
+
+## Para la casa
+
+### Ejercicio 1
+
+Importar la base de datos "data_enaho2019" y usar characterize() para conservar metadatos. Explorar los datos y renderizar el código.
+
+```{r}
+
+```

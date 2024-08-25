@@ -1,0 +1,160 @@
+---
+title: "Anotaciones clase 3"
+format: html
+---
+
+## Cargar paquetes
+
+```{r}
+library(dslabs)
+library(tidyverse)
+```
+
+## Importar datos
+
+```{r}
+data(gapminder, package = "dslabs")
+```
+
+## Verbo select() versus $
+
+```{r}
+gapminder_year1 <- select(gapminder, year)
+```
+
+```{r}
+gapminder_year2 <- gapminder$year
+```
+ 
+```{r}
+class(gapminder)
+```
+
+```{r}
+class(gapminder_year1)
+```
+
+
+```{r}
+class(gapminder_year2)
+```
+```{r}
+select(gapminder, year)
+```
+
+```{r}
+select(gapminder, 
+       year)
+```
+
+```{r}
+select(
+  gapminder, 
+       year
+  )
+```
+
+```{r}
+c(1, 2, 3, 4, 5)
+```
+```{r}
+c(1:5)
+```
+
+```{r}
+1:5
+```
+## Ejemplo de como funcionan los selectores
+
+```{r}
+datos_juguete <- data.frame(
+  peso_1a = c(7, 6, 8, 5), 
+  peso_2a = c(14, 15, 17, 13), 
+  peso_5a = c(24, 23, 22, 15), 
+  talla_1m = c(0.92, 0.45, 0.23, 0.86), 
+  peso_1m = c(21, 34, 23134, 21), 
+  lcefalica_1m = c(21, 21, 21 , 21),
+  dcefalico_1m = c(21, 345, 345, 32)
+)
+```
+
+```{r}
+datos_juguete %>% 
+  select(peso_1a, peso_2a, peso_5a, peso_1m)
+```
+
+```{r}
+datos_juguete %>% 
+  select(starts_with("peso"))
+```
+
+```{r}
+datos_juguete %>% 
+  select(talla_1m, peso_1m, lcefalica_1m, dcefalico_1m)
+```
+
+```{r}
+datos_juguete %>% 
+  select(ends_with("1m"))
+```
+
+```{r}
+datos_juguete %>% 
+  select(lcefalica_1m, dcefalico_1m)
+```
+
+```{r}
+datos_juguete %>% 
+  select(contains("cefalic"))
+```
+
+## Datos perdidos
+
+```{r}
+datos_juguete2 <- data.frame(
+  peso_1a = c(7, 6, 8, 5), 
+  peso_2a = c(14, 15, 17, 13), 
+  peso_5a = c(24, 23, 22, 15), 
+  talla_1m = c(0.92, 0.45, 0.23, 0.86), 
+  peso_1m = c(21, 34, NA, 21), 
+  lcefalica_1m = c(21, 21, NA, 21),
+  dcefalico_1m = c(21, 345, 345, 32)
+)
+# NA = Not Available
+datos_juguete2
+```
+
+## Nombres no convencionales de variables
+
+```{r}
+datos_juguete3 <- data.frame(
+  `peso 1a` = c(7, 6, 8, 5), 
+  `2apeso` = c(14, 15, 17, 13), 
+  peso_5a = c(24, 23, 22, 15), 
+  talla_1m = c(0.92, 0.45, 0.23, 0.86), 
+  peso_1m = c(21, 34, NA, 21), 
+  lcefalica_1m = c(21, 21, NA, 21),
+  dcefalico_1m = c(21, 345, 345, 32)
+)
+
+datos_juguete3
+```
+
+```{r}
+library(rio)
+dat_nomb_malogrados <- import("data_nombres_malogrados.xlsx")
+```
+```{r}
+dat_nomb_malogrados
+```
+
+```{r}
+dat_nomb_malogrados %>% 
+  select(`peso al año`) 
+```
+
+```{r}
+dat_nomb_malogrados %>% 
+  select(`peso al año`) %>% 
+  rename(peso_1a = `peso al año`)
+```

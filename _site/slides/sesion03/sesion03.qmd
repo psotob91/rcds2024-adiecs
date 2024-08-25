@@ -1,0 +1,1246 @@
+---
+format: 
+  revealjs: 
+    embed-resources: true
+    theme: [default, theme/theme.scss]
+    footer: "Análisis Estadístico de Datos en Salud 2023 - Día 3"
+    logo: img/logo.png
+    transition: convex
+    background-transition: zoom
+    incremental: false
+    slide-number: c/t
+    preview-links: true
+    # width: 1920
+    # height: 1080
+    height: 900
+    width: 1600
+    # parallax-background-image: images/bg-ietsi-slide-first.png
+    # parallax-background-size: "1920px 1080px"
+    # chalkboard: true
+    code-block-background: true
+    code-block-border-left: "#31BAE9"
+    highlight-style: ayu-dark
+    echo: true
+    multiplex: true
+    touch: true
+    auto-stretch: true
+    link-external-icon: true
+    link-external-newwindow: true
+    self-contained-math: true
+    
+from: markdown+emoji
+execute:
+  echo: true
+filters:
+  - reveal-auto-agenda
+auto-agenda:
+  bullets: numbered
+  heading: Agenda
+---
+
+\
+
+\
+
+<h1>Sesión 3</h1>
+
+<h2>[Curso: Análisis Estadístico de Datos en Salud]{.plo}</h2>
+
+<hr>
+
+<h3>[Percy Soto-Becerra, M.D., M.Sc(c)]{.negro}</h3>
+
+<h4>[DIS -- IETSI, EsSalud]{.negro}</h4>
+
+<h4>[2023-05-31]{.negro}</h4>
+
+`r fontawesome::fa("github", "black")` &nbsp; [https://github.com/psotob91](https://github.com/psotob91)
+
+![](img/logo.png){.absolute top=390 left=950 width="600"}
+
+```{r}
+#| echo: false
+#| output: false
+
+# Removing all objects including loaded libraries
+rm(list = ls(all = TRUE))
+gc()
+
+# Installing and loading packages
+if (!require("pacman")) {
+  install.packages("pacman")
+}
+
+pacman::p_unload("all") # Unloading all package except base
+
+pacman::p_load(tidyverse, 
+               tibble, 
+               labelled, 
+               pander, 
+               gt, 
+               kableExtra, 
+               DT, 
+               haven, 
+               skimr, 
+               Hmisc, 
+               gapminder) # Loading packages
+
+datos_fase1 <- read_stata("maca_meno_fase1.dta") %>% 
+  as_factor()
+
+data(gapminder)
+```
+
+
+# Datos 'tidy' 
+
+## Datos 'tidy'
+<hr>
+
+\
+\
+
+:::: columns
+::: {.column width='50%'}
+
+[Características de los datos ordenados o 'tidy']{.verde-h3}
+
+- Cada `variable` forma un `columna`.
+- Cada `observación` forma una `fila`. 
+- Cada `tipo de unidad observacional` forma una `tabla`.
+
+::: 
+
+::: {.column width='50%'}
+
+[Características de los datos desordenados o 'untidy']{.verde-h3}
+
+!@#$%^&*()
+
+:::
+::::
+
+## Gramática de manejo de datos
+<hr>
+
+Al igual que [{ggplot}]{.verde-h3}, el paquete [{dplyr}]{.verde-h3}, también de [{tidyverse}]{.verde-h3}, ofrece toda una gramática llena de funciones que actúan como verbos para manipular data.frames.
+
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{r dplyr-part-of-tidyverse, echo=FALSE, out.width="70%", caption = "dplyr is part of the tidyverse"}
+knitr::include_graphics("img/dplyr-part-of-tidyverse.png")
+```
+
+:::
+
+::: {.column width='50%'}
+
+- `select`: extrae columnas usando nombres
+- `arrange`: reordena filas
+- `slice`: extrae filas usando índices
+- `filter`: extrae filas que coincidan con criterios lógicos
+- `distinct`: filtra por filas únicas
+- `mutate`: agrega nuevas variables
+- `summarise`: reduce variables a valores
+- `group_by`: para operacionesa agrupadas
+- ... (mucho más)
+
+:::
+
+::::
+
+## Reglas de las funciones de [{dplyr}]{.verde-h3}
+<hr>
+
+\
+
+- El primer argumento **siempre** es el `data frame`.
+
+- Los argumentos subsecuentes dicen qué hacer con el `data frame`.
+
+- Siempre retorna un `data frame`.
+
+- No altera el `data frame` original.
+
+## Ejemplo de función [{dplyr}]{.verde-h3} en acción: seleccionar columna
+<hr>
+
+\ 
+
+Ver solamente `country` (países):
+
+```{r}
+#| echo: false
+gapminder <- as_tibble(gapminder)
+```
+
+```{r}
+select(gapminder, country)
+```
+
+## Reglas de las funciones de [{dplyr}]{.verde-h3} en acción {auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "1"
+select(
+  gapminder, 
+  country
+)
+```
+
+:::
+
+::: {.column width='50%'}
+
+- Inicia con la función (un verbo): [select()]{.verde-h3}
+
+:::
+
+:::: 
+
+## Reglas de las funciones de [{dplyr}]{.verde-h3} en acción {auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "2"
+select(
+  gapminder, 
+  country
+)
+```
+
+:::
+
+::: {.column width='50%'}
+
+- Inicia con la función (un verbo): [select()]{.verde-h3}
+
+- Primer argumento: data frame con el que trabajaremos, [gapminder]{.verde-h3}
+
+:::
+
+:::: 
+
+## Reglas de las funciones de [{dplyr}]{.verde-h3} en acción {auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "3"
+select(
+  gapminder, 
+  country
+)
+```
+
+:::
+
+::: {.column width='50%'}
+
+- Inicia con la función (un verbo): [select()]{.verde-h3}
+
+- Primer argumento: data frame con el que trabajaremos, [gapminder]{.verde-h3}
+
+- Segundo argumento: variable que queremos seleccionar, [country]{.verde-h3}
+
+:::
+
+:::: 
+
+
+## Reglas de las funciones de [{dplyr}]{.verde-h3} en acción  {auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: true
+select(
+  gapminder, 
+  country
+)
+```
+
+:::
+
+::: {.column width='50%'}
+
+- Inicia con la función (un verbo): [select()]{.verde-h3}
+
+- Primer argumento: data frame con el que trabajaremos, [gapminder]{.verde-h3}
+
+- Segundo argumento: variable que queremos seleccionar, [country]{.verde-h3}
+
+- Resultado: data frame con `r nrow(gapminder)` filas y 1 columna
+
+:::
+
+:::: 
+
+## Entra data frame / tibble, sale data frame / tiblble
+<hr>
+
+>Las funciones de dplyr siempre esperan un data frame y siempre generan un data frame.
+
+- Entra:
+
+```{r}
+class(gapminder)
+```
+
+- Sale:
+
+```{r}
+select(gapminder, continent) %>% 
+  class()
+```
+ 
+# El Operador Pipe
+
+## ¿Qué es un pipe?
+<hr>
+
+>En programación, un `pipe` es una técnica para transmitir información de un proceso a otro.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+- En R, hay dos operadores pipe:
+
+    + pipe de tidyverse: `%>%`
+    
+    + pipe nativo (de R base):`|>`
+    
+- En este curso, usaremos el pipe de tidyverse: `%>%`
+
+- El operador pipe de tidyverse es del paquete [{magrittr}]{.verde-h3}, que no necesita ser cargado si es que se carga [{tidyverse}]{.verde-h3}.
+
+:::
+
+::: {.column width='50%'}
+
+```{r magritte, echo=FALSE, out.width="50%", caption = "Magritte's pipe"}
+#| fig-align: center
+knitr::include_graphics("img/magritte.jpg")
+```
+
+```{r magrittr, echo=FALSE, out.width="50%", caption = "magrittr's pipe"}
+#| fig-align: center
+knitr::include_graphics("img/magrittr.jpg")
+```
+
+:::
+
+::::
+
+## [%\>%]{.verde-h3} en acción
+<hr>
+
+Este operador conecta secuencia de acciones en forma de código:
+
+:::: {.columns}
+
+::: {.column width='47%'}
+
+> | yo 
+> | [despierto]{.verde-h3} a las [8 horas]{.orange-logo}
+> | [salgo de cama]{.verde-h3} por el [lado derecho]{.orange-logo}
+> | [visto]{.verde-h3} [pantalones]{.red-logo} y [polo]{.red-logo}
+> | [salgo de casa]{.verde-h3} [con]{.viol} [carro]{.red-logo} [sin]{.viol} [bicicleta]{.red-logo}
+
+:::
+
+::: {.column width='6%'}
+
+:::
+
+::: {.column width='47%'}
+
+```r
+yo %>% 
+  despertar(tiempo = "8:00") %>% 
+  salir_de_cama(lado = "derecha") %>% 
+  vestir(pantalones = TRUE, polo = TRUE) %>% 
+  salir_de_casa(carro = TRUE, bicicleta = TRUE)
+```
+:::
+
+::::
+
+
+Atajo de teclado del operador pipe: 
+
+- <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd>
+
+- <kbd>Ctrl</kbd> + <kbd>&#x21e7;</kbd> + <kbd>M</kbd> 
+
+## Un ejemplo de uso de %>%
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Sin %>%]{.verde-h3}:
+
+```{r}
+datos_fase1 <- read_stata("maca_meno_fase1.dta") 
+datos_fase1 <- as_factor(datos_fase1)
+```
+
+- El código es redundante: repites tres veces `datos_fase1`.
+
+```{r}
+head(datos_fase1)
+```
+
+:::
+
+::: {.column width='50%'}
+
+[Con %>%]{.verde-h3}:
+
+```{r}
+datos_fase1 <- read_stata("maca_meno_fase1.dta") %>% 
+  as_factor()
+```
+
+- El código es más simple y directo, `datos_fase1` solo se repite una vez.
+
+```{r}
+head(datos_fase1)
+```
+
+:::
+
+::::
+
+# Principios del manejo de datos con {dplyr}
+
+## 
+
+>El paquete [{dplyr}]{.verde-h3} es una 'suite' de funciones para manipular data frame.
+
+```{r}
+#| echo: false
+data_dplyr <- data.frame(
+  Verbos = c("Extrae filas con filter()", 
+             "Extrae columnas con select()", 
+             "Reordena filas con arrange()", 
+             "Crea nuevas / remplaza columnas con mutate", 
+             "Haz resumenes agrupados con group_by() y summarize()"), 
+  Función = ""
+)
+
+data_dplyr %>%
+  kbl(booktabs = T) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                full_width = T) %>%
+  column_spec(2, image = spec_image(
+    c("img/verbos-filter.png", 
+      "img/verbos-select.png", 
+      "img/verbos-arrange.png", 
+      "img/verbos-mutate.png", 
+      "img/verbos-summarise.png"), 500, 250))
+```
+
+## Selección de columnas con [select()]{.verde-h3}
+<hr>
+
+-   La función [select()]{.verde-h3} selecciona o excluye columnas.
+
+-   El signo [-]{.verde-h3} permite elegir qué columnas eliminar.
+
+-   A veces es mejor llamarla usando: [dplyr::select()]{.verde-h3} debido a que otros paquetes también tienen una función con el mismo nombre.
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+[Larga]{.verde-h3}
+
+```r
+select(.data = DATA, ...)
+```
+
+[Abreviada]{.verde-h3}
+
+```r
+select(DATA, ...)
+```
+
+[Se estila usar %>%]{.verde-h3}
+
+```r
+DATA %>% 
+  select(...)
+```
+
+:::
+
+::: {.column width='5%'}
+
+:::
+
+::: {.column width='55%'}
+
+```{r}
+#| echo: false
+datos_select <- 
+  data.frame(
+    Argumento = c(".data", "..."), 
+    Descripción = c("Data frame o extensión de data frame (por ejemplo, tibble).", 
+             "Una o más nombres de variables sin ' ' o expresiones como x:y que permiten seleccionar rango de variables."))
+
+datos_select %>% 
+  kbl(booktabs = T) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                full_width = T)
+```
+
+:::
+
+::::
+
+
+## [select()]{.verde-h3} en acción
+<hr>
+
+::: {.panel-tabset}
+
+### Seleccionar 1 var
+
+- Si solo quiero seleccionar a `id`, `time`, `age`, `race` y `procedence`:
+
+```{r}
+datos_fase1 %>% 
+  select(id, time, age, race, procedence)
+```
+
+### Excluir 1 var
+
+- Si quisiera excluir a procedence:
+
+```{r}
+datos_fase1 %>% 
+  select(-procedence)
+```
+
+### Seleccionar rango de var
+
+- Si se quiere seleccionar variables contiguas `age`, `race`, `married`, `married2`, y `procedence`.
+
+```{r}
+datos_fase1 %>% 
+  select(age:procedence)
+```
+
+### Guardar
+
+- Se usa el operador [<-]{.verde-h3}:
+
+```{r}
+datos_fase1_select <- datos_fase1 %>% 
+  select(id, time, treat, age, race)
+```
+
+- También se puede invertir el operador [->]{.verde-h3}:
+
+```{r}
+datos_fase1 %>% 
+    select(id, time, treat, age, procedence) -> datos_fase1_select
+```
+
+- Una vez  guardado como objeto, podemos reutilizarlo para otros fines:
+
+```{r}
+datos_fase1_select
+```
+
+
+:::
+
+## Arreglar en orden ascendente / descendente con [arrange()]{.verde-h3} 
+<hr>
+
+::: {.panel-tabset}
+
+### Orden ascendente
+
+```{r}
+datos_fase1_select %>% 
+  arrange(age)
+```
+
+###  Orden descendente
+
+```{r}
+datos_fase1_select %>% 
+  arrange(desc(age))
+```
+
+:::
+
+## Seleccionar filas
+<hr>
+
+- De acuerdo a índice (posición de fila): 
+
+    + [slice( )]{.verde-h3}
+
+- De acuerdo a condición: 
+
+    + [filter( )]{.verde-h3}
+
+## Rebanar filas con [slice( )]{.verde-h3}
+<hr>
+
+::: {.panel-tabset}
+
+### Seleccionar filas contiguas
+
+- Seleccionar las 3 primeras filas:
+
+```{r}
+datos_fase1 %>% 
+  slice(1:3)
+```
+
+### Seleccionar filas dispersas
+
+- Seleccionar las filas 3, 6, 10:
+
+```{r}
+datos_fase1 %>% 
+  slice(c(3, 6, 10))
+```
+
+### Excluir filas
+
+- Excluir filas 1 y 3
+
+```{r}
+datos_fase1 %>% 
+  slice(-c(1, 3))
+```
+
+:::
+
+## Filtrado de filas con [filter()]{.verde-h3}
+<hr>
+
+-   La función [filter()]{.verde-h3} selecciona individuos que cumplen una condición lógica.
+
+-   Se debe usar operadores booleanos para construir condiciones lógicas simples o complejas.
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+[Larga]{.verde-h3}
+
+```r
+filter(.data = DATA, ...)
+```
+
+[Abreviada]{.verde-h3}
+
+```r
+filter(DATA, ...)
+```
+
+[Se estila usar %>%]{.verde-h3}
+
+```r
+DATA %>% 
+  filter(...)
+```
+
+:::
+
+::: {.column width='5%'}
+
+:::
+
+::: {.column width='55%'}
+
+```{r}
+#| echo: false
+datos_filter <- 
+  data.frame(
+    Argumento = c(".data", "..."), 
+    Descripción = c("Data frame o extensión de data frame (por ejemplo, tibble).", 
+             "Uno o más condiciones o pruebas que filter() evaluará en cada fila y seleccionará solo las condiciones que resulten verdaderas: TRUE."))
+
+datos_filter %>% 
+  kbl(booktabs = T) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                full_width = T)
+```
+
+:::
+
+::::
+
+
+## Operadores lógicos con R
+<hr>
+
+```{r}
+#| echo: false
+data_logica <- data.frame(
+  operador = c("<", "<=", ">", ">=", "==", "!=", "A & B"), 
+  definición = c("menor que", "menor o igual que", "mayor que", "mayor o igual que", 
+                 "exactamente igual a", "diferente de", "A y B"), 
+  operador2 = c("A | B", "is.na(A)", "!is.na(A)", "A %in% B", "!(A %in% B)", "!A", ""), 
+  definición2 = c("A o B", "evalúa si A es NA", "evalúa si A no es NA", 
+                  "evalúa si A está en B", "evalúa si A no está en B", "no A", "")
+)
+
+
+data_logica %>% 
+  kbl(col.names = c("Operador", "Definición", "Operador", "Definición")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                full_width = T) %>%
+  column_spec(c(1, 3), bold = T) #, color = "yellow"
+  # collapse_rows(columns = 1:2, valign = "top")  %>% 
+  # row_spec(0, background = "black", color = "white", bold = TRUE) %>% 
+  # row_spec(c(1, 3:5), background = "#D7261E", color = "white", bold = TRUE) %>% 
+  # row_spec(c(2, 6, 7), background = "blue", color = "white", bold = TRUE)
+```
+
+
+## [filter( )]{.verde-h3} en acción
+<hr>
+
+:::{.panel-tabset}
+
+### Condición simple
+
+-   Si se filtra solo para tener a los individuos en su **medición basal**:
+
+```{r}
+datos_fase1_select %>% 
+  filter(time == "Baseline")
+```
+
+### Y (AND)
+
+-   Podemos querer filtrar a los individuos en la **medición basal** **`Y`** que sean **placebo**:
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{r}
+datos_fase1_select %>% 
+  filter(time == "Baseline" & treat == "Placebo")
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+datos_fase1_select %>% 
+  filter(time == "Baseline", treat == "Placebo")
+```
+
+:::
+
+::::
+
+### O (OR)
+
+-   Podemos querer filtrar a los individuos en la **medición basal** **`O`** que sean **placebo**:
+
+```{r}
+datos_fase1_select %>% 
+  filter(time == "Baseline" | treat == "Placebo")
+```
+
+### ENTRE (BETWEEN)
+
+-   Si queremos solo las mujeres entre 34 y 38 años de edad:
+
+```{r}
+datos_fase1_select %>% 
+  filter(age >= 34 & age <= 38)
+```
+
+### EN (INTO)
+
+-   Si queremos a quienes son de Santa Anita, Callao, SMP o Carabayllo:
+
+
+::: {.panel-tabset}
+
+### **Opción válida pero ineficiente**:
+
+```{r}
+datos_fase1 %>% 
+  filter(procedence == "Santa Anita" | procedence == "Callao" | procedence == "SMP")
+```
+
+### **Opción válida y eficiente**:
+
+```{r}
+datos_fase1 %>% 
+  filter(procedence %in% c("Santa Anita", "Callao", "SMP"))
+```
+
+:::
+
+:::
+
+## Podemos anidar con [%>%]{.verde-h3} varias tareas
+<hr>
+
+- Esto se denomina establecer un `pipeline`:
+
+```{r}
+datos_fase1 %>% 
+  filter(age > 35) %>% # Primero filtro por age
+  select(id, time, treat, race, age) %>% # Luego me quedo solo con estas 5 columnas
+  arrange(age) # Por último, reordenamos por edad
+```
+
+## Creación de nuevas columnas con [mutate()]{.verde-h3}
+<hr>
+
+-   La función [mutate()]{.verde-h3} crea columnas nuevas o modifica existentes.
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+[Larga]{.verde-h3}
+
+```r
+mutate(.data = DATA, ...)
+```
+
+[Abreviada]{.verde-h3}
+
+```r
+mutate(DATA, ...)
+```
+
+[Se estila usar %>%]{.verde-h3}
+
+```r
+DATA %>% 
+  mutate(...)
+```
+
+:::
+
+::: {.column width='5%'}
+
+:::
+
+::: {.column width='55%'}
+
+\
+
+```{r}
+#| echo: false
+datos_mutate <- 
+  data.frame(
+    Argumento = c(".data", "..."), 
+    Descripción = c("Data frame o extensión de data frame (por ejemplo, tibble).", 
+             "Columnas existente para modificar o columnas nuevas para crear."))
+
+datos_mutate %>% 
+  kbl(booktabs = T) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                full_width = T)
+```
+
+:::
+
+::::
+
+
+## [mutate()]{.verde-h3} en acción {.scrollable}
+<hr>
+
+::: {.panel-tabset}
+
+### Crear una nueva variable
+
+-   Si queremos crear la variable índice de masa corporal:
+
+```{r}
+datos_fase1 %>% 
+  select(id, weight, height) %>% # Nos quedamos con peso y talla 
+  mutate(imc = weight / height ^ 2) # Creamos IMC en base a peso y talla
+```
+
+### Crear varias nuevas variables
+
+- También podemos crear más de una variable nueva.
+
+- Incluso, podemos reutilizar la variable recién creada para crear otra nueva dentro del mismo argumento de [mutate()]{.verde-h3}
+
+```{r}
+datos_fase1 %>% 
+  select(id, weight, height) %>% 
+  mutate(
+    imc = weight / height ^ 2, 
+    imc_escalado = imc / 10
+    ) 
+```
+
+### Remplazar variable existente
+
+-   Tener cuidado si se quiere reutilizar la variable original, en ese caso es mejor crear columna nueva.
+
+-   Queremos que la edad sea reportada en meses:
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+**Crear columna nueva:**
+
+```{r}
+datos_fase1 %>% 
+  select(id, age) %>% 
+  mutate(age2 = age * 12) # Columna nueva llamada age2
+```
+
+:::
+
+::: {.column width='50%'}
+
+**Remplazar la edad:**
+
+```{r}
+datos_fase1 %>% 
+  select(id, age) %>% 
+  mutate(age = age * 12) # Notar que se remplazó age 
+```
+
+:::
+
+::::
+
+:::
+
+# Otros verbos útiles para manejo de datos
+
+
+## Renombrar variables con [rename()]{.verde-h3}
+<hr>
+
+- Cambia los nombres de variables individuales.
+
+\ 
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+[Larga]{.verde-h3}
+
+```r
+rename(.data = DATA, ...)
+```
+
+[Abreviada]{.verde-h3}
+
+```r
+rename(DATA, ...)
+```
+
+[Se estila usar %>%]{.verde-h3}
+
+```r
+DATA %>% 
+  rename(...)
+```
+
+:::
+
+::: {.column width='5%'}
+
+:::
+
+::: {.column width='55%'}
+
+\
+
+```{r}
+#| echo: false
+datos_rename <- 
+  data.frame(
+    Argumento = c(".data", "..."), 
+    Descripción = c("Data frame o extensión de data frame (por ejemplo, tibble).", 
+             "nuevo_nombre = viejo_nombre"))
+
+datos_rename %>% 
+  kbl(booktabs = T) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                full_width = T)
+```
+
+:::
+
+::::
+
+
+## [rename()]{.verde-h3} en acción
+<hr>
+
+- Cambiar el nombre de `married` por `casado1` y el de `age` por `edad`. 
+
+```{r}
+datos_fase1 %>% 
+  rename(
+    casado1 = married, 
+    edad = age
+    )
+```
+
+
+# Uso de helpers
+
+## Selectores tidy
+
+- Son funciones que ayudan a especificar un grupo específico de columnas. 
+
+- Ejemplos típicos de funciones tidyselect son:
+
+    + [starts_with()]{.verde-h3}
+    
+    + [end_with()]{.verde-h3}
+    
+    + [contains()]{.verde-h3}
+    
+    + [matches()]{.verde-h3}
+    
+    + [last_col()]{.verde-h3}
+    
+    + [num_range()]{.verde-h3}
+    
+    + [where()]{.verde-h3}
+
+- Más información sobre tidylsect: <https://dplyr.tidyverse.org/reference/select.html>
+
+
+## Etiquetar variables con [set_var_labels()]{.verde-h3} {.scrollable}
+<hr>
+
+-   La función [set_var_labels()]{.verde-h3} del paquete [labelled()]{.verde-h3} es muy útil para etiquetar columnas.
+
+-   Los datos deben tener metadatos que permitan ser legibles por el ser humano.
+
+- Primero instalar y cargar paquete:
+
+```{r}
+library(labelled)
+```
+
+-  Es preferible usar esta función al final de todo el proceso de limpieza de datos.
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+[Larga]{.verde-h3}
+
+```r
+set_var_labels(.data = DATA, ...)
+```
+
+[Abreviada]{.verde-h3}
+
+```r
+set_var_labels(DATA, ...)
+```
+
+[Se estila usar %>%]{.verde-h3}
+
+```r
+DATA %>% 
+  set_var_labels(...)
+```
+
+:::
+
+::: {.column width='5%'}
+
+:::
+
+::: {.column width='55%'}
+
+\
+
+```{r}
+#| echo: false
+datos_var_lab <- 
+  data.frame(
+    Argumento = c(".data", "..."), 
+    Descripción = c("Data frame o extensión de data frame (por ejemplo, tibble).", 
+             "variable = 'nueva etiqueta'"))
+
+datos_var_lab %>% 
+  kbl(booktabs = T) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                full_width = T)
+```
+
+::: 
+
+::::
+
+## [set_var_labels()]{.verde-h3} en acción
+<hr>
+
+::: {.panel-tabset}
+
+### Sin etiqueta de variable
+
+- ¿Qué significan `pas`, `pad` y `pam`?
+
+- Difícil de saber sin una etiqueta
+
+```{r, echo=FALSE, out.width="40%"}
+knitr::include_graphics("img/sin-etiqueta.png")
+```
+
+### Con etiqueta de variable
+
+```{r}
+#| echo: false
+datos <- data.frame(
+  pas = c(122.3, 142.1, 100.2), 
+  pad = c(74, 81, 79), 
+  pam = c(90.1, 101.37, 86.06)
+)
+```
+
+- Usando [set_variable_labels()]{.verde-h3}
+
+```{r}
+datos2 <- datos %>% 
+  set_variable_labels(
+    pam = "Presión Arterial Media", 
+    pas = "Presión Arterial Sistólica", 
+    pad = "Presión Arterial Diastólica"
+  )
+```
+
+```{r, echo=FALSE, out.width="70%"}
+knitr::include_graphics("img/con-etiqueta.png")
+```
+
+:::
+
+
+
+## `r fontawesome::fa("mug-saucer", "white")` Hagamos una pausa {background-color="#00817E"}
+<hr>
+
+::: r-fit-text
+
+<center>
+
+Tomemos un descanso de `5 minutos`...
+
+Estire las piernas `r fontawesome::fa("person-walking", "white")`... 
+
+Deje de ver las pantallas `r fontawesome::fa("laptop", "white")`...
+
+... cualquier `r fontawesome::fa("laptop", "white")`, las del celular `r fontawesome::fa("mobile", "white")` también.
+
+</center>
+
+:::
+
+```{r}
+#| echo: false
+library(countdown)
+countdown_timer <- function(
+    minutes = 1, 
+    play_sound = TRUE, 
+    font_size = "2em", 
+    ...
+) {
+  countdown(
+    minutes = minutes,
+    # Fanfare when it's over
+    play_sound = play_sound,
+    # Set timer theme to match solarized colors
+    color_border              = "#404041",
+    color_text                = "white",
+    color_background = "#000000",
+    color_running_background  = "#72994E",
+    color_running_text        = "white",
+    color_finished_background = "#EE6331",
+    color_finished_text       = "white",
+    font_size = font_size,
+    ...
+  )
+}
+```
+
+```{r}
+#| echo: false
+countdown_timer(5)
+```
+
+
+## 
+
+::: r-fit-text
+<center>¡Gracias!</center>
+
+<center>¿Preguntas?</center>
+
+:::
+
+## 
+
+\
+
+\
+
+\
+
+::: r-fit-text
+
+<center>
+{{< fa brands twitter >}} @psotob91 
+
+{{< fa brands github >}} https://github.com/psotob91
+
+{{< fa inbox >}} percys1991@gmail.com
+</center>
+
+:::

@@ -1,0 +1,55 @@
+---
+title: "Sesión 06"
+date: "2023-06-14"
+---
+
+## Objetivos
+
+- Inferencia estadística
+
+- Estimación y prueba de hipótesis.
+
+- Pruebas para uno y dos grupos.
+
+- Evaluación de supuestos.
+
+
+## Materiales
+
+::: {.panel-tabset}
+
+### Teoría grabada
+
+<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/836988906?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Día 6 - Inferencia estadísica 1"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+
+- Anotaciones extra en quarto: [Aquí](../slides/sesion06/adicional.qmd) 
+
+### Práctica grabada
+
+<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/836993530?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" title="video6"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+
+### Slides
+
+```{r slides-videos, echo=FALSE, include=FALSE}
+source(here::here("R", "slide-things.R"))
+```
+
+```{r show-slide-tabs1, echo=FALSE, results="asis"}
+slide_buttons("/slides/sesion06/sesion06")
+```
+
+```{=html}
+<iframe width="780" height="500" src="../slides/sesion06/sesion06.html" title="Sesión 6 - Inferencia Estadística con R"></iframe>
+```
+
+### Talleres
+
+|                              |                                                                                  |
+|----------------------|--------------------------------------------------|
+| Instructivo en línea         | [Aquí](../taller/taller06/taller06_instructivo.html)                                                 |
+| Instructivo con solucionario | [Aquí](../taller/taller06/taller06_instructivo_sol.html)                                                                       |
+| Quarto para alumnos          | [Aquí](../taller/taller06/taller06_alumno.qmd)                                                                       |
+| Toda la carpeta del taller   | [Aquí](https://drive.google.com/drive/folders/1b9jkjs4Vp0oFMC53LqIo5D8bA_m5xfqn) |
+
+:::
+

@@ -1,0 +1,722 @@
+[
+  {
+    "objectID": "resource/manual_installR/install.html#instalando-r",
+    "href": "resource/manual_installR/install.html#instalando-r",
+    "title": "Instalación",
+    "section": "1. Instalando R",
+    "text": "1. Instalando R\n\nAntes de instalar R(v4.2.1), debemos ir al sitio web de CRAN para descargar el programa dando click en “Download R 4.2.1 for Windows”. \n\n\n\n\n\n\n\n\n\n\n\n \n\nUna vez descargado el programa, el primer paso es escoger el idioma del asistente de instalación de R.\n\n\n\n\n\n\n\n\n\n\n\n \n\nEscogido el idioma, para el segundo paso simplemente debemos dar click en “siguiente”.\n\n\n\n\n\n\n\n\n\n\n \n\nEn la siguiente ventana, el tercer paso consiste en elegir en qué carpeta se instalará R y sus dependencias. Si tenemos permisos de administrador en nuestro dispositivo, podemos dejar que R se instale en la carpeta por defecto (“program files”); sin embargo, si esto no es así (por ejemplo si no es nuestro dispositivo o compartimos su uso mediante distintos usuarios), lo más recomendable es elegir otra ubicación, por ejemplo “documentos”. Esto nos evitará problemas de accesos o permisos durante nuestra práctica diaria con R.\n\n\n\n\n\n\n\n\n\n\n\n \n\nA continuación, el cuarto paso consiste simplemente en dar click en “siguiente”.\n\n\n\n\n\n\n\n\n\n\n\n \n\nEn el quinto paso, nos preguntará si deseamos utilizar las opciones de configuración, recomendamos marcar “sí”.\n\n\n\n\n\n\n\n\n\n\n\n \n\nLuego, para el sexto paso seleccionamos MDI y damos click en “siguiente”.\n\n\n\n\n\n\n\n\n\n\n\n \n\nEn el séptimo paso elegimos ayuda HTML y damos click en “siguiente”.\n\n\n\n\n\n\n\n\n\n\n\n \n\nComo octavo paso, en las siguientes dos ventanas daremos click en “siguiente”, lo cual iniciará la instalación de R en nuestro dispositivo y, una vez termine, concluimos dando click en “finalizar”.",
+    "crumbs": [
+      "Recursos",
+      "Guías",
+      "Instalación"
+    ]
+  },
+  {
+    "objectID": "resource/manual_installR/install.html#instalando-rstudio",
+    "href": "resource/manual_installR/install.html#instalando-rstudio",
+    "title": "Instalación",
+    "section": "2. Instalando RStudio",
+    "text": "2. Instalando RStudio\n\nAl igual que en la sección anterior, para instalar la versión 2022.07.1+554. de nuestro IDE, primero vamos a la página oficial de Rstudio, escogemos la opción “Free” y damos click en “download RStudio for Windows”.\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n\n\n\n\n\n \n\nUna vez descargado el programa, iniciamos el asistente de instalación dando click en “Siguiente”.\n\n\n\n\n\n\n\n\n\n\n\n \n\nEn la siguiente ventana nos preguntarán en qué carpeta deseamos instalar nuestro RStudio. Aquí es importante tener las mismas consideraciones que mencionamos en la primera sección: Si no tenemos acceso de administrador, es mejor escoger “Documentos”, de lo contrario, simplemente damos click en “siguiente” en esta ventana e “instalar” en la siguiente.\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n\n\n\n\n\n \n\nTerminado el proceso de instalación, cerramos el asistente dando click en “Terminar”.",
+    "crumbs": [
+      "Recursos",
+      "Guías",
+      "Instalación"
+    ]
+  },
+  {
+    "objectID": "resource/manual_installR/install.html#instalando-rtools",
+    "href": "resource/manual_installR/install.html#instalando-rtools",
+    "title": "Instalación",
+    "section": "3. Instalando Rtools",
+    "text": "3. Instalando Rtools\nSolo se instala Rtools\n\nPor último, vamos a descargar Rtools 4.2 dando click en Rtools42 installer si y solo si tiene sistema operativo Windows. ¡Si tiene sistema operativo Mac o Linux (cualquier distro), no necesita instalar Rtools!\n\n\n\n\n\n\n\n\n\n\n\n \n\nUna vez descargado, iniciamos el asistente de instalación dando click en “next” en las siguientes dos ventanas.\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n\n\n\n\n\n \n\nA continuación, iniciamos la instalación dando click en “install” y esperamos a que el proceso se complete. Finalmente, cerramos el asistente dando click en “finish”.\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n\n\n\n\n\n \n\nSi hemos realizado el proceso correctamente, podremos abrir nuestro RStudio y llegar a esta pantalla:\n\n\n\n\n\n\n\n\n\n\n\n \n\nSi desea más información sobre cómo instalar estos programas en Windows y/o MAC, visite la página oficial del proyecto R.",
+    "crumbs": [
+      "Recursos",
+      "Guías",
+      "Instalación"
+    ]
+  },
+  {
+    "objectID": "resource/manual_installR/install.html#sobre-mac-y-linux",
+    "href": "resource/manual_installR/install.html#sobre-mac-y-linux",
+    "title": "Instalación",
+    "section": "4. Sobre MAC y Linux",
+    "text": "4. Sobre MAC y Linux\n\nPara la instalación de R y Rstudio en otros sistemas operativos, como macOS y Linux, vamos a la página oficial de R project y seguimos las mismas indicaciones.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nImportante\n\n\n\n\n\nEn estos sistemas operativos no es necesario instalar Rtools, solo es necesario para Windows.\n\n\n\n\n5. Recursos adicionales\nVideos de youtube recomendados:\n\n\n\n\n\n\n\n\n\n\nVideo de henryholder01\n\n \n\n\n\n\n\n\n\n\n\n\nVideo de Renzo Caceres Rossi\n\n \n\n\n\n\n\n\n\n\n\n\nVideo de Roger Miranda\n\n \n\n\n\n\n\n\n\n\n\n\nVideo de R Epidemics Consortium (RECON)\n\n \nManuales disponibles en la web:\n\n\nManual de Alessio Bocco\nManual de Giorgio Boccardo Bosoni y Felipe Ruiz Bruzzone\nManual del libro “Hands-On Programming with R”\nManual de Antoine Soetewey\n\n\n   ___  Este manual fue elaborado por:  Anthony Romero Cerdán (anthony.romeromh@gmail.com)  \n\n\n\n\n\n\n\n\n\n Búscanos en:",
+    "crumbs": [
+      "Recursos",
+      "Guías",
+      "Instalación"
+    ]
+  },
+  {
+    "objectID": "resource/manual_installR/install.html#recursos-adicionales",
+    "href": "resource/manual_installR/install.html#recursos-adicionales",
+    "title": "Instalación",
+    "section": "5. Recursos adicionales",
+    "text": "5. Recursos adicionales\nVideos de youtube recomendados:\n\n\n\n\n\n\n\n\n\n\nVideo de henryholder01\n\n \n\n\n\n\n\n\n\n\n\n\nVideo de Renzo Caceres Rossi\n\n \n\n\n\n\n\n\n\n\n\n\nVideo de Roger Miranda\n\n \n\n\n\n\n\n\n\n\n\n\nVideo de R Epidemics Consortium (RECON)\n\n \nManuales disponibles en la web:\n\n\nManual de Alessio Bocco\nManual de Giorgio Boccardo Bosoni y Felipe Ruiz Bruzzone\nManual del libro “Hands-On Programming with R”\nManual de Antoine Soetewey\n\n\n   ___  Este manual fue elaborado por:  Anthony Romero Cerdán (anthony.romeromh@gmail.com)  \n\n\n\n\n\n\n\n\n\n Búscanos en:",
+    "crumbs": [
+      "Recursos",
+      "Guías",
+      "Instalación"
+    ]
+  },
+  {
+    "objectID": "resource/rmarkdown.html",
+    "href": "resource/rmarkdown.html",
+    "title": "Using R Markdown",
+    "section": "",
+    "text": "R Markdown is regular Markdown with R code and output sprinkled in. You can do everything you can with regular Markdown, but you can incorporate graphs, tables, and other R output directly in your document. You can create HTML, PDF, and Word documents, PowerPoint and HTML presentations, websites, books, and even interactive dashboards with R Markdown. This whole course website is created with R Markdown (and a package named blogdown).\nThe documentation for R Markdown is extremely comprehensive, and their tutorials and cheatsheets are excellent—rely on those.\nHere are the most important things you’ll need to know about R Markdown in this class:"
+  },
+  {
+    "objectID": "resource/rmarkdown.html#key-terms",
+    "href": "resource/rmarkdown.html#key-terms",
+    "title": "Using R Markdown",
+    "section": "Key terms",
+    "text": "Key terms\n\nDocument: A Markdown file where you type stuff\nChunk: A piece of R code that is included in your document. It looks like this:\n\n```{r}\n# Code goes here\n```\nThere must be an empty line before and after the chunk. The final three backticks must be the only thing on the line—if you add more text, or if you forget to add the backticks, or accidentally delete the backticks, your document will not knit correctly.\nKnit: When you “knit” a document, R runs each of the chunks sequentially and converts the output of each chunk into Markdown. R then runs the knitted document through pandoc to convert it to HTML or PDF or Word (or whatever output you’ve selected).\nYou can knit by clicking on the “Knit” button at the top of the editor window, or by pressing ⌘⇧K on macOS or control + shift + K on Windows."
+  },
+  {
+    "objectID": "resource/rmarkdown.html#add-chunks",
+    "href": "resource/rmarkdown.html#add-chunks",
+    "title": "Using R Markdown",
+    "section": "Add chunks",
+    "text": "Add chunks\nThere are three ways to insert chunks:\n\nPress ⌘⌥I on macOS or control + alt + I on Windows\nClick on the “Insert” button at the top of the editor window\n\n\n\n\n\n\n\n\n\n\n\nManually type all the backticks and curly braces (don’t do this)"
+  },
+  {
+    "objectID": "resource/rmarkdown.html#chunk-names",
+    "href": "resource/rmarkdown.html#chunk-names",
+    "title": "Using R Markdown",
+    "section": "Chunk names",
+    "text": "Chunk names\nYou can add names to chunks to make it easier to navigate your document. If you click on the little dropdown menu at the bottom of your editor in RStudio, you can see a table of contents that shows all the headings and chunks. If you name chunks, they’ll appear in the list. If you don’t include a name, the chunk will still show up, but you won’t know what it does.\n\n\n\n\n\n\n\n\n\nTo add a name, include it immediately after the {r in the first line of the chunk. Names cannot contain spaces, but they can contain underscores and dashes. All chunk names in your document must be unique.\n```{r name-of-this-chunk}\n# Code goes here\n```"
+  },
+  {
+    "objectID": "resource/rmarkdown.html#chunk-options",
+    "href": "resource/rmarkdown.html#chunk-options",
+    "title": "Using R Markdown",
+    "section": "Chunk options",
+    "text": "Chunk options\nThere are a bunch of different options you can set for each chunk. You can see a complete list in the RMarkdown Reference Guide or at knitr’s website.\nOptions go inside the {r} section of the chunk:\n```{r name-of-this-chunk, warning=FALSE, message=FALSE}\n# Code goes here\n```\nThe most common chunk options are these:\n\nfig.width=5 and fig.height=3 (or whatever number you want): Set the dimensions for figures\necho=FALSE: The code is not shown in the final document, but the results are\nmessage=FALSE: Any messages that R generates (like all the notes that appear after you load a package) are omitted\nwarning=FALSE: Any warnings that R generates are omitted\ninclude=FALSE: The chunk still runs, but the code and results are not included in the final document\n\nYou can also set chunk options by clicking on the little gear icon in the top right corner of any chunk:"
+  },
+  {
+    "objectID": "resource/rmarkdown.html#inline-chunks",
+    "href": "resource/rmarkdown.html#inline-chunks",
+    "title": "Using R Markdown",
+    "section": "Inline chunks",
+    "text": "Inline chunks\nYou can also include R output directly in your text, which is really helpful if you want to report numbers from your analysis. To do this, use `r r_code_here`.\nIt’s generally easiest to calculate numbers in a regular chunk beforehand and then use an inline chunk to display the value in your text. For instance, this document…\n```{r find-avg-mpg, echo=FALSE}\navg_mpg &lt;- mean(mtcars$mpg)\n```\n\nThe average fuel efficiency for cars from 1974 was `r round(avg_mpg, 1)` miles per gallon.\n… would knit into this:\n\nThe average fuel efficiency for cars from 1974 was 20.1 miles per gallon."
+  },
+  {
+    "objectID": "resource/rmarkdown.html#output-formats",
+    "href": "resource/rmarkdown.html#output-formats",
+    "title": "Using R Markdown",
+    "section": "Output formats",
+    "text": "Output formats\nYou can specify what kind of document you create when you knit in the YAML front matter.\ntitle: \"My document\"\noutput:\n  html_document: default\n  pdf_document: default\n  word_document: default\nYou can also click on the down arrow on the “Knit” button to choose the output and generate the appropriate YAML. If you click on the gear icon next to the “Knit” button and choose “Output options”, you change settings for each specific output type, like default figure dimensions or whether or not a table of contents is included.\n\n\n\n\n\n\n\n\n\nThe first output type listed under output: will be what is generated when you click on the “Knit” button or press the keyboard shortcut (⌘⇧K on macOS; control + shift + K on Windows). If you choose a different output with the “Knit” button menu, that output will be moved to the top of the output section.\nThe indentation of the YAML section matters, especially when you have settings nested under each output type. Here’s what a typical output section might look like:\n---\ntitle: \"My document\"\nauthor: \"My name\"\ndate: \"January 13, 2020\"\noutput: \n  html_document: \n    toc: yes\n    fig_caption: yes\n    fig_height: 8\n    fig_width: 10\n  pdf_document: \n    latex_engine: xelatex  # More modern PDF typesetting engine\n    toc: yes\n  word_document: \n    toc: yes\n    fig_caption: yes\n    fig_height: 4\n    fig_width: 5\n---"
+  },
+  {
+    "objectID": "resource/unzipping.html",
+    "href": "resource/unzipping.html",
+    "title": "Unzipping files",
+    "section": "",
+    "text": "Because RStudio projects typically consist of multiple files (R scripts, datasets, graphical output, etc.) the easiest way to distribute them to you for examples, assignments, and projects is to combine all the different files in to a single compressed collection called a zip file. When you unzip a zipped file, your operating system extracts all the files that are contained inside into a new folder on your computer.\nUnzipping files on macOS is trivial, but unzipping files on Windows can mess you up if you don’t pay careful attention. Here’s a helpful guide to unzipping files on both macOS and Windows."
+  },
+  {
+    "objectID": "resource/unzipping.html#unzipping-files-on-macos",
+    "href": "resource/unzipping.html#unzipping-files-on-macos",
+    "title": "Unzipping files",
+    "section": "Unzipping files on macOS",
+    "text": "Unzipping files on macOS\nDouble click on the downloaded .zip file. macOS will automatically create a new folder with the same name as the .zip file, and all the file’s contents will be inside. Double click on the RStudio Project file (.Rproj) to get started."
+  },
+  {
+    "objectID": "resource/unzipping.html#unzipping-files-on-windows",
+    "href": "resource/unzipping.html#unzipping-files-on-windows",
+    "title": "Unzipping files",
+    "section": "Unzipping files on Windows",
+    "text": "Unzipping files on Windows\ntl;dr: Right click on the .zip file, select “Extract All…”, and work with the resulting unzipped folder.\nUnlike macOS, Windows does not automatically unzip things for you. If you double click on the .zip file, Windows will show you what’s inside, but it will do so without actually extracting anything. This can be is incredibly confusing! Here’s what it looks like—the only clues that this folder is really a .zip file are that there’s a “Compressed Folder Tools” tab at the top, and there’s a “Ratio” column that shows how much each file is compressed.\n\n\n\n\n\n\n\n\n\nIt is very tempting to try to open files from this view. However, if you do, things will break and you won’t be able to correctly work with any of the files in the zipped folder. If you open the R Project file, for instance, RStudio will point to a bizarre working directory buried deep in some temporary folder:\n\n\n\n\n\n\n\n\n\nYou most likely won’t be able to open any data files or save anything, which will be frustrating.\nInstead, you need to right click on the .zip file and select “Extract All…”:\n\n\n\n\n\n\n\n\n\nThen choose where you want to unzip all the files and click on “Extract”\n\n\n\n\n\n\n\n\n\nYou should then finally have a real folder with all the contents of the zipped file. Open the R Project file and RStudio will point to the correct working directory and everything will work."
+  },
+  {
+    "objectID": "content/01-content.html",
+    "href": "content/01-content.html",
+    "title": "Día 01",
+    "section": "",
+    "text": "En esta sesión se buscará abordar los siguientes temas:\n\nIntroducción a R y Rstudio.\nOperaciones usuales.\nInstalación de paquetes.\nAdministración de entorno.\nConfiguración de proyecto y carpetas.\nInstalación de paquetes.\nImportar base de datos.",
+    "crumbs": [
+      "Contenido",
+      "Contenido del curso",
+      "1: Día 1"
+    ]
+  },
+  {
+    "objectID": "content/01-content.html#objetivos",
+    "href": "content/01-content.html#objetivos",
+    "title": "Día 01",
+    "section": "",
+    "text": "En esta sesión se buscará abordar los siguientes temas:\n\nIntroducción a R y Rstudio.\nOperaciones usuales.\nInstalación de paquetes.\nAdministración de entorno.\nConfiguración de proyecto y carpetas.\nInstalación de paquetes.\nImportar base de datos.",
+    "crumbs": [
+      "Contenido",
+      "Contenido del curso",
+      "1: Día 1"
+    ]
+  },
+  {
+    "objectID": "content/01-content.html#materiales",
+    "href": "content/01-content.html#materiales",
+    "title": "Día 01",
+    "section": "Materiales",
+    "text": "Materiales\n\nVideoclase grabadaSlidesTalleres\n\n\n\nSesión 01\n\n\n\n\n\n\n\nSesión 02\n\n\n\n\n\n\n\n\nSesión 01\n\n Ver diapositivas en una nueva ventana\n\n\nSesión 02\n\n Ver diapositivas en una nueva ventana\n\n\n\n\n\n\n\nInstructivo en línea\nAquí\n\n\nInstructivo con solucionario\nAquí\n\n\nQuarto para alumnos\nAquí\n\n\nToda la carpeta del taller\nAquí",
+    "crumbs": [
+      "Contenido",
+      "Contenido del curso",
+      "1: Día 1"
+    ]
+  },
+  {
+    "objectID": "content/08-content.html",
+    "href": "content/08-content.html",
+    "title": "Sesión 08",
+    "section": "",
+    "text": "Reproducibilidad de resultados.\nTablas reproducibles con {gtsummary}.\nGráficos reproducibles."
+  },
+  {
+    "objectID": "content/08-content.html#objetivos",
+    "href": "content/08-content.html#objetivos",
+    "title": "Sesión 08",
+    "section": "",
+    "text": "Reproducibilidad de resultados.\nTablas reproducibles con {gtsummary}.\nGráficos reproducibles."
+  },
+  {
+    "objectID": "content/08-content.html#materiales",
+    "href": "content/08-content.html#materiales",
+    "title": "Sesión 08",
+    "section": "Materiales",
+    "text": "Materiales\n\nTeoría y práctica grabadaPráctica grabadaSlidesTalleres\n\n\n\nAnotaciones extra en quarto: Aquí\nDatos para código de anotaciones extra: Aquí\n\n\n\n\n\n\n\n Ver diapositivas en una nueva ventana\n\n\n\n\n\n\n\nInstructivo en línea\nAquí\n\n\nInstructivo con solucionario\nAquí\n\n\nQuarto para alumnos\nAquí\n\n\nToda la carpeta del taller\nAquí"
+  },
+  {
+    "objectID": "content/06-content.html",
+    "href": "content/06-content.html",
+    "title": "Sesión 06",
+    "section": "",
+    "text": "Inferencia estadística\nEstimación y prueba de hipótesis.\nPruebas para uno y dos grupos.\nEvaluación de supuestos."
+  },
+  {
+    "objectID": "content/06-content.html#objetivos",
+    "href": "content/06-content.html#objetivos",
+    "title": "Sesión 06",
+    "section": "",
+    "text": "Inferencia estadística\nEstimación y prueba de hipótesis.\nPruebas para uno y dos grupos.\nEvaluación de supuestos."
+  },
+  {
+    "objectID": "content/06-content.html#materiales",
+    "href": "content/06-content.html#materiales",
+    "title": "Sesión 06",
+    "section": "Materiales",
+    "text": "Materiales\n\nTeoría grabadaPráctica grabadaSlidesTalleres\n\n\n\n\n\n\n\n\nAnotaciones extra en quarto: Aquí\n\n\n\n\n\n\n\n\n\n\n\n Ver diapositivas en una nueva ventana\n\n\n\n\n\n\n\nInstructivo en línea\nAquí\n\n\nInstructivo con solucionario\nAquí\n\n\nQuarto para alumnos\nAquí\n\n\nToda la carpeta del taller\nAquí"
+  },
+  {
+    "objectID": "syllabus.html",
+    "href": "syllabus.html",
+    "title": "Syllabus",
+    "section": "",
+    "text": "Percy Soto-Becerra, M.D., M.Sc(c)\n   Híbrido (presencial y virtual asincrónico)\n   psotob@inkastats-academy.com\n   psotob91\n\n\n\n\n\n   Presencial: Martes | Virtual asincrónico: Toda la semana\n   27 de agosto al 01 de octubre, 2024\n   Presencial: 6:15-8:15 pm\n   Google Meet"
+  },
+  {
+    "objectID": "syllabus.html#aspectos-generales",
+    "href": "syllabus.html#aspectos-generales",
+    "title": "Syllabus",
+    "section": "ASPECTOS GENERALES",
+    "text": "ASPECTOS GENERALES\nCurso dirgido a profesionales que quieran aprender los fundamentos de R (a través de RStudio) para la Ciencia de Datos en Salud. Alineados con los enfoques modernos de enseñanza y práctica de R, este curso no busca solo brindar técnicas de análisis estadístico de datos a los participantes, también desarrollará competencias fundamentales en Ciencia de Datos en Salud, tales como reporte reproducible con Quarto markdown y generación de tablas y gráficos automatizados y de alta calidad."
+  },
+  {
+    "objectID": "syllabus.html#competencias-del-programa",
+    "href": "syllabus.html#competencias-del-programa",
+    "title": "Syllabus",
+    "section": "COMPETENCIAS DEL PROGRAMA",
+    "text": "COMPETENCIAS DEL PROGRAMA\n\nUsar R y RStudio para el manejo y limpieza de base de datos de estudios de investigación en salud.\nRealizar un análisis descriptivo e inferencial con un paquete estadístico de datos para la investigación en salud.\nResponder preguntas de modelado descriptivo mediante regresión lineal y logística.\nGenerar tablas y reporte reproducibles de estos mediante el uso de markdown a través de Quarto en R/RStudio."
+  },
+  {
+    "objectID": "syllabus.html#resultados-de-aprendizaje",
+    "href": "syllabus.html#resultados-de-aprendizaje",
+    "title": "Syllabus",
+    "section": "RESULTADOS DE APRENDIZAJE",
+    "text": "RESULTADOS DE APRENDIZAJE\nAl finalizar las unidades, los profesionales serán capaces de:\n\nMódulo 1: Manejar y pre-procesar datos con R.\nMódulo 2: Realizar un análisis descriptivo de los datos\nMódulo 3: Realizar procedimientos de inferencia estadística a través de pruebas de hipótesis y estimación de intervalos de confianza."
+  },
+  {
+    "objectID": "syllabus.html#contenidos",
+    "href": "syllabus.html#contenidos",
+    "title": "Syllabus",
+    "section": "CONTENIDOS",
+    "text": "CONTENIDOS\n\nMódulo 1Módulo 2Módulo 3\n\n\nManejo de datos con R\n- Importar y exportar datos.\n- Seleccionar columnas y filas.\n- Transformar columnas y filas.\n- Insertar y modificar metadatos.\n\n\nAnálisis descriptivo de datos con R\n- Inspección inicial de datos.\n- Descripción de datos numéricos\n- Descripción de datos categóricos\n- Descripción de la covariación de datos\n\n\nInferencia estadística con R\n- Pruebas de hipótesis paramétricas y no paramétricas.\n- Estimación de intervalo de confianza"
+  },
+  {
+    "objectID": "syllabus.html#estrategias-didácticas",
+    "href": "syllabus.html#estrategias-didácticas",
+    "title": "Syllabus",
+    "section": "ESTRATEGIAS DIDÁCTICAS",
+    "text": "ESTRATEGIAS DIDÁCTICAS\n\nClases teóricas: Los alumnos recibirán las clases teóricas de manera virtual. Inicialmente, los docentes dictarán las sesiones académicas, y los participantes brindarán comentarios respecto al tema. Posteriormente, se entregarán las diapositivas de las sesiones académicas por correo electrónico que serán leídas por los participantes. Las ponencias serán grabadas y se almacenarán en un repositorio académico virtual que será compartido a los participantes. Los participantes recibirán material de lectura complementario que ayudará a consolidar las sesiones teóricas.\nClases prácticas (Talleres): Los alumnos recibirán las clases prácticas de manera virtual. Previamente, se hará entrega de conjunto de datos de estudios reales publicados en repositorios abiertos o por el profesor investigador. Durante las clases prácticas, guiados por el docente a cargo, se realizará el análisis de los datos aplicando los métodos enseñados durante la sesión. Los talleres serán grabados y se almacenarán en un repositorio académico virtual que será compartido a los participantes. Los conjuntos de datos y el código de análisis de datos estarán disponible en un repositorio abierto en Github. Adicionalmente, se dispondrá de 15 minutos adicionales por cada clase práctica para poder hacer preguntas directas al docente a cargo, para solucionar cualquier duda o consulta, o si es que algún alumno lo solicita, hacer una revisión específica de algún aspecto del análisis de datos.\nConjunto de datos para analizar en casos aplicados: Siempre que sea posible, trabajaremos con conjunto de datos reales u obtenidos mediante simulación de estudios reales. También haremos uso del conjunto de datos del paquete “medicaldata” de R.\nEXAMEN FINAL\n\nAl final del curso habrá un conjunto de datos problema que corresponderán a un conjunto de datos con una pregunta de investigación y objetivo de modelado preestablecido. Los alumnos tendrán una semana para realizar los análisis solicitados y presentarlos como tarea calificada. Asimismo, se compartirá un solucionario al final del cierre de cada entrega."
+  },
+  {
+    "objectID": "syllabus.html#evaluación",
+    "href": "syllabus.html#evaluación",
+    "title": "Syllabus",
+    "section": "EVALUACIÓN",
+    "text": "EVALUACIÓN\nPara efectos de evaluar la asistencia, los participantes deberán haber asistido a mínimo 7/10 sesiones académicas. La nota mínima aprobatoria para que el participante apruebe el entrenamiento es de 13.00 (trece) en el sistema vigesimal.\nPara aprobar el entrenamiento, los participantes deberán cumplir con dos requisitos:\n\nCumplir con el requisito de asistencia del entrenamiento (13/16 sesiones académicas).\nAprobar el examen final del entrenamiento (calificación mayor o igual a 13.0 en el examen final).\n\nSe otorgará constancia de participación a quienes asistan mínimo al 80% de clases (equivalente a 13 de las 16 sesiones), y un certificado válido por 1 crédito académico a quienes adicionalmente aprueben la evaluación final."
+  },
+  {
+    "objectID": "syllabus.html#bibliografía",
+    "href": "syllabus.html#bibliografía",
+    "title": "Syllabus",
+    "section": "BIBLIOGRAFÍA",
+    "text": "BIBLIOGRAFÍA\n\nMeasurement scales and their summary statistics. BMJ Evidence-Based Medicine 2004;9:164-166. Enlace: https://ebm.bmj.com/content/9/6/164.2.citation-tools\nBaillie M, le Cessie S, Schmidt CO, Lusa L, Huebner M, for the Topic Group “Initial Data Analysis” of the STRATOS Initiative (2022) Ten simple rules for initial data analysis. PLoS Comput Biol 18(2): e1009819. https://doi.org/10.1371/journal.pcbi.1009819\nCummings P, Rivara FP. Reporting Statistical Information in Medical Journal Articles. Arch Pediatr Adolesc Med. 2003;157(4):321–324. doi:10.1001/archpedi.157.4.321\nBatra, Neale, et al. The Epidemiologist R Handbook. 2021. DOI 10.5281/zenodo.4752646. Capítulos 17. Enlace: https://epirhandbook.com/en/index.html\nGreenland, S., Senn, S.J., Rothman, K.J. et al. Statistical tests, P values, confidence intervals, and power: a guide to misinterpretations. Eur J Epidemiol 31, 337–350 (2016). https://doi.org/10.1007/s10654-016-0149-3\nAltman, N., Krzywinski, M. P values and the search for significance. Nat Methods 14, 3–4 (2017). https://doi.org/10.1038/nmeth.4120\nAre confidence intervals better termed “uncertainty intervals”? BMJ 2019; 366 doi: https://doi.org/10.1136/bmj.l5381\nValentin Amrhein, David Trafimow & Sander Greenland (2019) Inferential Statistics as Descriptive Statistics: There Is No Replication Crisis if We Don’t Expect Replication, The American Statistician, 73:sup1, 262-270, DOI: 10.1080/00031305.2018.1543137\nHawkins AT, Samuels LR. Use of Confidence Intervals in Interpreting Nonstatistically Significant Results. JAMA. 2021;326(20):2068–2069. doi: 10.1001/jama.2021.16172\nAmrhein V, Greenland S, McShane B. Scientists rise up against statistical significance. Nature. marzo de 2019;567(7748):305-7. https://www.nature.com/articles/d41586-019-00857-9"
+  },
+  {
+    "objectID": "syllabus.html#plana-docente",
+    "href": "syllabus.html#plana-docente",
+    "title": "Syllabus",
+    "section": "Plana Docente",
+    "text": "Plana Docente\n\n\n\n\n\n\nPercy Soto Becerra, M.D., M.Sc(c)\n\n\n\n\n\nInvestigador RENACYT con publicaciones en revistas científicas indizadas a SCOPUS, Medline y Web of Science. Médico cirujano por la Universidad Nacional Mayor de San Marcos (UNMSM), egresado de la Maestría en Ciencias en Investigación Epidemiológica de la Universidad Peruana Cayetano Heredia (UPCH) y maestrando de la maestría de Estadística de la Universidad Nacional Agraria La Molina (UNALM). Cuenta con más de tres años de experiencia en la formulación, implementación, y gestión de proyectos de investigación científica en salud. Posee una sólida formación en métodos cuantitativos para la investigación epidemiológica y redacción científica, asimismo, ha realizado entrenamiento avanzado y cuenta con experiencia en bioestadística y ciencia de datos. Ha obtenido financiamiento internacional como investigador principal junior; así como participar en investigaciones en salud con la aplicación de métodos avanzados en análisis de datos. Ha sido becario del Centro Internacional Fogarty de los Institutos Nacionales de Salud de los Estados Unidos mediante el proyecto D43 TW007393 Peru Epidemiology Research Training Consortium, el cual le permitió recibir entrenamiento en investigación biomédica. Ha colaborado como investigador en el Centro de Investigaciones Económicas y Sociales de la Universidad San Ignacio de Loyola (USIL), el Instituto de Evaluación de Tecnologías en Salud e Investigación (IETSI) del Seguro Social (EsSalud), el Centro Nacional de Salud Ocupacional (CENSOPAS) y el Centro Nacional de Salud Pública (CNSP) del Instituto Nacioanl de Salud (INS) y el Centro de Salud Global de la UPCH. Actualmente y es investigador asociado a la Universidad Continental. Interesado en aplicar métodos cuantitativos modernos para inferencia causal en epidemiología (efectividad clínica comparativa y evaluación de impacto de programas de salud), investigación clínica pronóstica y diagnóstica con especial énfasis en aplicaciones a medicina de precisión.\n\nGoogle Scholar: https://scholar.google.com/citations?user=lYRCQzYAAAAJ&hl=en\nGithub: https://github.com/psotob91\nE-mail: psotob@inkastats-academy.com"
+  },
+  {
+    "objectID": "resource/r-recursos.html",
+    "href": "resource/r-recursos.html",
+    "title": "R y RStudio recursos en línea",
+    "section": "",
+    "text": "El software R es un lenguaje de programación de acceso libre e ideal como entorno para el análisis estadístico y gráfico, reporte, presentación de datos, etc., lo que lo convierte en una de las opciones líderes a nivel mundial para la Ciencia de Datos en Salud. En la última década ha ocurrido una revolución en la computación estadística. Lenguajes de código abierto como R y Python han superado a programas propietarios más antiguos y costosos como SAS, Stata y SPSS. Asimismo, la literatura (libros, blogs, foros de ayuda, etc.) acerca de R es extensa en comparación con la de otros programas, por lo que resulta más fácil encontrar soluciones a problemas (relativamente complejos) con los que los usuarios a menudo se enfrentan.\nAsimismo, R tiene varios dialectos, todos los cuales tienen fortalezas y debilidades. Ciertamente, ser fluido en R implica manejar más de un dialecto si no todos. Sin embargo, el dialecto de tiyverse es probablemente uno de los más consistentes, completos y en constante desarrollo y mantención, por lo que es uno de los más rentables de aprender cuando se trata de R. Este curso abordará principalmente el estilo R tidy, aunque también hará uso del dialecto de R base y otros dialectos cuando sea propicio.\nPor otro lado, R Studio es una interfaz que permite una mejor comunicación eentre el usuario y R. Piense en R como el motor de un automóvil y en R Studio como el tablero de mando del automóvil: R hace el trabajo duro al calcular y aplicar los métodos estadísticos, mientras que R Studio es la interfaz amigable que permite ejecutar código de R.",
+    "crumbs": [
+      "Recursos",
+      "Información general",
+      "R y RStudio recursos en línea"
+    ]
+  },
+  {
+    "objectID": "resource/r-recursos.html#por-qué-r-y-rstudio",
+    "href": "resource/r-recursos.html#por-qué-r-y-rstudio",
+    "title": "R y RStudio recursos en línea",
+    "section": "",
+    "text": "El software R es un lenguaje de programación de acceso libre e ideal como entorno para el análisis estadístico y gráfico, reporte, presentación de datos, etc., lo que lo convierte en una de las opciones líderes a nivel mundial para la Ciencia de Datos en Salud. En la última década ha ocurrido una revolución en la computación estadística. Lenguajes de código abierto como R y Python han superado a programas propietarios más antiguos y costosos como SAS, Stata y SPSS. Asimismo, la literatura (libros, blogs, foros de ayuda, etc.) acerca de R es extensa en comparación con la de otros programas, por lo que resulta más fácil encontrar soluciones a problemas (relativamente complejos) con los que los usuarios a menudo se enfrentan.\nAsimismo, R tiene varios dialectos, todos los cuales tienen fortalezas y debilidades. Ciertamente, ser fluido en R implica manejar más de un dialecto si no todos. Sin embargo, el dialecto de tiyverse es probablemente uno de los más consistentes, completos y en constante desarrollo y mantención, por lo que es uno de los más rentables de aprender cuando se trata de R. Este curso abordará principalmente el estilo R tidy, aunque también hará uso del dialecto de R base y otros dialectos cuando sea propicio.\nPor otro lado, R Studio es una interfaz que permite una mejor comunicación eentre el usuario y R. Piense en R como el motor de un automóvil y en R Studio como el tablero de mando del automóvil: R hace el trabajo duro al calcular y aplicar los métodos estadísticos, mientras que R Studio es la interfaz amigable que permite ejecutar código de R.",
+    "crumbs": [
+      "Recursos",
+      "Información general",
+      "R y RStudio recursos en línea"
+    ]
+  },
+  {
+    "objectID": "resource/r-recursos.html#aviso-de-servicio-público",
+    "href": "resource/r-recursos.html#aviso-de-servicio-público",
+    "title": "R y RStudio recursos en línea",
+    "section": "Aviso de servicio público",
+    "text": "Aviso de servicio público\nSi ya has usado R previamente, este curso será muy fácil para ti. Si no lo has usado nunca, aprender R puede que sea un poco menos fácil, pero prometo que solo al inicio. Como todo nuevo idioma comenzarás a ganar fluidez conforme hables más ‘R-ñol’: la práctica hace al maestro. Felizmenete, el dialecto tidy es muy fluido y fácil de entender y es por eso que lo hemos elegido.\nComo lo resalta Andrew Heiss en la web de su curso Program Evaluation, Hadley Wickham, científico de datos creador de tidyverse y fundador de RStudio una vez dijo:\n\nCuando comienzas a programar, es fácil frustrarte mucho y pensar: “Oh, soy yo, soy realmente estúpido” o “No estoy hecho para programar”. Pero, ese no es el caso en absoluto. Todo el mundo se frustra. Todavía me frustro ocasionalmente cuando escribo código R. Es solo una parte natural de la programación. Entonces, sucede a todos y se vuelve cada vez menos frecuente con el tiempo. No te culpes. Solo tómate un descanso, haz algo divertido y luego regresa e inténtalo de nuevo más tarde.\n\nIncluso analistas de datos con experiencia sufren cuando encuentran errores que se resiten a resolverse. Andrew Heiss cita un popular meme de un tweet para resumir este ubicuo problema:\n\nSi te toma demasiado tiempo pensar infructuosamente, mejor tómate un descanso, conversa con tus compañeros de clase, consúltame por correo, programa una reunión virtual, entre otras opciones.\n\n\n\n\n\n\n\n\n\n\n\n\n\nAlison Horst: Gator error",
+    "crumbs": [
+      "Recursos",
+      "Información general",
+      "R y RStudio recursos en línea"
+    ]
+  },
+  {
+    "objectID": "resource/r-recursos.html#materiales-del-curso",
+    "href": "resource/r-recursos.html#materiales-del-curso",
+    "title": "R y RStudio recursos en línea",
+    "section": "Materiales del curso",
+    "text": "Materiales del curso\nLa mayoría de los materiales en este curso son libres.\n\nLibros\nHay algunos libros que usaremos constantemente para este curso. Todos están disponibles digitalmente y son libres. La lista a continuación:\nLibros de bioestadística o ciencia de datos en salud\n\nBatra, Neale, et al. The Epidemiologist R Handbook. 2021. https://epirhandbook.com/en/index.html (Libre como versión HTML!)\nBrad Cannell, Melvin Livingston. R for Epidemiology.https://www.r4epi.com/(Libre como versión HTML!)\nEwen Harrison and Riinu Pius. R for Health Data Science. 2021. https://argoshare.is.ed.ac.uk/healthyr_book/(Libre como versión HTML!, pero hay una versión impresa por $63.96 en Routledge)\nPeter D.R. Higgins. Reproducible Medical Research with R. 2022.https://bookdown.org/pdr_higgins/rmrwr/(Libre como versión HTML!)\nKamarul Imran, Wan Nor Arifin, Tengku Muhammad Hanis Tengku Mukhtar. Data Analysis in Medicine and Health using R. 2022. https://bookdown.org/drki_musa/dataanalysis/ (Libre como versión HTML!)\nJames Brophy. (Mostly Clinical) Epidemiology with R. 2021. https://bookdown.org/jbrophy115/bookdown-clinepi/(Libre como versión HTML!)\n\nLibros de ciencia de datos o estadística general\n\nChester Ismay and Albert Y. Kim. Statistical Inference via Data Science: A ModernDive into R and the Tidyverse! 2022 https://moderndive.com/index.html(Libre como versión HTML!, pero hay una versión impresa por $57.25 en Amazon)\nHadley Wickham & Garrett Grolemund. R for Data Sciencehttps://r4ds.had.co.nz/index.html(Libre como versión HTML!, pero hay una versión impresa por $18.99 a 46.74 en Amazon)\n\n\n\nArtículos, capítulos de libro, y otros materiales\nOcasionalmente también habrá artículos y videos adicionales para leer y mirar. Cuando esto suceda, los enlaces a estos otros recursos se incluirán en la página de lectura de esa semana.\n\n\nAyuda en línea\nLa Ciencia de Datos en Salud, la Bioestadística y la Programación pueden no ser tan sencillas. Las computadoras no piensan y errores sutiles pueden causar horas de estancamiento incluso si ya cuentan con mucha experiencia.\nPor tal motivo, hemos habilitado dos canales para que puedan hacer sus consultas las 24 horas del día, los 7 días de la semana:\n\n Grupo de Whatssap: Pueden hacer sus preguntas por este canal todo el tiempo que gusten. Este canal permanecerá abierto siempre, incluso muchos años después de terminado el curso, por lo que pueden volver a este cada vez que tengan consultas en el futuro.\n\nSupervisaré whatssap regularmente y responderé rápidamente. Sin embargo, puede que por mi ajetreada vida laboral y familiar, no pueda responder inmediatamente. Prometo que trataré de hacerlo dentro de las primeras 24 horas. Haga preguntas sobre las clases o problem sets. Es probable que tenga preguntas similares a las de sus compañeros y que también pueda responder las preguntas de otras personas.\n\n\n\n\n\n\nNota importante\n\n\n\nAmbos canales están reservados solo para alumnos del curso.\n\n\nEs posible que nosotros no podamos resolver todas sus dudas. Las Ciencias de Datos pueden llegar a ser realmente complejas, por lo que un poco de ayuda externa más experta podría ser necesaria.\nFelizmente, existe una inmensa comunidad en línea de usuarios de R, quienes continuamente intercambian soluciones. Es muy probable que tu problema ya haya sido resuelto antes y que su solución se encuentre en la web, solo tienes que saber dónde buscarla.\nDos de los más importantes sitios donde puedes buscar soluciones a tus problemas o consultar directamente son StackOverflow (un foro de preguntas y respuestas con cientos de miles de respuestas a todo tipo de preguntas sobre programación) y RStudio Community (un foro diseñado específicamente para personas que usan RStudio y tidyverse).\nSi usa Twitter, publique preguntas y contenido relacionados con R usnado #rstats. La comunidad allí es excepcionalmente generosa y servicial.\nBuscar soluciones en Google también es una buena opción, pero es un poco truculento si no sabes cómo hacerlo. Es mejor buscar en inglés, aunque también abunda información en español. Unos ejemplos de cómo buscar en Google podrían ser:\n\npropensity score matching r\n\no, si Google no reconoce a la letra r como el programa estadístico (¡pasa a veces!), puedes usar:\n\npropensity score matching rstats\n\nPor último, si sus consultas son especializadas en Ciencia de datos en Salud o Bioestadística, es probable que los foros mencionados no sean de ayuda. El foro Dathamethods es una buena plataforma para hacer este tipo de consultas. Esta plataforma es liderada por bioestadísticos y científicos de datos com amplia trayectoria en investigación clínico-epidemiológica. Frank Harrell, Bioestadístico asesor de la FDA, reconocido ‘trialista’ y experto en predicción clínica, es quien lidera esta plataforma y ha juntado una buena comunidad de bioestadísticos y científicos de datos siniors. Sugerimos se creen una cuenta y usen esta plataforma más a menudo.\nSi usas twitter, puedes consultar utilizando el hastagg #epitwitter, #MedStats. También puede ser de gran ayuda uniter al grupo de twitter Medical statistics: ‘A non comprhensive list of medical statisticians and methodologist’ creada por @MaartenvSmeden.",
+    "crumbs": [
+      "Recursos",
+      "Información general",
+      "R y RStudio recursos en línea"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "\n            Fundamentos de R para Ciencia de Datos en Salud\n        ",
+    "section": "",
+    "text": "Fundamentos de R para Ciencia de Datos en Salud\n        \n        \n            Aprende con ADIECS a utilizar todo el poder de R para la Ciencia de Datos\n        \n        \n            RCDS-2024-1 • ADIECS Virtual & Sincrónico\n        \n    \n    \n        \n    \n\n\n\n\n\n\nInstructor\n\n   Percy Soto-Becerra, M.D., M.Sc(c)\n   Híbrido (presencial y virtual asincrónico)\n   psotob@inkastats-academy.com\n   psotob91\n   Agenda una reunión virtual\n\n\n\nDetalles del curso\n\n   Presencial: Martes | Virtual asincrónico: Toda la semana\n   27 de agosto al 01 de octubre, 2024\n   Presencial: 6:15-8:15 pm\n   Google Meet\n\n\n\nContáctame\nE-mail y Whatssap son las mejores formas de ponerse en contacto conmigo. Intentaré responder a todos los correos electrónicos relacionados con el curso y los mensajes dentro de las 24 horas (de verdad), pero también recuerde que la vida puede ser ajetreada y caótica para todos (¡incluido yo!), así que si no respondo enseguida, no te preocupes!"
+  },
+  {
+    "objectID": "resource/index.html",
+    "href": "resource/index.html",
+    "title": "Recursos adicionales",
+    "section": "",
+    "text": "En esta sección trataremos de incluir un montón de recursos y guías adicionales relacionadas con análisis descriptivo e inferencia. ¡Hagan sus solicitudes por Whatssap o correo electrónico!",
+    "crumbs": [
+      "Recursos",
+      "Información general",
+      "Recursos adicionales"
+    ]
+  },
+  {
+    "objectID": "resource/citations.html",
+    "href": "resource/citations.html",
+    "title": "Citations and bibliography",
+    "section": "",
+    "text": "You can download a BibTeX file of all the non-web-based readings in the course:\n\n references.bib\n\nYou can open the file in BibDesk on macOS, JabRef on Windows, or Zotero or Mendeley online."
+  },
+  {
+    "objectID": "content/05-content.html",
+    "href": "content/05-content.html",
+    "title": "Sesión 05",
+    "section": "",
+    "text": "Videoclase grabadaSlidesTalleres\n\n\n[Se subirá a más tardar el día siguiente de realizada la sesión]\n\n\n[Se subirá a más tardar el día siguiente de realizada la sesión]\n\n\n\n\n\nInstructivo en línea\nAquí\n\n\nInstructivo con solucionario\nAquí\n\n\nQuarto para alumnos\nAquí\n\n\nToda la carpeta del taller\nAquí",
+    "crumbs": [
+      "Contenido",
+      "Contenido del curso",
+      "5: Día 5"
+    ]
+  },
+  {
+    "objectID": "content/05-content.html#materiales",
+    "href": "content/05-content.html#materiales",
+    "title": "Sesión 05",
+    "section": "",
+    "text": "Videoclase grabadaSlidesTalleres\n\n\n[Se subirá a más tardar el día siguiente de realizada la sesión]\n\n\n[Se subirá a más tardar el día siguiente de realizada la sesión]\n\n\n\n\n\nInstructivo en línea\nAquí\n\n\nInstructivo con solucionario\nAquí\n\n\nQuarto para alumnos\nAquí\n\n\nToda la carpeta del taller\nAquí",
+    "crumbs": [
+      "Contenido",
+      "Contenido del curso",
+      "5: Día 5"
+    ]
+  },
+  {
+    "objectID": "content/03-content.html",
+    "href": "content/03-content.html",
+    "title": "Día 03",
+    "section": "",
+    "text": "Videoclase grabadaSlidesTalleres\n\n\n[Se subirá a más tardar el día siguiente de realizada la sesión]\n\n\n[Se subirá a más tardar el día siguiente de realizada la sesión]\n\n\n\n\n\nInstructivo en línea\nAquí\n\n\nInstructivo con solucionario\nAquí\n\n\nQuarto para alumnos\nAquí\n\n\nToda la carpeta del taller\nAquí",
+    "crumbs": [
+      "Contenido",
+      "Contenido del curso",
+      "3: Día 3"
+    ]
+  },
+  {
+    "objectID": "content/03-content.html#materiales",
+    "href": "content/03-content.html#materiales",
+    "title": "Día 03",
+    "section": "",
+    "text": "Videoclase grabadaSlidesTalleres\n\n\n[Se subirá a más tardar el día siguiente de realizada la sesión]\n\n\n[Se subirá a más tardar el día siguiente de realizada la sesión]\n\n\n\n\n\nInstructivo en línea\nAquí\n\n\nInstructivo con solucionario\nAquí\n\n\nQuarto para alumnos\nAquí\n\n\nToda la carpeta del taller\nAquí",
+    "crumbs": [
+      "Contenido",
+      "Contenido del curso",
+      "3: Día 3"
+    ]
+  },
+  {
+    "objectID": "content/04-content.html",
+    "href": "content/04-content.html",
+    "title": "Día 04",
+    "section": "",
+    "text": "Videoclase grabadaSlidesTalleres\n\n\n[Se subirá a más tardar el día siguiente de realizada la sesión]\n\n\n[Se subirá a más tardar el día siguiente de realizada la sesión]\n\n\n\n\n\nInstructivo en línea\nAquí\n\n\nInstructivo con solucionario\nAquí\n\n\nQuarto para alumnos\nAquí\n\n\nToda la carpeta del taller\nAquí",
+    "crumbs": [
+      "Contenido",
+      "Contenido del curso",
+      "4: Día 4"
+    ]
+  },
+  {
+    "objectID": "content/04-content.html#materiales",
+    "href": "content/04-content.html#materiales",
+    "title": "Día 04",
+    "section": "",
+    "text": "Videoclase grabadaSlidesTalleres\n\n\n[Se subirá a más tardar el día siguiente de realizada la sesión]\n\n\n[Se subirá a más tardar el día siguiente de realizada la sesión]\n\n\n\n\n\nInstructivo en línea\nAquí\n\n\nInstructivo con solucionario\nAquí\n\n\nQuarto para alumnos\nAquí\n\n\nToda la carpeta del taller\nAquí",
+    "crumbs": [
+      "Contenido",
+      "Contenido del curso",
+      "4: Día 4"
+    ]
+  },
+  {
+    "objectID": "content/index.html",
+    "href": "content/index.html",
+    "title": "Clases, lecturas y videos",
+    "section": "",
+    "text": "Cada sesión también tiene una lista de reproducción de videos cortos grabados para cada una de las secciones de clase. Las diapositivas de la conferencia son archivos HTML especiales hechos con revealjs a través de Quarto (¡R puede hacer mucho!). En cada sesión verás un botón para abrir la presentación en una nueva pestaña:\n\n Ver diapositivas en una nueva ventana\nLas diapositivas también están incrustadas en cada página. Puede hacer clic en las diapositivas y navegar por ellas con ← and →. Si escribe ? mientras ve las diapositivas, puede ver una lista de comandos específicos de diapositivas (como f para pantalla completa).\nPor último, cada sesión de clase tiene un conjunto de lecturas recomendadas que se sugiere revisen para afianzar o ampliar lo abordado en clases.",
+    "crumbs": [
+      "Contenido",
+      "Información general",
+      "Clases, lecturas y videos"
+    ]
+  },
+  {
+    "objectID": "resource/data.html",
+    "href": "resource/data.html",
+    "title": "Data",
+    "section": "",
+    "text": "There are a ton of places to find data related to public policy and administration (as well as data on pretty much any topic you want) online:\n\nData is Plural newsletter: Jeremy Singer-Vine sends a weekly newsletter of the most interesting public datasets he’s found. You should subscribe to it. He also has an archive of all the datasets he’s highlighted.\nGoogle Dataset Search: Google indexes thousands of public datasets; search for them here.\nKaggle: Kaggle hosts machine learning competitions where people compete to create the fastest, most efficient, most predictive algorithms. A byproduct of these competitions is a host of fascinating datasets that are generally free and open to the public. See, for example, the European Soccer Database, the Salem Witchcraft Dataset or results from an Oreo flavors taste test.\n360Giving: Dozens of British foundations follow a standard file format for sharing grant data and have made that data available online.\nUS City Open Data Census: More than 100 US cities have committed to sharing dozens of types of data, including data about crime, budgets, campaign finance, lobbying, transit, and zoning. This site from the Sunlight Foundation and Code for America collects this data and rates cities by how well they’re doing.\nPolitical science and economics datasets: There’s a wealth of data available for political science- and economics-related topics:\n\nFrançois Briatte’s extensive curated lists: Includes data from/about intergovernmental organizations (IGOs), nongovernmental organizations (NGOs), public opinion surveys, parliaments and legislatures, wars, human rights, elections, and municipalities.\nThomas Leeper’s list of political science datasets: Good short list of useful datasets, divided by type of data (country-level data, survey data, social media data, event data, text data, etc.).\nErik Gahner’s list of political science datasets: Huge list of useful datasets, divided by topic (governance, elections, policy, political elites, etc.)"
+  },
+  {
+    "objectID": "resource/r.html",
+    "href": "resource/r.html",
+    "title": "R",
+    "section": "",
+    "text": "I highly recommend subscribing to the R Weekly newsletter. This e-mail is sent every Monday and is full of helpful tutorials about how to do stuff with R.\nSearching for help with R on Google can sometimes be tricky because the program name is a single letter. Google is generally smart enough to figure out what you mean when you search for “r scatterplot”, but if it does struggle, try searching for “rstats” instead (e.g. “rstats scatterplot”).\nIf you use Twitter, post R-related questions and content with #rstats. The community there is exceptionally generous and helpful. Also check out StackOverflow (a Q&A site with hundreds of thousands of answers to all sorts of programming questions) and RStudio Community (a forum specifically designed for people using RStudio and the tidyverse (i.e. you)).\nThese resources are also really really helpful:\n\nR for Data Science: A free online book for learning the basics of R and the tidyverse.\nR and RStudio cheat sheets: A large collection of simple cheat sheets for RStudio, ggplot2, and other R-related things.\nStat 545: Dr. Jenny Bryan at RStudio has an entire introductory course in R, visualization, and data analysis online.\nSTA 112FS: Data Science: Dr. Mine Çetinkaya-Rundel at the University of Edinburgh / Duke University has an entire introductory course in R, visualization, and data science online.\nCSE 631: Principles & Practice of Data Visualization: Yet another introductory course for R and ggplot2 by Dr. Alison Presmanes Hill at RStudio."
+  },
+  {
+    "objectID": "resource/r.html#learning-r",
+    "href": "resource/r.html#learning-r",
+    "title": "R",
+    "section": "",
+    "text": "I highly recommend subscribing to the R Weekly newsletter. This e-mail is sent every Monday and is full of helpful tutorials about how to do stuff with R.\nSearching for help with R on Google can sometimes be tricky because the program name is a single letter. Google is generally smart enough to figure out what you mean when you search for “r scatterplot”, but if it does struggle, try searching for “rstats” instead (e.g. “rstats scatterplot”).\nIf you use Twitter, post R-related questions and content with #rstats. The community there is exceptionally generous and helpful. Also check out StackOverflow (a Q&A site with hundreds of thousands of answers to all sorts of programming questions) and RStudio Community (a forum specifically designed for people using RStudio and the tidyverse (i.e. you)).\nThese resources are also really really helpful:\n\nR for Data Science: A free online book for learning the basics of R and the tidyverse.\nR and RStudio cheat sheets: A large collection of simple cheat sheets for RStudio, ggplot2, and other R-related things.\nStat 545: Dr. Jenny Bryan at RStudio has an entire introductory course in R, visualization, and data analysis online.\nSTA 112FS: Data Science: Dr. Mine Çetinkaya-Rundel at the University of Edinburgh / Duke University has an entire introductory course in R, visualization, and data science online.\nCSE 631: Principles & Practice of Data Visualization: Yet another introductory course for R and ggplot2 by Dr. Alison Presmanes Hill at RStudio."
+  },
+  {
+    "objectID": "resource/r.html#r-in-the-wild",
+    "href": "resource/r.html#r-in-the-wild",
+    "title": "R",
+    "section": "R in the wild",
+    "text": "R in the wild\nA popular (and increasingly standard) way for sharing your analyses and visualizations is to post an annotated explanation of your process somewhere online. RStudio allows you to publish knitted HTML files directly to RPubs, but you can also post your output to a blog or other type of website.1 Reading these kinds of posts is one of the best ways to learn R, since they walk you through each step of the process and show the code and output.\nHere are some of the best examples I’ve come across:\n\nText analysis of Trump’s tweets confirms he writes only the (angrier) Android half (with a follow-up)\nBob Ross - Joy of Painting\nBechdel analysis using the tidyverse: There are also a bunch of other examples using data from FiveThirtyEight.\nSexism on the Silver Screen: Exploring film’s gender divide\nComparison of Quentin Tarantino Movies by Box Office and the Bechdel Test\nWho came to vote in Utah’s caucuses?\nHealth care indicators in Utah counties\nSong lyrics across the United States\nA decade (ish) of listening to Sigur Rós\nWhen is Tom peeping these days?: There are a also bunch of final projects from other R and data visualization classes here and here.\nMapping Fall Foliage\nGeneral (Attys) Distributions\nDisproving Approval"
+  },
+  {
+    "objectID": "resource/r.html#footnotes",
+    "href": "resource/r.html#footnotes",
+    "title": "R",
+    "section": "Notas",
+    "text": "Notas\n\n\nIf you want to be really fancy, you can use blogdown, which makes a complete website with R Markdown files. That’s actually how this site is built (see the source code). You can build your own site with this tutorial.↩︎"
+  },
+  {
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Cronograma",
+    "section": "",
+    "text": "¡Aquí encontrará la hora de ruta para el curso!\n\nContenido (): Esta página contiene el enlace a las clases, diapositivas y conferencias grabadas de la semana. Lea y mire estos antes de nuestra reunión sincrónica.\nTaller (): Esta página contiene el enlace a los talleres que se realizan clase por clase.\nTarea (): Esta página contiene las instrucciones para cada tarea. Los informes deben entregarse antes del 11:59 p. m. del día programado según cronograma. Existe unas horas de tolerancia con penalización para entrega retrasada de las tareas encomendadas.\n\n\nMódulo propedéutico\n\n\n\n\n\n\nTítulo\n\n\nTeoría\n\n\nTaller\n\n\nTarea\n\n\n\n\n\n\nSesión 0\n\n\n\n\n20/08/2024\n\n\nInstalación de R y configuración de la caja de herramientas\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMódulo 1: Manejo de datos con R\n\n\n\n\n\n\nTítulo\n\n\nTeoría\n\n\nTaller\n\n\nTarea\n\n\n\n\n\n\nSesión 1\n\n\n\n\n27/08/2024\n\n\nIntroducción a R y Rstudio.\n\n\n\n\n\n\n\n\n\n\n\n\n\nSesión 2\n\n\n\n\n27/08/2024\n\n\nFunciones y Paquetes en R. Manipulación de datos.\n\n\n\n\n\n\n\n\n\n\n\n\n\nSesión 3\n\n\n\n\n03/09/2024\n\n\nIntroducción a ggplot2. Gráficos para investigación en Salud.\n\n\n\n\n\n\n\n\n\n\n\n\n\nSesión 4\n\n\n\n\n03/09/2024\n\n\nManejo de datos con dplyr 1.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMódulo 2: Análisis Descriptivo con R\n\n\n\n\n\n\nTítulo\n\n\nTeoría\n\n\nTaller\n\n\nTarea\n\n\n\n\n\n\nSesión 5\n\n\n\n\n10/09/2024\n\n\nManejo de datos con dplyr 2.\n\n\n\n\n\n\n\n\n\n\n\n\n\nSesión 6\n\n\n\n\n10/09/2024\n\n\nDescripción de datos numéricos y categóricos.\n\n\n\n\n\n\n\n\n\n\n\n\n\nSesión 7\n\n\n\n\n17/09/2024\n\n\nTablas descriptivas reproducibles para publicación.\n\n\n\n\n\n\n\n\n\n\n\n\n\nSesión 8\n\n\n\n\n17/09/2024\n\n\nPruebas paramétricas y no paramétricas. Comparación de múltiples grupos.\n\n\n\n\n\n\n\n\n\n\n\n\n\nSesión 9\n\n\n\n\n24/09/2024\n\n\nPruebas de asociación y correlación. Introducción a regresión.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMódulo 3: Inferencia Estadística con R\n\n\n\n\n\n\nTítulo\n\n\nTeoría\n\n\nTaller\n\n\nTarea\n\n\n\n\n\n\nSesión 10\n\n\n\n\n24/09/2024\n\n\nCreación y exportación de tablas estadísticas inferenciales y de regresión.\n\n\n\n\n\n\n\n\n\n\n\n\n\nExamen Final\n\n\n\n\n24/09/2024–01/10/2024\n\n\nExposición de caso de análisis  (enviar antes de 01/10/2024)"
+  },
+  {
+    "objectID": "content/00-content.html",
+    "href": "content/00-content.html",
+    "title": "Sesión 00",
+    "section": "",
+    "text": "¡Bienvenidos al Curso Fundamento de R para Ciencia de DAtos en Salud!",
+    "crumbs": [
+      "Contenido",
+      "Contenido del curso",
+      "0: Día 0"
+    ]
+  },
+  {
+    "objectID": "content/00-content.html#bievenida-al-curso",
+    "href": "content/00-content.html#bievenida-al-curso",
+    "title": "Sesión 00",
+    "section": "",
+    "text": "¡Bienvenidos al Curso Fundamento de R para Ciencia de DAtos en Salud!",
+    "crumbs": [
+      "Contenido",
+      "Contenido del curso",
+      "0: Día 0"
+    ]
+  },
+  {
+    "objectID": "content/00-content.html#objetivos",
+    "href": "content/00-content.html#objetivos",
+    "title": "Sesión 00",
+    "section": "Objetivos",
+    "text": "Objetivos\nEn esta sesión se buscará:\n\nPresentación de curso y recursos informáticos.\nVerificación de instalación de R, Rstudio y Rtools.\nRecursos informáticos del curso y recursos de aprendizaje en línea.",
+    "crumbs": [
+      "Contenido",
+      "Contenido del curso",
+      "0: Día 0"
+    ]
+  },
+  {
+    "objectID": "content/00-content.html#presentación-del-curso",
+    "href": "content/00-content.html#presentación-del-curso",
+    "title": "Sesión 00",
+    "section": "Presentación del curso",
+    "text": "Presentación del curso\nSesión 00\n\n Ver diapositivas en una nueva ventana",
+    "crumbs": [
+      "Contenido",
+      "Contenido del curso",
+      "0: Día 0"
+    ]
+  },
+  {
+    "objectID": "content/00-content.html#instale-r",
+    "href": "content/00-content.html#instale-r",
+    "title": "Sesión 00",
+    "section": "Instale R",
+    "text": "Instale R\nAntes que todo, debe instalar la última versión de los programas que usaremos para este curso. Dependiendo su sistema operativo, Ud. debería instalar los siguientes programas:\n\nWindowsMacLinux (cualquier distro)\n\n\n\nR\nR Studio\nR tools\n\n\n\n\nR\nR Studio\n\n\n\n\nR\nR Studio\n\n\n\n\nSi cuenta con una versión previa, elimínelas y reinstale todo de nuevo: debe tener la última versión actualizada de todos estos. Si nunca ha instalado R, ni los demás programa, hemos preparado el siguiente tutorial de instalación, el cual está disponible en la sección Recursos de la web del curso: Enlace aquí.\nSi tiene alguna duda durante la instalación, no dude en escribir por el Whatssap grupo.",
+    "crumbs": [
+      "Contenido",
+      "Contenido del curso",
+      "0: Día 0"
+    ]
+  },
+  {
+    "objectID": "content/00-content.html#instale-git",
+    "href": "content/00-content.html#instale-git",
+    "title": "Sesión 00",
+    "section": "Instale Git",
+    "text": "Instale Git",
+    "crumbs": [
+      "Contenido",
+      "Contenido del curso",
+      "0: Día 0"
+    ]
+  },
+  {
+    "objectID": "content/00-content.html#cree-una-cuenta-en-github",
+    "href": "content/00-content.html#cree-una-cuenta-en-github",
+    "title": "Sesión 00",
+    "section": "Cree una cuenta en GitHub",
+    "text": "Cree una cuenta en GitHub",
+    "crumbs": [
+      "Contenido",
+      "Contenido del curso",
+      "0: Día 0"
+    ]
+  },
+  {
+    "objectID": "content/07-content.html",
+    "href": "content/07-content.html",
+    "title": "Sesión 07",
+    "section": "",
+    "text": "Pruebas para tres o más grupos.\nPruebas para variables categóricas."
+  },
+  {
+    "objectID": "content/07-content.html#objetivos",
+    "href": "content/07-content.html#objetivos",
+    "title": "Sesión 07",
+    "section": "",
+    "text": "Pruebas para tres o más grupos.\nPruebas para variables categóricas."
+  },
+  {
+    "objectID": "content/07-content.html#materiales",
+    "href": "content/07-content.html#materiales",
+    "title": "Sesión 07",
+    "section": "Materiales",
+    "text": "Materiales\n\nTeoría y práctica grabadaPráctica grabadaSlidesTalleres\n\n\n\nAnotaciones extra en quarto: Aquí\n\n\n\n\n\n\n\n Ver diapositivas en una nueva ventana\n\n\n\n\n\n\n\nInstructivo en línea\nAquí\n\n\nInstructivo con solucionario\nAquí\n\n\nQuarto para alumnos\nAquí\n\n\nToda la carpeta del taller\nAquí"
+  },
+  {
+    "objectID": "resource/markdown.html",
+    "href": "resource/markdown.html",
+    "title": "Using Markdown",
+    "section": "",
+    "text": "Markdown is a special kind of markup language that lets you format text with simple syntax. You can then use a converter program like pandoc to convert Markdown into whatever format you want: HTML, PDF, Word, PowerPoint, etc. (see the full list of output types here)"
+  },
+  {
+    "objectID": "resource/markdown.html#basic-markdown-formatting",
+    "href": "resource/markdown.html#basic-markdown-formatting",
+    "title": "Using Markdown",
+    "section": "Basic Markdown formatting",
+    "text": "Basic Markdown formatting\n\n\n\n\n\n\n\n\n\nType…\n\n\n…or…\n\n\n…to get\n\n\n\n\n\n\nSome text in a paragraph.\nMore text in the next paragraph. Always\nuse empty lines between paragraphs.\n\n\n\n\n\nSome text in a paragraph.\n\n\nMore text in the next paragraph. Always use empty lines between paragraphs.\n\n\n\n\n\nItalic\n\n\nItalic\n\n\nItalic\n\n\n\n\nBold\n\n\nBold\n\n\nBold\n\n\n\n\n# Heading 1\n\n\n\n\n\nHeading 1\n\n\n\n\n\n## Heading 2\n\n\n\n\n\nHeading 2\n\n\n\n\n\n### Heading 3\n\n\n\n\n\nHeading 3\n\n\n\n\n\n(Go up to heading level 6 with ######)\n\n\n\n\n\n\n\n\nLink text\n\n\n\n\nLink text\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n&lt;code&gt;Inline code with backticks\n\n\n\n\nInline code with backticks\n\n\n\n\n&gt; Blockquote\n\n\n\n\n\n\nBlockquote\n\n\n\n\n\n\n- Things in\n- an unordered\n- list\n\n\n* Things in\n* an unordered\n* list\n\n\n\n\nThings in\n\n\nan unordered\n\n\nlist\n\n\n\n\n\n\n1. Things in\n2. an ordered\n3. list\n\n\n1) Things in\n2) an ordered\n3) list\n\n\n\n\nThings in\n\n\nan ordered\n\n\nlist\n\n\n\n\n\n\nHorizontal line\n\n---\n\n\nHorizontal line\n\n***\n\n\n\nHorizontal line"
+  },
+  {
+    "objectID": "resource/markdown.html#math",
+    "href": "resource/markdown.html#math",
+    "title": "Using Markdown",
+    "section": "Math",
+    "text": "Math\n\nBasic math commands\nMarkdown uses LaTeX to create fancy mathematical equations. There are like a billion little options and features available for math equations—you can find helpful examples of the the most common basic commands here. In this class, these will be the most common things you’ll use:\n\n\n\n\n\nDescription\nCommand\nOutput\n\n\n\n\nLetters\n\n\nRoman letters\n&lt;code&gt;a b c d e f&lt;/code&gt;\n\\(a\\ b\\ c\\ d\\ e\\ f\\)\n\n\nGreek letters (see &lt;a href='https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols'&gt;this&lt;/a&gt; for all possible letters)\n&lt;code&gt;\\alpha \\beta \\Gamma \\gamma&lt;/code&gt; &lt;br&gt; &lt;code&gt;\\Delta \\delta \\epsilon&lt;/code&gt;\n\\(\\alpha\\ \\beta\\ \\Gamma\\ \\gamma\\ \\Delta\\ \\delta\\ \\epsilon\\)\n\n\nLetters will automatically be italicized and treated as math variables;&lt;br&gt;if you want actual text in the math, use &lt;code&gt;\\text{}&lt;/code&gt;\nEw: &lt;code&gt;Treatment = \\beta&lt;/code&gt; &lt;br&gt;Good: &lt;code&gt;\\text{Treatment} = \\beta&lt;/code&gt;\nEw: \\(Treatment = \\beta\\)&lt;br&gt;Good: \\(\\text{Treatment} = \\beta\\)\n\n\nExtra spaces will automatically be removed; if you want a space, use &lt;code&gt;\\ &lt;/code&gt;\nNo space: &lt;code&gt;x y&lt;/code&gt; &lt;br&gt; Space: &lt;code&gt;x\\ y&lt;/code&gt;\nNo space: \\(x y\\) &lt;br&gt;Space: \\(x \\ y\\)\n\n\nSuperscripts and subscripts\n\n\nUse &lt;code&gt;^&lt;/code&gt; to make one character superscripted.\n&lt;code&gt;x^2&lt;/code&gt;\n\\(x^2\\)\n\n\nWrap the superscripted part in &lt;code&gt;{}&lt;/code&gt; if there's more than one character\n&lt;code&gt;x^{2+y}&lt;/code&gt;\n\\(x^{2+y}\\)\n\n\nUse &lt;code&gt;_&lt;/code&gt; to make one character subscripted\n&lt;code&gt;\\beta_1&lt;/code&gt;\n\\(\\beta_1\\)\n\n\nWrap the subscripted part in &lt;code&gt;{}&lt;/code&gt; if there's more than one character\n&lt;code&gt;\\beta_{i, t}&lt;/code&gt;\n\\(\\beta_{i, t}\\)\n\n\nUse superscripts and subscripts simultaneously\n&lt;code&gt;\\beta_1^{\\text{Treatment}}&lt;/code&gt;\n\\(\\beta_1^{\\text{Treatment}}\\)\n\n\nYou can even nest them\n&lt;code&gt;x^{2^{2^2}}&lt;/code&gt;\n\\(x^{2^{2^2}}\\)\n\n\nMath operations\n\n\nAddition\n&lt;code&gt;2 + 5 = 7&lt;/code&gt;\n\\(2 + 5 = 7\\)\n\n\nSubtraction\n&lt;code&gt;2 - 5 = -3&lt;/code&gt;\n\\(2 + 5 = -3\\)\n\n\nMultiplication\n&lt;code&gt;x \\times y&lt;/code&gt; &lt;br&gt; &lt;code&gt;x \\cdot y&lt;/code&gt;\n\\(x \\times y\\) &lt;br&gt; \\(x \\cdot y\\)\n\n\nDivision\n&lt;code&gt;8 \\div 2&lt;/code&gt;\n\\(8 \\div 2\\)\n\n\nFractions\n&lt;code&gt;\\frac{8}{2}&lt;/code&gt;\n\\(\\frac{8}{2}\\)\n\n\nSquare roots; use &lt;code&gt;[3]&lt;/code&gt; for other roots\n&lt;code&gt;\\sqrt{81} = 9&lt;/code&gt; &lt;br&gt; &lt;code&gt;\\sqrt[3]{27} = 3&lt;/code&gt;\n\\(\\sqrt{81} = 9\\) &lt;br&gt; \\(\\sqrt[3]{27} = 3\\)\n\n\nSummation; use sub/superscripts for extra details\n&lt;code&gt;\\sum x&lt;/code&gt; &lt;br&gt; &lt;code&gt;\\sum_{n=1}^{\\infty} \\frac{1}{n}&lt;/code&gt;\n\\(\\sum x\\) &lt;br&gt; \\(\\sum_{n=1}^{\\infty} \\frac{1}{n}\\)\n\n\nProducts; use sub/superscripts for extra details\n&lt;code&gt;\\prod x&lt;/code&gt; &lt;br&gt; &lt;code&gt;\\prod_{n=1}^{5} n^2&lt;/code&gt;\n\\(\\prod x\\) &lt;br&gt; \\(\\prod_{n=1}^{5} n^2\\)\n\n\nIntegrals; use sub/superscripts for extra details\n&lt;code&gt;\\int x^2 \\ dx&lt;/code&gt; &lt;br&gt; &lt;code&gt;\\int_{1}^{100} x^2 \\ dx&lt;/code&gt;\n\\(\\int x^2 \\ dx\\) &lt;br&gt; \\(\\int_{1}^{100} x^2 \\ dx\\)\n\n\nExtra symbols\n\n\nAdd a bar for things like averages\n&lt;code&gt;\\bar{x}&lt;/code&gt;\n\\(\\bar{x}\\)\n\n\nUse an overline for longer things\nEw: &lt;code&gt;\\bar{abcdef}&lt;/code&gt; &lt;br&gt; Good: &lt;code&gt;\\overline{abcdef}&lt;/code&gt;\nEw: \\(\\bar{abcdef}\\) &lt;br&gt; Good: \\(\\overline{abcdef}\\)\n\n\nAdd a hat for things like estimates\n&lt;code&gt;\\hat{y}&lt;/code&gt;\n\\(\\hat{y}\\)\n\n\nUse a wide hat for longer things\nEw: &lt;code&gt;\\hat{abcdef}&lt;/code&gt; &lt;br&gt; Good: &lt;code&gt;\\widehat{abcdef}&lt;/code&gt;\nEw: \\(\\hat{abcdef}\\) &lt;br&gt; Good: \\(\\widehat{abcdef}\\)\n\n\nUse arrows for DAG-like things\n&lt;code&gt;Z \\rightarrow Y \\leftarrow X&lt;/code&gt;\n\\(Z \\rightarrow Y \\leftarrow X\\)\n\n\nBonus fun\n\n\nUse colors!; see &lt;a href='https://www.overleaf.com/learn/latex/Using_colours_in_LaTeX'&gt;here&lt;/a&gt; for more details and &lt;a href='https://www.overleaf.com/learn/latex/Using_colours_in_LaTeX#Reference_guide'&gt;here&lt;/a&gt; for a list of color names\n&lt;code&gt;\\color{red}{y} = \\color{blue}{\\beta_1 x_1}&lt;/code&gt;\n\\(\\color{red}{y}\\ \\color{black}{=}\\ \\color{blue}{\\beta_1 x_1}\\)\n\n\n\n\n\n\n\n\n\nUsing math inline\nYou can use math in two different ways: inline or in a display block. To use math inline, wrap it in single dollar signs, like $y = mx + b$:\n\n\n\n\n\n\n\n\nType…\n\n\n…to get\n\n\n\n\n\n\nBased on the DAG, the regression model for\nestimating the effect of education on wages\nis $\\hat{y} = \\beta_0 + \\beta_1 x_1 + \\epsilon$, \nor $\\text{Wages} = \\beta_0 + \n\\beta_1 \\text{Education} + \\epsilon$.\n\n\nBased on the DAG, the regression model for estimating the effect of education on wages is \\(\\hat{y} = \\beta_0 + \\beta_1 x_1 + \\epsilon\\), or \\(\\text{Wages} = \\beta_0 + \\beta_1 \\text{Education} + \\epsilon\\).\n\n\n\n\n\n\nUsing math in a block\nTo put an equation on its own line in a display block, wrap it in double dollar signs, like this:\nType…\nThe quadratic equation was a way to solve for $x$ in high school math:\n\n$$\nx = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}\n$$\n…to get…\n\nThe quadratic equation was a way to solve for \\(x\\) in high school math:\n\\[\nx = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}\n\\]\n\n\n\n\nDollar signs and math\nBecause dollar signs are used to indicate math equations, you can’t just use dollar signs like normal if you’re writing about actual dollars. For instance, if you write This book costs $5.75 and this other costs $40, Markdown will treat everything that comes between the dollar signs as math, like so: “This book costs \\($5.75 and this other costs $40\\)”.\nTo get around that, put a backslash (\\) in front of the dollar signs, so that This book costs \\$5.75 and this other costs \\$40 becomes “This book costs $5.75 and this other costs $40”."
+  },
+  {
+    "objectID": "resource/markdown.html#tables",
+    "href": "resource/markdown.html#tables",
+    "title": "Using Markdown",
+    "section": "Tables",
+    "text": "Tables\nThere are 4 different ways to hand-create tables in Markdown—I say “hand-create” because it’s normally way easier to use R to generate these things with packages like kableExtra (use kable()) or pander (use pandoc.table()). The two most common are simple tables and pipe tables. You should look at the full documentation here.\nFor simple tables, type…\n  Right     Left     Center     Default\n-------     ------ ----------   -------\n     12     12        12            12\n    123     123       123          123\n      1     1          1             1\n\nTable: Caption goes here\n…to get…\n\nCaption goes here\n\n\nRight\nLeft\nCenter\nDefault\n\n\n\n\n12\n12\n12\n12\n\n\n123\n123\n123\n123\n\n\n1\n1\n1\n1\n\n\n\nFor pipe tables, type…\n| Right | Left | Default | Center |\n|------:|:-----|---------|:------:|\n|   12  |  12  |    12   |    12  |\n|  123  |  123 |   123   |   123  |\n|    1  |    1 |     1   |     1  |\n\nTable: Caption goes here\n…to get…\n\nCaption goes here\n\n\nRight\nLeft\nDefault\nCenter\n\n\n\n\n12\n12\n12\n12\n\n\n123\n123\n123\n123\n\n\n1\n1\n1\n1"
+  },
+  {
+    "objectID": "resource/markdown.html#footnotes",
+    "href": "resource/markdown.html#footnotes",
+    "title": "Using Markdown",
+    "section": "Footnotes",
+    "text": "Footnotes\nThere are two different ways to add footnotes (see here for complete documentation): regular and inline.\nRegular notes need (1) an identifier and (2) the actual note. The identifier can be whatever you want. Some people like to use numbers like [^1], but if you ever rearrange paragraphs or add notes before #1, the numbering will be wrong (in your Markdown file, not in the output; everything will be correct in the output). Because of that, I prefer to use some sort of text label:\nType…\nHere is a footnote reference[^1] and here is another [^note-on-dags].\n\n[^1]: This is a note.\n\n[^note-on-dags]: DAGs are neat. \n\nAnd here's more of the document.\n…to get…\n\nHere is a footnote reference1 and here is another.2\nAnd here’s more of the document.\n\n\n\n\n\nThis is a note.↩︎\n\n\n\n\nDAGs are neat.↩︎\n\n\n\n\n\n\nYou can also use inline footnotes with ^[Text of the note goes here], which are often easier because you don’t need to worry about identifiers:\nType…\nCausal inference is neat.^[But it can be hard too!]\n…to get…\n\nCausal inference is neat.1\n\n\n\n\n\nBut it can be hard too!↩︎"
+  },
+  {
+    "objectID": "resource/markdown.html#front-matter",
+    "href": "resource/markdown.html#front-matter",
+    "title": "Using Markdown",
+    "section": "Front matter",
+    "text": "Front matter\nYou can include a special section at the top of a Markdown document that contains metadata (or data about your document) like the title, date, author, etc. This section uses a special simple syntax named YAML (or “YAML Ain’t Markup Language”) that follows this basic outline: setting: value for setting. Here’s an example YAML metadata section. Note that it must start and end with three dashes (---).\n---\ntitle: Title of your document\ndate: \"January 13, 2020\"\nauthor: \"Your name\"\n---\nYou can put the values inside quotes (like the date and name in the example above), or you can leave them outside of quotes (like the title in the example above). I typically use quotes just to be safe—if the value you’re using has a colon (:) in it, it’ll confuse Markdown since it’ll be something like title: My cool title: a subtitle, which has two colons. It’s better to do this:\n---\ntitle: \"My cool title: a subtitle\"\n---\nIf you want to use quotes inside one of the values (e.g. your document is An evaluation of \"scare quotes\"), you can use single quotes instead:\n---\ntitle: 'An evaluation of \"scare quotes\"'\n---"
+  },
+  {
+    "objectID": "resource/markdown.html#citations",
+    "href": "resource/markdown.html#citations",
+    "title": "Using Markdown",
+    "section": "Citations",
+    "text": "Citations\nOne of the most powerful features of Markdown + pandoc is the ability to automatically cite things and generate bibliographies. to use citations, you need to create a BibTeX file (ends in .bib) that contains a database of the things you want to cite. You can do this with bibliography managers designed to work with BibTeX directly (like BibDesk on macOS), or you can use Zotero (macOS and Windows) to export a .bib file. You can download an example .bib file of all the readings from this class here.\nComplete details for using citations can be found here. In brief, you need to do three things:\n\nAdd a bibliography: entry to the YAML metadata:\n---\ntitle: Title of your document\ndate: \"January 13, 2020\"\nauthor: \"Your name\"\nbibliography: name_of_file.bib\n---\nChoose a citation style based on a CSL file. The default is Chicago author-date, but you can choose from 2,000+ at this repository. Download the CSL file, put it in your project folder, and add an entry to the YAML metadata (or provide a URL to the online version):\n---\ntitle: Title of your document\ndate: \"January 13, 2020\"\nauthor: \"Your name\"\nbibliography: name_of_file.bib\ncsl: \"https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl\"\n---\nSome of the most common CSLs are:\n\nChicago author-date\nChicago note-bibliography\nChicago full note-bibliography (no shortened notes or ibids)\nAPA 7th edition\nMLA 8th edition\n\nCite things in your document. Check the documentation for full details of how to do this. Essentially, you use @citationkey inside square brackets ([]):\n\n\n\n\n\n\n\n\nType…\n…to get…\n\n\n\n\nCausal inference is neat [@Rohrer:2018;\n@AngristPischke:2015].\nCausal inference is neat [@Rohrer:2018; @AngristPischke:2015].\n\n\nCausal inference is neat [see @Rohrer:2018,\np. 34; also @AngristPischke:2015, chapter 1]\nCausal inference is neat [see @Rohrer:2018, p. 34; also @AngristPischke:2015, chapter 1]\n\n\nAngrist and Pischke say causal inference\nis neat [-@AngristPischke:2015; see also\n@Rohrer:2018].\nAngrist and Pischke say causal inference is neat [-@AngristPischke:2015; see also @Rohrer:2018].\n\n\n@AngristPischke:2015 [chapter 1] say causal\ninference is neat, and @Rohrer:2018 agrees.\n@AngristPischke:2015 [chapter 1] say causal inference is neat, and @Rohrer:2018 agrees.\n\n\n\nAfter compiling, you should have a perfectly formatted bibliography added to the end of your document too:\n\nAngrist, Joshua D., and Jörn-Steffen Pischke. 2015. Mastering ’Metrics: The Path from Cause to Effect. Princeton, NJ: Princeton University Press.\nRohrer, Julia M. 2018. “Thinking Clearly About Correlations and Causation: Graphical Causal Models for Observational Data.” Advances in Methods and Practices in Psychological Science 1 (1): 27–42. https://doi.org/10.1177/2515245917745629."
+  },
+  {
+    "objectID": "resource/markdown.html#other-references",
+    "href": "resource/markdown.html#other-references",
+    "title": "Using Markdown",
+    "section": "Other references",
+    "text": "Other references\nThese websites have additional details and examples and practice tools:\n\nCommonMark’s Markdown tutorial: A quick interactive Markdown tutorial.\nMarkdown tutorial: Another interactive tutorial to practice using Markdown.\nMarkdown cheatsheet: Useful one-page reminder of Markdown syntax.\nThe Plain Person’s Guide to Plain Text Social Science: A comprehensive explanation and tutorial about why you should write data-based reports in Markdown."
+  },
+  {
+    "objectID": "content/02-content.html",
+    "href": "content/02-content.html",
+    "title": "Día 02",
+    "section": "",
+    "text": "Videoclase grabadaSlidesTalleres\n\n\n[Se subirá a más tardar el día siguiente de realizada la sesión]\n\n\nSesión 03\n\n Ver diapositivas en una nueva ventana\n\n\nSesión 04\n\n Ver diapositivas en una nueva ventana\n\n\n\n\n\n\n\nInstructivo en línea\nAquí\n\n\nInstructivo con solucionario\nAquí\n\n\nQuarto para alumnos\nAquí\n\n\nToda la carpeta del taller\nAquí",
+    "crumbs": [
+      "Contenido",
+      "Contenido del curso",
+      "2: Día 2"
+    ]
+  },
+  {
+    "objectID": "content/02-content.html#materiales",
+    "href": "content/02-content.html#materiales",
+    "title": "Día 02",
+    "section": "",
+    "text": "Videoclase grabadaSlidesTalleres\n\n\n[Se subirá a más tardar el día siguiente de realizada la sesión]\n\n\nSesión 03\n\n Ver diapositivas en una nueva ventana\n\n\nSesión 04\n\n Ver diapositivas en una nueva ventana\n\n\n\n\n\n\n\nInstructivo en línea\nAquí\n\n\nInstructivo con solucionario\nAquí\n\n\nQuarto para alumnos\nAquí\n\n\nToda la carpeta del taller\nAquí",
+    "crumbs": [
+      "Contenido",
+      "Contenido del curso",
+      "2: Día 2"
+    ]
+  },
+  {
+    "objectID": "resource/install.html",
+    "href": "resource/install.html",
+    "title": "Installing R, RStudio, tidyverse, and tinytex",
+    "section": "",
+    "text": "You will do all of your work in this class with the open source (and free!) programming language R. You will use RStudio as the main program to access R. Think of R as an engine and RStudio as a car dashboard—R handles all the calculations and the actual statistics, while RStudio provides a nice interface for running R code."
+  },
+  {
+    "objectID": "resource/install.html#rstudio.cloud",
+    "href": "resource/install.html#rstudio.cloud",
+    "title": "Installing R, RStudio, tidyverse, and tinytex",
+    "section": "RStudio.cloud",
+    "text": "RStudio.cloud\nR is free, but it can sometimes be a pain to install and configure. To make life easier, you can (and should!) use the free RStudio.cloud service initially, which lets you run a full instance of RStudio in your web browser. This means you won’t have to install anything on your computer to get started with R! We will have a shared class workspace in RStudio.cloud that will let you quickly copy templates for labs and problem sets.\nGo to https://rstudio.cloud/ and create an account. You’ll receive a link to join the shared class workspace separately. If you don’t get this link, let me know and I will invite you."
+  },
+  {
+    "objectID": "resource/install.html#rstudio-on-your-computer",
+    "href": "resource/install.html#rstudio-on-your-computer",
+    "title": "Installing R, RStudio, tidyverse, and tinytex",
+    "section": "RStudio on your computer",
+    "text": "RStudio on your computer\nRStudio.cloud is convenient, but it can be slow and it is not designed to be able to handle larger datasets, more complicated analysis, or fancier graphics. Over the course of the semester, you should wean yourself off of RStudio.cloud and install all these things locally. This is also important if you want to customize fonts, since RStudio.cloud has extremely limited support for fonts other than Helvetica.\nHere’s how you install all these things\n\nInstall R\nFirst you need to install R itself (the engine).\n\nGo to the CRAN (Collective R Archive Network)1 website: https://cran.r-project.org/\nClick on “Download R for XXX”, where XXX is either Mac or Windows:\n::: {.cell} ::: {.cell-output-display}  ::: :::\n\nIf you use macOS, scroll down to the first .pkg file in the list of files (in this picture, it’s R-4.0.0.pkg; as of right now, the current version is also 4.0.0) and download it.\n::: {.cell} ::: {.cell-output-display}  ::: :::\nIf you use Windows, click “base” (or click on the bolded “install R for the first time” link) and download it.\n::: {.cell} ::: {.cell-output-display}  ::: :::\n\nDouble click on the downloaded file (check your Downloads folder). Click yes through all the prompts to install like any other program.\nIf you use macOS, download and install XQuartz. You do not need to do this on Windows.\n\n\n\nInstall RStudio\nNext, you need to install RStudio, the nicer graphical user interface (GUI) for R (the dashboard). Once R and RStudio are both installed, you can ignore R and only use RStudio. RStudio will use R automatically and you won’t ever have to interact with it directly.\n\nGo to the free download location on RStudio’s website: https://www.rstudio.com/products/rstudio/download/#download\nThe website should automatically detect your operating system (macOS or Windows) and show a big download button for it:\n::: {.cell} ::: {.cell-output-display}  ::: :::\nIf not, scroll down a little to the large table and choose the version of RStudio that matches your operating system.\n::: {.cell} ::: {.cell-output-display}  ::: :::\nDouble click on the downloaded file (again, check your Downloads folder). Click yes through all the prompts to install like any other program.\n\nDouble click on RStudio to run it (check your applications folder or start menu).\n\n\nInstall tidyverse\nR packages are easy to install with RStudio. Select the packages panel, click on “Install,” type the name of the package you want to install, and press enter.\n\n\n\n\n\n\n\n\n\nThis can sometimes be tedious when you’re installing lots of packages, though. The tidyverse, for instance, consists of dozens of packages (including ggplot2) that all work together. Rather than install each individually, you can install a single magical package and get them all at the same time.\nGo to the packages panel in RStudio, click on “Install,” type “tidyverse”, and press enter. You’ll see a bunch of output in the RStudio console as all the tidyverse packages are installed.\n\n\n\n\n\n\n\n\n\nNotice also that RStudio will generate a line of code for you and run it: install.packages(\"tidyverse\"). You can also just paste and run this instead of using the packages panel.\n\n\nInstall tinytex\nWhen you knit to PDF, R uses a special scientific typesetting program named LaTeX (pronounced “lay-tek” or “lah-tex”; for goofy nerdy reasons, the x is technically the “ch” sound in “Bach”, but most people just say it as “k”—saying “layteks” is frowned on for whatever reason).\nLaTeX is neat and makes pretty documents, but it’s a huge program—the macOS version, for instance, is nearly 4 GB! To make life easier, there’s an R package named tinytex that installs a minimal LaTeX program and that automatically deals with differences between macOS and Windows.\nHere’s how to install tinytex so you can knit to pretty PDFs:\n\nUse the Packages in panel in RStudio to install tinytex like you did above with tidyverse. Alternatively, run install.packages(\"tinytex\") in the console.\nRun tinytex::install_tinytex() in the console.\nWait for a bit while R downloads and installs everything you need.\nThe end! You should now be able to knit to PDF."
+  },
+  {
+    "objectID": "resource/install.html#footnotes",
+    "href": "resource/install.html#footnotes",
+    "title": "Installing R, RStudio, tidyverse, and tinytex",
+    "section": "Notas",
+    "text": "Notas\n\n\nIt’s a goofy name, but CRAN is where most R packages—and R itself—lives.↩︎"
+  },
+  {
+    "objectID": "resource/style.html",
+    "href": "resource/style.html",
+    "title": "Sugerencia de estilo en R",
+    "section": "",
+    "text": "R es bastante flexible con la forma como escribimos el código (a diferencia de otros lenguajes como Python, donde utilizar mal los espacion puede arruinar todo tu código!). Todas las siguientes líneas de código harán exactamente lo mismo:\n\n#Código 1:\nmpg %&gt;% \n  filter(cty &gt; 10, class == \"compact\")\n\n#Código 2:\nmpg %&gt;% filter(cty &gt; 10, class == \"compact\")\n\n#Código 3:\nmpg %&gt;% \n  filter(cty &gt; 10, \n         class == \"compact\")\n\n#Código 4:\nmpg %&gt;% filter(cty&gt;10, class==\"compact\")\n\n#Código 5:\nfilter(mpg,cty&gt;10,class==\"compact\")\n\n#Código 6:\nmpg %&gt;% \nfilter(cty &gt; 10, \n                        class == \"compact\")\n\nfilter ( mpg,cty&gt;10,     class==\"compact\" )\n\nSin embargo, como podrás notar, solo las tres primeras opciones son fácilmente legibles.\nPara ayudar a mejorar la legibilidad y que sea más fácil compartir código con otras personas, existe una guía de estilo para código en R. Es bastante corta y contiene muchos ejemplos de buenas y malas maneras de escribir código (para nombrar variables, para manejar líneas de código extensas, usar niveles de identación adecuadas, etc.). Deberías hecharle un vistazo alguna vez!\nRStudio tiene una forma integrada de limpiar nuestro código. Seleccionamos el código, presionamos ctrl + i (en Windows) o ⌘ + i (en macOS), y R reordenará el código por nosotros. Si bien esto no siempre resulta bien, es muy útil para una correcta identación a la derecha sin tener que hacerlo manualmente presionando el botón de space un millón de veces.",
+    "crumbs": [
+      "Recursos",
+      "Información general",
+      "Sugerencia de estilo en R"
+    ]
+  },
+  {
+    "objectID": "resource/style.html#convenciones-de-estilo-en-r",
+    "href": "resource/style.html#convenciones-de-estilo-en-r",
+    "title": "Sugerencia de estilo en R",
+    "section": "",
+    "text": "R es bastante flexible con la forma como escribimos el código (a diferencia de otros lenguajes como Python, donde utilizar mal los espacion puede arruinar todo tu código!). Todas las siguientes líneas de código harán exactamente lo mismo:\n\n#Código 1:\nmpg %&gt;% \n  filter(cty &gt; 10, class == \"compact\")\n\n#Código 2:\nmpg %&gt;% filter(cty &gt; 10, class == \"compact\")\n\n#Código 3:\nmpg %&gt;% \n  filter(cty &gt; 10, \n         class == \"compact\")\n\n#Código 4:\nmpg %&gt;% filter(cty&gt;10, class==\"compact\")\n\n#Código 5:\nfilter(mpg,cty&gt;10,class==\"compact\")\n\n#Código 6:\nmpg %&gt;% \nfilter(cty &gt; 10, \n                        class == \"compact\")\n\nfilter ( mpg,cty&gt;10,     class==\"compact\" )\n\nSin embargo, como podrás notar, solo las tres primeras opciones son fácilmente legibles.\nPara ayudar a mejorar la legibilidad y que sea más fácil compartir código con otras personas, existe una guía de estilo para código en R. Es bastante corta y contiene muchos ejemplos de buenas y malas maneras de escribir código (para nombrar variables, para manejar líneas de código extensas, usar niveles de identación adecuadas, etc.). Deberías hecharle un vistazo alguna vez!\nRStudio tiene una forma integrada de limpiar nuestro código. Seleccionamos el código, presionamos ctrl + i (en Windows) o ⌘ + i (en macOS), y R reordenará el código por nosotros. Si bien esto no siempre resulta bien, es muy útil para una correcta identación a la derecha sin tener que hacerlo manualmente presionando el botón de space un millón de veces.",
+    "crumbs": [
+      "Recursos",
+      "Información general",
+      "Sugerencia de estilo en R"
+    ]
+  },
+  {
+    "objectID": "resource/style.html#principales-aspectos-de-estilo-para-tener-en-cuenta-en-este-curso",
+    "href": "resource/style.html#principales-aspectos-de-estilo-para-tener-en-cuenta-en-este-curso",
+    "title": "Sugerencia de estilo en R",
+    "section": "Principales aspectos de estilo para tener en cuenta en este curso",
+    "text": "Principales aspectos de estilo para tener en cuenta en este curso\n\nImportante: En InkaStats nunca te evaluaremos por esto! Si escribes algo como filter(mpg,cty&gt;10,class==\"compact\"), te podriamos recomendar agregar espacios, pero eso no afectará tu calificación.\n\n\nEspaciado\n\nRevisa la sección de “Spacing” en la guía de estilo de tidyverse.\n\nColoca espacios después de las comas (como en el español cotidiano):\n\n# Bien\nfilter(mpg, cty &gt; 10)\n\n# Mal\nfilter(mpg , cty &gt; 10)\nfilter(mpg ,cty &gt; 10)\nfilter(mpg,cty &gt; 10)\n\nColoca espacios alrededor de operadores como +, -, &gt;, =, etc.:\n\n# Bien\nfilter(mpg, cty &gt; 10)\n\n# Mal\nfilter(mpg, cty&gt;10)\nfilter(mpg, cty&gt; 10)\nfilter(mpg, cty &gt;10)\n\nNo coloques espacios alrededor de paréntesis que son parte de la función:\n\n# Bien\nfilter(mpg, cty &gt; 10)\n\n# Mal\nfilter (mpg, cty &gt; 10)\nfilter ( mpg, cty &gt; 10)\nfilter( mpg, cty &gt; 10 )\n\n\n\nLíneas extensas\n\nRevisa la sección “Long lines” en la guía de estilo de tidyverse.\n\nGeneralmente es una buena práctica no tener líneas de código muy extensas. Una buena sugerencia es trabajar con un límite de 80 caracteres por línea de código. En lugar de contar caracteres manualmente (no hagas eso, en serio), en RStudio ve a “Tools” &gt; “Global Options” &gt; “Code” &gt; “Display” y revisa la opción “Show margin”. Deberías poder ver una delgada línea indicando 80 caracteres. De nuevo, podrías no tomar estas sugerencias y eso está bien. Sin embargo, es una buena práctica mantener una extensión límite.\nPuedes agregar saltos de línea dentro de líneas de código más largas. Los saltos de línea deben ir después de las comas, y los argumentos de la función deben alinearse dentro de la misma:\n\n# Bien\nfilter(mpg, cty &gt; 10, class == \"compact\")\n\n# Bien\nfilter(mpg, cty &gt; 10, \n       class == \"compact\")\n\n# Bien\nfilter(mpg,\n       cty &gt; 10,\n       class == \"compact\")\n\n# Mal\nfilter(mpg, cty &gt; 10, class %in% c(\"compact\", \"pickup\", \"midsize\", \"subcompact\", \"suv\", \"2seater\", \"minivan\"))\n\n# Bien\nfilter(mpg, \n       cty &gt; 10, \n       class %in% c(\"compact\", \"pickup\", \"midsize\", \"subcompact\", \n                    \"suv\", \"2seater\", \"minivan\"))\n\n\n\nOperador pipe (%&gt;%) y capas en ggplot (+)\nColoca cada capa de un gráfico con ggplot en líneas separadas con un + al final de la línea e idéntalas con dos espacios:\n\n# Bien\nggplot(mpg, aes(x = cty, y = hwy, color = class)) +\n  geom_point() +\n  geom_smooth() +\n  theme_bw()\n\n# Mal\nggplot(mpg, aes(x = cty, y = hwy, color = class)) +\n  geom_point() + geom_smooth() +\n  theme_bw()\n\n# Muy mal\nggplot(mpg, aes(x = cty, y = hwy, color = class)) + geom_point() + geom_smooth() + theme_bw()\n\n# Muy mal y no va funcionar\nggplot(mpg, aes(x = cty, y = hwy, color = class))\n  + geom_point()\n  + geom_smooth() \n  + theme_bw()\n\nColoca para paso en una sucesión de funciones de dplyr en líneas separadas con el operador %&gt;% al final de la línea e idéntalo con dos espacios:\n\n# Bien\nmpg %&gt;% \n  filter(cty &gt; 10) %&gt;% \n  group_by(class) %&gt;% \n  summarize(avg_hwy = mean(hwy))\n\n# Mal\nmpg %&gt;% filter(cty &gt; 10) %&gt;% group_by(class) %&gt;% \n  summarize(avg_hwy = mean(hwy))\n\n# Muy mal\nmpg %&gt;% filter(cty &gt; 10) %&gt;% group_by(class) %&gt;% summarize(avg_hwy = mean(hwy))\n\n# Muy mal y no va a funcionar\nmpg %&gt;% \n  filter(cty &gt; 10)\n  %&gt;% group_by(class)\n  %&gt;% summarize(avg_hwy = mean(hwy))\n\n\n\nComentarios\n\nRevisa la sección de “Comments” en la guía de estilo de tidyverse.\n\nLos comentarios deben iniciar con un símbolo de comentario y un espacio: #\n\n# Bien\n\n#Mal\n\n    #Mal\n\nSi el comentario es muy corto (y no extenderá la línea de código más allá de los 80 caracteres), podrías incluirlo en la misma línea del código, separándolo por al menos dos espacios (también funciona con un solo espacio, pero si usas dos será más legible):\n\nmpg %&gt;% \n  filter(cty &gt; 10) %&gt;%  # Solo filas donde cty es 10 o más\n  group_by(class) %&gt;%  # Dividirlo en grupos según class\n  summarize(avg_hwy = mean(hwy))  # Calcular el promedio de hwy en cada grupo\n\nSi lo deseas, puedes agregar espacios para alinear los comentarios a la misma altura:\n\nmpg %&gt;% \n  filter(cty &gt; 10) %&gt;%            # Solo filas donde cty es 10 o más\n  group_by(class) %&gt;%             # Dividirlo en grupos según class\n  summarize(avg_hwy = mean(hwy))  # Calcular el promedio de hwy en cada grupo\n\nSi el comentario es muy extenso, puedes dividirlo en múltiples líneas. RStudio puede hacer esto por ti si vas a “Code” &gt; “Reflow comment”\n\n# Bien\n# Las familias felices son todas iguales; cada familia infeliz es infeliz a su manera. \n# Todo estaba en desorden en la casa de los Oblonsky. La esposa había descubierto \n# que el marido mantenía una intriga con una chica francesa, que había sido \n# institutriz en su familia, y le había anunciado a su marido que no podía \n# seguir viviendo en la misma casa con él. Esta situación \n# ya duraba tres días, y no sólo el marido y la mujer mismos, sino \n# todos los miembros de su familia y casa, estaban dolorosamente conscientes de ello. \n\n# Mal \n# Las familias felices son todas iguales; cada familia infeliz es infeliz a su manera. Todo estaba en confusión en la casa de los Oblonsky. La esposa había descubierto que el marido mantenía una intriga con una muchacha francesa, que había sido institutriz en su familia, y le había anunciado a su marido que no podía seguir viviendo en la misma casa con él. Esta situación había durado ya tres días, y no sólo el marido y la mujer, sino todos los miembros de su familia y hogar, estaban dolorosamente conscientes de ello.\n\nSin embargo, si se trata de comentarios que son MUY largos, considera colocar el texto en R Markdown y hacer que sea prosa real.\nAdaptado de Andrew Heiss",
+    "crumbs": [
+      "Recursos",
+      "Información general",
+      "Sugerencia de estilo en R"
+    ]
+  }
+]

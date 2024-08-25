@@ -1,0 +1,1233 @@
+---
+format: 
+  revealjs: 
+    embed-resources: false
+    theme: [default, theme/theme.scss]
+    footer: "Fundamentos R para Ciencia de Datos en Salud - Sesión 2"
+    logo: img/logo.png
+    transition: convex
+    background-transition: zoom
+    incremental: false
+    slide-number: c/t
+    preview-links: true
+    height: 900
+    width: 1600
+    chalkboard: true
+    code-block-background: true
+    code-block-border-left: "#31BAE9"
+    highlight-style: ayu-dark
+    echo: true
+    multiplex: true
+    touch: true
+    auto-stretch: true
+    link-external-icon: true
+    link-external-newwindow: true
+    self-contained-math: true
+    
+from: markdown+emoji
+execute:
+  echo: true
+filters:
+  - reveal-auto-agenda
+auto-agenda:
+  bullets: numbered
+  heading: Agenda
+---
+
+\
+
+\
+
+<h1>Sesión 2</h1>
+
+<h2>[Curso: Fundamentos R para Ciencia de Datos en Salud]{.plo}</h2>
+
+<hr>
+
+<h3>[Percy Soto-Becerra, M.D., M.Sc(c)]{.negro}</h3>
+
+<h4>[InkaStats Academy | Latin Data Science Solutions S.A.C.]{.negro}</h4>
+
+`r fontawesome::fa("github", "black")` &nbsp; [https://github.com/psotob91](https://github.com/psotob91)
+
+![](img/logo_curso.png){.absolute top=340 left=980 width=35%}
+
+
+```{r}
+#| echo: false
+#| output: false
+
+# Removing all objects including loaded libraries
+rm(list = ls(all = TRUE))
+gc()
+
+# Installing and loading packages
+if (!require("pacman")) {
+  install.packages("pacman")
+}
+
+pacman::p_unload("all") # Unloading all package except base
+
+pacman::p_load(tidyverse, 
+               tibble, 
+               pander, 
+               gt, 
+               kableExtra) # Loading packages
+```
+
+
+# Funciones y paquetes en R
+
+## Antes de usar R, configure su ambiente de trabajo
+<hr>
+
+\
+
+- **Paso 1:** Cree una carpeta de trabajo `r fontawesome::fa("folder")`. 
+
+    + En donde quiera. Sea ordenado.  
+
+- **Paso 2:** Abra RStudio `r fontawesome::fa("r-project")`. 
+
+- **Paso 3:** Cree un proyecto y vincule el proyecto con la carpeta nueva. 
+
+    + A partir de este momento, la carpeta que contiene el archivo `.Rproj` es denominada `carpeta raíz`. 
+    
+    + Todo lo que ocurra en R partirá de la carpeta raíz en adelante.
+
+- **Paso 3:** Comience a trabajar. Puede usar `R scripts` o `R Markdown / Quarto`.
+
+    + Nosotros usaremos `Quarto`.
+
+## `r fontawesome::fa("laptop-code", "white")` Nuestro turno {background-color="#000000"}
+<hr>
+
+\
+
+-   Cree una carpeta de trabajo en Documentos, llámela `mi_primer_proyecto`.
+-   Cree un proyecto de Rstudio y ubíquelo en la carpeta nueva `mi_primer_proyecto`.
+-   Cree el primer script de R, anote lo siguiente: `"# Este es mi primer script de R"` y guárdelo como `mi_primer_script.r`.
+-   Cree el primer archivo .qmd de Quarto, anote lo siguiente: `"# Este es mi primer archivo quarto"` y guárdelo como `mi_primer_quarto.qmd`.
+- Renderice el primer archivo quarto creado: `mi_primer_quarto.qmd`.
+-   Verifique que los archivos han sido creados y se encuentran en la carpeta raíz `mi_primer_proyecto`.
+
+\
+\
+\
+
+```{r}
+#| echo: false
+library(countdown)
+countdown_timer <- function(
+    minutes = 1, 
+    play_sound = TRUE, 
+    font_size = "2em", 
+    ...
+) {
+  countdown(
+    minutes = minutes,
+    # Fanfare when it's over
+    play_sound = play_sound,
+    # Set timer theme to match solarized colors
+    color_border              = "#404041",
+    color_text                = "white",
+    color_background = "#000000",
+    color_running_background  = "#72994E",
+    color_running_text        = "white",
+    color_finished_background = "#EE6331",
+    color_finished_text       = "white",
+    font_size = font_size,
+    ...
+  )
+}
+
+```
+
+```{R}
+#| echo: false
+countdown_timer(10)
+```
+
+## R es una calculadora
+<hr>
+
+::: panel-tabset
+### Básicas 1
+
+::: columns
+::: {.column width="50%"}
+-   Suma:
+
+```{r}
+#| echo: true
+3 + 8
+```
+
+-   Resta:
+
+```{r}
+#| echo: true
+3 - 8
+```
+:::
+
+::: {.column width="50%"}
+-   Multiplicación
+
+```{r}
+#| echo: true
+3 * 8
+```
+
+-   División
+
+```{r}
+#| echo: true
+3 * 8
+```
+:::
+:::
+
+### Básicas 2
+
+::: columns
+::: {.column width="50%"}
+-   Potencia:
+
+```{r}
+#| echo: true
+3 ^ 3 # ^ se obtiene mediante: ALT + 94
+```
+
+-   Raíz cuadrada:
+
+```{r}
+#| echo: true
+sqrt(16)
+```
+:::
+
+::: {.column width="50%"}
+-   Otra raíz
+
+```{r}
+#| echo: true
+8 ^ (1 / 3) # Raíz cúbica
+```
+
+-   Operación combinada
+
+```{r}
+#| echo: true
+15 + (64 - 60) ^ (1/2)
+```
+:::
+:::
+
+### Avanzadas 1
+
+::: columns
+::: {.column width="50%"}
+-   Logaritmo natural:
+
+```{r}
+#| echo: true
+log(12) # log es logaritmo natural o neperiano
+```
+
+-   Logaritmo base 10:
+
+```{r}
+#| echo: true
+log10(100)
+```
+:::
+
+::: {.column width="50%"}
+-   Exponencial
+
+```{r}
+#| echo: true
+exp(2)
+```
+
+-   pi
+
+```{r}
+#| echo: true
+pi
+```
+:::
+:::
+
+### Comparaciones
+
+::: columns
+::: {.column width="50%"}
+-   Mayor que:
+
+```{r}
+#| echo: true
+5 > 4
+```
+
+-   Menor igual que:
+
+```{r}
+#| echo: true
+6 <= 3
+```
+:::
+
+::: {.column width="50%"}
+-   Igualdad:
+
+```{r}
+#| echo: true
+7 == 7
+```
+
+-   Diferente:
+
+```{r}
+#| echo: true
+8 != 5
+```
+:::
+:::
+
+### Atajos de teclado
+
+- Si tu teclado puede usar ASCII, puedes usar los siguientes atajos: 
+
+```{r}
+#| echo: false
+#| output: asis
+data.frame(
+  Atajo = c("<kbd>Alt</kbd> + <kbd>94</kbd>", 
+            "<kbd>Alt</kbd> + <kbd>126</kbd>", 
+            "<kbd>Alt</kbd> + <kbd>38</kbd>", 
+            "<kbd>Alt</kbd> + <kbd>124</kbd>"), 
+  Simbolo = c("^", "~", "&", "|"), 
+  Uso = c("... elevado a la potencia ...", "... en relación a ...", "... Y ...", "... O ..."), 
+  Comentario = c("Aritmético", 
+                 "Aritmético", 
+                 "Booleano", 
+                 "Booleano")
+  ) %>% 
+  pandoc.table(caption = "", 
+               justify = "llll", 
+               missing = "—", 
+               split.tables = Inf, 
+               col.names = c("Atajo", 
+                             "Símbolo", 
+                             "Significado", 
+                             "Operador"))
+```
+
+- Si tu teclado no tiene ASCII, sugiero configurar teclado para que coincida con el idioma: [Tutorial 1](https://www.youtube.com/watch?v=PO5pU7KknY0) y [Tutorial 2](https://www.youtube.com/watch?v=Lm0I9xuy7n0).
+
+:::
+
+## `r fontawesome::fa("laptop-code", "white")` Nuestro turno {background-color="#000000"}
+<hr>
+
+-   En el script previamente creado `mi_primer_script.r`, escriba las siguientes operaciones matemáticas: cinco más ocho;  tres por 23; veinte elevado al cubo; setenta y tres entre cinco. Ejecute el código y mire el resultado en la consola.
+
+- Copie las operaciones matemáticas escritas en `mi_primer_script.r` sobre `mi_primer_quarto.qmd`.
+
+- El código debe colocarse como `chunk` de código par que pueda ejecutarse. Ejecute el código de cada chunk.
+    
+- Compare las salidas del `mi_primer_script.r` y de `mi_primer_quarto.qmd`.
+
+- ¿El símbolo `#` se ejecuta igual en un script de R y en un quarto markdown? ¿Cuál es la diferencia?
+
+
+```{r}
+#| echo: false
+library(countdown)
+countdown_timer <- function(
+    minutes = 1, 
+    play_sound = TRUE, 
+    font_size = "2em", 
+    ...
+) {
+  countdown(
+    minutes = minutes,
+    # Fanfare when it's over
+    play_sound = play_sound,
+    # Set timer theme to match solarized colors
+    color_border              = "#404041",
+    color_text                = "white",
+    color_background = "#000000",
+    color_running_background  = "#72994E",
+    color_running_text        = "white",
+    color_finished_background = "#EE6331",
+    color_finished_text       = "white",
+    font_size = font_size,
+    ...
+  )
+}
+```
+
+```{r}
+#| echo: false
+countdown_timer(10)
+```
+
+## R es más que una simple calculadora
+<hr>
+
+- Pero..., R es `más que solo una calculadora`...
+
+- R es un `lenguaje` compuesto por "palabras".
+
+- Las palabras son `objetos` en R:
+
+    + Todo (casi) es un objeto.
+
+- Los `verbos` de R son las `funciones`:
+
+    + Ejecutan acciones sobre otros objetos.
+    
+    + Los objetos sobre los que recae la acción se incluyen entre paréntesis.
+  
+## Funciones en R
+<hr>
+
+:::: {.columns}
+
+::: {.column width='45%'}
+
+
+- Estructura general de una función:
+
+```{.r}
+ejecuta_accion(sobre_esto)
+ejecuta_accion(sobre_esto, hacia_eso, con_esto)
+```
+
+\
+
+- Dos funciones usuales son `install.packages` y `library`, las cuales instalan y cargan un paquete, respectivamente:
+
+```{.r}
+install.packages("package_name")
+library(package_name)
+```
+
+:::
+
+::: {.column width='55%'}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/funcion-R.png")
+```
+
+
+:::
+
+::::
+
+
+## Ayuda en R
+<hr>
+
+- La documentación acerca de una función puede ser consultada mediante `?`
+
+```{.r}
+?library
+```
+
+::: r-stack
+
+![](img/help1.png){.fragment}
+
+![](img/help2.png){.fragment}
+:::
+
+## Cargar conjunto de datos de R
+<hr>
+
+- Se pueden importar de diversas fuentes: MS Excel, .csv, .txt, Stata, SAS, SPSS, etc.
+
+- Algunos paquetes cuentan también con datos en formato de R: `*.RData` o `.rds`.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+- Importar datos de paquetes de R:
+
+```{r}
+#| echo: true
+library(medicaldata)
+data(covid_testing)
+```
+
+- Consultar por descripción de los datos:
+
+```{r}
+#| eval: false
+?covid_testing
+```
+
+:::
+
+::: {.column width='50%'}
+
+- Ver un resumen de los datos
+
+```{r}
+head(covid_testing)
+```
+
+:::
+
+::::
+
+
+## Operador esenciales de R base
+<hr>
+
+::: panel-tabset
+
+## Operador seleccionar `$`
+
+- En un conjunto de datos, permite seleccionar la columna de interés.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+- Por ejemplo, género de los participantes:
+
+```{r}
+covid_testing$gender
+```
+
+:::
+
+::: {.column width='50%'}
+
+- O la edad:
+
+```{r}
+covid_testing$age
+```
+
+:::
+
+::::
+
+
+## Operador asignar nombre `<-`
+
+- `<-` representa una flecha que se lee: `asignar a`.       
+
+- Permite guardar un objeto con un nombre dado
+
+    - El objeto se guarda en el <kbd>Environment</kbd>.
+
+```{r}
+genero <- covid_testing$gender
+```
+
+- Luego, lo puedes llamar utilizando el nombre con el que lo guardaste.
+
+```{r}
+genero
+```
+
+:::
+
+## El panel Environment
+
+>Es un panel que muestra los objetos (data frames, matrices, vectores, funciones, etc.) que se tienen en el entorno de trabajo.
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/environment.png")
+```
+
+## Imprimir y guardar resultado
+
+::: {.panel-tabset}
+
+### Solo imprimir
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/resultado-imprimir.png")
+```
+
+### Solo guardar
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/resultado-guardar.png")
+```
+
+### Guardar e imprimir
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/resultado-imp-guardar.png")
+```
+
+:::
+
+
+# Datos en R
+
+## Conjunto de datos en R
+<hr>
+
+- En investigación, las bases de datos se organizan en `tablas rectangulares` estructuradas.
+
+    + Cada fila es una `observación`
+    + Cada columna es una `variable`
+
+- Hay dos clases de objetos que comúnmente usamos para almacenar y manipular datos en R: 
+    + `data.frame`
+    + `data.tibble`
+
+![<FONT size='4'>*Adaptado de Smit Aj, Abrahams A & Schlegel RW. Intro R Workshop: Data Manipulation, Analysius, and Visualization.*</FONT>](img/table-datos.png)
+
+
+## data.tibble versus data.frame
+<hr>
+
+>[Los `data.tibble` también son `data.frame`, pero con algunos `poderes adicionales`.]{.r-fit-text}
+
+::: columns
+::: {.column width='50%'}
+
+<center><h3>[Así se ve un data tibble]{.verde-h3}</h3></center>
+
+```{r}
+#| echo: false
+library(medicaldata)
+data(covid_testing)
+covid_testing <- covid_testing %>% as_tibble() %>% select(1:5)
+```
+
+```{r}
+covid_testing
+```
+
+- Notar que los `data.tibble` son `data.frame aumentados`:
+
+```{r}
+class(covid_testing)
+```
+
+:::
+
+::: {.column width='50%'}
+
+<center><h3>[Y así un data frame]{.verde-h3}</h3></center>
+
+```{r}
+#| echo: false
+covid_testing <- as.data.frame(covid_testing)
+```
+
+```{r}
+covid_testing
+```
+
+- Los `data.frame` son solo eso, `data.frame`:
+
+```{r}
+class(covid_testing)
+```
+
+:::
+
+:::
+
+## ¿De qué están hechos los data.frame y data.tibble?
+<hr>
+
+- Sus unidades básicas son los `vectores`.
+
+>Los `vectores` son `colecciones de datos` de un `solo tipo`:
+
+
+```{r}
+#| echo: false
+tipo_vector <- data.frame(
+  tipo = c("Entero", "Doble", "Caracter", "Lógicos", "Factor"), 
+  tipo_ingles = c("Integer", "Double", "Character", "Logical", "Factor"), 
+  desc = c("Solo números enteros", "Números", "Texto o cadenas ('strings')", "Verdadero o Falso", "Categorías"), 
+  ejem = c("c(1, 2, 3, 4)", "c(1, 2.4, 3.14, 4)", "c('1', 'azul', 'divertido', 'monstruo')", "c(TRUE, FALSE, TRUE, FALSE)", "c('Muy intenso', 'Leve', 'Moderado', 'Leve')")
+)
+```
+
+```{r}
+#| echo: false
+#| output: asis
+tipo_vector %>% 
+  pandoc.table(caption = "", 
+               justify = "lcll", 
+               missing = "—", 
+               split.tables = Inf, 
+               col.names = c("Tipo de dato", 
+                             "(En inglés)", 
+                             "Descripción", 
+                             "Ejemplo"))
+```
+
+
+## Vectores como átomos de R
+<hr>
+
+
+::: columns
+
+::: {.column width='40%'}
+- Vectores se limitan a `un solo tipo de dato`.
+
+- Conforman `diversas estructuras`: matrices, arreglos, listas, etc.
+
+- Usaremos principalmente data frames y data tibbles.
+
+- Los data frames y tibbles:
+    
+    + Son columnas de vectores.
+    
+    + Cada vector puede ser de distinto tipo.
+    
+:::
+
+::: {.column width='60%'}
+
+- Los data frames y tibbles:
+
+    + Almacenan más de un tipo de dato: *integer*, *double*, *character*, *logic*, *factor*, *etc*.
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/estructuras-r.png")
+```
+
+:::
+:::
+
+## Vectores y data frame / data  tibble en R
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/vector-dataframe.png")
+```
+
+## ¿Cómo podemos ver qué hay en los conjuntos de datos?
+<hr>
+
+Podemos `hechar un vistazo` ([glimpse]{.verde-h3} en inglés) a los datos:
+
+
+```{r}
+#| echo: false
+library(medicaldata)
+data(covid_testing)
+```
+
+```{r}
+glimpse(covid_testing)
+```
+
+## ¿Cómo obtener más información?
+<hr>
+
+::: panel-tabset
+## Diccionario
+
+- Como los datos provienen de un paquete en R, se puede usar la función de ayuda [?]{.verde-h3}
+
+```{r}
+#| echo: true
+#| eval: false
+?covid_testing
+```
+
+![](img/help_covid_testing.png){fig-align="center"}
+
+## Dimensiones
+
+- Número de filas: 
+
+```{r}
+nrow(covid_testing)
+```
+
+- Número de columnas: 
+
+```{r}
+ncol(covid_testing)
+```
+
+- Número de filas y columnas: 
+
+```{r}
+dim(covid_testing)
+```
+
+:::
+
+
+## `r fontawesome::fa("mug-saucer", "white")` Hagamos una última pausa {background-color="#00817E"}
+<hr>
+
+::: r-fit-text
+
+<center>
+
+Tomemos un descanso de `5 minutos`...
+
+Estire las piernas `r fontawesome::fa("person-walking", "white")`... 
+
+Deje de ver las pantallas `r fontawesome::fa("laptop", "white")`...
+
+... cualquier `r fontawesome::fa("laptop", "white")`, las del celular `r fontawesome::fa("mobile", "white")` también.
+
+</center>
+
+:::
+
+```{r}
+#| echo: false
+library(countdown)
+countdown_timer <- function(
+    minutes = 1, 
+    play_sound = TRUE, 
+    font_size = "2em", 
+    ...
+) {
+  countdown(
+    minutes = minutes,
+    # Fanfare when it's over
+    play_sound = play_sound,
+    # Set timer theme to match solarized colors
+    color_border              = "#404041",
+    color_text                = "white",
+    color_background = "#000000",
+    color_running_background  = "#72994E",
+    color_running_text        = "white",
+    color_finished_background = "#EE6331",
+    color_finished_text       = "white",
+    font_size = font_size,
+    ...
+  )
+}
+```
+
+```{r}
+#| echo: false
+countdown_timer(5)
+```
+
+## Importar datos de fuentes externas a R
+<hr>
+
+::: {style="margin-top: 100px; font-size: 1.5em; color: black;"}
+| El paquete [{rio}]{.verde-h3} es la `navaja suiza`
+|  de la importación de datos en R.
+
+::: columns
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 50%
+knitr::include_graphics("img/rio-hex.png")
+```
+
+:::
+
+::: {.column width="50%"}
+
+|           Su función [import]{.verde-h3} 
+|           permite importar 
+|           prácticamente  
+|           cualquier formato.
+
+:::
+:::
+
+
+:::
+
+## Importando datos con [{rio}]{.verde-h3} {.scrollable}
+<hr>
+
+::: panel-tabset
+
+## Instalar [{rio}]{.verde-h3} {auto-animate="true"}
+
+- [{rio}]{.verde-h3} debe instalarse de una manera especial
+
+- Pasos: 
+
+    #. Primero se instala como siempre, usando [install.packages]{.verde-h3}
+    #. Adicionalmente, se sugiere correr [install_formats]{.verde-h3}. inmediatamente después de la primera instalación.
+    #. Se carga el paquete usando [library]{.verde-h3}.
+
+```r
+install.packages("rio")
+rio::install_formats()
+library(rio)
+```
+::: {.fragment}
+- Más detalles sobre el paquete y sus funciones pueden encontrarse en la página web del paquete: <https://thomasleeper.com/rio/index.html>
+:::
+
+## import
+
+- Se usa [import()]{.verde-h3} para importar nuevos datos y [<-]{.verde-h3} para asignar los datos a un nuevo [data.frame]{.verde-h3}
+
+```r
+nuevos_datos <- import(file = "datos_para_importar.fmt")
+```
+
+\
+
+>Podemos omitir los nombres de los argumentos cuando utilizamos funciones.
+
+\
+
+::: columns
+::: {.column width="50%"}
+
+```r
+nuevos_datos <- import(file = "datos_para_importar.fmt")
+```
+
+:::
+
+::: {.column width="50%"}
+
+```r
+nuevos_datos <- import("datos_para_importar.fmt")
+```
+
+:::
+:::
+
+## Plano
+
+- Para archivos de tipo \*.csv o \*.txt
+
+- No importa el tipo de separación de las columnas: comas, puntos y comas, otros caracteres.
+
+    + [import()]{.verde-h3} determinará rápidamente el tipo de separación y hará el trabajo.
+    
+```{r}
+#| echo: false
+library(rio)
+```
+
+```{r}
+datos_csv <- import("maca_meno_perclin.csv")
+head(datos_csv)
+```
+
+## MS Excel 
+
+- Útil para archivos con las extensiones \*.xls o \*.xlsx
+
+```{r}
+datos_xlsx <- import("maca_meno_perclin.xlsx")
+head(datos_xlsx)
+```
+
+## Stata (*.dta)
+
+- Permite importar datos de formato Stata. Sin embargo, en Stata, los valores de las variables suelen estar etiquetados, por lo que es importante también recuperar esta información.
+
+- Si importamos una tabla de datos en formato Stata, vemos que algunas variables categóricas como `married` o `married2` se importan como números. ¿Qué significa 1 o 0?
+
+```{r}
+datos_dta <- import("maca_meno_fase1.dta")
+head(datos_dta)
+```
+
+## SPSS (*.sav)
+
+- Lo mismo que ocurre con Stata, sucede con SPSS: los metadatos se pierden.
+
+```{r}
+datos_sav <- import("RECH0.sav")
+head(datos_sav)
+```
+
+## Otros
+
+- La función [import]{.verde-h3} soporta una gran variedad de formatos.
+
+- Si alguna vez necesita, puede consultar la web del paquete y encontrará tutoriales de cómo importar los formatos que requiera.
+
+<center>[https://thomasleeper.com/rio/index.html]{.big-text2}</center>
+
+:::
+
+## ¿Cómo importar metadatos de Stata o SPSS?
+<hr>
+
+::: {.panel-tabset}
+
+### ¿Metadatos?
+
+:::: {.columns}
+
+::: {.column width='30%'}
+
+- Son los datos de los datos.
+
+- En bases de datos para análisis estadístico, dos metadatos bastante usados son:
+
+    + Etiquetas de la variable
+    
+    + Etiquetas de los valores de la variable
+    
+:::
+
+::: {.column width='70%'}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/metadatos.png")
+```
+
+:::
+
+::::
+
+### Stata (*.dta)
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Importar datos Stata solo con import()]{.verde-h3}
+
+- Las etiquetas de valor para `time`, `treat`, `married` y `married2` se pierden.
+
+```{r}
+datos_dta <- import("maca_meno_fase1_v2.dta")
+
+head(datos_dta)
+```
+:::
+
+::: {.column width='50%'}
+
+[Usar import() más characterize()]{.verde-h3}
+
+- Las etiquetas de valor para `time`, `treat`, `married` y `married2` se recuperan
+
+```{r}
+datos_dta <- import("maca_meno_fase1_v2.dta") %>% 
+  characterize()
+head(datos_dta)
+```
+
+:::
+
+::::
+
+
+### SPSS (*.sav)
+
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+[Importar datos SPSS solo con import()]{.verde-h3}
+
+- Las etiquetas de valor para `time`, `treat`, `married` y `married2` se pierden.
+
+```{r}
+datos_sav <- import("maca_meno_fase1_v2.sav")
+
+head(datos_sav)
+```
+:::
+
+::: {.column width='50%'}
+
+[Usar import() más characterize()]{.verde-h3}
+
+- Las etiquetas de valor para `time`, `treat`, `married` y `married2` se recuperan
+
+```{r}
+datos_sav <- import("maca_meno_fase1_v2.sav") %>% 
+  characterize()
+head(datos_sav)
+```
+
+:::
+
+::::
+
+:::
+
+## Exportando datos con [{rio}]{.verde-h3} {.scrollable}
+<hr>
+
+::: {.panel-tabset}
+
+### export()
+
+- Se usa [export()]{.verde-h3} para exportar un objeto `data frame` o `data tibble` a otro formato:
+
+```r
+export(datos_para_importa, file = "datos_exportados.fmt")
+```
+
+- Los formatos pueden ser:
+
+```{r}
+#| echo: false
+#| output: asis
+tibble::tribble(
+                              ~Format, ~Typical.Extension,
+               "Comma-separated data",             ".csv",
+                "Pipe-separated data",             ".psv",
+                 "Tab-separated data",             ".tsv",
+  "CSVY (CSV + YAML metadata header)",            ".csvy",
+                                "SAS",        ".sas7bdat",
+                               "SPSS",             ".sav",
+                  "SPSS (compressed)",            ".zsav",
+                              "Stata",             ".dta",
+                          "SAS XPORT",             ".xpt",
+                      "SPSS Portable",             ".por",
+                              "Excel",             ".xls",
+                              "Excel",            ".xlsx",
+                           "R syntax",               ".R",
+                    "Saved R objects",     ".RData, .rda",
+               "Serialized R objects",             ".rds",
+                            "Epiinfo",             ".rec"
+  ) %>% 
+  pandoc.table(caption = "", 
+               justify = "ll", 
+               missing = "—", 
+               split.tables = Inf, 
+               col.names = c("Formato", 
+                             "Extensión típica"))
+
+```
+
+### Ejemplos: 
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+- A formato .rds (sugerido para guardar base de datos individuales en R):
+
+```r
+export(datos, "datos.rds")
+```
+
+- A formato .xlsx:
+
+```r
+export(datos, "datos.xlsx")
+```
+
+:::
+
+::: {.column width='50%'}
+
+- A formato .csv:
+
+```r
+export(datos, "datos.csv")
+```
+
+- A formato .dta:
+
+```r
+export(datos, "datos.dta")
+```
+
+- A formato .sav:
+
+```r
+export(datos, "datos.sav")
+```
+
+:::
+
+::::
+
+
+:::
+
+
+## `r fontawesome::fa("laptop-code", "white")` Nuestro turno {background-color="#000000"}
+<hr>
+
+\
+
+- Descargue la carpeta taller01.
+
+- Un compañero compartirá su pantalla.
+
+- Los demás lo apoyarán indicándole qué escribir.
+
+- El instructor de aula les apoyará en el proceso.
+
+\
+\
+\  
+
+## 
+
+::: r-fit-text
+<center>¡Gracias!</center>
+
+<center>¿Preguntas?</center>
+
+:::
+
+## 
+
+\
+
+\
+
+\
+
+::: r-fit-text
+
+<center>
+{{< fa brands twitter >}} @psotob91 
+
+{{< fa brands github >}} https://github.com/psotob91
+
+{{< fa inbox >}} psotob@inkastats-academy.com
+</center>
+
+:::

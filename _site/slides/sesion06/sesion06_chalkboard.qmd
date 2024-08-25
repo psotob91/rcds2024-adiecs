@@ -1,0 +1,1290 @@
+---
+format: 
+  revealjs: 
+    self-contained: false
+    theme: [default, theme/theme.scss]
+    footer: "Análisis Estadístico de Datos en Salud 2023 - Día 6"
+    logo: img/logo.png
+    transition: convex
+    background-transition: zoom
+    incremental: false
+    slide-number: c/t
+    preview-links: true
+    # width: 1920
+    # height: 1080
+    height: 900
+    width: 1600
+    # parallax-background-image: images/bg-ietsi-slide-first.png
+    # parallax-background-size: "1920px 1080px"
+    chalkboard: true
+    code-block-background: true
+    code-block-border-left: "#31BAE9"
+    highlight-style: ayu-dark
+    echo: true
+    multiplex: true
+    touch: true
+    auto-stretch: true
+    link-external-icon: true
+    link-external-newwindow: true
+    self-contained-math: true
+    
+from: markdown+emoji
+execute:
+  echo: true
+filters:
+  - reveal-auto-agenda
+auto-agenda:
+  bullets: numbered
+  heading: Agenda
+---
+\
+
+\
+
+<h1>Sesión 6</h1>
+
+<h2>[Curso: Análisis Estadístico de Datos en Salud]{.plo}</h2>
+
+<hr>
+
+<h3>[Percy Soto-Becerra, M.D., M.Sc(c)]{.negro}</h3>
+
+<h4>[DIS -- IETSI, EsSalud]{.negro}</h4>
+
+<h4>[2023-06-14]{.negro}</h4>
+
+`r fontawesome::fa("github", "black")` &nbsp; [https://github.com/psotob91](https://github.com/psotob91)
+
+![](img/logo.png){.absolute top=390 left=950 width="600"}
+
+```{r}
+#| echo: false
+#| output: false
+
+# Removing all objects including loaded libraries
+rm(list = ls(all = TRUE))
+gc()
+
+# Installing and loading packages
+if (!require("pacman")) {
+  install.packages("pacman")
+}
+
+pacman::p_unload("all") # Unloading all package except base
+
+pacman::p_load(tidyverse, 
+               tibble, 
+               labelled, 
+               pander, 
+               gt, 
+               kableExtra, 
+               DT, 
+               haven, 
+               skimr, 
+               Hmisc, 
+               janitor, 
+               rio, 
+               gtsummary, 
+               gt, 
+               flextable, 
+               kableExtra, 
+               readxl, 
+               rstatix, 
+               medicaldata) # Loading packages
+```
+
+# Introducción a la inferencia estadística
+
+## Inferencia Estadística
+<hr>
+
+-   Rama de la Estadística que trata sobre procedimientos que permiten obtener conclusiones de la población basándonos en los datos de una sola muestra.
+
+-   Hay dos enfoques predominantes: <FONT size='6'>
+
+    -   Frecuentista</FONT><FONT size='6'>
+    -   Bayesianismo</FONT>
+
+-   En este curso, como en la mayoría de cursos básicos, seguiremos el enfoque frecuentista.
+
+## Inferencia Estadística bajo la lupa frecuentista
+<hr>
+
+-   Los procedimientos de prueba de hipóteis y de estimación de intervalos de confianza trabajan bajo el enfoque frecuentista.
+
+-   Es la estadística de pre-grado (y post-grado).
+
+-   Trabaja bajo la idea que puedes repetir infnitas o muchísimas veces el mismo estudio, pero sobre una nueva muestra aleatoria obtenida.
+
+## Estimación
+<hr>
+
+![](img/estimacion.png)
+
+## Estimación (cont.)
+<hr>
+
+![](img/estimacion2.png)
+
+## Prueba de hipótesis
+<hr>
+
+![](img/ph.png)
+
+## Lógica frecuentista
+<hr>
+
+![](img/logica-frecuentista.png)
+
+## La distribución muestral es lo importante!
+<hr>
+
+-   No importa tanto la distribución de la muestra o de la población.
+
+-   Si no que la distribución de todas las muestras posibles siga cierto comportamiento!
+
+## La distribución muestral es lo importante
+<hr>
+
+![](img/dist-muestral.png)
+
+::: aside
+Entrar: <https://onlinestatbook.com/stat_sim/sampling_dist/>
+:::
+
+## Prueba de Hipótesis (PH)
+<hr>
+
+-   *"Método para evaluar una afirmación o hipótesis sobre un parámetro poblacional usando datos de una muestra."*
+
+-   Usar métodos estadísticos para determinar la probabilidad de que nuestras hipótesis sean consistentes con los datos. <FONT size='6'>
+
+    -   Bajo ciertas suposiciones y puntos de corte, podemos tomar decisiones acerca de en qué creemos o no.</FONT><FONT size='6'>
+    -   Como toda decisión, esta se mantiene hasta encontrar nueva evidencia en contra. Son decisiones 'temporales'.</FONT>
+
+## PH (cont.)
+<hr>
+
+-   Depende del tipo de variables incluidas, de su distribución, del pareamiento, etc.
+
+-   Los métodos de prueba de hipótesis que veremos hoy se basan en la Hipótesis Nula, por ende, su nombre completo (a menudo obviado) es: **Prueba de Significancia de Hipótesis Nula**.
+
+## PH (cont.)
+<hr>
+
+::: callout-warning
+## Alerta terminológica!
+
+-   Cuando nos referimos a 'probar' una hipótesis nos estamos refiriendo a la traducción del inglés 'test', que significa 'evaluar', 'someter a prueba'.
+
+-   Esta es una evaluación empírica: basada en los dato que tenemos disponibles.
+
+-   Los datos provienen a menudo de muestras, ergo, parte de lo que observamos podría deberse a que nos tocó 'por azar' una muestra extrema o 'rara'.
+
+-   A menudo, confundimos 'probar' con 'demostrar'.
+
+-   En estadística no demostramos nunca.
+
+-   Solo comprobamos, es decir, vemos datos y confirmamos nuestros hallazgos si son parecidos o los falseamos si son diferentes.</FONT>
+:::
+
+## PH (cont.)
+<hr>
+
+::: callout-warning
+## Otra alerta terminológica!
+
+-   Nos interesan hipótesis estadísticas acerca de la población, no sobre la muestra.
+
+-   Usamos un estadístico calculado de los datos de la muestra para probar una hipótesis acerca de un parámetro de la población.
+
+-   Nunca probamos hipótesis sobre individuos de la población (p. ej., el peso de un individuo), si no sobre parámetros de la población (p. ej., el promedio de peso de la población).
+
+-   Para una misma variable pueden interesarnos parámetros diferentes (p. ej., mediana de peso versus media de peso versus desviación estándar de peso).
+:::
+
+## ¿Qué solemos probar o estimar? {.scrollable}
+<hr>
+
+-   **Acerca de un parámetro:** PH contra valor hipotético o estimar el parámetro de una población.
+
+::: callout-note
+**Ej. 1.** Tengo dudas acerca de si una prueba de laboratorio de anticuerpos mide bien o no: *¿El promedio de anticuerpos en mis pocillos control es igual o diferente que el especificado en el inserto?*
+:::
+
+::: callout-note
+**Ej. 2.** La adherencia a una guía de práctica clínica se evalúa de acuerdo a un punto de corte establecido: *¿El porcentaje de cumplimiento de la GPC es mayor a 80%?*
+:::
+
+## ¿Qué solemos probar o estimar? (cont.) {.scrollable}
+<hr>
+
+-   **Acerca de dos o más parámetros:**
+
+::: callout-note
+**Ej. 1.** Quiero saber si un nuevo medicamento reduce la presión arterial: *¿El promedio de presión arterial de la población que toma el medicamento es menor o mayor igual que el promedio de presión arterial de la población que no toma el medicamento?*
+:::
+
+::: callout-note
+**Ej. 2.** Tengo dudas acerca de si un medicamento aumenta la incidencia de cura de COVID-19: *¿La incidencia acumulada de cura a 1 mes de la población que toma el medicamento es mayor o menor igual que la incidencia acumulada de cura a 1 mes de la población que no toma el medicamento?*
+:::
+
+## La inferencia estadística puede tener 2 usos: {.scrollable}
+
+1.  `Describir diferencias entre dos poblaciones usando datos de muestra.`
+
+    -   Ejemplo: Comparar prevalencia de anemia por regiones. Las regiones no `causan` anemia, pero saber estas diferencias regionales nos permite conocer las inequidades. Estamos comparando dos poblaciones diferentes.
+    
+    - A estas diferencias encontradas en una población se las llama, a veces, `asociación bivariada` (o `cruda`).
+
+2.  `Hacer inferencias causales.`
+
+    -   Ejemplo: Estimar la eficacia o efectividad de las vacunas. Queremos inferir qué le hubiera pasado a una población si tomara un tratamiento contrafactual. Estamos comparando la misma población contra sigo misma en un universo contrafactual.
+
+## Procedimiento de prueba de hipótesis
+<hr>
+
+1.  Formular las `hipótesis nula` y `alterna`.
+
+2.  Establecer los `criterios de decisión` para evaluar la veracidad de la hipótesis nula.
+
+3.  Asumir que la `H0 es verdadera` y `estimar` la `probabilidad` de observar un `valor igual o más extremo` que el valor observado si pudieramos `repetir el estudio infinitas veces` (o al menso un número muy grande!). Esto es el `valor p`.
+
+4.  Tomar una decisión respecto a si creemos o no en la hipótesis nula.
+
+## ¿Qué es el valor p?
+<hr>
+
+-   Probabilidad de...
+
+-   Observar un determinado valor o más extremo.
+
+-   En una muestra aleatoria de tamaño "n".
+
+-   Dado que asumimos que la hipótesis nula es verdadera.
+
+## Criterios de decisión {.scrollable}
+<hr>
+
+-   Basado en el nivel de significancia estadístico (usualmente 5%, pero puede cambiar y a menudo cambia).
+
+> Valor p mide la probabilidad de observar, en una muestra, un determinado valor o más extremo que este valor si la muestra proviniera de una población donde la hipótesis nula es verdadero.
+
+::: callout-note
+## Ejemplo 1
+
+-   Si p = 30%, quiere decir que en 100 muestras al azar de una población donde la H0 es verdadera, en 30 encontraríamos un estadístico igual o más extremo que el observado en la muestra.
+
+-   Es decir, es muy común encontrar estos valores en muestras tomadas de una población donde la H0 es verdadera.
+
+-   Por lo tanto decido suponer que no tengo evidencia suficiente para concluir que la H0 sea falsa.
+
+-   Esta decisión, si es errónea, puede tener consecuencias.
+:::
+
+## Criterios de decisión (cont.) {.scrollable}
+<hr>
+
+> Valor p mide la probabilidad de observar, en una muestra, un determinado valor o más extremo que este valor si la muestra proviniera de una población donde la hipótesis nula es verdadero.
+
+::: callout-note
+## Ejemplo 2
+
+-   Si p = 1%, quiere decir que en 100 muestras al azar de una población donde la H0 es verdadera, solo en 1 encontraríamos un estadístico igual o más extremo al observado.
+
+-   Es decir, es muy raro encontrar estos valores en muestras tomadas de una población de una población donde la H0 es verdadera. Es posible, pero improbable.
+
+-   Por lo tanto, pensamos mal, y decidimos suponer que es más probable que la H0 sea falsa a que nos haya tocado una muestra extrema siendo la H0 verdadera.
+
+-   Decido rechazar la H0.
+
+-   Esta decisión, si es errónea, puede tener consecuencias.
+:::
+
+## Criterios de decisión (cont.)
+<hr>
+
+![](img/criterio.png)
+
+## Errores de decisión
+<hr>
+
+![](img/errores.png)
+
+## Definición de intervalo de confianza al P%
+<hr>
+
+-   Rango de valores que contendrían el verdadero valor del parámetro P% de las veces, si pudiera repetir el estudio muchísimas veces con muestras aleatorias diferentes del mismo tamaño.
+
+-   El IC95% significa que si pudiera tuviera 100 estudios similares, con mismo n pero muestras aleatorias diferentes, aprox. 95 estudios tendrían IC que capturarían el verdadero valor.
+
+## Definición de intervalo de confianza al P% (cont.)
+<hr>
+
+-   No significa que el IC95% que yo observo tiene un 95% de obtener el valor del parámetro.
+
+-   De hecho, la probabilidad de que el IC95% que yo observo en mi estudio contenga el valor del parámetro no se puede estimar en estadística frecuentista, pero sabemos que es 1 (lo contiene) o 0 (no lo contiene). No admite valores intermedios.
+
+## Procedimientos para Intervalos de Confianza
+<hr>
+
+-   Use el valor puntual como la mejor estimación del parámetro disponible basada en los datos.
+
+-   Estime un error estándar para la distribución muestral del estadístico de interés.
+
+-   Asuma una distribución muestral conocida para el estaditico de interés.
+
+-   Con estos dos insumos, calcule los límites del intervalo de confianza.
+
+## 12 Errores de concepto acerca del valor p
+<hr>
+
+![](img/doce-errores.png)
+
+## Si la hipótesis nula es cierta, siempre será posible que algunos estudios den valores muy extremos...
+<hr>
+
+![](img/pextremo.png)
+
+## Intervalos de confianza y valor p
+<hr>
+
+-   IC 95% también pueden ser usados para probar hipótesis
+
+-   A menudo complementan información.
+
+-   En algunas revistas, el valor p ha sido baneado.
+
+-   Incluso en revistas donde el valor p no ha sido baneado, el IC95% es indispensable y el valor p un complemento.
+
+-   Adecuadamente interpretado, el IC da más información que el valor p acerca de la imprecisión (incertidumbre asociada) de la estimación.
+
+-   Su lectura es tan útil, que varios instrumentos de valoración de la certeza de la evidencia lo usan (p. ej., GRADE).
+
+## Intervalos de confianza pueden brindar un poco más de información
+<hr>
+
+-   Si se interpretan apropiadamente, pueden "ilustrar" mejor la incertidumbre asociada a la estimación.
+
+![](img/info-intervals.png)
+
+## Ejemplos de importancia del IC para valorar imprecisión (incertidumbre) de las estimaciones
+<hr>
+
+![](img/ejemplo-ic1.png)
+
+## Ejemplos de importancia del IC para valorar imprecisión (incertidumbre) de las estimaciones (cont.)
+<hr>
+
+![](img/ejemplo-ic2.png)
+
+## Otro ejemplo de importancia del IC para valorar imprecisión (incertidumbre) de las estimaciones
+<hr>
+
+![](img/ejemplo-ic3.png)
+
+## Significancia estadística vs Significancia clínica
+<hr>
+
+-   La significancia estadística es solo una probabilidad (una medida de incertidumbre asociada a la estimación); siempre existe la posibilidad de error (tipo I y tipo II).
+
+-   Los intervalos de confianza pueden ayudar a entender mejor esta incertidumbre, si y solo si también se interpretan bien.
+
+-   La incertidumbre que miden no es la que usualmente pensamos (hay muchos errores de conceptos!!).
+
+## Significancia estadística vs Significancia clínica (cont.)
+<hr>
+
+-   Grandes tamaños de muestra permiten detectar diferencias pequeñas.
+
+-   Tamaños de muestra muy grandes resultarán en diferencias estadísticamente significativas; incluso si la diferencia clínica no es significativa.
+
+## Significancia estadística vs Significancia clínica (cont.)
+<hr>
+
+![](img/significancia.png)
+
+## Las pruebas de hipótesis tradicionales a menudo no se usan en la práctica habitual
+<hr>
+
+-   Estas pruebas, son los ladrillos sobre los que se construyen otros métodos que son el estándar actual de análisis estadístico en investigación en salud: Modelos estadísticos
+
+-   Es muy raro encontrar un ejemplo actual donde sea válidas usarlas. Su gran problema es que no permiten controlar el efecto de otras variables.
+
+## Las pruebas de hipótesis tradicionales a menudo no se usan en la práctica habitual (cont.)
+<hr>
+
+-   Usarlas para concluir potenciales efectos puede ser peligroso.
+
+-   Incluso los ensayos clínicos aleatorizados no hacen uso de estas directamente, sino incorporadas como parte de modelos de regresión.
+
+-   Usar pruebas estadísticas cuando no son válidas para responder las preguntas científicas es peligroso.
+
+## Pruebas de hipótesis versus modelos estadísticos (ejemplo en estudio observacional)
+<hr>
+
+![](img/prueba-modelo.png)
+
+```{r}
+#| echo: false
+library(haven)
+datos <- read_dta("maca_meno_fase1.dta") %>% 
+  as_factor() %>% 
+  filter(time == "3 months")
+```
+
+## Pruebas de Hipótesis {.scrollable}
+<hr>
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/mermaid-param1.png")
+```
+
+## Pruebas de Hipótesis Paramétricas {.scrollable}
+<hr>
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/mermaid-param.png")
+```
+
+## Pruebas de Hipótesis No Paramétricas {.scrollable}
+<hr>
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/ph-nopara.png")
+```
+
+## ¿De qué depende la PH que debo elegir? {.scrollable}
+<hr>
+
+- `Datos` proporcionan `evidencia empírica` de alinearse con los `supuestos estadísticas` de la prueba elegida.
+
+- 'Alinearse' quiere decir, `aproximarse 'razonablemente' bien`: 
+
+>*“Todos los modelos son erróneos, pero algunos son útiles”. (George Box)*
+
+- Tener en cuenta, que las `pruebas de hipótesis nula de significancia` tradicionales son `robustas` a `incumplimientos` de algunos `supuestos`.
+
+## ¿De qué depende la PH que debo elegir? (cont.) {.scrollable}
+<hr>
+
+- Por ejemplo, las `pruebas` mencionadas son `robustas` a `incumplimiento leve/moderado de normalidad` si y solo si el `n` es `suficientemente grande`.
+
+- Sin embargo, ante el `incumplimiento`, hay que hacer un `análisis concienzudo` para tomar una decisión:
+
+><FONT size='6'>**Opción 1:** Usar la prueba a pesar de leves/moderadas de algún supuesto porque la prueba es robusta ante este incumplimiento. </FONT>
+
+><FONT size='6'>**Opción 2:** Usar otra prueba o la misma prueba 'corregida' que sí permita analizar apropiadamente los datos que tengo.</FONT>
+
+## Supuestos comunes a todas las PH
+<hr>
+
+- 1. Aleatorización
+
+- 2. Observaciones independientes
+
+## Aleatorización
+<hr>
+
+![](img/aleatorizacion.png)
+
+## Aleatorización {.scrollable}
+<hr>
+
+- **`Muestra es aleatoria`** para `generalizar` a una `población` de interés `bien definida`. 
+
+    + <FONT size='6'>Gold estándar: `Muestreo aleatorio simple` para alcanzar `"Representatividad Estadística"`.</FONT>
+      
+    + <FONT size='6'>Alternativas más limitadas: Muestreo consecutivo, otras formas de muestreo no probabilístico y asumir `"representatividad teórica"`.</FONT>
+
+<center>`ó`</center>
+
+- **`Muestra proviene de intervenciones asignadas por azar`** para hacer `inferencia causal` sobre una `intervención/exposición` de interés `bien definida`. 
+
+    + <FONT size='6'>Gold estándar: `Asignación aleatoria`.</FONT>
+    
+    + <FONT size='6'>Alternativas más limitadas: Control de confusión y asumir `"emulación de asignación aleatoria"`.</FONT>
+
+## 
+
+:::{.callout-note}
+
+## Los supuestos no verificables de la investigación clínica
+
+- La mayoría de la `investigación clínica` recae en `supuestos no verificables`. 
+
+- Cuando no hay `muestreo aleatorio` o `asignación aleatoria`, existe `riesgo alto` de que el supuesto no se cumpla.
+
+- Sin embargo, en ciertos escenarios, `puede` ser `razonable pensar` que se `alcanzó el supuesto` (`representatividad teórica` o `emulación de asignación aleatoria`).
+
+- En estos escenarios, estos `supuestos` son `no testeables completamente`, solo `parcialmente`:
+
+    + <FONT size='5'>Solo podemos `refultarlos` con los `datos observados`, pero nunca probar su cumplimiento.</FONT>
+    + <FONT size='5'>El investigador `asume una postura` y se `compremete`, temporalmente, con los `supuestos` hasta disponer de `mejor evidencia` y `actualizar` sus `posturas`.</FONT>
+:::
+
+## 
+
+:::{.callout-note}
+
+## La ausencia del muestreo probabilístico no siempre es mala
+
+- `Siempre que sea posible`, debería optarse por las `formas más robustas` de hacer `inferencia`. 
+
+    + <FONT size='5'>`Solo cuando sea imposible` (ej., muestreo aleatorio de pacientes, asignar una exposición dañina, etc) nos queda usar las formas `menos robustas`. </FONT>
+    + <FONT size='5'>Dado que, `bajo ciertas condiciones`, se pueden obtener `inferencias válidas`, es `posible responder` preguntas con estos enfoques menos robustos aunque el `proceso` es `más largo` y `controvertido` (ej. efecto dañino del cigarro, del petroleo con plomo, cambio climático). </FONT>
+
+- Algunas formas de `muestreo no probabilístico`, bajo ciertas condiciones, pueden razonablemente alcanzar `representatividad teórica`. La discusión transparente y sincera es importante.
+
+    + <FONT size='5'>Por ejemplo, guías de riesgo de sesgo de estudios de prueba diagnóstica (como [QUADAS-2](https://pubmed.ncbi.nlm.nih.gov/22007046/)) considera al `muestreo consecutivo` en el mismo nivel que el muestreo probabilístico en contextos clínicos cuando no es factible realizar muestreo aleatorio para estudios de pruebas diagnósticas.</FONT>
+    
+:::
+
+##
+
+:::{.callout-warning}
+
+## Advertencia: Abuso de la representatividad teórica!
+
+- En `investigación clínica` a menudo se abusa de la `representividad teórica`.  
+
+- Esto debería evitarse y reservarse solo a casos en los que resulta imposible hacer un muestreo aleatorio (y obtener `representatividad estadística`) pero se tenga algún procedimiento `no probabilístico` que pueda, bajo ciertas asunciones razonables, emular la representatividad estadística. 
+
+- Un ejemplo clásico es usar un `muestreo consecutivo` (bien realizado) en ensayos clínicos, estudios de prueba diagnóstica o pronóstica. Este procedimiento es aceptado en ámbitos clínicos dado que no existe un marco muestral observable o se desea generalizar a nuevos pacientes (idea de superpobación). 
+
+:::
+
+## ¿Qué pasa si supuesto de Aleatoridad no se cumple?
+<hr>
+
+- Incluso `sin una muestra probibilística` o una `asignación aleatoria`, la `aleatoridad` **`debe`** cumplirse.
+
+- Por eso es que asumimos que se cumple cuando es `razonable hacerlo`. Si `no es razonable`, mejor **`no hacer el estudio`**.
+
+    - <FONT size='6'>Si este supuesto en realidad no es cierto, su incumplimiento `invalida` las `inferencias` realizadas: No inferencias causales válidas, tampoco resultados generalizables a poblaciones de interés.</FONT>
+    
+## Observaciones son independientes
+<hr>
+
+- Esto es equivalente a pensar que `todos los sujetos son muestreados de la misma población` y que han sido `seleccionados` de manera `independiente` de los otros.
+
+    - <FONT size='6'>La selección de un individuo no afecta la selección de otro.</FONT>
+
+- `¿Cuándo falla la independencia de observaciones?` 
+    - <FONT size='6'>Cuando hay `pareamiento` o `correlación` debido al `tiempo`, `distribución espacial`, etc.</FONT>
+    
+## 
+
+:::{.callout-note}
+
+## ¿Se puede evaluar este supuesto?
+
+- Sí se puede cuando se conoce la(s) variable(s) que generan la `dependencia`.
+
+- A menudo `no se evalúa`, si no que uno lo antepone por el `diseño`.
+
+- Los `métodos convencionales` se pueden `extender` para `lidiar` con `observaciones dependientes`.
+    
+:::
+
+## Supuestos específicos de algunas PH
+
+- 3. Normalidad 
+
+- 4. Homogenenidad de varianzas (homocedasticidad)
+
+## Normalidad
+
+- Común en el caso de `pruebas paramétricas`: prueba t de Student, prueba Z y ANOVA.
+
+- En realidad, requerimos que la `distribución muestral` del `estadístico` (p. ej., medias, proporciones, diferencia de medias, etc.) sea `normal`, `no` la `distribución de la variable`.
+
+
+## Normalidad (cont.) 
+- Se alcanza si la `distribución de la variable respuesta` es `normal`.
+
+- Si la distribución de la `variable respuesta no es normal`, pero la `muestra` es `suficientemente grande` ($n \to \infty$), entonces la `distribución muestral de medias` es `normal`: `Teorema del Límite Central` garantiza `normalidad asintótica`.
+
+## La idea en un Tweet! 
+<hr>
+
+```{r}
+#| echo: false
+#| fig-align: center
+knitr::include_graphics("img/normality.png")
+```
+
+## Normalidad asintótica de la distribución muestral {.scrollable}
+<hr>
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/normalidad-asintotica.png")
+```
+
+
+## 
+
+:::{.callout-warning}
+
+## Advertencia: ¿Cuándo una muestra es suficientemente grande?
+
+- Si la muestra es `pequeña`, es `muy importante` que la `población` tenga un `distribución normal` para que el supuesto de cumpla.
+
+- Si la muestra es `suficientemente grande`, las inferencias serán `robustas` a `desviaciones ligeras/moderadas` del supuesto de normalidad.
+
+- Problema: ¿Cuándo la muestra es `suficientemente` grande?
+
+- Incluso con muestras consideradas `muy grandes` si distribución es `sesgada`, puede no alcanzarse la distribución normal.
+
+- Ante la duda, mejor usar `métodos robustos` de manera complementaria (`análisis de sensibilidad`) o como `análisis principal`. 
+
+:::
+
+## ¿Cómo evaluar normalidad?
+<hr>
+
+- La normalidad es sobre la población, no sobre la muestra.
+
+- Sin embago, usamos a lo observado en la muestra para concluir sobre la población. 
+
+- Métodos gráficos son preferibles: gráfico de qqplot.
+
+- Métodos de prueba de hipótesis pueden complementar en tamaños de muestras moderados. Nunca usar solos!
+
+## ¿Cómo evaluar normalidad? (cont.) {.scrollable}
+<hr>
+
+::: panel-tabset 
+
+### Método gráfico
+
+- Preferible.
+
+- Histogramas tienen problemas con pocos datos
+
+- Usar gráfico de quantil quantil normal (QQ plot normal), es muy útil con pocos datos.
+
+- Bandas de confianza son referenciales. Ayudan pero tener cuidado con muestras muy muy grandes.
+
+- La función `ggqqplot` del paquete `{ggpubr}` es muy útil para esto:
+
+**¿Qué distribución tiene?**
+
+```{r}
+#| echo: false
+set.seed(123)
+datos2 <- data.frame(
+  x = rnorm(53, 100, 5), 
+  grupo = c(rep("Control", 26), rep("Tratado", 27))
+)
+```
+
+```{r}
+library(ggpubr)
+datos2 %>% 
+    ggqqplot(x = "x")
+```
+
+> **Rpta.:** La variable x en la muestra tiene una distribución aproximadamente normal. Luego, concluyo que en la población la distribución de la variable x también debería ser normal y, por tanto, la distribución muestral de medias también debería ser normal. 
+
+**¿Qué distribución tiene esta otra variable?**
+
+```{r}
+
+datos %>% 
+  ggqqplot(x = "weight")
+```
+
+> **Rpta.:** La variable x en la muestra tiene una distribución aproximadamente normal, con cierta desviación ligera hacia la derecha. Esto sugiere que la distribución de la población tampoco es normal. Sin embargo, si el n es grande, es razonable asumir que la distribución muestral del estadístico es normal. 
+
+**¿Y esta otra, qué distribución tiene?**
+
+```{r}
+datos %>% 
+  ggqqplot(x = "e2")
+```
+
+
+> **Rpta.:** LA variable x en la muestra tiene una distribución que dista bastante de la normal, con una marcada desviación hacia la derecha. Esto sugiere que la distribución de la población tampoco es normal. Sin embargo, en este caso también es incierto saber qué tan grande debe ser el n para que se cumpla el TLC. Sería mejor usar alguna alternativa robusta.
+
+### Prueba de hipótesis
+
+**x**: 
+
+```{r}
+datos2 %>% 
+  shapiro_test(x)
+```
+> **H0:** La distribucion de la variable en la poblacion es normal.
+> **Ha:** La distribucion de la variable en la poblacion no es normal.
+> **Conclusión:** Con un nivel de significancia del 5%, no se puede rechazar la H0. La distribución de la variable en la población podría ser normal.
+
+**weight**: 
+
+```{r}
+datos %>% 
+  shapiro_test(weight)
+```
+
+> **H0:** La distribucion de la variable en la poblacion es normal.
+> **Ha:** La distribucion de la variable en la poblacion no es normal.
+> **Conclusión:** Con un nivel de significancia del 5%, se rechaza la H0. La distribución de la variable en la población no es normal.
+> **Comentario:** Según la evidencia gráfica, esta desviación es ligera, por lo que podríamos confiar en la normalidad asintótica.
+
+**e2**: 
+
+```{r}
+datos %>% 
+  shapiro_test(e2)
+```
+
+> **H0:** La distribucion de la variable en la poblacion es normal.
+> **Ha:** La distribucion de la variable en la poblacion no es normal.
+> **Conclusión:** Con un nivel de significancia del 5%, se rechaza la H0. La distribución de la variable en la población no es normal.
+
+:::
+
+## Homogeneidad de varianzas
+<hr>
+
+- Consiste en que la `varianza` de la variable en `cada grupo` a comparar tiene el `mismo valor`. 
+
+![](img/homogeneidad.png)
+
+
+## Homogeneidad de varianzas (cont.)
+<hr>
+
+- Muchas pruebas (t de Student, ANOVA, etc.) requieren el `cumplimiento` de este `supuesto` para poder dar inferencias válidas de `comparación de grupos`.
+
+- Su `incumplimiento` `invalida` la `inferencia`: No se puede confiar en los `valores p` e `IC95%`.
+
+- Lo bueno es que, a menudo, estas pruebas presentan `modificaciones` o correcciones que permiten obtener `inferencias robustas`.
+
+
+## ¿Cómo evaluar homogeneidad de varianzas? {.scrollable}
+<hr>
+
+::: panel-tabset 
+
+### Método gráfico
+
+- Actualmente son considerados `preferibles`. 
+
+- Se pueden comparar los gráficos cuantil - cuantil normal.
+
+- Si hay homocedasticidad, las líneas diagonales deberían ser paralelas o aproximadamente paralelas.
+
+**¿Hay homogeneidad de varianzas?**
+
+```{r}
+datos2 %>% 
+  ggqqplot("x", color = "grupo")
+```
+
+> **Rpta:** Sí hay evidencia gráfica de homocedasticidad en la muestra (líneas paralelas), luego, debería concluyo que también habría en las poblaciones.
+
+**¿Y en este otro, hay homogeneidad de varianzas?**
+
+```{r}
+#| echo: false
+set.seed(123)
+datos3 <- data.frame(
+  y = c(rnorm(26, 100, 5),rnorm(27, 100, 10)), 
+  grupo = c(rep("Control", 26), rep("Tratado", 27))
+)
+```
+
+```{r}
+datos3 %>% 
+  ggqqplot("y", color = "grupo")
+```
+
+> **Rpta:** No,  hay evidencia gráfica de heterocedasticidad en la muestra (líneas secantes), luego, debería concluyo que también habría heterogeneidad de varianzas en las poblaciones.
+
+### Prueba de hipótesis
+
+- Existen varias pruebas de hipótesis: Leven, Breslow, etc.
+
+- El `principal problema` es que `no funcionan` bien con `n` muy `grandes` (siempre rechazan la H0) o muy `pequeños` (siempre aceptan la H0).
+
+- Además requieren `supuestos` como la normalidad, entre otros.
+
+- `Pueden` usarse de manera `complementaria` a los gráficos, pero `nunca solos`.
+
+- No las abordaremos en este curso. Preferiremos el método gráfico.
+
+:::
+
+
+## Supuestos 'implícitos' de todas las PH
+<hr>
+
+- 5. Datos medidos sin error 
+
+    + Si error es `no diferencial`, entonces `sesgo de medición` es predecible, su dirección diluye el tamaño de la diferencia estimada.
+    + Si error es `diferencial`, entonces causan un `sesgo de medición` `no predecible`.
+
+- 6. No existencia de otras fuentes de sesgo (error sistemático)
+
+    + Si muestreo no es aleatorio, entonces puede haber `sesgo de selección`.
+    + Si no hay asignación aleatoria, entonces puede haber  `sesgo de confusión`.
+
+
+## Pruebas de Hipótesis con R 
+<hr>
+
+- Existen `distintos paquetes` en R base para realizar `PH` o `estimación`.
+
+- Hay mucha `inconsistencia` entre estos.
+
+- El paquete `{rstatix}` compila todos estos en una sola sintaxis `R tidy`. 
+
+```{r}
+# install.packages("rstatix")
+library(rstatix)
+```
+
+- Enlace web: [https://rpkgs.datanovia.com/rstatix/](https://rpkgs.datanovia.com/rstatix/)
+
+
+# Estimación y Pruebas de Hipótesis para Variables Respuesta Numéricas: Uno o dos grupos
+
+## Para un grupo {.scrollable}
+<hr>
+
+::: panel-tabset
+
+### Param. 1
+
+- Se usa función `t_test()` de paquete `{rstatix}`.
+
+- Permite obtener el `valor p` para una hipótesis dada y el `intervalo de confianza` para la `media`.
+
+```{r}
+datos %>% 
+  t_test(weight ~ 1, mu = 100, detailed = TRUE) 
+```
+
+- El argumento `mu = número` es un valor de referencia contra el que deseamos compararnos.
+
+- El argumento `detailed = TRUE` permite obtener también los `intervalos de confianza`. 
+
+- La función `gt()` es para mejorar visualización del resultado. 
+
+```{r}
+library(gt)
+datos %>% 
+  t_test(weight ~ 1, mu = 100, detailed = TRUE) %>% 
+  gt()
+```
+
+- Agregaremos gt() a partir de ahora.
+
+- **Interpretación:**
+
+> La media estimada de glucosa fue de 95.48 mg/dL (IC95% 71.6 mg/dL a 119.4 mg/dL). Aunque este valor fue menor a 100 mg/dL (valor de referencia), no es posible concluir que la media poblacional es diferente del valor de refrencia 100 mg/dL (p = 0.627).
+
+:::{.callout-note}
+
+## Supuestos
+
+- Aleatorización
+
+- Indenpendencia de observaciones
+
+- Normalidad o cumplimiento del TLC.
+
+```{r}
+library(ggpubr)
+datos %>% 
+  ggqqplot(x = "weight")
+```
+
+- Supuesto de homogeneidad de varianzas (homocedasticidad) no importa aquí ya que solo hay 1 grupo!
+
+- Supuestos implícitos (no error de medición ni sesgos)
+
+:::
+
+### Param. 2
+
+**¿El nivel medio de estradiol es difernete de 50 UI en la población?**
+
+Para variable estradiol:
+
+```{r}
+datos %>% 
+  t_test(e2 ~ 1, mu = 50, detailed = TRUE) 
+```
+
+:::{.callout-note}
+
+Supuestos: 
+
+- Aleatorización
+
+- Indenpendencia de observaciones
+
+- Normalidad o cumplimiento del TLC.
+
+```{r}
+datos %>% 
+  ggqqplot(x = "e2")
+```
+
+- Supuesto de homogeneidad de varianzas (homocedasticidad) no importa aquí ya que solo hay 1 grupo!
+
+- Supuestos implícitos (no error de medición ni sesgos)
+
+:::
+
+- **Interpretación:**
+
+> La media estimada de estradiol fue de 112.67 UI. Debido a la desviación severa de la normalidad, preferimos no confiar en la inferencia generada por la prueba de hipótesis t de Student y obtamos por una alternativa robusta no parmétrica. 
+
+### No Param 1 
+
+**Prueba del Signo**:
+
+- Permite comparar la `mediana` (ya no la media) contra un valor de referencia.
+
+- No permite estimar intervalos de confianza.
+
+```{r}
+datos %>% 
+  sign_test(weight ~ 1, mu = 0, detailed = TRUE) 
+```
+
+- **Interpretación:**
+
+> La mediana estimada de glucosa fue de 95.53 mg/dL. Aunque este valor fue menor a 100 mg/dL (valor de referencia), no es posible concluir que la media poblacional es diferente del valor de refrencia (p = 0.627).
+
+:::{.callout-note}
+
+## Supuestos
+
+- Aleatorización
+
+- Indenpendencia de observaciones
+
+- Variable al menos en escala ordinal
+
+- Supuestos implícitos (no error de medición ni sesgos)
+
+::: 
+
+### No Param 2 
+
+**¿El nivel mediano de estradiol es difernete de 50 UI en la población?**
+
+```{r}
+datos %>% 
+  sign_test(e2 ~ 1, mu = 50, detailed = TRUE) 
+```
+
+:::{.callout-note}
+
+## Supuestos
+
+- Aleatorización
+
+- Indenpendencia de observaciones
+
+- Variable al menos en escala ordinal
+
+- Supuestos implícitos (no error de medición ni sesgos)
+
+::: 
+
+
+- **Interpretación:**
+
+> La mediana estimada de estradiol fue de 103.95 UI. Este valor fue mayor a 50 UI (valor de referencia) (p < 0.001).
+
+:::
+
+## Estimación y PH para dos grupos dependientes {.scrollable}
+
+::: panel-tabset
+
+### Paramétrico
+
+- Se usa la `prueba t de Student` para datos pareados. 
+
+- Como los datos están pareados 1:1, la prueba trabaja sobre la `diferencia de los valores` individuales convirtiendo el problema en `una sola muestra`. 
+
+- Por lo tanto, los `supuestos` son los `mismos` que para la `prueba t de Student  de un solo grupo.
+
+**Ejemplo:** ¿Cuál es el efecto de la Vitamina C en el crecimiento de los dientes en cuyes experimentales?
+
+`len`: Longitud de dientes al final del experimento.
+
+`supp`: Suplemento de vitamina C (VC vs. OJ)
+
+```{r}
+#| echo: false
+data("ToothGrowth")
+df <- ToothGrowth
+read.csv("df3.csv", sep = ";") -> df2
+
+df2 %>% 
+  mutate(dif = VC - OJ) -> df3
+```
+
+```{r}
+df %>% t_test(len ~ supp, 
+              paired = TRUE, 
+              detailed = TRUE) %>% gt()
+```
+
+:::{.callout-important}
+
+## Supuestos
+
+- Aleatorización
+
+- Indenpendencia de observaciones
+
+- Normalidad o cumplimiento del TLC.
+
+```{r}
+library(ggpubr)
+df3 %>% 
+  ggqqplot(x = "dif")
+```
+
+- Variable al menos en escala ordinal
+
+- Supuestos implícitos (no error de medición ni sesgos)
+
+:::
+
+### No param.
+
+- Se tienen dos opciones: `Prueba del signo` vs. `Prueba de rangos signados de Wilcoxon`.
+
+- Se trabaja igual que para t-test pareada, con al `diferencia de los valores` de tal forma que se tiene solo `un grupo`.
+
+- `Prueba del signo` no requiere supuesto de simetría de distribución para comparar medianas.
+
+- `Prueba de Wilcoxon` requiere supuesto de simetría de distribución para comparar medianas. 
+
+**Prueba del signo:**
+
+```{r}
+df %>% sign_test(len ~ supp, 
+              detailed = TRUE) %>% gt()
+```
+
+**Prueba de Wilcoxon:**
+
+```{r}
+df %>% wilcox_test(len ~ supp, 
+              detailed = TRUE) %>% gt()
+```
+
+:::{.callout-important}
+
+## Supuestos de la Prueba del Signo
+
+- Aleatorización
+
+- Indenpendencia de observaciones
+
+- Escala de medición al menos ordinal
+
+:::
+
+:::{.callout-important}
+
+## Supuestos de la Prueba de Wilcoxon
+
+- Aleatorización
+
+- Indenpendencia de observaciones
+
+- Escala de medición al menos ordinal
+
+- Distribución simétrica
+
+:::
+
+:::
+
+## Estimación y PH para dos grupos independientes {.scrollable}
+<hr>
+
+::: panel-tabset
+
+### Paramétrico
+
+- Se usa `prueba t de Student` para `grupos independientes`.
+
+```{r}
+#| echo: false
+datos2 <- datos %>% 
+  filter(treat != "WARMI 3 C/D") %>% 
+  mutate(treat = droplevels(treat))
+```
+
+```{r}
+datos2 %>% 
+  t_test(weight ~ treat, detailed = TRUE, var.equal = TRUE) %>% 
+  gt()
+```
+
+:::{.callout-important}
+
+## Supuestos de la Prueba t de Student para grupos independientes
+
+- Aleatorización
+
+- Indenpendencia de observaciones
+
+- Normalidad
+
+- Homogeneidad de varianzas (*)
+
+```{r}
+datos2 %>% 
+  ggqqplot("weight", color = "treat")
+```
+
+```{r}
+datos2 %>% 
+  group_by(treat) %>% 
+  skim(weight)
+```
+
+- Si no confiamos en la homogeneidad de varianzas, podemos hacer la prueba robusta a la heterogeneidad de varianzas usando la corrección de Satterwhite:
+
+```{r}
+datos2 %>% 
+  t_test(weight ~ treat, detailed = TRUE, var.equal = FALSE) %>% 
+  gt()
+```
+
+:::
+
+### No param.
+
+- Se usa `prueba de suma de rangos de Wilcoxon`, también denominada `U de Mann Withney`.
+
+```{r}
+datos2 %>% 
+  wilcox_test(e2 ~ treat, detailed = TRUE) %>% 
+  gt()
+```
+
+:::
+
+:::{.callout-important}
+
+## Supuestos
+
+- Aleatorización
+
+- Indenpendencia de observaciones
+
+- Escala de medición al menos ordinal
+
+- Igual forma de distribución entre los grupos (solo diferencia en la posición)
+
+:::
+
+
+## `r fontawesome::fa("mug-saucer", "white")` Hagamos una pausa {background-color="#00817E"}
+<hr>
+
+::: r-fit-text
+
+<center>
+
+Tomemos un descanso de `5 minutos`...
+
+Estire las piernas `r fontawesome::fa("person-walking", "white")`... 
+
+Deje de ver las pantallas `r fontawesome::fa("laptop", "white")`...
+
+... cualquier `r fontawesome::fa("laptop", "white")`, las del celular `r fontawesome::fa("mobile", "white")` también.
+
+</center>
+
+:::
+
+```{r}
+#| echo: false
+library(countdown)
+countdown_timer <- function(
+    minutes = 1, 
+    play_sound = TRUE, 
+    font_size = "2em", 
+    ...
+) {
+  countdown(
+    minutes = minutes,
+    # Fanfare when it's over
+    play_sound = play_sound,
+    # Set timer theme to match solarized colors
+    color_border              = "#404041",
+    color_text                = "white",
+    color_background = "#000000",
+    color_running_background  = "#72994E",
+    color_running_text        = "white",
+    color_finished_background = "#EE6331",
+    color_finished_text       = "white",
+    font_size = font_size,
+    ...
+  )
+}
+```
+
+```{r}
+#| echo: false
+countdown_timer(5)
+```
+
+## 
+
+
+## 
+
+::: r-fit-text
+<center>¡Gracias!</center>
+
+<center>¿Preguntas?</center>
+
+:::
+
+## 
+
+\
+
+\
+
+\
+
+::: r-fit-text
+
+<center>
+{{< fa brands twitter >}} @psotob91 
+
+{{< fa brands github >}} https://github.com/psotob91
+
+{{< fa inbox >}} percys1991@gmail.com
+</center>
+
+:::

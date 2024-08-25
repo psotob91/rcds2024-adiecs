@@ -1,0 +1,9 @@
+---
+title: "Problem set 1"
+date: "2022-09-05"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.align = "center")
+```
+

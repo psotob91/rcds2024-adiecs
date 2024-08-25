@@ -1,0 +1,48 @@
+hog_nhab;alumbrado_medio;tiene_agua_potable;acceso_agua;cuantas_horas_si_agua;alumbrado_electrico;alumbrado_petroleo;codperso;jefe_peso_g;jefe_talla_cm;alumbrado_vela;alum_generador;alumbrado_otro;alumbrado_no;tiene_internet;necesid_basicas_insatisf_vivie;necesid_basicas_insatist_hacin;necesid_basicas_insatisf_sshh;necesid_basicas_insatisf_noesc;region;necesid_basicas_insatisf_depec;hog_tip;procedencia_agua
+1;si;si;no;1;si;no;1;89836;188;no;no;no;no;no;no;no;no;no;Costa Norte;no;Casa independiente;público
+1;no;si;no;2;si;no;2;97660;157;no;no;no;no;no;no;no;no;no;Costa Centro;no;Departamento en edificio;público
+1;si;no;no;1;si;no;3;93653;181;no;no;no;no;no;no;no;no;no;Costa Sur;no;Vivienda en quinta;público
+1;si;si;no;1;si;no;4;76264;201;no;no;no;no;no;si;no;no;no;Costa Sur;no;Vivienda en casa de vecindad (Callejón, solar o corralón);público
+;;;;;;no;5;66881;202;no;no;no;no;si;si;no;no;no;Sierra Centro;no;Choza o cabaña;público
+3;no;si;no;20;si;no;6;79085;170;no;no;no;no;si;no;si;no;no;Sierra Sur;no;Vivienda improvisada;público
+11;no;si;no;18;si;no;7;85858;187;no;no;no;no;si;no;si;no;no;Selva;no;Local no destinado para habitación humana;público
+4;no;si;no;18;si;no;8;70297;169;no;no;no;no;si;no;si;si;no;Lima Metropolitana;no;Otro;público
+4;no;si;no;24;si;no;9;75230;159;no;no;no;no;si;no;si;no;no;Sierra Norte;si;Casa independiente;público
+4;si;no;no;24;si;no;10;87844;159;no;no;no;no;no;no;si;no;no;Costa Sur;no;Vivienda en casa de vecindad (Callejón, solar o corralón);público
+1;no;no;no;24;si;no;11;72416;164;no;no;no;no;no;no;no;si;si;Costa Centro;si;Vivienda en quinta;público
+;;si;no;;no;;12;74708;195;;;;;;;;;;Selva;;Vivienda improvisada;rio
+2;no;no;no;24;si;no;13;75731;199;no;no;no;no;no;no;no;si;si;Lima Metropolitana;si;Otro;público
+1;no;no;si;;si;no;14;67088;191;no;no;no;no;no;no;no;si;si;Lima Metropolitana;si;Vivienda en quinta;cisterna
+1;no;no;si;;si;no;15;67088;191;no;no;no;no;no;no;no;si;si;Lima Metropolitana;si;Vivienda en quinta;cisterna
+1;no;no;si;;si;no;16;67088;191;no;no;no;no;no;no;no;si;si;Lima Metropolitana;si;Vivienda en quinta;cisterna
+1;no;no;no;24;si;no;17;70249;198;no;no;no;no;no;no;si;no;no;Costa Norte;no;;público
+;;;;;;;18;89782;180;;;;;;;si;;;Lima Metropolitana;;Vivienda en quinta;
+2;no;si;no;24;si;no;19;89420;195;no;no;no;no;si;no;si;no;no;Costa Norte;no;Departamento en edificio;público
+1;si;si;no;24;si;no;20;95142;184;no;no;no;no;si;no;si;si;no;Costa Centro;no;Departamento en edificio;público
+5;si;;;;si;no;21;80807;192;no;no;no;no;si;no;si;no;no;Selva;1;Casa independiente;pozo
+3;no;;si;;si;no;22;77682;158;no;no;no;no;si;no;si;no;no;Lima Metropolitana;no;;pozo
+1;si;si;no;24;si;no;23;95142;184;no;no;no;no;si;no;si;si;no;Costa Centro;no;Departamento en edificio;público
+2;si;no;si;;si;no;24;94867;169;no;no;no;no;si;no;si;no;no;Costa Norte;no;;pozo
+2;si;no;si;;si;no;25;94867;169;no;no;no;no;si;no;si;no;no;Costa Norte;no;;pozo
+4;si;no;;;si;no;26;79723;189;no;no;no;no;no;no;si;no;no;Sierra Centro;no;;pozo
+3;si;no;si;;si;no;27;71282;162;no;no;no;no;no;no;no;no;no;Costa Norte;no;Departamento en edificio;pozo
+1;no;si;si;;si;no;28;98124;171;no;no;no;no;no;no;no;no;no;Lima Metropolitana;no;Departamento en edificio;pozo
+;no;si;si;;;;29;78917;195;;no;;;;si;si;;;Sierra Sur;;Vivienda en casa de vecindad (Callejón, solar o corralón);
+1;si;si;no;24;si;no;30;95142;184;no;no;no;no;si;no;si;si;no;Costa Centro;no;Departamento en edificio;público
+1;si;si;no;;no;no;31;88234;156;no;no;si;no;no;si;si;no;no;Selva;no;Vivienda improvisada;rio
+;no;si;no;;;;32;85049;177;;;;;;si;si;;;Costa Sur;;Choza o cabaña;pozo
+;si;si;no;;no;no;33;68031;166;;;;;;si;;;;Sierra Sur;;Departamento en edificio;
+3;no;si;no;;no;no;34;77033;165;no;no;si;no;no;si;no;no;no;Lima Metropolitana;no;Vivienda en casa de vecindad (Callejón, solar o corralón);rio
+1;;;no;;no;no;35;85548;161;no;no;si;no;no;no;no;si;no;Selva;no;Departamento en edificio;rio
+;;si;no;;no;;36;74708;195;;;;;;;;;;Selva;;Vivienda improvisada;rio
+;si;si;no;;si;;37;71245;173;no;no;si;no;;si;;si;si;Selva;si;Vivienda improvisada;rio
+;no;no;no;;;no;38;92237;185;;no;;;si;si;;;;Sierra Centro;;Casa independiente;
+;si;no;si;;si;no;39;94509;162;;;si;;si;si;;;;Costa Sur;;Vivienda improvisada;rio
+;si;no;si;;si;no;40;68395;191;no;no;si;;si;si;si;;;Sierra Sur;;Casa independiente;
+;si;no;si;;si;no;41;77697;202;no;no;si;no;si;si;si;si;si;Lima Metropolitana;si;Local no destinado para habitación humana;pozo
+;no;si;no;;;no;42;74596;162;no;no;si;no;;si;;si;si;Sierra Centro;si;Casa independiente;
+;si;si;no;;si;;43;71245;173;no;no;si;no;;si;;si;si;Selva;si;Vivienda improvisada;rio
+1;si;si;;;si;no;44;70758;182;no;no;no;no;si;no;no;si;no;Sierra Centro;no;Local no destinado para habitación humana;rio
+4;no;no;no;24;si;no;45;83904;191;no;no;no;no;si;no;no;no;no;Lima Metropolitana;no;Vivienda improvisada;pozo
+4;no;no;no;24;si;no;46;70073;202;no;no;no;no;si;no;no;no;no;Sierra Centro;no;Choza o cabaña;pozo
+4;no;no;no;24;si;;47;67331;159;no;no;no;no;si;no;no;no;no;Lima Metropolitana;no;Choza o cabaña;pozo

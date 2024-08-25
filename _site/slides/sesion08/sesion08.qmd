@@ -1,0 +1,2946 @@
+---
+format: 
+  revealjs: 
+    self-contained: true
+    theme: [default, theme/theme.scss]
+    footer: "Análisis Estadístico de Datos en Salud 2023 - Día 8"
+    logo: img/logo.png
+    transition: convex
+    background-transition: zoom
+    incremental: false
+    slide-number: c/t
+    preview-links: true
+    height: 900
+    width: 1600
+    # chalkboard: true
+    code-block-background: true
+    code-block-border-left: "#31BAE9"
+    highlight-style: ayu-dark
+    echo: true
+    multiplex: true
+    touch: true
+    auto-stretch: true
+    link-external-icon: true
+    link-external-newwindow: true
+    self-contained-math: true
+    
+from: markdown+emoji
+execute:
+  echo: true
+filters:
+  - reveal-auto-agenda
+auto-agenda:
+  bullets: numbered
+  heading: Agenda
+---
+\
+
+\
+
+<h1>Sesión 8</h1>
+
+<h2>[Curso: Análisis Estadístico de Datos en Salud]{.plo}</h2>
+
+<hr>
+
+<h3>[Percy Soto-Becerra, M.D., M.Sc(c)]{.negro}</h3>
+
+<h4>[DIS -- IETSI, EsSalud]{.negro}</h4>
+
+<h4>[2023-06-21]{.negro}</h4>
+
+`r fontawesome::fa("github", "black")` &nbsp; [https://github.com/psotob91](https://github.com/psotob91)
+
+![](img/logo.png){.absolute top=390 left=950 width="600"}
+
+```{r}
+#| echo: false
+#| output: false
+
+# Removing all objects including loaded libraries
+rm(list = ls(all = TRUE))
+gc()
+
+# Installing and loading packages
+if (!require("pacman")) {
+  install.packages("pacman")
+}
+
+pacman::p_unload("all") # Unloading all package except base
+
+pacman::p_load(tidyverse, 
+               tibble, 
+               labelled, 
+               pander, 
+               gt, 
+               kableExtra, 
+               DT, 
+               haven, 
+               skimr, 
+               Hmisc, 
+               janitor, 
+               rio, 
+               gtsummary, 
+               gt, 
+               flextable, 
+               kableExtra, 
+               readxl, 
+               rstatix, 
+               medicaldata, 
+               summarytools, 
+               gmodels) # Loading packages
+```
+
+# [Reporte Reproducible]{.blanco}
+
+<h1>[Reporte Reproducible]{.verde-h3}</h1>
+
+## ¿Cómo hacer que un análisis de datos sea reproducible? {.scrollable}
+<hr>
+
+-   No cree la tabla "manualmente".
+
+-   [Genere]{.hl} las [tablas]{.hl} con [código]{.hl}: 
+
+    -   Es [reproducible]{.hl}. 
+    -   Menos propenso a error de digitación o *lapsus calamis*. 
+    -   Han habido retracciones de ensayos clínicos por errores de tipeo!! 
+    -   Es más rápido, ahorrarás tiempo!! 
+
+## R integra el reporte en todo el flujo de trabajo reproducible
+<hr>
+
+::: r-stack
+![](img/data-science-cycle.001.png){.fragment}
+
+![](img/data-science-cycle.002.png){.fragment}
+
+![](img/data-science-cycle.003.png){.fragment}
+
+![](img/data-science-cycle.004.png){.fragment}
+
+![](img/data-science-cycle.005.png){.fragment}
+
+![](img/data-science-cycle.006.png){.fragment}
+
+![](img/data-science-cycle.007.png){.fragment}
+
+![](img/data-science-cycle.008.png){.fragment}
+
+![](img/data-science-cycle.009.png){.fragment}
+:::
+
+
+##  Tablas descriptivas {.scrollable}
+<hr>
+
+- En un artículo estas pueden variar entre disciplinas y dependiendo lo qu e se desee comunicar.
+
+- En investigación en salud, por ejemplo, a la [tabla descriptiva]{.hl} menudo se la conoce como tablas [tipo 1]{.hl}.
+
+    -   Puede haber más de una, no hay reglas, solo buenos o malos criterios para presentar resultados. 
+    
+    - A veces separan la tabla 1 en Tabla 1 (toda la población) y tabla 2 (comparación de características)
+    
+-   Hay muchos paquetes: [{flextable}]{.plo}, [{gt}]{.plo},[{huxtable}]{.plo}, [{kableExtra}]{.plo}, [{kable}]{.plo}, etc.
+-   Sugerimos [{gtsummary}]{.plo} para comenzar: [[https://www.danieldsjoberg.com/gtsummary/](https://www.danieldsjoberg.com/gtsummary/)]{.big-text1}
+
+## Tablas reproducibles en R
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+- Paquetes para construir tablas personalizadas **paso a paso**:
+
+    + [{flextable}]{.verde-h3}
+    + [{gt}]{.verde-h3}
+    + [{huxtable}]{.verde-h3}
+    + [{kable}]{.verde-h3}
+    + [{kableExtra}]{.verde-h3}
+
+:::
+
+::: {.column width='50%'}
+
+- Paquetes para construir tablas **pre-definidas** de manera rápida:
+
+    + [{gtsummary}]{.verde-h3}
+    + Hay varias más, pero no las tengo mapeadas todas... (en una próxima edición)
+
+:::
+
+::::
+
+
+## Tabla decriptiva reproducible con {gtsummary}
+<hr>
+
+-   Permite [crear tablas]{.hl} en formato de [revistas biomédicas]{.hl}.
+
+-   Función [tbl_summary()]{.hl} para tablas descriptivas univariadas y comparativas (bivariadas)
+
+<center>![](img/tbl_summary_demo1.gif)</center>
+
+<center>[<https://www.danieldsjoberg.com/gtsummary/>]{.big-text1}</center>
+
+## Los datos que usaremos {.scrollable}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='70%'}
+
+- Usaremos los datos simulados de un ensayo clínico para evaluar la seguridad de un suplemento en outcomes clinico y fisiologicos de mujeres con menopausia:
+
+```{r}
+#| echo: false
+library(haven)
+datos <- import("maca_meno_fase1.dta") %>% 
+  characterize() %>% 
+  select(id, time, treat, age, race, married2, procedence, weight, height, e2) %>% 
+  mutate(treated = case_when(
+    treat == "Placebo" ~ 0, 
+    treat %in% c("Dosis 1", "Dosis 2") ~ 1, 
+    TRUE ~ as.numeric(NA)
+  )) %>% 
+  set_variable_labels(treated = "Treated") %>% 
+  select(id, time, treat, treated, age, race, married2, procedence, weight, height, e2)
+```
+
+```{r}
+#| echo: false
+head(datos) %>% 
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                full_width = T,
+                font_size = 30) 
+  # kable_paper("striped", full_width = F) %>%               
+  # column_spec(1, bold = T) %>%
+  # collapse_rows(columns = 1:2, valign = "top")  %>% 
+  # row_spec(0, background = "black", color = "white", bold = TRUE) %>% 
+  # row_spec(c(1, 3:5), background = "white", color = "black", bold = TRUE) %>% 
+  # row_spec(c(2, 6, 7), background = "gray", color = "white", bold = TRUE)
+```
+
+```{r}
+#| echo: false
+bd_inmuno <- read_stata("boost_inmuno.dta") %>% 
+  as_factor()
+```
+
+:::
+
+::: {.column width='30%'}
+
+- Las etiquetas de cada variable son:
+
+```{r}
+#| echo: false
+#| label: 'describe-small-trial'
+tibble(
+  Variable = names(datos),
+  Label = map_chr(Variable, ~attr(datos[[.x]], "label"))
+  ) %>%  
+  kbl() %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                full_width = T,
+                font_size = 30) 
+```
+
+:::
+
+::::
+
+# [tbl_summary() paso a paso]{.blanco}
+
+<h1>[tbl_summary() paso a paso]{.verde-h3}</h1>
+
+## tbl_summary() básico {.scrollable}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+- Seleccionar las variables que desea reportar con función [select()]{.plo}, luego usar [tbl_summary()]{.plo}:
+
+```r
+library(gtsummary)
+datos %>% 
+  select(age, race, married2, e2) %>% 
+  tbl_summary()
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 45%
+library(gtsummary)
+datos %>% 
+  select(age, treated, married2, e2) %>% 
+  tbl_summary() %>% 
+  as_gt() %>% 
+  gtsave("tab1.png", "img/")
+
+knitr::include_graphics("img/tab1.png")
+```
+
+:::
+
+::: {.column width='50%'}
+
+- Cuarto tipo de resumenes: [continuous]{.hl}, [continuos2]{.hl}, [categorical]{.hl} y [dichotomous]{.hl}
+
+- Por defecto, los estadísticos son reportadas como [mediana]{.hl} ([percentil 25]{.hl}, [percentil 75]{.hl}) para variables numéricas y [n (%)]{.hl} para variables categóricas/dicotómicas.
+
+- Las variables codificadas como [0]{.hl} / [1]{.hl}, [TRUE]{.hl} / [FALSE]{.hl} o [Yes]{.hl} / [No]{.hl} son tratadas como dicotómicas.
+
+- Los valores [NA]{.hl} se listan como "Unknown
+
+- Los atributos de etiqueta se imprimen por defecto.
+
+- Uno puede realizar más personalizaciones a la tabla.
+
+:::
+
+::::
+
+
+## Personalización del resultado de tbl_summary() {.scrollable auto-animate="true"}  
+<hr> 
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary()
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 45%
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary() %>% 
+  as_gt() %>% 
+  gtsave("tab2.png", "img/")
+
+knitr::include_graphics("img/tab2.png")
+```
+
+:::
+
+::::
+
+## Personalización del resultado de tbl_summary() {.scrollable auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous")
+  )
+```
+
+- [type]{.hl}: Especifica el tipo de variable para el resumen 
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 45%
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous")
+  ) %>% 
+  as_gt() %>% 
+  gtsave("tab3.png", "img/")
+
+knitr::include_graphics("img/tab3.png")
+```
+
+:::
+
+::::
+
+## Personalización del resultado de tbl_summary() {.scrollable auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    statistic = list(
+      age ~ "{mean} ({sd})", 
+      married2 ~ "{n}  / {N} ({p}%)"
+    )
+  )
+```
+
+- [type]{.hl}: Especifica el tipo de variable para el resumen.
+
+- [statistic]{.hl}: Personaliza los estadísticos reportados.
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 45%
+# datos %>% 
+#   select(age, treated, married2, height, e2) %>% 
+#   tbl_summary(
+#     type = list(height ~ "continuous"), 
+#     statistic = list(
+#       age ~ "{mean} ({sd})", 
+#       married2 ~ "{n}  / {N} ({p}%)"
+#     )
+#   )   %>% as_gt() %>% 
+# gtsave("tab4.png", "img/")
+
+knitr::include_graphics("img/tab4.png")
+```
+
+:::
+
+::::
+
+## Personalización del resultado de tbl_summary() {.scrollable auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    statistic = list(
+      c(age, height) ~ "{mean} ({sd})", 
+      c(married2, treated) ~ "{n}  / {N} ({p}%)"
+    )
+  )
+```
+
+- [type]{.hl}: Especifica el tipo de variable para el resumen.
+
+- [statistic]{.hl}: Personaliza los estadísticos reportados.
+
+    + Usar [c()]{.hl} para varias variables.
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 45%
+# datos %>% 
+#   select(age, treated, married2, height, e2) %>% 
+#   tbl_summary(
+#     type = list(height ~ "continuous"), 
+#     statistic = list(
+#       c(age, height) ~ "{mean} ({sd})", 
+#       c(married2, treated) ~ "{n}  / {N} ({p}%)"
+#     )
+#   ) %>% 
+#   as_gt() %>% 
+#   gtsave("tab5.png", "img/")
+
+knitr::include_graphics("img/tab5.png")
+```
+
+:::
+
+::::
+
+## Personalización del resultado de tbl_summary() {.scrollable auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(c(age, height) ~ "continuous2"), 
+    statistic = list(
+      c(age, height) ~ c("{mean} ({sd})", 
+                         "{median} ({p25} - {p75})"), 
+      c(married2, treated) ~ "{n}  / {N} ({p}%)"
+    )
+  )
+```
+
+- [type]{.hl}: Especifica el tipo de variable para el resumen.
+
+- [statistic]{.hl}: Personaliza los estadísticos reportados.
+
+    + Usar [c()]{.hl} para varias variables.
+    
+    + Si queremos reportar más estadísticos en variables numéricas usamos [continuous2]{.hl}
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 45%
+# datos %>% 
+#   select(age, treated, married2, height, e2) %>% 
+#   tbl_summary(
+#     type = list(c(age, height) ~ "continuous2"), 
+#     statistic = list(
+#       c(age, height) ~ c("{mean} ({sd})", 
+#                          "{median} ({p25} - {p75})"), 
+#       c(married2, treated) ~ "{n}  / {N} ({p}%)"
+#     )
+#   ) %>% 
+#   as_gt() %>% 
+#   gtsave("tab6.png", "img/")
+
+knitr::include_graphics("img/tab6.png")
+```
+
+:::
+
+::::
+
+## Personalización del resultado de tbl_summary() {.scrollable auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(c(age, height) ~ "continuous2"), 
+    statistic = list(
+      c(age, height) ~ c("{mean} ({sd})", 
+                         "{median} ({p25} - {p75})", 
+                         "{min} - {max}"), 
+      c(married2, treated) ~ "{n}  / {N} ({p}%)"
+    )
+  )
+```
+
+- [type]{.hl}: Especifica el tipo de variable para el resumen.
+
+- [statistic]{.hl}: Personaliza los estadísticos reportados.
+
+    + Usar [c()]{.hl} para varias variables.
+    
+    + Si queremos reportar más estadísticos en variables numéricas usamos [continuous2]{.hl}
+    
+        + Podemos ponerle cuantos estadísticos queramos.
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 45%
+# datos %>% 
+#   select(age, treated, married2, height, e2) %>% 
+#   tbl_summary(
+#     type = list(c(age, height) ~ "continuous2"), 
+#     statistic = list(
+#       c(age, height) ~ c("{mean} ({sd})", 
+#                          "{median} ({p25} - {p75})", 
+#                          "{min} - {max}"), 
+#       c(married2, treated) ~ "{n}  / {N} ({p}%)"
+#     )
+#   ) %>% 
+#   as_gt() %>% 
+#   gtsave("tab7.png", "img/")
+
+knitr::include_graphics("img/tab7.png")
+```
+
+:::
+
+::::
+
+## Personalización del resultado de tbl_summary() {.scrollable auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(c(age, height) ~ "continuous2"), 
+    statistic = list(
+      c(age, height) ~ c("{mean} ({sd})", "{min} - {max}"), 
+      c(e2) ~ c("{median} ({p25} - {p75})",
+                "{min} - {max}"),       
+      c(married2, treated) ~ "{n}  / {N} ({p}%)"
+    )
+  ) 
+```
+
+- [type]{.hl}: Especifica el tipo de variable para el resumen.
+
+- [statistic]{.hl}: Personaliza los estadísticos reportados.
+
+    + Usar [c()]{.hl} para varias variables.
+    
+    + Si queremos reportar más estadísticos en variables numéricas usamos [continuous2]{.hl}
+    
+        + Podemos ponerle cuantos estadísticos queramos.
+        
+        + Podemos tener diferentes combinaciones de estadísticos.
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 45%
+# datos %>% 
+#   select(age, treated, married2, height, e2) %>% 
+#   tbl_summary(
+#     type = list(c(age, height, e2) ~ "continuous2"), 
+#     statistic = list(
+#       c(age, height) ~ c("{mean} ({sd})", 
+#                          "{min} - {max}"), 
+#       c(e2) ~ c("{median} ({p25} - {p75})",
+#                 "{min} - {max}"),       
+#       c(married2, treated) ~ "{n}  / {N} ({p}%)"
+#     )
+#   ) %>% 
+#   as_gt() %>% 
+#   gtsave("tab8.png", "img/")
+
+knitr::include_graphics("img/tab8.png")
+```
+
+:::
+
+::::
+
+## Personalización del resultado de tbl_summary() {.scrollable auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(c(age, height, e2) ~ "continuous2"), 
+    statistic = list(
+      c(age, height) ~ c("{mean} ({sd})", "{min} - {max}"), 
+      c(e2) ~ c("{median} ({p25} - {p75})",
+                "{min} - {max}"),       
+      c(married2, treated) ~ "{n}  / {N} ({p}%)"
+    ), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    )
+  )
+```
+
+- [type]{.hl}: Especifica el tipo de variable para el resumen.
+
+- [statistic]{.hl}: Personaliza los estadísticos reportados.
+
+- [label]{.hl}: Cambia o personaliza la etiqueta de la variable.
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 45%
+# datos %>% 
+#   select(age, treated, married2, height, e2) %>% 
+#   tbl_summary(
+#     type = list(c(age, height, e2) ~ "continuous2"), 
+#     statistic = list(
+#       c(age, height) ~ c("{mean} ({sd})", 
+#                          "{min} - {max}"), 
+#       c(e2) ~ c("{median} ({p25} - {p75})",
+#                 "{min} - {max}"),       
+#       c(married2, treated) ~ "{n}  / {N} ({p}%)"
+#     ), 
+#     label = list(
+#       treated ~ "Treated with supplement", 
+#       e2 ~ "Estradiol, UI",
+#       married2 ~ "Marital status"
+#     )
+#   ) %>% 
+#   as_gt() %>% 
+#   gtsave("tab9.png", "img/")
+
+knitr::include_graphics("img/tab9.png")
+```
+
+:::
+
+::::
+
+
+## Personalización del resultado de tbl_summary() {.scrollable auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(c(age, height, e2) ~ "continuous2"), 
+    statistic = list(
+      c(age, height) ~ c("{mean} ({sd})", "{min} - {max}"), 
+      c(e2) ~ c("{median} ({p25} - {p75})",
+                "{min} - {max}"),       
+      c(married2, treated) ~ "{n}  / {N} ({p}%)"
+    ), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    digits = list(
+      c(age) ~ 1, c(height, e2) ~ 2, c(married2, treated) ~ 1
+    )
+  )
+```
+
+- [type]{.hl}: Especifica el tipo de variable para el resumen.
+
+- [statistic]{.hl}: Personaliza los estadísticos reportados.
+
+- [label]{.hl}: Cambia o personaliza la etiqueta de la variable.
+
+- [digit]{.hl}: Especifica el número de decimales de redondeo.
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 45%
+# datos %>% 
+#   select(age, treated, married2, height, e2) %>% 
+#   tbl_summary(
+#     type = list(c(age, height, e2) ~ "continuous2"), 
+#     statistic = list(
+#       c(age, height) ~ c("{mean} ({sd})", 
+#                          "{min} - {max}"), 
+#       c(e2) ~ c("{median} ({p25} - {p75})",
+#                 "{min} - {max}"),       
+#       c(married2, treated) ~ "{n}  / {N} ({p}%)"
+#     ), 
+#     label = list(
+#       treated ~ "Treated with supplement", 
+#       e2 ~ "Estradiol, UI",
+#       married2 ~ "Marital status"
+#     ), 
+#     digits = list(
+#       c(age) ~ 1, c(height, e2) ~ 2, 
+#       c(married2, treated) ~ 1
+#     )
+#   ) %>% 
+#   as_gt() %>% 
+#   gtsave("tab10.png", "img/")
+
+knitr::include_graphics("img/tab10.png")
+```
+
+:::
+
+::::
+
+## Reporte de datos perdidos con tbl_summary() {.scrollable auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(c(age, height, e2) ~ "continuous2"), 
+    statistic = list(
+      c(age, height) ~ c("{mean} ({sd})", "{min} - {max}"), 
+      c(e2) ~ c("{median} ({p25} - {p75})", "{min} - {max}"),       
+      c(married2, treated) ~ "{n}  / {N} ({p}%)"
+    ), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    digits = list(
+      c(age) ~ 1, c(height, e2) ~ 2, c(married2, treated) ~ 1
+    ), 
+    missing_text = "Missing data"
+  ) 
+```
+
+- [misisng_text]{.hl}: Permite editar la etiqueta de missing ([Unknown]{.hl} por defecto).
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 45%
+# datos %>% 
+#   select(age, treated, married2, height, e2) %>% 
+#   tbl_summary(
+#     type = list(c(age, height, e2) ~ "continuous2"), 
+#     statistic = list(
+#       c(age, height) ~ c("{mean} ({sd})", "{min} - {max}"), 
+#       c(e2) ~ c("{median} ({p25} - {p75})", "{min} - {max}"),       
+#       c(married2, treated) ~ "{n}  / {N} ({p}%)"
+#     ), 
+#     label = list(
+#       treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+#       married2 ~ "Marital status"
+#     ), 
+#     digits = list(
+#       c(age) ~ 1, c(height, e2) ~ 2, c(married2, treated) ~ 1
+#     ), 
+#     missing_text = "Missing data"
+#   ) %>% 
+#   as_gt() %>% 
+#   gtsave("tab11.png", "img/")
+
+knitr::include_graphics("img/tab11.png")
+```
+
+:::
+
+::::
+
+## Reporte de datos perdidos con tbl_summary() {.scrollable auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(c(age, height, e2) ~ "continuous2"), 
+    statistic = list(
+      c(age, height) ~ c("{mean} ({sd})", "{min} - {max}"), 
+      c(e2) ~ c("{median} ({p25} - {p75})", "{min} - {max}"),       
+      c(married2, treated) ~ "{n}  / {N} ({p}%)"
+    ), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    digits = list(
+      c(age) ~ 1, c(height, e2) ~ 2, c(married2, treated) ~ 1
+    ), 
+    missing = "always", missing_text = "Missing data"
+  )  
+```
+
+- [misisng_text]{.hl}: Permite editar la etiqueta de missing ([Unknown]{.hl} por defecto).
+
+- [missing]{.hl}: Por defecto se presentan los datos perdidos solo si la variable los tiene ["ifany"]{.hl}.
+
+    + [missing = "always"]{.hl} siempre presenta datos perdidos.
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 45%
+#| code-overflow: wrap
+# datos %>% 
+#   select(age, treated, married2, height, e2) %>% 
+#   tbl_summary(
+#     type = list(c(age, height, e2) ~ "continuous2"), 
+#     statistic = list(
+#       c(age, height) ~ c("{mean} ({sd})", "{min} - {max}"), 
+#       c(e2) ~ c("{median} ({p25} - {p75})", "{min} - {max}"),       
+#       c(married2, treated) ~ "{n}  / {N} ({p}%)"
+#     ), 
+#     label = list(
+#       treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+#       married2 ~ "Marital status"
+#     ), 
+#     digits = list(
+#       c(age) ~ 1, c(height, e2) ~ 2, c(married2, treated) ~ 1
+#     ), 
+#     missing = "always", missing_text = "Missing data"
+#   ) %>% 
+#   as_gt() %>% 
+#   gtsave("tab12.png", "img/")
+
+knitr::include_graphics("img/tab12.png")
+```
+
+:::
+
+::::
+
+
+## Reporte de datos perdidos con tbl_summary() {.scrollable auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(c(age, height, e2) ~ "continuous2"), 
+    statistic = list(
+      c(age, height) ~ c("{mean} ({sd})", "{min} - {max}"), 
+      c(e2) ~ c("{median} ({p25} - {p75})", "{min} - {max}"),       
+      c(married2, treated) ~ "{n}  / {N} ({p}%)"
+    ), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    digits = list(
+      c(age) ~ 1, c(height, e2) ~ 2, c(married2, treated) ~ 1
+    ), 
+    missing = "no"
+  ) 
+```
+
+- [misisng_text]{.hl}: Permite editar la etiqueta de missing ([Unknown]{.hl} por defecto).
+
+- [missing]{.hl}: Por defecto se presentan los datos perdidos solo si la variable los tiene ["ifany"]{.hl}.
+
+    + [missing = "always"]{.hl} siempre presenta datos perdidos, así la variable no los tenga.
+    + [missing = "no"]{.hl} nunca presenta datos perdidos, así la variable los tenga.
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 45%
+#| code-overflow: wrap
+# datos %>% 
+#   select(age, treated, married2, height, e2) %>% 
+#   tbl_summary(
+#     type = list(c(age, height, e2) ~ "continuous2"), 
+#     statistic = list(
+#       c(age, height) ~ c("{mean} ({sd})", "{min} - {max}"), 
+#       c(e2) ~ c("{median} ({p25} - {p75})", "{min} - {max}"),       
+#       c(married2, treated) ~ "{n}  / {N} ({p}%)"
+#     ), 
+#     label = list(
+#       treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+#       married2 ~ "Marital status"
+#     ), 
+#     digits = list(
+#       c(age) ~ 1, c(height, e2) ~ 2, c(married2, treated) ~ 1
+#     ), 
+#     missing = "no"
+#   ) %>% 
+#   as_gt() %>% 
+#   gtsave("tab13.png", "img/")
+
+knitr::include_graphics("img/tab13.png")
+```
+
+:::
+
+::::
+
+## En resumen: {gtsummary} + fórmulas  {.scrollable}
+<hr>
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/Dan-SummaryTables-5.png")
+```
+
+## Personzalización con bold_*() / italicize_*() {.scrollable auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    missing = "ifany"
+  ) 
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 45%
+#| code-overflow: wrap
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    missing = "ifany"
+  ) %>% 
+  as_gt() %>% 
+  gtsave("tab14.png", "img/")
+
+knitr::include_graphics("img/tab14.png")
+```
+
+:::
+
+::::
+
+## Personzalización con bold_*() / italicize_*() {.scrollable auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{r}
+#| eval: false
+#| code-line-numbers: 11|
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    missing = "ifany"
+  ) %>% 
+  bold_labels()
+```
+
+- [bold_labels()]{.hl}: negrita a las etiquetas de las variables
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 45%
+#| code-overflow: wrap
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    missing = "ifany"
+  ) %>% 
+  bold_labels() %>% 
+  as_gt() %>% 
+  gtsave("tab15.png", "img/")
+
+knitr::include_graphics("img/tab15.png")
+```
+
+:::
+
+::::
+
+## Personzalización con bold_\*() / italicize_\*() {.scrollable auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{r}
+#| eval: false
+#| code-line-numbers: 12|
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    missing = "ifany"
+  ) %>% 
+  bold_labels() %>% 
+  italicize_levels() 
+```
+
+- [bold_labels()]{.hl}: negrita a las etiquetas de las variables
+
+- [italicize_levels()]{.hl}: cursiva a los niveles (valores) de las variables
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 45%
+#| code-overflow: wrap
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    missing = "ifany"
+  ) %>% 
+  bold_labels() %>% 
+  italicize_levels() %>% 
+  as_gt() %>% 
+  gtsave("tab16.png", "img/")
+
+knitr::include_graphics("img/tab16.png")
+```
+
+:::
+
+::::
+
+
+## Guardar tabla como documento MS Word {.scrollable auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+- Se puede [descargar]{.hl} la tabla en formato [MS. Word]{.hl} para [reporte reproducible]{.hl}.
+
+- Primero se  [guarda]{.hl}  como un [objeto]{.hl} de [R]{.hl}:
+
+```r
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    missing = "ifany"
+  ) %>% 
+  bold_labels() -> tabla1 
+
+tabla1
+```
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    missing = "ifany"
+  ) %>% 
+  bold_labels() -> tabla1
+```
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 50%
+#| code-overflow: wrap
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    missing = "ifany"
+  ) %>% 
+  bold_labels() %>% 
+  as_gt() %>% 
+  gtsave("tab17.png", "img/")
+
+knitr::include_graphics("img/tab17.png")
+```
+
+:::
+
+::::
+
+## Guardar tabla como documento MS Word {.scrollable auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+- Se puede [descargar]{.hl} la tabla en formato [MS. Word]{.hl} para [reporte reproducible]{.hl}.
+
+- Primero se  [guarda]{.hl}  como un [objeto]{.hl} de [R]{.hl}:
+
+```r
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    missing = "ifany"
+  ) %>% 
+  bold_labels() -> tabla1 
+
+tabla1
+```
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    missing = "ifany"
+  ) %>% 
+  bold_labels() -> tabla1
+```
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 50%
+#| code-overflow: wrap
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    missing = "ifany"
+  ) %>% 
+  bold_labels() %>% 
+  as_gt() %>% 
+  gtsave("tab17.png", "img/")
+
+knitr::include_graphics("img/tab17.png")
+```
+
+:::
+
+::::
+
+- Luego, al objeto se lo [guarda]{.hl} como un archivo de [MS Word]{.hl}. 
+
+ 
+## Guardar tabla como documento MS Word {.scrollable auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+- Se puede [descargar]{.hl} la tabla en formato [MS. Word]{.hl} para [reporte reproducible]{.hl}.
+
+- Primero se  [guarda]{.hl}  como un [objeto]{.hl} de [R]{.hl}:
+
+```r
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    missing = "ifany"
+  ) %>% 
+  bold_labels() -> tabla1 
+
+tabla1
+```
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    missing = "ifany"
+  ) %>% 
+  bold_labels() -> tabla1
+```
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 50%
+#| code-overflow: wrap
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    missing = "ifany"
+  ) %>% 
+  bold_labels() %>% 
+  as_gt() %>% 
+  gtsave("tab17.png", "img/")
+
+knitr::include_graphics("img/tab17.png")
+```
+
+:::
+
+::::
+
+- Luego, al objeto se lo [guarda]{.hl} como un archivo de [MS Word]{.hl}. 
+
+:::: {.columns}
+
+::: {.column width='30%'}
+
+```{r}
+library(flextable)
+```
+
+:::
+
+::: {.column width='70%'}
+
+- Paso 1: Cargar paquete [{flextable}]{.plo}
+
+:::
+
+::::
+
+
+## Guardar tabla como documento MS Word {.scrollable auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+- Se puede [descargar]{.hl} la tabla en formato [MS. Word]{.hl} para [reporte reproducible]{.hl}.
+
+- Primero se  [guarda]{.hl}  como un [objeto]{.hl} de [R]{.hl}:
+
+```r
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    missing = "ifany"
+  ) %>% 
+  bold_labels() -> tabla1 
+
+tabla1
+```
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    missing = "ifany"
+  ) %>% 
+  bold_labels() -> tabla1
+```
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 50%
+#| code-overflow: wrap
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    missing = "ifany"
+  ) %>% 
+  bold_labels() %>% 
+  as_gt() %>% 
+  gtsave("tab17.png", "img/")
+
+knitr::include_graphics("img/tab17.png")
+```
+
+:::
+
+::::
+
+- Luego, al objeto se lo [guarda]{.hl} como un archivo de [MS Word]{.hl}. 
+
+:::: {.columns}
+
+::: {.column width='30%'}
+
+```{r}
+library(flextable)
+
+tabla1 %>% 
+  as_flex_table() 
+```
+
+:::
+
+::: {.column width='70%'}
+
+- Paso 1: Cargar paquete [{flextable}]{.plo}
+
+- Paso 2: Se convierte a objeto de tipo [flextable]{.hl} con la función [as_flex_table()]{.plo}.
+
+
+:::
+
+::::
+
+
+## Guardar tabla como documento MS Word {.scrollable auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+- Se puede [descargar]{.hl} la tabla en formato [MS. Word]{.hl} para [reporte reproducible]{.hl}.
+
+- Primero se  [guarda]{.hl}  como un [objeto]{.hl} de [R]{.hl}:
+
+```r
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    missing = "ifany"
+  ) %>% 
+  bold_labels() -> tabla1 
+
+tabla1
+```
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    missing = "ifany"
+  ) %>% 
+  bold_labels() -> tabla1
+```
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 50%
+#| code-overflow: wrap
+datos %>% 
+  select(age, treated, married2, height, e2) %>% 
+  tbl_summary(
+    type = list(height ~ "continuous"), 
+    label = list(
+      treated ~ "Treated with supplement", e2 ~ "Estradiol, UI",
+      married2 ~ "Marital status"
+    ), 
+    missing = "ifany"
+  ) %>% 
+  bold_labels() %>% 
+  as_gt() %>% 
+  gtsave("tab17.png", "img/")
+
+knitr::include_graphics("img/tab17.png")
+```
+
+:::
+
+::::
+
+- Luego, al objeto se lo [guarda]{.hl} como un archivo de [MS Word]{.hl}: 
+
+
+:::: {.columns}
+
+::: {.column width='30%'}
+
+```{r}
+library(flextable)
+
+tabla1 %>% 
+  as_flex_table() %>% 
+  save_as_docx(path = "Tabla1.docx")
+```
+
+:::
+
+::: {.column width='70%'}
+
+- Paso 1: Cargar paquete [{flextable}]{.plo}
+
+- Paso 2: Se convierte a objeto de tipo [flextable]{.hl} con la función [as_flex_table()]{.plo}.
+
+- Paso 3: Se guarda como word con la función [save_as_docx()]{.plo}
+
+:::
+
+::::
+
+
+## Guardar tabla como documento MS Word (cont.) {.scrollable}
+<hr>
+
+- El [MS Word]{.hl} aparecerá en la [carpeta]{.hl}  del [proyecto]{.hl}:
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/tabla1-rstudio.png")
+```
+
+
+## Guardar tabla como documento MS Word (cont.) {.scrollable}
+<hr>
+
+- Y la [tabla]{.hl} en [Word]{.hl} lucirá así:
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/tabla1-word.png")
+```
+
+## Guardar tabla como documento MS Excel {.scrollable}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='30%'}
+
+- Usamos el paquete [{huxtable}]{.plo}
+
+```{r}
+library(huxtable)
+```
+
+- Con la función [as_hux_xlsx]{.plo} convertimos el objeto [tbl_summary]{.hl} a un excel con un nombre de archivo que uno defina:
+ 
+```{r}
+tabla1 %>% 
+  as_hux_xlsx(file = "Tabla1.xlsx")
+```
+
+:::
+
+::: {.column width='70%'}
+
+
+- La tabla en excel se muestra a continuación:
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: 100%
+knitr::include_graphics("img/tabla1-excel.png")
+```
+
+:::
+
+::::
+
+# [gtsummary: tbl_summary y argumento by =]{.blanco}
+
+<h1>[{gtsummary}: tbl_summary y argumento by =]{.verde-h3}</h1>
+
+## {gtsummary}: tbl_summary y argumento by = 
+<hr>
+
+> Se puede usar la función [tbl_summary()]{.plo} para comparar variables numéricas según grupos.
+
+::: columns
+::: {.column width="50%"}
+``` r
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo)
+```
+
+-   Primero seleccionamos las variables numéricas y la variable de agrupación sexo.
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) 
+```
+:::
+:::
+
+## {gtsummary}: tbl_summary y argumento by = {auto-animate=true}
+<hr>
+
+::: columns
+::: {.column width="50%"}
+``` r
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary()
+```
+
+-   Primero seleccionamos las variables numéricas y la variable de agrupación sexo.
+
+-   Si hacemos [tbl_summary()]{.plo}, se generará una tabla descriptiva para toda la muestra.
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 50%
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary() %>%  
+  as_gt() %>% 
+  gtsave("tab1.png", "img/")
+
+knitr::include_graphics("img/tab_biv1.png")
+```
+:::
+:::
+
+## {gtsummary}: tbl_summary y argumento by = {auto-animate=true}
+<hr>
+
+::: columns
+::: {.column width="50%"}
+``` r
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo)
+```
+
+-   Primero seleccionamos las variables numéricas y la variable de agrupación sexo.
+
+-   Si hacemos [tbl_summary()]{.plo}, se generará una tabla descriptiva para toda la muestra.
+
+-   El argumento [by()]{.plo} genera una tabla descriptiva con las medidas de resumen por cada grupo.
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo) %>%  
+  as_gt() %>% 
+  gtsave("tab2.png", "img/")
+
+knitr::include_graphics("img/tab_biv2.png")
+```
+:::
+:::
+
+## Personalizar tbl_summary() paso a paso 
+<hr>
+
+::: columns
+::: {.column width="50%"}
+``` r
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo) 
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo) %>%  
+  as_gt() %>% 
+  gtsave("tab3.png", "img/")
+
+knitr::include_graphics("img/tab_biv3.png")
+```
+:::
+:::
+
+## Personalizar tbl_summary() paso a paso {auto-animate=true}
+<hr>
+
+::: columns
+::: {.column width="50%"}
+``` r
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2")) 
+```
+
+-   [type:]{.hl} Especifica el tipo de variable para resumen.
+
+    -   Queremos reportar varios estadísticos para edad
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2")) %>%  
+  as_gt() %>% 
+  gtsave("tab4.png", "img/")
+
+knitr::include_graphics("img/tab_biv4.png")
+```
+:::
+:::
+
+## Personalizar tbl_summary() paso a paso {auto-animate=true}
+<hr>
+
+::: columns
+::: {.column width="50%"}
+``` r
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              statistic = list(
+                edad ~ c("{mean} ± {sd}", "{median} ({p25}, {p75})")
+              )) 
+```
+
+-   [type:]{.hl} Especifica el tipo de variable para resumen.
+
+    -   Queremos reportar varios estadísticos para edad
+
+-   [statistic:]{.hl} Personaliza los estadísticos reportados.
+
+    -   Indicamos qué estadísticos queremos reportar para edad.
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              statistic = list(
+                edad ~ c("{mean} ± {sd}", "{median} ({p25}, {p75})")
+              )) %>%  
+  as_gt() %>% 
+  gtsave("tab5.png", "img/")
+
+knitr::include_graphics("img/tab_biv5.png")
+```
+:::
+:::
+
+## Personalizar tbl_summary() paso a paso {auto-animate=true}
+<hr>
+
+::: columns
+::: {.column width="50%"}
+``` r
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              statistic = list(
+                edad ~ c("{mean} ± {sd}", "{median} ({p25}, {p75})"), 
+                IgG_Basal ~ "{mean} ± {sd}"
+              )) 
+```
+
+-   [type:]{.hl} Especifica el tipo de variable para resumen.
+
+    -   Queremos reportar varios estadísticos para edad
+
+-   [statistic:]{.hl} Personaliza los estadísticos reportados.
+
+    -   Indicamos qué estadísticos queremos reportar para edad.
+
+    -   Queremos reportar media y DE para IgG Basal.
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              statistic = list(
+                edad ~ c("{mean} ± {sd}", "{median} ({p25}, {p75})"), 
+                IgG_Basal ~ "{mean} ± {sd}"
+              )) %>%  
+  as_gt() %>% 
+  gtsave("tab6.png", "img/")
+
+knitr::include_graphics("img/tab_biv6.png")
+```
+:::
+:::
+
+## Personalizar tbl_summary() paso a paso {auto-animate=true}
+<hr>
+
+::: columns
+::: {.column width="50%"}
+``` r
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              statistic = list(
+                edad ~ c("{mean} ± {sd}", "{median} ({p25}, {p75})"), 
+                IgG_Basal ~ "{mean} ± {sd}"
+              ), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              ))
+```
+
+-   [type:]{.hl} Especifica el tipo de variable para resumen.
+
+    -   Queremos reportar varios estadísticos para edad
+
+-   [statistic:]{.hl} Personaliza los estadísticos reportados.
+
+    -   Indicamos qué estadísticos queremos reportar para edad.
+
+    -   Queremos reportar media y DE para IgG Basal.
+
+-   [label]{.hl} Personaliza las etiquetas de variable.
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              statistic = list(
+                edad ~ c("{mean} ± {sd}", "{median} ({p25}, {p75})"), 
+                IgG_Basal ~ "{mean} ± {sd}"
+              ), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              )) %>%  
+  as_gt() %>% 
+  gtsave("tab7.png", "img/")
+
+knitr::include_graphics("img/tab_biv7.png")
+```
+:::
+:::
+
+## Personalizar tbl_summary() paso a paso {auto-animate=true}
+<hr>
+
+::: columns
+::: {.column width="50%"}
+``` r
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              statistic = list(
+                edad ~ c("{mean} ± {sd}", "{median} ({p25}, {p75})"), 
+                IgG_Basal ~ "{mean} ± {sd}"
+              ), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              ), 
+              digits = list(
+                c(IgG_Final, IgG_Basal) ~ 2
+              ))
+```
+
+-   [type:]{.hl} Especifica el tipo de variable para resumen.
+
+-   [statistic:]{.hl} Personaliza los estadísticos reportados.
+
+-   [label]{.hl} Personaliza las etiquetas de variable.
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              statistic = list(
+                edad ~ c("{mean} ± {sd}", "{median} ({p25}, {p75})"), 
+                IgG_Basal ~ "{mean} ± {sd}"
+              ), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              ), 
+              digits = list(
+                c(IgG_Final, IgG_Basal) ~ 2
+              )) %>%  
+  as_gt() %>% 
+  gtsave("tab8.png", "img/")
+
+knitr::include_graphics("img/tab_biv8.png")
+```
+
+-   [digits:]{.hl} Controla el número de decimales de redondeo.
+
+    -   Permitir que IgG (basal y final) se reporten con solo 2 decimales.
+:::
+:::
+
+## Personalizar tbl_summary() paso a paso {auto-animate=true}
+<hr>
+
+::: columns
+::: {.column width="50%"}
+``` r
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              statistic = list(
+                edad ~ c("{mean} ± {sd}", "{median} ({p25}, {p75})"), 
+                IgG_Basal ~ "{mean} ± {sd}"
+              ), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              ), 
+              digits = list(
+                c(IgG_Final, IgG_Basal) ~ 2, 
+                edad ~ c(1, 2, 1, 2)
+              )) 
+```
+
+-   [type:]{.hl} Especifica el tipo de variable para resumen.
+
+-   [statistic:]{.hl} Personaliza los estadísticos reportados.
+
+-   [label]{.hl} Personaliza las etiquetas de variable.
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              statistic = list(
+                edad ~ c("{mean} ± {sd}", "{median} ({p25}, {p75})"), 
+                IgG_Basal ~ "{mean} ± {sd}"
+              ), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              ), 
+              digits = list(
+                c(IgG_Final, IgG_Basal) ~ 2, 
+                edad ~ c(1, 2, 1, 2)
+              )) %>%  
+  as_gt() %>% 
+  gtsave("tab9.png", "img/")
+
+knitr::include_graphics("img/tab_biv9.png")
+```
+
+-   [digits:]{.hl} Controla el número de decimales de redondeo.
+
+    -   Edad que se reporte con 1 decimal la media y media y 2 decimales la SD y el IQR.
+:::
+:::
+
+## Más personalización de tbl_summary() con add_()
+<hr>
+
+::: columns
+::: {.column width="50%"}
+``` r
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              ))
+```
+
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              )) %>% 
+  as_gt() %>%
+  gtsave("tab10.png", "img/")
+
+knitr::include_graphics("img/tab_biv10.png")
+```
+
+:::
+:::
+
+## Más personalización de tbl_summary() con add_() {auto-animate=true}
+<hr>
+
+::: columns
+::: {.column width="50%"}
+``` r
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              )) %>% 
+  add_overall()
+```
+
+-   [add_overall:]{.hl} Agrega una columna con el resumen de características para toda la población de estudio.
+
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              )) %>% 
+  add_overall() %>% 
+  as_gt() %>%
+  gtsave("tab11.png", "img/")
+
+knitr::include_graphics("img/tab_biv11.png")
+```
+
+:::
+:::
+
+## Más personalización de tbl_summary() con add_() {auto-animate=true}
+<hr>
+
+::: columns
+::: {.column width="50%"}
+``` r
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              )) %>% 
+  add_overall() %>% 
+  add_n()
+```
+
+-   [add_overall:]{.hl} Agrega una columna con el resumen de características para toda la población de estudio.
+
+- [add_n():]{.hl} Agrega una columna con el tamaño de muestra efectivo (excluyendo los datos perdidos)
+
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              )) %>% 
+  add_overall() %>% 
+  add_n() %>% 
+  as_gt() %>%
+  gtsave("tab12.png", "img/")
+
+knitr::include_graphics("img/tab_biv12.png")
+```
+
+:::
+:::
+
+## Más personalización de tbl_summary() con modify_() 
+<hr>
+
+- Podemos modificar el nombre de las cabeceras, pero primero hay que saber cómo están guardadas.
+
+- Creamos la tabla cruda y la guardamos con un nombre:
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              )) -> tabla
+
+tabla
+```
+
+```{r}
+#| echo: false
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              )) -> tabla
+```
+
+:::
+
+::: {.column width='50%'}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              )) -> tabla
+
+tabla %>%   
+  as_gt() %>%
+  gtsave("tab13.png", "img/")
+
+knitr::include_graphics("img/tab_biv13.png")
+```
+
+:::
+
+::::
+
+## Más personalización de tbl_summary() con modify_() {auto-animate=true}
+<hr>
+
+- Podemos modificar el nombre de las cabeceras, pero primero hay que saber cómo están guardadas.
+
+- Creamos la tabla cruda y la guardamos con un nombre:
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              )) -> tabla
+
+tabla
+```
+
+```{r}
+#| echo: false
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              )) -> tabla
+```
+
+
+- Luego, consultamos los nombres de cabeceras internos que tiene el objeto tbl_summary:
+
+```{r}
+show_header_names(tabla)
+```
+
+:::
+
+::: {.column width='50%'}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              )) -> tabla
+
+tabla %>%   
+  as_gt() %>%
+  gtsave("tab14.png", "img/")
+
+knitr::include_graphics("img/tab_biv14.png")
+```
+
+- Podemos editar los nombres de las cabeceras llamándolos como [label]{.hl}, [stat_1]{.hl} y [stat_2]{.hl}.
+
+:::
+
+::::
+
+## Más personalización de tbl_summary() con modify_() 
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              )) 
+```
+- [modify_header()]{.hl}: Edita los nombres de las cabeceras.
+
+:::
+
+::: {.column width='50%'}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              )) %>% 
+  as_gt() %>%
+  gtsave("tab15.png", "img/")
+
+knitr::include_graphics("img/tab_biv15.png")
+```
+
+
+:::
+
+::::
+
+## Más personalización de tbl_summary() con modify_() {auto-animate=true}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              )) %>% 
+  modify_header(
+    label ~ "Variables", 
+    stat_1 ~ "Female", 
+    stat_2 ~ "Male"
+  )
+```
+- [modify_header()]{.hl}: Edita los nombres de las cabeceras.
+
+:::
+
+::: {.column width='50%'}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              )) %>% 
+  modify_header(
+    label ~ "Variables", 
+    stat_1 ~ "Female", 
+    stat_2 ~ "Male"
+  ) %>%   
+  as_gt() %>%
+  gtsave("tab16.png", "img/")
+
+knitr::include_graphics("img/tab_biv16.png")
+```
+
+
+:::
+
+::::
+
+## Más personalización de tbl_summary() con modify_() {auto-animate=true}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              )) %>% 
+  modify_header(
+    label ~ "Variables", 
+    stat_1 ~ "Female", 
+    stat_2 ~ "Male"
+  )
+```
+- [modify_header()]{.hl}: Edita los nombres de las cabeceras.
+
+    + Podemos editar el contenido de estas con {}
+    
+        + Por ejemplo, poner "n = {n}"
+
+:::
+
+::: {.column width='50%'}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              )) %>% 
+  modify_header(
+    label ~ "Variables", 
+    stat_1 ~ "Female (n = {n})", 
+    stat_2 ~ "Male (n = {n})"
+  )  %>%  
+  as_gt() %>%
+  gtsave("tab17.png", "img/")
+
+knitr::include_graphics("img/tab_biv17.png")
+```
+
+:::
+
+::::
+
+## Más personalización de tbl_summary() con modify_() {auto-animate=true}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              )) %>% 
+  modify_header(
+    label ~ "Variables", 
+    stat_1 ~ "Female (n = {n})", 
+    stat_2 ~ "Male (n = {n})"
+  )  
+```
+- [modify_header()]{.hl}: Edita los nombres de las cabeceras.
+
+    + Podemos editar el contenido de estas con {}
+    
+        + Por ejemplo, poner "n = {n}"
+
+:::
+
+::: {.column width='50%'}
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| error: false
+#| fig-align: center
+#| out-width: 100%
+bd_inmuno %>% 
+  select(edad, tdosis_refuerzo, IgG_Basal, IgG_Final, sexo) %>% 
+  tbl_summary(by = sexo, 
+              type = list(edad ~ "continuous2"), 
+              label = list(
+                edad ~ "Age, years", 
+                tdosis_refuerzo ~ "Time between second and third dose", 
+                IgG_Basal ~ "IgG pre booster", 
+                IgG_Final ~ "IgG post booster"
+              )) %>% 
+  modify_header(
+    label ~ "Variables", 
+    stat_1 ~ "Female (n = {n})", 
+    stat_2 ~ "Male (n = {n})"
+  )  %>%  
+  as_gt() %>%
+  gtsave("tab18.png", "img/")
+
+knitr::include_graphics("img/tab_biv18.png")
+```
+
+# [Buenas y malas prácticas de reporte en investigación]{.blanco}
+
+<h1>[Buenas y malas prácticas de reporte en investigación]{.verde-h3}</h1>
+
+## Recomendaciones de reporte {.scrollable}
+
+- `No reporte valores p innecesarios`, que no respondan sus preguntas de investigación pre-definidas.
+
+- Es una `mala práctica` reportar tablas comparativas descriptivas con valores p. Lamentablemente es muy difundida.
+
+- Varias guías, comenzando por `STROBE` (para observacionales) y `CONSORT` (para ensayos clínicos) explícitamente recomiendan en contra de reportar estas tablas. Solo haga una comparación descriptiva de los resultados de la tabla. 
+
+## gtsummary and p-values {.scrollable}
+
+- Se puede agregar el valor p en las tablas de gtsummary:
+
+```{r}
+library(gtsummary)
+datos %>%
+  dplyr::select(treat, age, race, married2, weight, height, e2) %>% 
+  tbl_summary(
+    by = treat
+  ) %>%  
+  add_p()
+```
+
+- Tambien se puede personalizar las pruebas de hipótesis: <https://www.danieldsjoberg.com/gtsummary/reference/tests.html?q=add%20_%20p>
+
+- Sin embargo, a menos que sea parte del análisis principal, no recomendamos el uso de valores p en las tablas comparativas descriptivas (Tabla 1 o 2 de muchos artículos).
+
+## ¿Qué dice STROBE? {.scrollable}
+
+- La guía "Strengthening the reporting of observational studies in epidemiology (STROBE) statement" da algunas recomendaciones para tablas tipo 1: 
+
+```{r}
+#| fig-align: center
+#| echo: false
+#| out-width: 100%
+knitr::include_graphics("img/strobe-caratula.png")
+```
+
+## ¿Qué dice STROBE? {.scrollable}
+
+- STROBE recomienda en contra de reportar valores p en las tablas descriptivas!!
+
+```{r}
+#| fig-align: center
+#| echo: false
+#| out-width: 100%
+knitr::include_graphics("img/strobe-nopvalue.png")
+```
+<center><https://journals.lww.com/epidem/Fulltext/2007/11000/Strengthening_the_Reporting_of_Observational.28.aspx></center>
+
+- Lamentablemente sigue siendo una mala práctica muy difundida. Evitemos esta mala práctica.
+
+## ¿Y valores p en la Tabla 11 de ensayos clínicos? {.scrollable}
+
+- El "Consolidated Standards of Reporting Trials (CONSORT)" recomienda no usar valores p ni métodos de inferencia estadística en la Tabla 1.
+
+- Evaluar el "balance" y la "adecuada" asignación aleatoria  en la Tabla 1 de un ensayo clínico es conocido como: "Falacia de la tabla 1". 
+
+- Para más información revise el siguiente artículo: <https://www.bmj.com/content/340/bmj.c869>
+
+
+# [Misceláneas]{.blanco}
+
+<h1>[{gtsummary}: Misceláneas]{.verde-h3}</h1>
+
+## Otras formas de imprimir tablas
+
+- Tablas con `kable()` y `kableExtra()` de paquete `{knitr}`.
+
+- Tablas de `{gt}` y `{flextable}`.
+
+## Reproducibilidad y gráficos
+
+- Crear gráficos de alta calidad con ggplot2
+
+- Guardar gráficos especificando sus parámetros con ggsave
+
+- Ensamblar gráficos con {patchwork}
+
+- Imprimir imágenes en Quarto
+
+## Superpoderes de Quarto
+
+- Código dentro de texto.
+
+- Información extra sobre Quarto
+
+- Configuraciones básicas adicionales.
+
+- Temas de Quarto
+
+## `r fontawesome::fa("mug-saucer", "white")` Hagamos una pausa {background-color="#00817E"}
+<hr>
+
+::: r-fit-text
+
+<center>
+
+Tomemos un descanso de `5 minutos`...
+
+Estire las piernas `r fontawesome::fa("person-walking", "white")`... 
+
+Deje de ver las pantallas `r fontawesome::fa("laptop", "white")`...
+
+... cualquier `r fontawesome::fa("laptop", "white")`, las del celular `r fontawesome::fa("mobile", "white")` también.
+
+</center>
+
+:::
+
+```{r}
+#| echo: false
+library(countdown)
+countdown_timer <- function(
+    minutes = 1, 
+    play_sound = TRUE, 
+    font_size = "2em", 
+    ...
+) {
+  countdown(
+    minutes = minutes,
+    # Fanfare when it's over
+    play_sound = play_sound,
+    # Set timer theme to match solarized colors
+    color_border              = "#404041",
+    color_text                = "white",
+    color_background = "#000000",
+    color_running_background  = "#72994E",
+    color_running_text        = "white",
+    color_finished_background = "#EE6331",
+    color_finished_text       = "white",
+    font_size = font_size,
+    ...
+  )
+}
+```
+
+```{r}
+#| echo: false
+countdown_timer(5)
+```
+
+## 
+
+::: r-fit-text
+<center>¡Gracias!</center>
+
+<center>¿Preguntas?</center>
+
+:::
+
+## 
+
+\
+
+\
+
+\
+
+::: r-fit-text
+
+<center>
+{{< fa brands twitter >}} @psotob91 
+
+{{< fa brands github >}} https://github.com/psotob91
+
+{{< fa inbox >}} percys1991@gmail.com
+</center>
+
+:::

@@ -1,0 +1,19 @@
+---
+title: "Tareas"
+---
+
+Los objetivos de este curso es que ustedes puedan realizar un análisis descriptivo y, cuando sea apropiado, aplicar métodos de inferencia estadístico. Cada tarea está diseñada para ayudarles a alcanzar una de estas metas.
+
+
+## Problem sets
+
+
+Para paracticar escribir código en R, realizar análisis descriptivos y aplicar inferencia estadística, completará una serie de conjunto de problemas o **Problem sets**.
+
+Deberá demostrar que hizo un esfuerzo consciente para resolver cada pregunta. 
+
+- ✔+: (*20 puntos*) La tarea está 100% completa. Todas las preguntas fueron  respondidas, y la mayoría de las respuestas son correctas. El documento es limpio y fácil de seguir. El trabajo es excepcional. A menudo no asignaré este puntaje.
+- ✔: (*18 puntos*) La tarea está completa en un 70–99 % y la mayoría de las respuestas son correctas. **Este es el nivel de rendimiento esperado.**
+- ✔−: (*13 puntos*) La tarea está completa en menos del 70 % y/o la mayoría de las respuestas son incorrectas. Esto indica que necesita mejorar la próxima vez. Espero no asignarlos a menudo.
+
+Pueden (¡y deben!) trabajar juntos en los conjuntos de problemas, pero *deben entregar sus propias respuestas.* No pueden trabajar en grupos de más de **cuatro** personas, y deben indicar quién participó en el grupo en tu tarea

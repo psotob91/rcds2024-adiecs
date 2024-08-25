@@ -1,0 +1,163 @@
+---
+title: "Adicional"
+---
+
+## Paquetes
+
+```{r}
+library(tidyverse)
+library(knitr)
+library(gt)
+library(summarytools)
+library(Hmisc)
+library(janitor)
+```
+
+##  Datos
+
+```{r}
+edad <- c(9, 12, 10, 8, 7, 6)
+hb <- c(11.2, 10.4, 9.8, NA, 14, 8.1)
+
+datos <- data.frame(edad = edad, 
+                    hb = hb, 
+                    sexo = c(rep("female", 4), 
+                             rep("male", 2)), 
+                    obesidad = c(rep("si", 3), 
+                                 rep("no", 3)))
+```
+
+```{r}
+mean(edad)
+```
+
+```{r}
+mean(hb)
+```
+
+```{r}
+mean(hb, na.rm = TRUE)
+```
+  
+```{r}
+mean(datos$edad)
+```
+
+```{r}
+mean(datos$hb)
+```
+
+```{r}
+mean(datos$hb, na.rm = TRUE)
+```
+
+```{r}
+median(datos$hb, na.rm = TRUE)
+```
+
+```{r}
+quantile(datos$hb, probs = c(0.5), na.rm = TRUE)
+```
+```{r}
+quantile(datos$hb, probs = c(0.25, 0.5, 0.75), na.rm = TRUE)
+```
+```{r}
+sd(datos$hb, na.rm = TRUE)
+```
+
+```{r}
+datos %>% 
+  summarise(mean(edad))
+```
+
+```{r}
+datos %>% 
+  summarise(Media = mean(edad))
+```
+
+```{r}
+datos %>% 
+  summarise(media_edad = mean(edad), 
+            sd_edad = sd(edad), 
+            media_hb = mean(hb, na.rm = TRUE), 
+            sd_hb = sd(hb, na.rm = TRUE))
+```
+
+
+```{r}
+datos %>% 
+  summarise(n = n(), 
+            media_edad = mean(edad), 
+            sd_edad = sd(edad), 
+            media_hb = mean(hb, na.rm = TRUE), 
+            sd_hb = sd(hb, na.rm = TRUE)) -> datos_sum
+```
+
+```{r}
+datos_sum |> 
+  mutate(Edad = str_glue("{round(media_edad, 1)} ({round(sd_edad, 1)})"), 
+         Hemoglobina = str_glue("{round(media_hb, 1)} ({round(sd_hb, 1)})")) |> 
+  select(n, Edad, Hemoglobina) -> datos_tabla
+```
+
+- Reportar:
+
+```{r}
+datos_tabla |> 
+  kable()
+```
+
+- Reportar:
+
+```{r}
+datos_tabla |> 
+  gt()
+```
+
+
+```{r}
+datos |> 
+  descr()
+```
+
+```{r}
+datos |> 
+  descr(stats = c("mean", "sd", "min", "max"))
+```
+
+        
+```{r}
+describe(datos$edad)
+```
+
+```{r}
+datos %>% 
+  pull(edad) %>%
+  describe()
+```
+
+```{r}
+table(datos$sexo)
+```
+
+```{r}
+datos |> 
+  count(sexo) -> tabla_datos_sexo
+
+tabla_datos_sexo |> 
+  gt()
+```
+
+
+```{r}
+datos |> 
+  tabyl(sexo, obesidad) |> 
+  adorn_pct_formatting() |> 
+  adorn_ns()
+```
+
+```{r}
+datos |> 
+  freq(sexo)
+```
+

@@ -1,0 +1,31 @@
+---
+title: "Día 03"
+date: "2024-03-23"
+---
+
+## Materiales
+
+::: {.panel-tabset}
+
+### Videoclase grabada
+
+[Se subirá a más tardar el día siguiente de realizada la sesión]
+
+
+### Slides
+
+[Se subirá a más tardar el día siguiente de realizada la sesión]
+
+### Talleres
+
+|                              |                                                                                  |
+|----------------------|--------------------------------------------------|
+| Instructivo en línea         | [Aquí](../taller/taller03/taller03_instructivo_xxx.html)                                                 |
+| Instructivo con solucionario | [Aquí](../taller/taller03/taller03_instructivo_sol_xxx.html)                                                                       |
+| Quarto para alumnos          | [Aquí](../taller/taller03/taller03_alumno_xxx.qmd)                                                                       |
+| Toda la carpeta del taller   | [Aquí](https://drive.google.com/drive/folders/16C3xkQ9i0AnY-FbCPDa3ZwLRXY8XDNyPxxx) |
+
+:::
+
+
+

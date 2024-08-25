@@ -1,0 +1,830 @@
+---
+format: 
+  revealjs: 
+    self-contained: true
+    theme: [default, theme/theme.scss]
+    footer: "Análisis Estadístico de Datos en Salud 2023 - Día 3"
+    logo: img/icon-512-insnsb.jpg
+    transition: convex
+    background-transition: zoom
+    incremental: false
+    slide-number: c/t
+    preview-links: true
+    # width: 1920
+    # height: 1080
+    height: 900
+    width: 1600
+    # parallax-background-image: images/bg-ietsi-slide-first.png
+    # parallax-background-size: "1920px 1080px"
+    # chalkboard: true
+    code-block-background: true
+    code-block-border-left: "#31BAE9"
+    highlight-style: ayu-dark
+    echo: true
+    multiplex: true
+    touch: true
+    auto-stretch: true
+    link-external-icon: true
+    link-external-newwindow: true
+    self-contained-math: true
+    
+from: markdown+emoji
+execute:
+  echo: true
+filters:
+  - reveal-auto-agenda
+auto-agenda:
+  bullets: numbered
+  heading: Agenda
+---
+\
+
+\
+
+<h1>Sesión 4</h1>
+
+<h2>[Curso: Análisis Estadístico de Datos en Salud]{.plo}</h2>
+
+<hr>
+
+<h3>[Percy Soto-Becerra, M.D., M.Sc(c)]{.negro}</h3>
+
+<h4>[DIS -- IETSI, EsSalud]{.negro}</h4>
+
+<h4>[2023-06-02]{.negro}</h4>
+
+`r fontawesome::fa("github", "black")` &nbsp; [https://github.com/psotob91](https://github.com/psotob91)
+
+![](img/logo.png){.absolute top=390 left=950 width="600"}
+
+
+
+```{r}
+#| echo: false
+#| output: false
+
+# Removing all objects including loaded libraries
+rm(list = ls(all = TRUE))
+gc()
+
+# Installing and loading packages
+if (!require("pacman")) {
+  install.packages("pacman")
+}
+
+pacman::p_unload("all") # Unloading all package except base
+
+pacman::p_load(tidyverse, 
+               tibble, 
+               labelled, 
+               pander, 
+               gt, 
+               kableExtra, 
+               DT, 
+               haven, 
+               skimr, 
+               Hmisc, 
+               janitor, 
+               rio) # Loading packages
+
+datos_fase1 <- read_stata("maca_meno_fase1.dta") %>% 
+  as_factor()
+
+datos <- datos_fase1
+```
+
+# Manejo de datos 2: Categorización de variables
+
+## Creación de variables con [case_when()]{.verde-h3}
+
+-   Función de apoyo a [mutate()]{.verde-h3}para crear variables según condiciones más complejas.
+
+-   Crea variables de acuerdo a condiciones complejas
+
+```r
+case_when(
+  condición1 ~ resultado1, 
+  condición2 ~ resultado2, 
+  condición3 ~ resultado3
+  )
+```
+
+- Toda transformación o creación de variables en dplyr ocurre por mutate; por tanto, [case_when()]{.verde-h3}se utiliza dentro de un mutate
+
+```r
+datos %>% 
+  mutate(
+    nueva_var = case_when(
+      condición1 ~ resultado1,
+      condición2 ~ resultado2, 
+      condición3 ~ resultado3
+    )
+  )
+```
+
+- Atajo de teclado para obtener `~`: <kbd>Alt</kbd> + <kbd>1</kbd> + <kbd>2</kbd> + <kbd>6</kbd>
+
+## Condición no cumplida en [case_when()]{.verde-h3}
+
+- Para indicar que todas las condiciones previas no se cumplen, se debe colocar `TRUE`:
+
+```r
+datos %>% 
+  mutate(
+    nueva_var = case_when(
+      condición1 ~ resultado1,
+      condición2 ~ resultado2, 
+      condición3 ~ resultado3, 
+      TRUE ~ resultado_si_condición_no_se_cumple
+    )
+  )
+```
+
+- Es muy importante siempre colocarla al final de cualquier conjunto de condiciones previas.
+
+- Cuando el resultado de no cumplirse es que se asigne valor perdido, es importante usar la función `as.tipo_var()` sobre el indicador de dato perdido `NA`.
+
+    + Si es character: [as.character(NA)]{.verde-h3}
+    
+    + Si es numeric: [as.numeric(NA)]{.verde-h3}
+
+
+## [case_when()]{.verde-h3} en acción
+
+::: {.panel-tabset}
+
+
+### Categorizar variable numérica
+
+-   Se quieren crear categorías de edad: "20-30", "31-35" y "36-41"
+
+```{r}
+datos_fase1 %>% 
+  select(id, age) %>% 
+  mutate(agecat = case_when(age >= 20 & age <= 30 ~ "20-30", 
+                            age >= 31 & age <= 35 ~ "31-35", 
+                            age >= 36 & age <= 41 ~ "36-41", 
+                            TRUE ~ as.character(NA))
+         ) 
+```
+
+
+### Variable según condición compleja
+
+- Se desea crear variable indicadora de inclusión en estudio: Solo pacientes sin pareja y que proceden de Callao, Carabayllo, Chorrillos o SJL son elegibles:  
+
+```{r}
+datos_fase1 %>% 
+  mutate(elegible = case_when(
+    married2 == "Without couple" & procedence %in% c("Callao", "Carabayllo", "Chorrillos", "SJL") ~ "Elegible", 
+    TRUE ~ "No elegible"
+    )
+  ) 
+```
+
+
+:::
+
+
+
+## Recodificar valores de variables con [case_match()]{.verde-h3}
+<hr>
+
+- Recodifica los valores de una variable por otros.
+
+- Anteriormente se usaba `recode()`, esta función sigue funcionando pero ha sido superada por `case_match()` y es la que se recomienda usar.
+
+-   Crea variables de acuerdo a condiciones complejas
+
+```r
+case_match(
+  variable, 
+  valor_antiguo1 ~ valor_nuevo1, 
+  c(valor_antiguo2, valor_antiguo3) ~ valor_nuevo2, 
+  valor_antiguo3 ~ valor_nuevo3
+  )
+```
+
+## Recodificar valores de variables con [case_match()]{.verde-h3}
+<hr>
+
+- Toda modificación de variables en dplyr ocurre por mutate; por tanto, [case_match()]{.verde-h3}se utiliza dentro de un mutate
+
+```r
+datos %>% 
+  mutate(
+    variable = case_match(
+      variable, 
+      valor_antiguo1 ~ valor_nuevo1,
+      c(valor_antiguo2, valor_antiguo3) ~ valor_nuevo2, 
+      valor_antiguo3 ~ valor_nuevo3
+    )
+  )
+```
+
+
+
+## [case_match()]{.verde-h3} en acción
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+- Veamos la variable married2:
+
+```{r}
+datos_fase1 |> 
+  select(married2) |> 
+  head()
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+datos_fase1 %>% 
+  mutate(married2 = case_match(married2, 
+                           "Without couple" ~ "Sin pareja", 
+                           "With couple" ~ "Con pareja"))
+
+datos_fase1 |> 
+  select(married2) |> 
+  head()
+```
+
+:::
+
+::::
+
+
+- Cambiar los valores de married2 del inglés al español:
+
+
+
+# AID / AED en R
+
+## {.scrollable}
+
+> **Paso 1:** Resumen global de los datos
+
+
+::: panel-tabset
+
+### ¿Qué debo inspeccionar de manera global?
+
+- Dimensiones: columnas y filas
+
+- Variables y tipos
+
+- Datos completos y faltantes
+
+- Variables numéricas: Mínimos, máximos y valores extremos
+
+- Variables categóricas: Valores o categorías muy poco frecuentes y datos perdidos encubiertos
+
+### [glimpse()]{.verde-h3}
+
+- Heche un vistazo de los datos con [glimpse()]{.verde-h3}:
+
+```{r}
+glimpse(datos)
+```
+
+### [skim()]{.verde-h3}
+
+- La función [skim()]{.verde-h3} del paquete [{skimr}]{.verde-h3} genera un resumen global de los datos:
+
+```{r}
+skim(datos)
+```
+
+### [describe()]{.verde-h3}
+
+- La función [describe()]{.verde-h3} del paquete [{Hmisc}]{.verde-h3} genera un reporte general bien detallado, variable por variable:
+
+```{r}
+describe(datos)
+```
+:::
+
+## {.scrollable}
+
+> **Paso 2:** Detecte y maneje duplicados 
+
+::: panel-tabset
+### Filas duplicadas
+
+- La función [get_dupes()]{.verde-h3} del paquete [{janitor}]{.verde-h3} es útil para esto.
+
+-   Si solo colocamos [get_dupes()]{.verde-h3}, entonces nos identifica duplicados de fila completa:
+
+```{r}
+#| echo: false
+datos <- import("maca_meno_perclin.csv")
+```
+
+
+```{r}
+library(janitor)
+datos %>% 
+  get_dupes()
+```
+
+### ID duplicados
+
+-   Si colocamos una o más variables dentro de [get_dupes()]{.verde-h3}, entonces nos identifica duplicados solo de esa variable.
+
+-   A menudo lo hacemos para encontrar individus duplicados.
+
+```{r}
+datos %>% 
+  get_dupes(id_raton)
+```
+
+### Elimine duplicados
+
+-   Si el duplicado es erróneo, lo podemos eliminar con [distinct()]{.verde-h3} y el argumento [.keep_all = TRUE]{.verde-h3}.
+
+-   Se debde espeficiar si el duplicado es de fila o de alguna variable (p. ej., id).
+
+```{r}
+datos <- datos %>% 
+  distinct(id_raton, .keep_all = TRUE)
+
+datos
+```
+
+### Deduplicación probabilística
+
+- ¿Qué pasa si no se sabe si el duplicado es erróneo?
+
+    + Podemos tener dos o más filas con duplicados y no saber cuál es el correcto.
+    
+    + En estos casos, el problema es complejo. Una solución puede ser la deduplicación probabilística.
+    
+:::
+
+## {.scrollable}
+
+> **Paso 3:** Identifique datos faltantes
+
+- Evalúe número y porcentaje de datos perdidos así como el patrón de estos.
+
+- Hay varios paquetes que permiten manejar datos perdidos:
+    + [{VIM}]{.verde-h3}
+    + [{visdat}]{.verde-h3}
+    + [{naniar}]{.verde-h3}
+    + [{otros}]{.verde-h3}
+    
+- Usaremos algunas funciones de [{visdat}]{.verde-h3}, [{VIM}]{.verde-h3}y [{naniar}]{.verde-h3}.
+
+- [{visdat}]{.verde-h3}y [{nanair}]{.verde-h3}generan gráficos [{ggplot2}]{.verde-h3}, mientras que [{VIM}]{.verde-h3} no lo hace.
+
+## {.scrollable}
+
+> **Paso 3:** Identifique datos faltantes (cont.)
+
+::: panel-tabset
+
+### [skim()]{.verde-h3}
+
+- Nuevamente  [skim()]{.verde-h3} nos permite conocer, rápidamente, el número de datos perdidos.
+
+```{r}
+skim(datos)
+```
+
+### Visualizar tipos de datos
+
+- El paquete [{visdat}]{.verde-h3} te permite visualizar el tipo de dato y si hay o no presencia de datos perdidos
+
+```{r}
+#| fig-align: center
+#| out-width: 90%
+library(visdat)
+datos %>% 
+  vis_dat()
+```
+
+- Es importante verificar si el tipo de dato corresponde con la naturaleza de la variable de estudio.
+
+- Algunos datos faltantes pueden no verse por no configurar apropiadamente el tipo de la variable.
+
+### Visualizar % de datos faltantes
+
+- Podemos también generar gráficos para identificar los datos perdidos y sus combinaciones:
+
+```{r}
+#| fig-align: center
+#| out-width: 90%
+datos %>% 
+  vis_miss()
+```
+
+- Se aprecia que la variable `prot` tiene 47.83% de sus datos faltantes. La variable `urea` tiene 39.13% de sus datos faltantes. 
+
+- La legenda que dice `Missing (10.7%)` indica que el total de datos faltantes en las celdas (no en las filas) es de 10.7%.
+
+- ¿Cuántos datos faltantes en por fila tendremos? ¿Qué combinaciones de datos faltantes tendremos?
+
+:::
+
+## {.scrollable}
+
+> **Paso 3:** Identifique datos faltantes (cont.)
+
+::: panel-tabset
+
+### Combinaciones de datos faltantes
+
+- El paquete [{VIM}]{.verde-h3} permite identificar datos perdidos por variable y sus combinaciones.
+
+- Podemos visualizar los resultados directamente con la función [aggr()]{.verde-h3}:
+
+```{r}
+#| fig-align: center
+#| out-width: 90%
+library(VIM)
+datos %>% 
+  aggr(numbers = TRUE)
+```
+
+- También podemos usar la función [gg_miss_upset]{.verde-h3} del paquete [{naniar}]{.verde-h3} para evaluar las combinaciones de datos perdidos:
+ 
+```{r}
+#| fig-align: center
+#| out-width: 90%
+library(naniar)
+datos %>% 
+  gg_miss_upset()
+```
+
+### Recuperar datos faltantes
+
+- Lo primero que uno debe tratar de hacer es recuperar los datos faltantes.
+
+    + Volver a revisar documentos fuentes.
+    
+    + Recontactar sujetos, etc.
+    
+- Podemos identificar a los individuos con datos faltantes en la variable urea usando [filter()]{.verde-h3}:
+
+```{r}
+datos %>% 
+  select(id_jaula, id_raton, urea) %>% 
+  filter(is.na(urea))
+```
+
+- Si se recupera la información, uno puede remplazar los valores usando código en R. 
+
+- La función [replace()]{.verde-h3}del paquete [{dplyr}]{.verde-h3} es útil para esto. Supongamos que el dato perdido para el ratón 6 es de 65.2, podemos rempalzar el dato usando [replace()]{.verde-h3}
+
+```{r}
+datos %>% 
+  select(id_jaula, id_raton, urea) %>% 
+  mutate(
+    urea = replace(urea, id_raton == 6, 65.2)
+  )
+```
+
+### Datos perdidos ocultos
+
+- Los datos perdidos a veces se guardan por defecto con algunos caracteres especiales.
+
+- Pueden ser problemáticas si se guardan con categorías como: -99, 8888, "No aplica", "No sabe", etc.
+
+- Una función muy útil para lidiar con estos datos y convertirlos en `NA` es la función [replace_na()]{.verde-h3}del paquete [{tidyr}]{.verde-h3}
+
+```{r}
+#| echo: false
+datos_perdidos_comun <- 
+  data.frame(
+    edad = c(45, 23, 34, 29, -999, 23, 34,57, 88, -999, -999), 
+    diabetes = c("Sí", "Sí", "No", "N/A", "No", "Sí", "No", "N/A", "N/A", "N/A", "Sí")
+  )
+```
+
+
+```{r}
+library(tidyr)
+datos_perdidos_comun
+```
+
+- Podemos convertir directamente todos estos valores por default a datos perdidos:
+
+```{r}
+datos_perdidos_comun %>% 
+  mutate(edad = na_if(edad, -999), 
+         diabetes = na_if(diabetes, "N/A")) -> datos_perdidos_limpia
+
+datos_perdidos_limpia
+```
+
+:::
+
+
+## {.scrollable}
+
+> **Paso 4:** Identifique valores extremos no plausibles 
+
+::: panel-tabset
+
+### [skim()]{.verde-h3}
+
+-   Revise, variable por variable `valores extremos no plausibles` o `plausibles, pero sospechosamente extremos`. El valor mínimo es `p0` y el valor máximo es `p100`. Deben ser plausibles.
+
+```{r}
+skim(datos)
+```
+
+### [describe()]{.verde-h3}
+
+-   Permite hacer algo similar
+
+```{r}
+describe(datos)
+```
+
+### Gráficos de cajas
+
+- El `gráfico de cajas` nos muestra la disrtibución de la variable numérica en termino de sus cuantiles.
+
+- Los `puntos aislados`, fuera de las cajas y bigotes, son considerados valores extremos. 
+
+- Estos pueden ser `plausibles` o `no plausibles`. 
+
+- El gráfico de cajas permite `identificar`, rápidamente, `valores extremos` potencialmente `no plausibles` o `problemáticos`.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{r}
+datos |> 
+  ggplot(aes(y = peso_final)) + 
+  geom_boxplot()
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+datos |> 
+  ggplot(aes(y = peso_utero)) + 
+  geom_boxplot()
+```
+
+:::
+
+::::
+
+
+### Datos no plausibles
+
+- Los datos extremos pueden ser valores anómalos válidos.
+
+- En ocasiones, son valores no plausibles, inválidos, producto del mal recojo de información.
+
+- Cuando se tenga valores extremos no plausibles se puede optar por dos acciones:
+
+    + 1) Corregir el valor extremo no plausible por datos que sí sean plausibles.
+
+    + 2) Si no se puede, convertir los valores extremos no plausibles en datos faltantes (veremos esto).
+    
+    + 3) Bonus: A veces puede ser mejor recortar los datos y quedarse con el 1% y 99% percentil más bajo y alto, respectivamente.
+ 
+:::
+
+## {.scrollable}
+
+> **Paso 4:** Identifique valores extremos no plausibles 
+
+::: panel-tabset
+
+### Corregir valor extremo no plausible
+
+- Se puede usar la función: [na_if()]{.verde-h3} del paquete [{dplyr}]{.verde-h3}.
+
+```{r}
+#| echo: false
+datos_extremo <- data.frame(
+  peso = c(56, 34, 23, 78, 46, 1450), 
+  hb = c(12, 11, 213, 10, 3124, -4)
+)
+```
+
+- Veamos una base de datos juguete con datos de peso (kg) y hemoglobina (mg/dL) de pacientes en un estudio:
+
+    + El peso de 1450 es un valor extremo no plausible. Igualmente, los valores de hemoglobina 213, 3124 y -4 son valores extremos no plausibles.
+    
+    + Lo primero que debemos hacer es recuperar es tratar de recuperar estos valores.
+    
+    + Supongamos que podemos recuperar los valores: 1450 en realidad es 45 kg; 213, 3124 y -4 son 11.3, 10.44 y 9.2 mg/dL.
+    
+- Podemos usar la función recode para corregir los valores de peso:
+
+```{r}
+datos_extremo %>% 
+  mutate(peso = recode(peso, `1450` = 45))
+```
+
+- También podemos corregir de varias variables simultáneamente:
+
+```{r}
+datos_extremo %>% 
+  mutate(
+    peso = recode(peso, `1450` = 45), 
+    hb = recode(hb, `213` = 11.3, `3124` = 10.44, `-4` = 9.2)
+    ) -> datos_extremo_recodif
+
+datos_extremo_recodif
+```
+
+### Convertir valor extremo no plausible a faltante
+
+- Si no podemos recuperar los datos correctos, la otra opción es convertir los valores extremos en datos faltantes:
+
+```{r}
+datos_extremo %>% 
+  mutate(
+    peso = na_if(peso, 1450)
+  )
+```
+
+- Podemos hacerlo de manera simultánea para varias variables
+
+```{r}
+datos_extremo %>% 
+  mutate(
+    peso = na_if(peso, 1450), 
+    hb = na_if(hb, 213), 
+    hb = na_if(hb, 3124), 
+    hb = na_if(hb, -4)
+  )
+```
+
+- O usando [replace()]{.verde-h3} y una condición lógica:
+
+```{r}
+datos_extremo %>% 
+  mutate(
+    peso = na_if(peso, 1450), 
+    hb = replace(hb, hb > 100 | hb < 0, NA)
+  ) -> datos_extremo_recomiss
+
+datos_extremo_recomiss
+```
+
+:::
+
+## {.scrollable}
+
+> **Paso 5:** Detecte y corrija inconsistencias mediante consultas (*queries*) de interés 
+
+::: panel-tabset
+### Consulta 1
+
+Muestre el peso inicial mínimo, máximo y promedio del grupo control:
+
+```{r}
+#| code-line-numbers: "|2|3-7"
+datos %>% 
+  filter(tratamiento == "control") %>% 
+  summarise(
+    minimo_peso = min(peso_inicial), 
+    maximo_peso = max(peso_inicial), 
+    promedio_peso = mean(peso_inicial)
+  )
+```
+
+### Consulta 2
+
+Muestre los pesos inicial máximos, mínimo y promedio según grupo de tratamiento. También muestre el número de ratones por grupo:
+
+```{r}
+#| code-line-numbers: "|2|3-7"
+datos %>% 
+  group_by(tratamiento) %>% 
+  summarise(
+    minimo_peso = min(peso_inicial), 
+    maximo_peso = max(peso_inicial), 
+    promedio_peso = mean(peso_inicial), 
+    n_ratones = n()
+  )
+```
+
+### Consulta 3
+
+Muestre los id_jaula con el número de ratones por jaula
+
+```{r}
+#| code-line-numbers: "|2|3"
+datos %>% 
+  group_by(id_jaula) %>% 
+  summarise(n_ratones_por_jaula = n())
+```
+
+### Consulta 4
+
+Identifique los ID de los ratones del grupo control con una razón glucosa / colesterol \> 1
+
+```{r}
+#| code-line-numbers: "|2"
+datos %>% 
+  filter(tratamiento == "control" & glucose / chol > 1)
+```
+
+Otra forma de hacerlo, es crear primerio la razón glucose / chol y filtrar:
+
+```{r}
+#| code-line-numbers: "|2|3"
+datos %>% 
+  mutate(ratio_gluc_chol = glucose / chol) %>% 
+  filter(tratamiento == "control" & ratio_gluc_chol > 1)
+```
+
+:::
+
+
+## `r fontawesome::fa("mug-saucer", "white")` Hagamos una pausa {background-color="#00817E"}
+<hr>
+
+::: r-fit-text
+
+<center>
+
+Tomemos un descanso de `5 minutos`...
+
+Estire las piernas `r fontawesome::fa("person-walking", "white")`... 
+
+Deje de ver las pantallas `r fontawesome::fa("laptop", "white")`...
+
+... cualquier `r fontawesome::fa("laptop", "white")`, las del celular `r fontawesome::fa("mobile", "white")` también.
+
+</center>
+
+:::
+
+```{r}
+#| echo: false
+library(countdown)
+countdown_timer <- function(
+    minutes = 1, 
+    play_sound = TRUE, 
+    font_size = "2em", 
+    ...
+) {
+  countdown(
+    minutes = minutes,
+    # Fanfare when it's over
+    play_sound = play_sound,
+    # Set timer theme to match solarized colors
+    color_border              = "#404041",
+    color_text                = "white",
+    color_background = "#000000",
+    color_running_background  = "#72994E",
+    color_running_text        = "white",
+    color_finished_background = "#EE6331",
+    color_finished_text       = "white",
+    font_size = font_size,
+    ...
+  )
+}
+```
+
+```{r}
+#| echo: false
+countdown_timer(5)
+```
+
+## 
+
+::: r-fit-text
+<center>¡Gracias!</center>
+
+<center>¿Preguntas?</center>
+
+:::
+
+## 
+
+\
+
+\
+
+\
+
+::: r-fit-text
+
+<center>
+{{< fa brands twitter >}} @psotob91 
+
+{{< fa brands github >}} https://github.com/psotob91
+
+{{< fa inbox >}} percys1991@gmail.com
+</center>
+
+:::

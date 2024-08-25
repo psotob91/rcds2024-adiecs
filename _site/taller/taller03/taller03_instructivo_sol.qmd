@@ -1,0 +1,579 @@
+---
+title: "<font color='white'>Taller 3</font>"
+subtitle: "Análisis Estadístico de Datos en Salud"
+author: 
+  - Percy Soto-Becerra
+  - Anthony Romero
+date: last-modified
+date-format: "DD-MM-YYYY"
+description: "PFC 2023 -– IETSI, EsSalud"
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: "Índice"
+    toc-location: right
+    embed-resources: true
+    number-sections: true
+    theme: cerulean
+    title-block-style: default
+    title-block-banner: true
+    section-divs: true
+    css: [include/webex.css, include/styles.css]
+    include-after-body: include/webex.js
+    code-block-border-left: false
+lang: es
+execute: 
+  message: false
+  warning: false
+---
+
+```{r}
+#| include: false
+library(webexercises)
+library(tidyverse)
+library(palmerpenguins)
+library(labelled)
+```
+
+## Introducción
+
+En este tercer taller del curso revisaremos las funciones básicas del paquete `Dplyr` de `Tidyverse` para manejo y preprocesamiento de datos con R.
+
+### Hoja de referencia (cheatsheet) de {dplyr}
+
+<!-- Imagen del cheatsheet -->
+
+```{r}
+#| echo: false
+knitr::include_graphics("img/dplyr1.png")
+```
+
+<!-- Boton para descargar el cheatsheet -->
+
+```{=html}
+<p class="text-center">
+  <a class="btn btn-primary btn-lg cheatsheet-download" href="include/dplyr_es.pdf" target="_blank">
+    <i class="fa-solid fa-file-arrow-down"></i>Descargar CheatSheet en PDF
+  </a>
+</p>
+```
+
+## Repasemos las funciones más importantes de {dplyr}
+
+*Función que utilizamos para...*
+
+```{r}
+#| echo: false
+#| results: asis
+  
+p1_r1 <- c("arrange()", "select()", answer = "filter()", "rename()", "mutate()", "group_by()", "summarise()", "relocate()")
+p1_r2 <- c("arrange()", "select()", "filter()", answer = "rename()", "mutate()", "group_by()", "summarise()", "relocate()")
+p1_r3 <- c("arrange()", "select()", "filter()", "rename()", answer = "mutate()", "group_by()", "summarise()", "relocate()")
+p1_r4 <- c("arrange()", answer = "select()", "filter()", "rename()", "mutate()", "group_by()", "summarise()", "relocate()")
+p1_r5 <- c("arrange()", "select()", "filter()", "rename()", "mutate()", "group_by()", answer = "summarise()", "relocate()")
+p1_r6 <- c("arrange()", "select()", "filter()", "rename()", "mutate()", answer = "group_by()", "summarise()", "relocate()")
+p1_r7 <- c(answer = "arrange()", "select()", "filter()", "rename()", "mutate()", answer = "group_by()", "summarise()", "relocate()")
+p1_r8 <- c("arrange()", "select()", "filter()", "rename()", "mutate()", answer = "group_by()", "summarise()", answer = "relocate()")
+```
+
+-   ... elegir una o más filas específicas: `r mcq(p1_r1)`
+
+-   ... cambiarle el nombre a una variable (columna): `r mcq(p1_r2)`
+
+-   ... crear una variable: `r mcq(p1_r3)`
+
+-   ... elegir una o más columnas específicas: `r mcq(p1_r4)`
+
+-   ... resumir los datos calculando estadísticas (media, suma, min, max, etc): `r mcq(p1_r5)`
+
+-   ... agrupar filas de un dataframe según una o más variables: `r mcq(p1_r6)`
+
+-   ... ordenar filas de un dataframe según una o más variables: `r mcq(p1_r7)`
+
+-   ... ordenar o cambiar de posición una o más columnas: `r mcq(p1_r8)`
+
+::: callout-tip
+## Recordar
+
+La sintaxis general de las funciones en R sigue esta lógica: `nombre_de_la_función( data, argumento(s) )`.
+
+*Omitir mayúsculas, tildes, **espacios** o cualquier caracter especial.*
+:::
+
+## Ahora te presentamos a los "pingüinos de Palmer"
+
+`Palmerpenguins` es una base de datos elaborado y publicado por la Dra. Kristen Gorman y sus colegas del *sitio de Investigación Ecológica a Largo Plazo de la Estación Palmer (Palmer LTER)* en la Antártida. Estos datos se publicaron originalmente en [PLoS ONE](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0090081). Puedes obtener más información sobre este paquete [aquí](https://allisonhorst.github.io/palmerpenguins/).
+
+Para utilizar esta data, debemos instalar el paquete `palmerpenguins` desde *CRAN* usando este código: `install.packages("palmerpenguins")`.
+
+En esta base de datos se incluyeron a 3 especies de pingüinos: *Adelia, Barbijo y Papúa*
+
+```{r}
+#| echo: false
+knitr::include_graphics("img/penguins.png")
+```
+
+Además, hay 8 variables:
+
+-   **specie:** indica la especie de cada pingüino (Adelia, Barbijo y Paúa)
+-   **island:** indica la isla donde se observó (en el Archipiélago Palmer o Antártida)
+-   **bill_length_mm:** indica la longitud de la cresta dorsal del pico del pingüino (en mm)
+-   **bill_depth_mm:** indica la profundidad del pico del pingüino (en mm)
+-   **flipper_length_mm:** indica la longitud de la aleta del pingüino (en mm)
+-   **body_mass_g:** indica la masa corporal del pingüino (en g)
+-   **sex:** indica el sexo del pingüino (macho o hembra)
+-   **year:** indica el año del estudio (2007, 2008 o 2009) ( Primero descarguemos los datos juguetes:
+
+```{r}
+data("penguins", package = "palmerpenguins")
+```
+
+Démosle un vistazo a la data:
+
+```{r}
+penguins %>%    # Data 
+  head(10) 
+```
+
+Recuerden que, por ser un conjunto de datos juguete, podemos preguntarle a R sobre su libro de codigos y documentacion asociada:
+
+``` r
+?penguins
+```
+
+::: {.callout-important collapse="false" appearance="default" icon="true"}
+## Pipe
+
+-   En R tidyverse resulta muy conveniente poder usar el operador `pipe` (`%>%`).
+-   Este permite `pipear` (algo así como meter en una `pipa` o `tuberia`) un proceso secuencial facilitando el proceso de creacion de codigo.
+-   Este enfoque permite ahorrar mucho codigo redundante.
+-   Veamos un ejemplo:
+
+::: columns
+::: {.column width="50%"}
+```{r}
+glimpse(penguins)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+penguins |> 
+  glimpse()
+```
+:::
+:::
+:::
+
+## Ejercicios con {dplyr}: Filtrar filas
+
+### Ejercicio 1 {.unnumbered}
+
+Filtrar la data para mostrar únicamente a los pingüinos de la especie "Chinstrap". Plantee una solucion sin pipe y otra con pipe (Renderizar el chunk de código).
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+-   Sin pipe:
+
+```{r}
+filter(penguins, species == "Chinstrap")
+```
+
+-   Con pipe:
+
+```{r}
+penguins %>% 
+  filter(species == "Chinstrap")
+```
+:::
+
+### Ejercicio 2 {.unnumbered}
+
+Filtrar la data para mostrar únicamente a los pingüinos de las especies "Chinstrap" y "Gentoo". Plantee una solucion sin pipe y otra con pipe (Renderizar el chunk de código). (Renderizar el chunk de código)
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+-   Sin pipe:
+
+```{r}
+filter(penguins, species == "Chinstrap" | species == "Gentoo")
+```
+
+-   Con pipe:
+
+```{r}
+penguins %>% 
+  filter(species == "Chinstrap" | species == "Gentoo")
+```
+:::
+
+### Ejercicio 3 {.unnumbered}
+
+Filtrar la data para mostrar únicamente a los pingüinos de la especie "Adelie" que sean de la isla "Dream". Plantee una solucion sin pipe y otra con pipe (Renderizar el chunk de código). (Renderizar el chunk de código)
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+-   Sin pipe:
+
+```{r}
+filter(penguins, species == "Adelie", island == "Dream")
+```
+
+-   Con pipe:
+
+```{r}
+penguins %>%
+  filter(species == "Adelie", island == "Dream")
+```
+:::
+
+### Ejercicio 4 {.unnumbered}
+
+Ordenar a todos los pinguinos segun su longitud de pico de `menor a mayor` y de `mayor a menor`. Guardar los datos como `penguins_ascend` y `penguins_descend`, respectivamente.
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+-   Orden ascendente:
+
+```{r}
+penguins %>%
+  arrange(bill_length_mm)
+```
+
+-   Orden descendente:
+
+```{r}
+penguins %>%
+  arrange(desc(bill_length_mm))
+```
+:::
+
+### Ejercicio 5 {.unnumbered}
+
+Excluir a todos los pingüinos de la especie "Chinstrap" de la data (Renderizar el chunk de código)
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+penguins %>%
+  filter(species != "Chinstrap")
+```
+:::
+
+### Ejercicio 6 {.unnumbered}
+
+Filtrar los datos para mostrar únicamente a los pingüinos cuya aleta tenga una longitud mayor a 200 mm (Renderizar el chunk de código)
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+penguins %>%
+  filter(flipper_length_mm > 200)
+```
+:::
+
+### Ejercicio 7 {.unnumbered}
+
+Filtrar la data para mostrar únicamente a los pingüinos de la especie "Adelie" cuya cresta dorsal del pico sea mayor a 40mm (Renderizar el chunk de código)
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+penguins %>%
+  filter(species == "Adelie", bill_length_mm > 40)
+```
+:::
+
+### Ejercicio 8 {.unnumbered}
+
+Filtrar la data para mostrar únicamente a los pingüinos cuya masa corporal sea, como máximo, 2900g. Luego, reordenar los datos segun longitud de pico, de menor a mayor. Hacerlo con y sin pipe. Discutir que ventajas proporciona el pipe en este contexto (Renderizar el chunk de código):
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+-   Con pipe
+
+```{r}
+penguins2 <- filter(penguins, body_mass_g <= 2900)
+penguins3 <- arrange(penguins2, bill_length_mm)
+```
+
+-   Sin pipe
+
+```{r}
+penguins2 <- penguins |> 
+  filter(body_mass_g <= 2900) |> 
+  arrange(bill_length_mm)
+```
+
+-   Ideas fuerza para discusion:
+
+    ```         
+      - Pipe evita que se creen dos data frames intermedios (penguins2 y penguins3).
+      - Evito codigo redundante al no tener que repetir innecesarimente el nombre del data frame que es manipulado.
+      - Es mas ordenado visualmente, lo que facilita el 'debugeo', esto es particularmente util cuando se tiene codigo largo que puede ser interconectado por varios pipes consecutivos.
+    ```
+:::
+
+### Ejercicio 9 {.unnumbered}
+
+Se desea filtrar a todos pingüinos Gentoo con pico de mas de 15.5 mm de profundidad. Escriba el código para tal tarea. (Renderizar el chunk de código)
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+penguins %>%
+  filter(species == "Gentoo", bill_depth_mm > 15.5)
+```
+:::
+
+### Ejercicio 10 {.unnumbered}
+
+Filtre a los pinguinos machos que fueron registrados en las islas "Biscoe" y "Dream". (Renderizar el chunk de código)
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+penguins %>%
+  filter(island %in% c("Dream","Biscoe"), sex == "male")
+```
+:::
+
+### Ejercicio 11 {.unnumbered}
+
+Filter la data para mostrar a los pinguinos Adelie con una cresta dorsal de pico menor a 35mm que no sean machos. (Renderizar el chunk de código)
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+penguins %>%
+  filter(sex == "female", species == "Adelie", bill_length_mm < 35)
+```
+:::
+
+## Ejercicios con {dplyr}: Seleccionar columnas
+
+### Ejercicio 12 {.unnumbered}
+
+Seleccione las variables species e island. Imprima pero no guarde. (Renderizar el chunk de código)
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+penguins %>%
+  select(species, island)
+```
+:::
+
+### Ejercicio 13 {.unnumbered}
+
+Eliminar las variables sex e island. Imprima y guarde con el nombre de penguins_excluido (Renderizar el chunk de código)
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+-   Opcion 1: Repetir el `-` por cada variable:
+
+```{r}
+penguins_excluido <- penguins %>%
+  select(-sex, -island)
+```
+
+-   Opcion 2: Un solo `-` para el vector `c()` de variables
+
+```{r}
+penguins_excluido <- penguins %>%
+  select(-c(sex, island))
+```
+:::
+
+### Ejercicio 14 {.unnumbered}
+
+Seleccione las variables que contengan "length" en el nombre (Renderizar el chunk de código)
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+penguins %>%
+  select(contains("length"))
+```
+:::
+
+### Ejercicio 15 {.unnumbered}
+
+Seleccione las variables que contengan "length" en el nombre o inicien con "bill" (Renderizar el chunk de código)
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+penguins %>%
+  select(contains("length") | starts_with("bill"))
+```
+:::
+
+### Ejercicio 16 {.unnumbered}
+
+Seleccione las variables desde especies hasta masa corporal usando el operador ":" (Renderizar el chunk de código)
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+penguins %>%
+  select(species:body_mass_g)
+```
+:::
+
+### Ejercicio 17 {.unnumbered}
+
+Excluya la variable isla de la data (Renderizar el chunk de código)
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+penguins %>%
+  select(-island)
+```
+:::
+
+### Ejercicio 18 {.unnumbered}
+
+Seleccione las variables que inicien con "bill" (Renderizar el chunk de código)
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+penguins %>%
+  select(starts_with("bill"))
+```
+:::
+
+### Ejercicio 19 {.unnumbered}
+
+Seleccione el año, isla y especie de la data (Renderizar el chunk de código)
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+penguins %>%
+  select(year, island, species)
+```
+:::
+
+## Ejercicios con {dplyr}: Mutar (crear o modificar) columnas
+
+### Ejercicio 20 {.unnumbered}
+
+Cree una variable que contenga a la masa corporal pero en kilogramos, llamela "body_mass_kg" y otra variable llamada "flipper_length_m" que contenga a la longitud de la aleta pero en metros (Renderizar el chunk de código)
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+penguins %>%
+  mutate(body_mass_kg = body_mass_g / 1000,
+         flipper_length_m = flipper_length_mm / 1000)
+```
+:::
+
+### Ejercicio 21 {.unnumbered}
+
+Seleccione a los pinguinos Gentoo y mantenga la isla de la que proviene, el sexo y la masa corporal (Renderizar el chunk de código)
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+penguins %>%
+  filter(species == "Gentoo") %>%
+  select(island, sex, body_mass_g)
+```
+:::
+
+### Ejercicio 22 {.unnumbered}
+
+Seleccione a los pinguinos machos con longitud de pico mayor a 200 mm y mantenga a las variables que terminen con "mm" (Renderizar el chunk de código)
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+penguins %>%
+  filter(sex == "male", flipper_length_mm > 200) %>%
+  select(ends_with("mm"))
+```
+:::
+
+## Ejercicios con {dplyr}: renombrar columnas
+
+### Ejercicio 23 {.unnumbered}
+
+Renombre la variable sex por sexo y body_mass_g por img. Guarda el data frame como penguis2 (Renderizar el chunk de código)
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+penguins2 <- penguins |> 
+  rename(sexo = sex, 
+         img = body_mass_g)
+```
+:::
+
+## Ejercicios con {labelled}: Metadatos de nombre de variable
+
+### Ejercicio 24 {.unnumbered}
+
+Sobre penguins2, etiquete las variables con sus respectivas etiquetas. Guardelo con el mismo nombre penguins2 para actualizar este data frame (Renderizar el chunk de código)
+
+| Variable | Etiqueta            |
+|----------|---------------------|
+| species  | Especie de pingüino |
+| island   | Isla especifica     |
+| sexo     | Sexo                |
+| year     | Año                 |
+
+::: {.callout-caution collapse="true"}
+## Solución
+
+```{r}
+penguins2 <- penguins2 |> 
+  set_variable_labels(species = "Especie de pingüino", 
+                      island = "Isla especifica", 
+                      sexo = "Sexo", 
+                      year = "Año")
+```
+:::
+
+Luego, haga un `View(penguins2)` para reconocer las etiquetas agregadas. Compare con `View(penguins)`¿En qué se diferencian `penguins` de `penguins2`?
+
+### Ejercicio de reflexión {.unnumbered}
+
+```{r}
+#| echo: false
+#| results: asis
+pref_r <- c("No importa el orden", "Sí importa el orden porque select() solo funciona después de filter()", answer = "Sí importa el orden porque si select() no incluye la variable para filtrar, el filter() no funcionará")
+```
+
+::: border
+**Pregunta:**
+
+-   ¿Crees que importa si primero usamos el select() y luego el filter(), o viceversa? `r mcq(pref_r)`
+:::

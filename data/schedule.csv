@@ -1,0 +1,13 @@
+group;subgroup;date;date_end;title;deadline;content;example;assignment
+Módulo propedéutico;Sesión 0;20/08/2024;;Instalación de R y configuración de la caja de herramientas;;;;
+Módulo 1: Manejo de datos con R;Sesión 1;27/08/2024;;Introducción a R y Rstudio.;;;;
+Módulo 1: Manejo de datos con R;Sesión 2;27/08/2024;;Funciones y Paquetes en R. Manipulación de datos.;;;;
+Módulo 1: Manejo de datos con R;Sesión 3;03/09/2024;;Introducción a ggplot2.  Gráficos para investigación en Salud.;;;;
+Módulo 1: Manejo de datos con R;Sesión 4;03/09/2024;;Manejo de datos con dplyr 1.;;;;
+Módulo 2: Análisis Descriptivo con R;Sesión 5;10/09/2024;;Manejo de datos con dplyr 2.;;;;
+Módulo 2: Análisis Descriptivo con R;Sesión 6;10/09/2024;;Descripción de datos numéricos y categóricos.;;;;
+Módulo 2: Análisis Descriptivo con R;Sesión 7;17/09/2024;;Tablas descriptivas reproducibles para publicación.;;;;
+Módulo 2: Análisis Descriptivo con R;Sesión 8;17/09/2024;;Pruebas paramétricas y no paramétricas. Comparación de múltiples grupos.;;;;
+Módulo 2: Análisis Descriptivo con R;Sesión 9;24/09/2024;;Pruebas de asociación y correlación. Introducción a regresión.;;;;
+Módulo 3: Inferencia Estadística con R;Sesión 10;24/09/2024;;Creación y exportación de tablas estadísticas inferenciales y de regresión.;;;;
+Módulo 3: Inferencia Estadística con R;Examen Final;24/09/2024;01/10/2024;Exposición de caso de análisis;01/10/2024;;;

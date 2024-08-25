@@ -1,0 +1,128 @@
+---
+title: "Adicional - sesion 8"
+---
+
+## Cargar paquetes
+
+```{r}
+library(tidyverse)
+library(rio)
+library(gtsummary) # Wrapper de gt para inv biomedica
+library(flextable) # Nexo a Word
+library(huxtable)  # Nexo a excel
+library(labelled)
+library(ggpubr)
+```
+
+## Importar datos
+
+```{r}
+datos <- import("maca_meno_fase1.dta") |> 
+  characterize() 
+
+datos <- datos |> 
+  mutate(año = 2022)
+  # set_variable_labels(año = "Years")
+```
+
+## Inspeccionar daots
+
+```{r}
+glimpse(datos)
+```
+
+## Tabla con tbl_summary()
+
+```{r}
+datos |> 
+  select(age, race, married2, weight, 
+         height, e2, lh, fsh, prog, año) |> 
+  tbl_summary(label = list(año ~ "Years", lh ~ "LH"))
+```
+
+```{r}
+datos |> 
+  ggqqplot("age")
+
+datos |> 
+  ggqqplot("weight")
+
+datos |> 
+  ggqqplot("height")
+
+datos |> 
+  ggqqplot("e2")
+
+datos |> 
+  ggqqplot("lh")
+
+datos |> 
+  ggqqplot("fsh")
+
+datos |> 
+  ggqqplot("prog")
+```
+
+
+```{r}
+datos |> 
+  select(age, race, married2, weight, 
+         height, e2, lh, fsh, prog) |> 
+  tbl_summary(type = list(height ~ "continuous"))
+```
+
+```{r}
+datos |> 
+  select(age, race, married2, weight, 
+         height, e2, lh, fsh, prog) |> 
+  tbl_summary(type = list(height ~ "continuous"),
+              statistic = list(age ~ "{mean} ± {sd}", 
+                               prog ~ "{mean} ± {sd}"))
+```
+
+```{r}
+datos |> 
+  select(age, race, married2, weight, 
+         height, e2, lh, fsh, prog) |> 
+  tbl_summary(type = list(height ~ "continuous"),
+              statistic = list(c(age, prog) ~ "{mean} ± {sd}", 
+                               c(race, married2) ~ "{n}/{N}, {p}%"))
+```
+
+
+```{r}
+tabla1 <- datos |> 
+  select(age, race, married2, weight, 
+         height, e2, lh, fsh, prog) |> 
+  tbl_summary(type = list(all_continuous() ~ "continuous2", 
+                          height ~ "continuous2"),
+              statistic = list(all_continuous2() ~ c("{mean} ± {sd}",
+                                                     "{median} ({p25},{p75})",
+                                                     "{min}, {max}"), 
+                               all_categorical() ~ "{n}/{N}, {p}%"), 
+              digits = list(all_categorical() ~ c(0, 0, 2), 
+                            all_continuous2() ~ c(2, 2, 0, 0, 0, 3, 3),
+                            prog ~ c(0, 0, 1, 0 ,0, 0, 0)), 
+              missing = "ifany", 
+              missing_text = "Dato perdido", 
+              by = married2) |> 
+  add_overall() |> 
+  add_p() |> 
+  bold_labels()
+```
+
+```{r}
+tabla1
+```
+
+```{r}
+tabla1 |> 
+  as_flex_table() |> 
+  save_as_docx(path = "Tabla1.docx")
+```
+
+```{r}
+tabla1 |> 
+  as_hux_xlsx("Tabla1.xlsx")
+```
+

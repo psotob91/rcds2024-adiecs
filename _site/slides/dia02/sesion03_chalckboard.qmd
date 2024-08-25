@@ -1,0 +1,1818 @@
+---
+format: 
+  revealjs: 
+    embed-resources: false
+    theme: [default, theme/theme.scss]
+    footer: "Fundamentos R para Ciencia de Datos en Salud - Sesión 3"
+    logo: img/logo.jpg
+    transition: convex
+    background-transition: zoom
+    incremental: false
+    slide-number: c/t
+    preview-links: true
+    # width: 1920
+    # height: 1080
+    height: 900
+    width: 1600
+    # parallax-background-image: images/bg-ietsi-slide-first.png
+    # parallax-background-size: "1920px 1080px"
+    chalkboard: true
+    code-block-background: true
+    code-block-border-left: "#31BAE9"
+    highlight-style: ayu-dark
+    echo: true
+    multiplex: true
+    touch: true
+    auto-stretch: true
+    link-external-icon: true
+    link-external-newwindow: true
+    self-contained-math: true
+    
+from: markdown+emoji
+execute:
+  echo: true
+filters:
+  - reveal-auto-agenda
+auto-agenda:
+  bullets: numbered
+  heading: Agenda
+---
+
+\
+
+\
+
+<h1>Sesión 3</h1>
+
+<h2>[Curso: Fundamentos R para Ciencia de Datos en Salud]{.plo}</h2>
+
+<hr>
+
+<h3>[Percy Soto-Becerra, M.D., M.Sc(c)]{.negro}</h3>
+
+<h4>[DIS -- IETSI, EsSalud]{.negro}</h4>
+
+
+`r fontawesome::fa("github", "black")` &nbsp; [https://github.com/psotob91](https://github.com/psotob91)
+
+![](img/logo_curso.jpg){.absolute top=340 left=980 width=35%}
+
+# Visualización de datos
+
+```{r}
+#| echo: false
+#| output: false
+
+# Removing all objects including loaded libraries
+rm(list = ls(all = TRUE))
+gc()
+
+# Installing and loading packages
+if (!require("pacman")) {
+  install.packages("pacman")
+}
+
+pacman::p_unload("all") # Unloading all package except base
+
+pacman::p_load(tidyverse, 
+               tibble, 
+               pander, 
+               gt, 
+               kableExtra, 
+               DT, 
+               haven) # Loading packages
+```
+
+
+## Visualización de datos
+<hr>
+
+>"The simple graph has brought more information to the data analyst's mind than any other device." --- John Tukey
+
+- La visualización de datos es la creación y el estudio de la representación visual de los datos.
+
+- Muchas herramientas para visualizar datos, R es una de ellas.
+
+- Muchos enfoques/sistemas dentro de R para hacer visualizaciones de datos
+
+    + [{ggplot2}]{.verde-h3} es uno de ellos, y eso es lo que vamos a usar
+  
+    
+## Gramática de gráficos
+<hr>
+
+\ 
+
+:::: columns
+
+::: {.column width="50%"}
+
+- Una gramática de gráficos es una herramienta que nos permite describir de manera concisa los componentes de un gráfico.
+
+- Es un lenguaje que permite dibujar un gráfico con palabras sencillas.
+
+- Uno puede describir el proceso de dibujar el gráfico con sus propias palabras y estas convertirse en gráfico.
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+#| out-width: "150%"
+knitr::include_graphics("img/grammar-of-graphics.png")
+```
+
+:::
+
+::::    
+
+## [{ggplot2}]{.verde-h3} es un paquete de [{tidyverse}]{.verde-h3}.
+<hr>
+
+:::: columns
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+#| out-width: "80%"
+knitr::include_graphics("img/ggplot2-part-of-tidyverse.png")
+```
+
+:::
+
+::: {.column width="50%"}
+
+\
+
+- [{ggplot2}]{.verde-h3} es el paquete de visualización de datos de tidyverse.
+
+- `gg` en [{ggplot2}]{.verde-h3} significa `Gramática de gráficos`.
+
+- Inspirado en el libro [*Grammar of Graphics*](https://link.springer.com/book/10.1007/0-387-28695-0) de Leland Wilkinson
+
+:::
+::::
+
+
+## Evolución de los gráficos estadisticos
+<hr>
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: "60%"
+knitr::include_graphics("img/meme-ggplo2-quality.png")
+```
+
+
+## Primeros pasos con [{ggplot2}]{.verde-h3} {.scrollable}
+<hr>
+
+::: {.panel-tabset}
+
+### gapminder
+
+:::: {.columns}
+
+::: {.column width='40%'}
+- Data disponible en paquete {dslabs}.
+
+```{r}
+#| output: asis
+library(dslabs)
+data(gapminder, package = "dslabs") 
+```
+:::
+
+::: {.column width='60%'}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: "100%"
+knitr::include_graphics("img/countries_health_wealth_2016_v151.png")
+```
+
+:::
+
+::::
+
+### Datos
+
+- Veamos los datos:
+
+```{r}
+#| echo: false
+#| output: asis
+library(DT)
+datatable(gapminder)
+```
+
+### Diccionario
+
+- Veamos el detalle
+
+```r
+?gapminder
+```
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: "100%"
+knitr::include_graphics("img/help_gapminder.png")
+```
+
+### Subset
+
+- En algunos casos, trabajaremos con los datos del año 2000:
+
+```{r}
+gapminder2000 <- gapminder %>% 
+  filter(year == 2000)
+```
+
+- En algunos casos, trabajaremos con los datos del año 1980 y 2000:
+
+```{r}
+gapminder1980_2000 <- gapminder %>% 
+  filter(year %in% c(1980, 2000))
+```
+
+
+:::
+
+
+## Aspectos básicos de [{ggplot2}]{.verde-h3}.
+<hr>
+
+- Estructura de código para generar gráficos en [{ggplot2}]{.verde-h3}
+
+```r
+ggplot(data = [dataset], 
+       mapping = aes(x = [x_variable], 
+                     y = [y_variable])) +
+   geom_xxx() +
+   other options
+```
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: "100%"
+knitr::include_graphics("img/ggplot-elements.png")
+```
+
+## 
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: "100%"
+knitr::include_graphics("img/ggplot2_simplified.png")
+```
+
+## Componentes de [{ggplot2}]{.verde-h3}.
+<hr>
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: "100%"
+knitr::include_graphics("img/ggplot-components.jpg")
+```
+
+# Código paso a paso
+
+## Pasos para un gráfico [{ggplot2}]{.verde-h3}{.scrollable}
+<hr>
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: "100%"
+knitr::include_graphics("img/ch-03-ggplot-flow-vertical.png")
+```
+
+
+## {auto-animate="true"}
+
+>Inicia con el data.frame [gapminder]{.verde-h3}
+
+:::: columns
+::: {.column width='50%'}
+
+```r
+ggplot(data = gapminder)
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+ggplot(data = gapminder)
+```
+
+:::
+::::
+
+## {auto-animate="true"}
+
+>Inicia con el data.frame `gapminder`, [mapea *year* a x]{.verde-h3}
+
+:::: columns
+::: {.column width='50%'}
+
+```r
+ggplot(data = gapminder, 
+       mapping = aes(x = year))
+```
+
+:::
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+ggplot(data = gapminder, 
+       mapping = aes(x = year))
+```
+
+:::
+::::
+
+## {auto-animate="true"}
+
+>Inicia con el data.frame `gapminder`, mapea *year* a x y [mapea *life_expectancy* a y]{.verde-h3}
+
+:::: columns
+::: {.column width='50%'}
+
+```r
+ggplot(data = gapminder, 
+       mapping = aes(x = year, 
+                     y = life_expectancy))
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+ggplot(data = gapminder, 
+       mapping = aes(x = year, 
+                     y = life_expectancy))
+```
+
+:::
+::::
+
+## {auto-animate="true"}
+
+>Inicia con el data.frame `gapminder`, mapea *year* a x y mapea *life_expectancy* a y. [Representa cada información con un punto]{.verde-h3}
+
+:::: columns
+::: {.column width='50%'}
+
+```r
+ggplot(data = gapminder, 
+       mapping = aes(x = year, 
+                     y = life_expectancy)) + 
+  geom_point()
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+ggplot(data = gapminder, 
+       mapping = aes(x = year, 
+                     y = life_expectancy)) + 
+  geom_point()
+```
+
+:::
+::::
+
+## {auto-animate="true"}
+
+>Inicia con el data.frame `gapminder`, mapea *year* a x y mapea *life_expectancy* a y. Representa cada información con un punto. [Mapea *continent* al color de los puntos]{.verde-h3}
+
+:::: columns
+::: {.column width='50%'}
+
+```r
+ggplot(data = gapminder, 
+       mapping = aes(x = year, 
+                     y = life_expectancy, 
+                     colour = continent)) + 
+  geom_point()
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+ggplot(data = gapminder, 
+       mapping = aes(x = year, 
+                     y = life_expectancy, 
+                     colour = continent)) + 
+  geom_point()
+```
+
+:::
+::::
+
+## {auto-animate="true"}
+
+>Inicia con el data.frame `gapminder`, mapea *year* a x y mapea *life_expectancy* a y. Representa cada información con un punto. Mapea *continent* al color de los puntos. [Titula el gráfico como "Esperanza de vida a lo largo del tiempo"]{.verde-h3}
+
+:::: columns
+::: {.column width='50%'}
+
+```r
+ggplot(data = gapminder, 
+       mapping = aes(x = year, 
+                     y = life_expectancy, 
+                     colour = continent)) + 
+  geom_point() + 
+  labs(title = "Esperanza de vida a lo largo del tiempo")
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+ggplot(data = gapminder, 
+       mapping = aes(x = year,  
+                     y = life_expectancy, 
+                     colour = continent)) + 
+  geom_point() + 
+  labs(title = "Esperanza de vida a lo largo del tiempo")
+```
+
+:::
+::::
+
+## {auto-animate="true"}
+
+>Inicia con el data.frame `gapminder`, mapea *year* a x y mapea *life_expectancy* a y. Representa cada información con un punto. Mapea *continent* al color de los puntos. Titula el gráfico como "Esperanza de vida a lo largo del tiempo" [y agrega el subtitulo "Datos para Africa, Americas, Asia, Europa y Oceania"]{.verde-h3}
+
+:::: columns
+::: {.column width='50%'}
+
+```r
+ggplot(data = gapminder, 
+       mapping = aes(x = year, 
+                     y = life_expectancy, 
+                     colour = continent)) + 
+  geom_point() + 
+  labs(title = "Esperanza de vida a lo largo del tiempo", 
+       subtitle = "Datos para Africa, Americas, Asia, Europa y Oceania")
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+ggplot(data = gapminder, 
+       mapping = aes(x = year, 
+                     y = life_expectancy, 
+                     colour = continent)) + 
+  geom_point() + 
+  labs(title = "Esperanza de vida a lo largo del tiempo", 
+       subtitle = "Datos para Africa, Americas, Asia, Europa y Oceania")
+```
+
+:::
+::::
+
+## {auto-animate="true"}
+
+>Inicia con el data.frame `gapminder`, mapea *year* a x y mapea *life_expectancy* a y. Representa cada información con un punto. Mapea *continent* al color de los puntos. Titula el gráfico como "Esperanza de vida a lo largo del tiempo" y agrega el subtitulo "Datos para Africa, Americas, Asia, Europa y Oceania". [Etiqueta los ejes x e y como "Año" y "Esperanza de Vida", respectivamente]{.verde-h3}
+
+:::: columns
+::: {.column width='50%'}
+
+```r
+ggplot(data = gapminder, 
+       mapping = aes(x = year, 
+                     y = life_expectancy, 
+                     colour = continent)) + 
+  geom_point() + 
+  labs(title = "Esperanza de vida a lo largo del tiempo", 
+       subtitle = "Datos para Africa, Americas, Asia, Europa y Oceania", 
+       x = "Año", y = "Esperanza de Vida")
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+ggplot(data = gapminder, 
+       mapping = aes(x = year, 
+                     y = life_expectancy, 
+                     colour = continent)) + 
+  geom_point() + 
+  labs(title = "Esperanza de vida a lo largo del tiempo", 
+       subtitle = "Datos para Africa, Americas, Asia, Europa y Oceania", 
+       x = "Año", y = "Esperanza de Vida")
+```
+
+:::
+::::
+
+
+## {auto-animate="true"}
+
+>Inicia con el data.frame `gapminder`, mapea *year* a x y mapea *life_expectancy* a y. Representa cada información con un punto. Mapea *continent* al color de los puntos. Titula el gráfico como "Esperanza de vida a lo largo del tiempo" y agrega el subtitulo "Datos para Africa, Americas, Asia, Europa y Oceania". Etiqueta los ejes x e y como "Año" y "Esperanza de Vida", respectivamente. [Etiqueta la leyenda como "Continentes"]{.verde-h3}
+
+:::: columns
+::: {.column width='50%'}
+
+```r
+ggplot(data = gapminder, 
+       mapping = aes(x = year, 
+                     y = life_expectancy, 
+                     colour = continent)) + 
+  geom_point() + 
+  labs(title = "Esperanza de vida a lo largo del tiempo", 
+       subtitle = "Datos para Africa, Americas, Asia, Europa y Oceania", 
+       x = "Año", y = "Esperanza de Vida", 
+       colour = "Continentes")
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+ggplot(data = gapminder, 
+       mapping = aes(x = year, 
+                     y = life_expectancy, 
+                     colour = continent)) + 
+  geom_point() + 
+  labs(title = "Esperanza de vida a lo largo del tiempo", 
+       subtitle = "Datos para Africa, Americas, Asia, Europa y Oceania", 
+       x = "Año", y = "Esperanza de Vida", 
+       colour = "Continentes")
+```
+
+:::
+::::
+
+
+## {auto-animate="true"}
+
+>Inicia con el data.frame `gapminder`, mapea *year* a x y mapea *life_expectancy* a y. Representa cada información con un punto. Mapea *continent* al color de los puntos. Titula el gráfico como "Esperanza de vida a lo largo del tiempo" y agrega el subtitulo "Datos para Africa, Americas, Asia, Europa y Oceania". Etiqueta los ejes x e y como "Año" y "Esperanza de Vida", respectivamente. Etiqueta la leyenda como "Continentes"  [y agrega un titulo para la fuente de datos]{.verde-h3}
+
+:::: columns
+::: {.column width='50%'}
+
+```r
+ggplot(data = gapminder, 
+       mapping = aes(x = year, 
+                     y = life_expectancy, 
+                     colour = continent)) + 
+  geom_point() + 
+  labs(title = "Esperanza de vida a lo largo del tiempo", 
+       subtitle = "Datos para Africa, Americas, Asia, Europa y Oceania", 
+       x = "Año", y = "Esperanza de Vida", 
+       colour = "Continentes", 
+       caption = "Fuente: Gapminder data")
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+ggplot(data = gapminder, 
+       mapping = aes(x = year, 
+                     y = life_expectancy, 
+                     colour = continent)) + 
+  geom_point() + 
+  labs(title = "Esperanza de vida a lo largo del tiempo", 
+       subtitle = "Datos para Africa, Americas, Asia, Europa y Oceania", 
+       x = "Año", y = "Esperanza de Vida", 
+       colour = "Continentes", 
+       caption = "Fuente: Gapminder data")
+```
+
+:::
+::::
+
+
+## {auto-animate="true"}
+
+>Inicia con el data.frame `gapminder`, mapea *year* a x y mapea *life_expectancy* a y. Representa cada información con un punto. Mapea *continent* al color de los puntos. Titula el gráfico como "Esperanza de vida a lo largo del tiempo" y agrega el subtitulo "Datos para Africa, Americas, Asia, Europa y Oceania". Etiqueta los ejes x e y como "Año" y "Esperanza de Vida", respectivamente. Etiqueta la leyenda como "Continentes"  y agrega un titulo para la fuente de datos. [Finalmente, usa una escala de colores discreta que esté diseñada para preservar la visualización de personas con formas comunes discapacidad visual para los colores]{.verde-h3}
+
+:::: columns
+::: {.column width='50%'}
+
+```r
+ggplot(data = gapminder, 
+       mapping = aes(x = year, 
+                     y = life_expectancy, 
+                     colour = continent)) + 
+  geom_point() + 
+  labs(title = "Esperanza de vida a lo largo del tiempo", 
+       subtitle = "Datos para Africa, Americas, Asia, Europa y Oceania", 
+       x = "Año", y = "Esperanza de Vida", 
+       colour = "Continentes", 
+       caption = "Fuente: Gapminder data") + 
+  scale_colour_viridis_d()
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+ggplot(data = gapminder, 
+       mapping = aes(x = year, 
+                     y = life_expectancy, 
+                     colour = continent)) + 
+  geom_point() + 
+  labs(title = "Esperanza de vida a lo largo del tiempo", 
+       subtitle = "Datos para Africa, Americas, Asia, Europa y Oceania", 
+       x = "Año", y = "Esperanza de Vida", 
+       colour = "Continentes", 
+       caption = "Fuente: Gapminder data") + 
+  scale_colour_viridis_d()
+```
+
+:::
+::::
+
+## En resumen
+<hr>
+
+::: {.panel-tabset}
+
+### Gráfico
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| out-width: "80%"
+#| fig-width: 10
+ggplot(data = gapminder, 
+       mapping = aes(x = year, 
+                     y = life_expectancy, 
+                     colour = continent)) + 
+  geom_point() + 
+  labs(title = "Esperanza de vida a lo largo del tiempo", 
+       subtitle = "Datos para Africa, Americas, Asia, Europa y Oceania", 
+       x = "Año", y = "Esperanza de Vida", 
+       colour = "Continentes", 
+       caption = "Fuente: Gapminder data") + 
+  scale_colour_viridis_d()
+```
+
+### Código
+
+```r
+ggplot(data = gapminder, 
+       mapping = aes(x = year, 
+                     y = life_expectancy, 
+                     colour = continent)) + 
+  geom_point() + 
+  labs(title = "Esperanza de vida a lo largo del tiempo", 
+       subtitle = "Datos para Africa, Americas, Asia, Europa y Oceania", 
+       x = "Año", y = "Esperanza de Vida", 
+       colour = "Continentes", 
+       caption = "Fuente: Gapminder data") + 
+  scale_colour_viridis_d()
+```
+
+### Narrativa
+
+Inicia con el data.frame `gapminder`, mapea *year* a x y mapea *life_expectancy* a y.
+
+Representa cada información con un punto. 
+
+Mapea continent al color de los puntos. 
+
+Titula el gráfico como "Esperanza de vida a lo largo del tiempo" y agrega el subtitulo "Datos para Africa, Americas, Asia, Europa y Oceania". 
+
+Etiqueta los ejes x e y como "Año" y "Esperanza de Vida", respectivamente. 
+
+Etiqueta la leyenda como "Continentes"  y agrega un titulo para la fuente de datos. 
+
+Finalmente, usa una escala de colores discreta que esté diseñada para preservar la visualización de personas con formas comunes discapacidad visual para los colores.
+
+:::
+
+## Nombre de argumentos
+<hr>
+
+>Se puede omitir los nombres de los dos primeros argumentos cuando construimos gráficos con [{ggplot2}]{.verde-h3}.
+
+:::: columns
+
+::: {.column width="50%"}
+
+```{r}
+ggplot(data = gapminder, 
+       mapping = aes(x = gdp, 
+                     y = life_expectancy, 
+                     colour = continent)) + 
+  geom_point() + 
+  scale_colour_viridis_d()
+```
+
+::: 
+
+::: {.column width="50%"}
+
+```{r}
+ggplot(gapminder, 
+       aes(x = gdp, 
+           y = life_expectancy, 
+           colour = continent)) + 
+  geom_point() + 
+  scale_colour_viridis_d()
+```
+
+::: 
+
+::::
+
+## Transformar variables para mejorar visualización
+<hr>
+
+>Se puede realizar transformaciones sobre la marcha de las variables en los gráficos de [{ggplot2}]{.verde-h3}.
+
+:::: columns
+
+::: {.column width="50%"}
+
+```{r}
+ggplot(data = gapminder2000, 
+       mapping = aes(x = gdp, 
+                     y = life_expectancy, 
+                     colour = continent)) + 
+  geom_point() + 
+  labs(title = "PBI y esperanza de vida", 
+       subtitle = "Datos para Africa, Americas, Asia, Europa y Oceania", 
+       x = "Producto Bruto Interno", 
+       y = "Esperanza de Vida", 
+       colour = "Continentes", 
+       caption = "Fuente: Gapminder data") + 
+  scale_colour_viridis_d()
+```
+
+::: 
+
+::: {.column width="50%"}
+
+```{r}
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp), #< Ponemos log()
+                     y = life_expectancy, 
+                     colour = continent)) + 
+  geom_point() + 
+  labs(title = "PBI y esperanza de vida", 
+       subtitle = "Datos para Africa, Americas, Asia, Europa y Oceania", 
+       x = "Logaritmo de Producto Bruto Interno", #< Editamos nombre
+       y = "Esperanza de Vida", 
+       colour = "Continentes", 
+       caption = "Fuente: Gapminder data") + 
+  scale_colour_viridis_d()
+```
+
+::: 
+
+::::
+
+## `r fontawesome::fa("laptop-code", "white")` Nuestro turno {background-color="#000000"}
+<hr>
+
+\ 
+
+- Descargue la carpeta comaprtida denominada `taller02`.
+
+- Abra el proyecto `taller02.Rproj`.
+
+- Abra el archivo quarto `taller02.qmd`.
+
+- Renderice el archivo quarto `taller02.qmd`. Abra el archivo `taller02.html` generado.
+
+- Desarrolle la `PRIMERA PARTE` del taller. Al final, renderice el archivo.
+
+
+```{r}
+#| echo: false
+library(countdown)
+countdown_timer <- function(
+    minutes = 1, 
+    play_sound = TRUE, 
+    font_size = "2em", 
+    ...
+) {
+  countdown(
+    minutes = minutes,
+    # Fanfare when it's over
+    play_sound = play_sound,
+    # Set timer theme to match solarized colors
+    color_border              = "#404041",
+    color_text                = "white",
+    color_background = "#000000",
+    color_running_background  = "#72994E",
+    color_running_text        = "white",
+    color_finished_background = "#EE6331",
+    color_finished_text       = "white",
+    font_size = font_size,
+    ...
+  )
+}
+```
+
+
+```{r}
+#| echo: false
+countdown_timer(10)
+```
+
+# Estéticas
+
+## Opciones de estéticas
+<hr>
+
+\ 
+
+Las características comunmente usadas en los gráficos que pueden ser mapeadas a variables específicas en los datos:
+
+- color
+
+- forma
+
+- tamaño
+
+- alfa (transparencia)
+
+## Color
+<hr>
+
+```{r}
+#| echo: true
+#| eval: true
+#| code-line-numbers: "|4"
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+#| output-location: column
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp), 
+                     y = life_expectancy, 
+                     colour = continent)) + 
+  geom_point() + 
+  scale_colour_viridis_d()
+```
+
+## Forma
+<hr>
+
+- Forma mapeada a variable adicional
+
+```{r}
+#| echo: true
+#| eval: true
+#| code-line-numbers: "|5"
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+#| output-location: column
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp), 
+                     y = life_expectancy, 
+                     colour = continent, 
+                     shape = region)) + 
+  geom_point() + 
+  scale_colour_viridis_d()
+```
+
+## Forma
+<hr>
+
+- Forma mapeada a la misma variable
+
+```{r}
+#| echo: true
+#| eval: true
+#| code-line-numbers: "|5"
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+#| output-location: column
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp),  
+                     y = life_expectancy, 
+                     colour = continent, 
+                     shape = continent)) + 
+  geom_point() + 
+  scale_colour_viridis_d()
+```
+
+## Tamaño 
+<hr>
+
+```{r}
+#| echo: true
+#| eval: true
+#| code-line-numbers: "|6"
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+#| output-location: column
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp),  
+                     y = life_expectancy, 
+                     colour = continent, 
+                     shape = continent, 
+                     size = population)) + 
+  geom_point() + 
+  scale_colour_viridis_d()
+```
+
+## Alfa 
+<hr>
+
+```{r}
+#| echo: true
+#| eval: true
+#| code-line-numbers: "|7"
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+#| output-location: column
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp), 
+                     y = life_expectancy, 
+                     colour = continent, 
+                     shape = continent, 
+                     size = population, 
+                     alpha = population)) + 
+  geom_point() + 
+  scale_colour_viridis_d()
+```
+
+## Mapeo versus Configuración
+<hr>
+
+:::: columns
+
+::: {.column width="50%"}
+
+### [Mapeo]{.verde-h3}
+
+```{r}
+#| echo: true
+#| code-line-numbers: "|6,7"
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp), 
+                     y = life_expectancy, 
+                     colour = continent, 
+                     shape = continent, 
+                     size = population, 
+                     alpha = population)) + 
+  geom_point() + 
+  scale_colour_viridis_d()
+```
+
+:::
+
+::: {.column width="50%"}
+
+### [Configuración]{.verde-h3}
+
+```{r}
+#| echo: true
+#| code-line-numbers: "|6"
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp),  
+                     y = life_expectancy, 
+                     colour = continent, 
+                     shape = continent)) + 
+  geom_point(
+    size = 2, 
+    alpha = 0.5) + 
+  scale_colour_viridis_d()
+```
+
+:::
+
+::::
+
+## Mapeo vs. Configuración
+<hr>
+
+- [Mapeo:]{.verde-h3} Determina el tamaño, alfa, etc. de los puntos basados en el valor de un variable en los datos:
+
+    + Conocido en inglés como *mapping*.
+    
+    + Se configura como: [aes()]{.verde-h3}
+    
+- [Configuración:]{.verde-h3} Determina el tamaño, alfa, etc. de los puntos SIN basarse en el valor de un variable en los datos:
+
+    + Conocido en inglés como *setting*.
+
+    + Se configura como: [geom_*]{.verde-h3} (en este caso fue [geom_point]{.verde-h3}, pero hay otras geometrías más)
+    
+
+
+## Temas pre-definidos de [{ggplot2}]{.verde-h3}.
+<hr>
+
+\ 
+
+- [{ggplot2}]{.verde-h3} ofrece una serie de temas predinidos.
+
+- Un [tema predefinido]{.verde-h3} es una configuración pre-definida de componentes no dependientes de los datos (títulos, etiquetas, fuentes, fondo, grilas, leyendas, etc.) que pueden ser usados para darle un aspecto consistente a los gráficos.
+
+- Más info sobre los temas completas pre-definidos se pueden encontra en el siguiente enlace: [Ver aquí](https://ggplot2.tidyverse.org/reference/ggtheme.html).
+
+- Uno también puede personalizar sus propios temas: [Ver aquí](https://ggplot2.tidyverse.org/reference/theme.html).
+
+## Temas completos {.scrollable}
+<hr>
+
+::: {.panel-tabset}
+
+### Lista 
+
+- theme_gray (por defecto)
+
+- theme_bw()
+
+- theme_linedraw()
+
+- theme_light()
+
+### theme_gray
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+#| output-location: column
+#| code-line-numbers: "|8"
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp), 
+                     y = life_expectancy, 
+                     colour = continent, 
+                     shape = continent)) + 
+  geom_point(size = 2, alpha = 0.5) + 
+  scale_colour_viridis_d() + 
+  theme_gray()
+```
+
+### theme_bw()
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+#| output-location: column
+#| code-line-numbers: "|8"
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp), 
+                     y = life_expectancy, 
+                     colour = continent, 
+                     shape = continent)) + 
+  geom_point(size = 2, alpha = 0.5) + 
+  scale_colour_viridis_d() + 
+  theme_bw()
+```
+
+### theme_linedraw()
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+#| output-location: column
+#| code-line-numbers: "|8"
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp), 
+                     y = life_expectancy, 
+                     colour = continent, 
+                     shape = continent)) + 
+  geom_point(size = 2, alpha = 0.5) + 
+  scale_colour_viridis_d() + 
+  theme_linedraw()
+```
+
+### theme_light()
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+#| output-location: column
+#| code-line-numbers: "|8"
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp), 
+                     y = life_expectancy, 
+                     colour = continent, 
+                     shape = continent)) + 
+  geom_point(size = 2, alpha = 0.5) + 
+  scale_colour_viridis_d() + 
+  theme_light()
+```
+
+:::
+
+## Temas completos (parte 2) {.scrollable}
+<hr>
+
+::: {.panel-tabset}
+
+### Lista 
+
+- theme_dark()
+
+- theme_minimal()
+
+- theme_classic()
+
+- theme_void()
+
+- theme_test()
+
+
+### theme_dark()
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+#| output-location: column
+#| code-line-numbers: "|8"
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp), 
+                     y = life_expectancy, 
+                     colour = continent, 
+                     shape = continent)) + 
+  geom_point(size = 2, alpha = 0.5) + 
+  scale_colour_viridis_d() + 
+  theme_dark()
+```
+
+### theme_minimal()
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+#| output-location: column
+#| code-line-numbers: "|8"
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp), 
+                     y = life_expectancy, 
+                     colour = continent, 
+                     shape = continent)) + 
+  geom_point(size = 2, alpha = 0.5) + 
+  scale_colour_viridis_d() + 
+  theme_minimal()
+```
+
+### theme_classic()
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+#| output-location: column
+#| code-line-numbers: "|8"
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp), 
+                     y = life_expectancy, 
+                     colour = continent, 
+                     shape = continent)) + 
+  geom_point(size = 2, alpha = 0.5) + 
+  scale_colour_viridis_d() + 
+  theme_classic()
+```
+
+### theme_void()
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+#| output-location: column
+#| code-line-numbers: "|8"
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp), 
+                     y = life_expectancy, 
+                     colour = continent, 
+                     shape = continent)) + 
+  geom_point(size = 2, alpha = 0.5) + 
+  scale_colour_viridis_d() + 
+  theme_void()
+```
+
+### theme_test()
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-align: center
+#| out-width: "100%"
+#| fig-width: 8
+#| output-location: column
+#| code-line-numbers: "|8"
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp), 
+                     y = life_expectancy, 
+                     colour = continent, 
+                     shape = continent)) + 
+  geom_point(size = 2, alpha = 0.5) + 
+  scale_colour_viridis_d() + 
+  theme_test()
+```
+
+:::
+    
+## Facetado
+<hr>
+
+- Se puede `dividir` la imagen en `varias subimágenes` de acuerdo a alguna otra `condición`.
+
+- Muy útil cuando se tienen grandes de datos y es de interés mostrar sus relaciones con varias variables.
+
+- Hay dos tipos de facetado:
+
+    + facet_grid
+    
+    + facet_wrap
+    
+```{r}
+#| echo: false
+#| fig-align: center
+knitr::include_graphics("img/position-facets.png")
+```
+    
+
+## Facetado {.scrollable}
+<hr>
+
+```{r}
+#| echo: false
+gapminder3 <- gapminder %>% 
+  filter(continent %in% c("Europe", "Africa"))
+```
+
+::: {.panel-tabset}
+
+### facet_grid `x ~ .`
+
+```r
+ggplot(data = gapminder, 
+       mapping = aes(x = year, 
+                     y = life_expectancy)) + 
+  geom_point() + 
+  facet_grid(continent ~ .) + 
+  scale_colour_viridis_d() + 
+  theme_bw()
+```
+
+```{r}
+#| echo: false
+#| fig-align: center
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp), 
+                     y = life_expectancy)) + 
+  geom_point() + 
+  facet_grid(continent ~ .) + 
+  scale_colour_viridis_d() + 
+  theme_bw()
+```
+
+### facet_grid `. ~  x`
+
+```r
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp), 
+                     y = life_expectancy)) + 
+  geom_point() + 
+  facet_grid(. ~ continent) + 
+  scale_colour_viridis_d() + 
+  theme_bw()
+```
+
+```{r}
+#| echo: false
+#| fig-align: center
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp), 
+                     y = life_expectancy)) + 
+  geom_point() + 
+  facet_grid(. ~ continent) + 
+  scale_colour_viridis_d() + 
+  theme_bw()
+```
+
+### facet_wrap `x . ~`
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp), 
+                     y = life_expectancy)) + 
+  geom_point() + 
+  facet_wrap(continent ~ . ) + 
+  scale_colour_viridis_d() + 
+  theme_bw()
+```
+
+:::
+
+::: {.column width='50%'}
+
+```r
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp), 
+                     y = life_expectancy)) + 
+  geom_point() + 
+  facet_wrap(. ~ continent) + 
+  scale_colour_viridis_d() + 
+  theme_bw()
+```
+
+:::
+
+::::
+
+```{r}
+#| echo: false
+#| fig-align: center
+ggplot(data = gapminder2000, 
+       mapping = aes(x = log(gdp), 
+                     y = life_expectancy)) + 
+  geom_point() + 
+  facet_wrap(continent ~ . ) + 
+  scale_colour_viridis_d() + 
+  theme_bw()
+```
+
+### facet_wrap `x . y`
+
+```r
+ggplot(data = gapminder1980_2000, 
+       mapping = aes(x = log(gdp), 
+                     y = life_expectancy)) + 
+  geom_point() + 
+  facet_grid(year ~ continent) + 
+  scale_colour_viridis_d() + 
+  theme_bw()
+```
+
+```{r}
+#| echo: false
+#| fig-align: center
+ggplot(data = gapminder1980_2000, 
+       mapping = aes(x = log(gdp), 
+                     y = life_expectancy)) + 
+  geom_point() + 
+  facet_grid(year ~ continent) + 
+  scale_colour_viridis_d() + 
+  theme_bw()
+```
+
+
+:::
+
+
+## `r fontawesome::fa("mug-saucer", "white")` Hagamos una pausa {background-color="#00817E"}
+<hr>
+
+::: r-fit-text
+
+<center>
+
+Tomemos un descanso de `5 minutos`...
+
+Estire las piernas `r fontawesome::fa("person-walking", "white")`... 
+
+Deje de ver las pantallas `r fontawesome::fa("laptop", "white")`...
+
+... cualquier `r fontawesome::fa("laptop", "white")`, las del celular `r fontawesome::fa("mobile", "white")` también.
+
+</center>
+
+:::
+
+```{r}
+#| echo: false
+library(countdown)
+countdown_timer <- function(
+    minutes = 1, 
+    play_sound = TRUE, 
+    font_size = "2em", 
+    ...
+) {
+  countdown(
+    minutes = minutes,
+    # Fanfare when it's over
+    play_sound = play_sound,
+    # Set timer theme to match solarized colors
+    color_border              = "#404041",
+    color_text                = "white",
+    color_background = "#000000",
+    color_running_background  = "#72994E",
+    color_running_text        = "white",
+    color_finished_background = "#EE6331",
+    color_finished_text       = "white",
+    font_size = font_size,
+    ...
+  )
+}
+```
+
+```{r}
+#| echo: false
+countdown_timer(5)
+```
+
+
+# Datos 'tidy' 
+
+## Datos 'tidy'
+<hr>
+
+\
+\
+
+:::: columns
+::: {.column width='50%'}
+
+[Características de los datos ordenados o 'tidy']{.verde-h3}
+
+- Cada `variable` forma un `columna`.
+- Cada `observación` forma una `fila`. 
+- Cada `tipo de unidad observacional` forma una `tabla`.
+
+::: 
+
+::: {.column width='50%'}
+
+[Características de los datos desordenados o 'untidy']{.verde-h3}
+
+!@#$%^&*()
+
+:::
+::::
+
+## Gramática de manejo de datos
+<hr>
+
+Al igual que [{ggplot}]{.verde-h3}, el paquete [{dplyr}]{.verde-h3}, también de [{tidyverse}]{.verde-h3}, ofrece toda una gramática llena de funciones que actúan como verbos para manipular data.frames.
+
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{r dplyr-part-of-tidyverse, echo=FALSE, out.width="70%", caption = "dplyr is part of the tidyverse"}
+knitr::include_graphics("img/dplyr-part-of-tidyverse.png")
+```
+
+:::
+
+::: {.column width='50%'}
+
+- `select`: extrae columnas usando nombres
+- `arrange`: reordena filas
+- `slice`: extrae filas usando índices
+- `filter`: extrae filas que coincidan con criterios lógicos
+- `distinct`: filtra por filas únicas
+- `mutate`: agrega nuevas variables
+- `summarise`: reduce variables a valores
+- `group_by`: para operacionesa agrupadas
+- ... (mucho más)
+
+:::
+
+::::
+
+## Reglas de las funciones de [{dplyr}]{.verde-h3}
+<hr>
+
+\
+
+- El primer argumento **siempre** es el `data frame`.
+
+- Los argumentos subsecuentes dicen qué hacer con el `data frame`.
+
+- Siempre retorna un `data frame`.
+
+- No altera el `data frame` original.
+
+## Ejemplo de función [{dplyr}]{.verde-h3} en acción: seleccionar columna
+<hr>
+
+\ 
+
+Ver solamente `country` (países):
+
+```{r}
+#| echo: false
+gapminder <- as_tibble(gapminder)
+```
+
+```{r}
+select(gapminder, country)
+```
+
+## Reglas de las funciones de [{dplyr}]{.verde-h3} en acción {auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "1"
+select(
+  gapminder, 
+  country
+)
+```
+
+:::
+
+::: {.column width='50%'}
+
+- Inicia con la función (un verbo): [select()]{.verde-h3}
+
+:::
+
+:::: 
+
+## Reglas de las funciones de [{dplyr}]{.verde-h3} en acción {auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "2"
+select(
+  gapminder, 
+  country
+)
+```
+
+:::
+
+::: {.column width='50%'}
+
+- Inicia con la función (un verbo): [select()]{.verde-h3}
+
+- Primer argumento: data frame con el que trabajaremos, [gapminder]{.verde-h3}
+
+:::
+
+:::: 
+
+## Reglas de las funciones de [{dplyr}]{.verde-h3} en acción {auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "3"
+select(
+  gapminder, 
+  country
+)
+```
+
+:::
+
+::: {.column width='50%'}
+
+- Inicia con la función (un verbo): [select()]{.verde-h3}
+
+- Primer argumento: data frame con el que trabajaremos, [gapminder]{.verde-h3}
+
+- Segundo argumento: variable que queremos seleccionar, [country]{.verde-h3}
+
+:::
+
+:::: 
+
+
+## Reglas de las funciones de [{dplyr}]{.verde-h3} en acción  {auto-animate="true"}
+<hr>
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{r}
+#| echo: true
+select(
+  gapminder, 
+  country
+)
+```
+
+:::
+
+::: {.column width='50%'}
+
+- Inicia con la función (un verbo): [select()]{.verde-h3}
+
+- Primer argumento: data frame con el que trabajaremos, [gapminder]{.verde-h3}
+
+- Segundo argumento: variable que queremos seleccionar, [country]{.verde-h3}
+
+- Resultado: data frame con `r nrow(gapminder)` filas y 1 columna
+
+:::
+
+:::: 
+
+## Entra data frame / tibble, sale data frame / tiblble
+<hr>
+
+>Las funciones de dplyr siempre esperan un data frame y siempre generan un data frame.
+
+- Entra:
+
+```{r}
+class(gapminder)
+```
+
+- Sale:
+
+```{r}
+select(gapminder, continent) %>% 
+  class()
+```
+ 
+
+## `r fontawesome::fa("mug-saucer", "white")` Hagamos una pausa {background-color="#00817E"}
+<hr>
+
+::: r-fit-text
+
+<center>
+
+Tomemos un descanso de `5 minutos`...
+
+Estire las piernas `r fontawesome::fa("person-walking", "white")`... 
+
+Deje de ver las pantallas `r fontawesome::fa("laptop", "white")`...
+
+... cualquier `r fontawesome::fa("laptop", "white")`, las del celular `r fontawesome::fa("mobile", "white")` también.
+
+</center>
+
+:::
+
+```{r}
+#| echo: false
+library(countdown)
+countdown_timer <- function(
+    minutes = 1, 
+    play_sound = TRUE, 
+    font_size = "2em", 
+    ...
+) {
+  countdown(
+    minutes = minutes,
+    # Fanfare when it's over
+    play_sound = play_sound,
+    # Set timer theme to match solarized colors
+    color_border              = "#404041",
+    color_text                = "white",
+    color_background = "#000000",
+    color_running_background  = "#72994E",
+    color_running_text        = "white",
+    color_finished_background = "#EE6331",
+    color_finished_text       = "white",
+    font_size = font_size,
+    ...
+  )
+}
+```
+
+```{r}
+#| echo: false
+countdown_timer(5)
+```
+
+## 
+
+::: r-fit-text
+<center>¡Gracias!</center>
+
+<center>¿Preguntas?</center>
+
+:::
+
+## 
+
+\
+
+\
+
+\
+
+::: r-fit-text
+
+<center>
+{{< fa brands twitter >}} @psotob91 
+
+{{< fa brands github >}} https://github.com/psotob91
+
+{{< fa inbox >}} percys1991@gmail.com
+</center>
+
+:::

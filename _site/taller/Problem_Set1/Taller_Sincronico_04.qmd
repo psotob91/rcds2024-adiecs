@@ -1,0 +1,172 @@
+---
+title: "Taller RCDS - Semana 4: Réplica de Análisis"
+author: "Percy Soto Becerra"
+---
+
+## Introducción
+
+Para este problem set 1, procesaremos los datos del artículo titulado **"Comorbid Depression and Heart Failure: A
+Community Cohort Study"** y publicado en la revista Plos One (doi: <10.1371/journal.pone.0158570>). Hemos modificado ligeramente los datos originales para agregarles algunos problemas que permitan enfrentar problemas de calidad de datos.
+
+En este problem set 1 nos centraremos solo en manejo de datos y análisis incicial de datos. Todos los ejercicios requieren que usted haga algún tipo de comentario personal, ya sea describir los resultados observados o comentar el proceso / razonamiento seguido. Es importante que se respondan con comentarios, la pregunta que no tiene comentarios solo valdrá 25% del puntaje total.
+
+## Ejercicio 1: Cargue los paquetes que usará. Comentar con # al lado de cada paquete un resumen breve de para qué lo usarán. **Tip: Use library()**
+
+*Nota: Todos los paquetes que usará deberán estar en este chunk, no en otro chunk posterior*
+
+```{r}
+
+```
+
+## Ejercicio 2: Importe los datos denominados `"pone.0158570.s002_modified.xlsx"`
+
+```{r}
+
+```
+
+## Ejercicio 3: Haga un inspección global de los datos
+
+- **Dé un vistazo a los datos. Describa brevemente sus resultados.**
+
+```{r}
+
+```
+
+- **Obtenga un resumen global superficial de los datos. Describa brevemente sus resultados.**
+
+```{r}
+
+```
+
+- **Obtenga una descripción un poco más detallada variable por variable de los datos. Describa brevementesus resultados.**
+
+```{r}
+
+```
+
+## Ejercicio 4: Procese los datos según el siguiente diccionario:
+
+```{r}
+knitr::include_graphics("codebook.png")
+```
+
+- En un solo pipeline, haga lo siguiente:
+
+    + (1) Renombre variables.
+    + (2) Recodifique las etiquetas de las variables categóricas.
+    + (3) Cree las nuevas variables.
+    + (4) Etiquete a las variables.
+
+```{r}
+
+```
+
+## Ejercicio 5: Identifique duplicados
+
+- **Identifique duplicados de fila. Describa brevementesus resultados.**
+
+```{r}
+
+```
+
+- **Identifique duplicados de id. Describa brevemente sus resultados.**
+
+```{r}
+
+```
+
+- **Solo si hubo duplicados de fila, elimine los duplicados de fila, quedándose solo con una versión de cada observación. Comente el proceso/razonamiento.** 
+
+*Tip: Puedes usar distinct()*
+
+```{r}
+
+```
+
+- **Solo si hubo duplicados de id, elimine el duplicado de fila que menos información completa tenga. Comente el proceso/razonamiento.**
+
+*Tip: Puedes usar slice() o filter()*
+
+```{r}
+
+```
+
+## Ejercicio 6: Identifique datos perdidos
+
+- **Presente el número de datos perdidos y tasa de completitud variable por variable en una sola salida. Describa los resultados relacionados a datos perdidos.**
+
+```{r}
+
+```
+
+- **Muestre gráficos de datos perdidos y como se agrupan entre variables.Describa los resultados relacionados a datos perdidos.**
+
+```{r}
+
+```
+
+## Ejercicio 7: Haga las siguientes consultas ("queries")
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+
+## Ejercicio 8: Haga los siguientes gráficos:
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+
+## Ejercicio 9: Exporte los datos a los siguientes formatos:
+
+- Formato de R: ".rds"
+
+```{r}
+
+```
+
+- Formato de Excel: ".xlsx"
+
+```{r}
+
+```
+
+- Formato de archivo plano: ".csv"
+
+```{r}
+
+```
+
+- Formato de Stata: ".dta"
+
+```{r}
+
+```
+
+## Ejercicio 10: Renderice el archivo .qmd final. Comparta la carpeta entera, la cual debe contener el .qmd, así como el .html.

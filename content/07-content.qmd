@@ -1,0 +1,48 @@
+---
+title: "Sesión 07"
+date: "2023-06-16"
+---
+
+## Objetivos
+
+- Pruebas para tres o más grupos.
+
+- Pruebas para variables categóricas.
+
+## Materiales
+
+::: {.panel-tabset}
+
+### Teoría y práctica grabada
+
+- Anotaciones extra en quarto: [Aquí](../slides/sesion07/adicional.qmd) 
+
+### Práctica grabada
+
+
+### Slides
+
+```{r slides-videos, echo=FALSE, include=FALSE}
+source(here::here("R", "slide-things.R"))
+```
+
+```{r show-slide-tabs1, echo=FALSE, results="asis"}
+slide_buttons("/slides/sesion07/sesion07")
+```
+
+```{=html}
+<iframe width="780" height="500" src="../slides/sesion07/sesion07.html" title="Sesión 7 - Inferencia Estadística con R"></iframe>
+```
+
+### Talleres
+
+|                              |                                                                                  |
+|----------------------|--------------------------------------------------|
+| Instructivo en línea         | [Aquí](../taller/taller07/taller07_instructivo.html)                                                 |
+| Instructivo con solucionario | [Aquí](../taller/taller07/taller07_instructivo_sol.html)                                                                       |
+| Quarto para alumnos          | [Aquí](../taller/taller07/taller07_alumno.qmd)                                                                       |
+| Toda la carpeta del taller   | [Aquí](https://drive.google.com/drive/folders/1qDor0XJEtB9rW6yXWIfmc_mWXYz9MNTV) |
+
+:::
+
+

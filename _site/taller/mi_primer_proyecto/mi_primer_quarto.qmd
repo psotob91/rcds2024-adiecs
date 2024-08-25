@@ -1,0 +1,135 @@
+---
+title: "Mi primer archivo quarto"
+author: "Percy Soto"
+format: 
+  html: 
+    theme: cerulean
+    embed-resources: true
+---
+
+## Cargar paquetes
+
+```{r}
+library(medicaldata)
+library(tidyverse)
+```
+
+## Importar datos
+
+Primero importaremos los datos del estudio de streptomicina:
+
+```{r}
+data(strep_tb)
+```
+
+```{r}
+data(scurvy)
+```
+
+Veamos las primeras 6 filas de los datos
+
+```{r}
+head(scurvy)
+```
+
+# Titulo nivel 1
+
+## Titulo nivel 2
+
+### Titulo nivel 3
+
+#### Titulo nivel 4
+
+Yo puedo *escribir* [aquí]{.underline} **cualquier** ***cosa***.
+
+`Yo` puedo **escribir** aquí *más* [cosas]{.underline}.
+
+| Col1 | Col2 |
+|------|------|
+| sdas | sas  |
+| as   | sas  |
+| sas  | saas |
+
+![Ejemplo de imagen](images/asociacion_agnostica.JPG){fig-align="center"}
+
+$$E[Y_i]=\beta_0+\beta_1x_i$$
+
+-   idea 1
+
+-   idea 2
+
+-   idea 3
+
+    -   subidea1
+    -   subidea 2
+
+1.  idea
+
+2.  otra idea
+
+3.  otra idea mas
+
+4.  idea
+
+5.  otra idea
+
+6.  otra idea mas
+
+> "Todos los modelos son incorrectos, pero algunos son útiles"
+>
+> |                                                             G. Box
+
+```{r}
+# ESTO ES UNA SUMA
+2 + 2
+```
+
+El numero de individuos en ambos brazos fue de `r 2 + 2`.
+
+
+```{r}
+scurvy$treatment
+```
+
+```{r}
+scurvy$skin_sores_d6
+```
+
+```{r}
+skin_sores <- scurvy$skin_sores_d6
+skin_sores
+```
+
+
+```{r}
+glimpse(scurvy)
+```
+
+```{r}
+?scurvy
+```
+
+```{r}
+nrow(scurvy)
+```
+
+```{r}
+ncol(scurvy)
+```
+
+```{r}
+dim(scurvy)
+```
+
+La base de datos del estudio de James Lind sobre terapias contra el escorbuto tenía `r nrow(scurvy)` filas y `r ncol(scurvy)` variables.
+
+```{r}
+nrow(scurvy)
+```
+
+Markdown es el lenguaje de marcado
+
+RMarkdown era el framework que tenia RStudio para ejecutar codigo Markdown.
+Quarto es RMarkdown con esteroides.
+Posit
+

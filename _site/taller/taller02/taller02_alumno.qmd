@@ -1,0 +1,202 @@
+---
+title: "Taller 2"
+---
+
+## Introducción
+
+En este segundo taller del curso vamos a aprender a crear gráficos a partir de una base de datos de [Gapminder](https://www.gapminder.org/).
+
+## Instalar/cargar paquetes
+
+Esta vez vamos a trabajar con el paquete nuevo `{ggplot}` del (meta)paquete `{tidyverse}`. Podemos instalar directamente el paquete `{ggplot}`, pero es mejor instalar `{tidyverse}` (<https://www.tidyverse.org/>), ya que este viene con un conjunto más grandes de paquetes que también usaremos más adelante.
+
+El otro paquete nuevo que usaremos es `{dslabs}` cuya única función es almacenar bases de datos. Puedes ver qué bases de datos tiene y su documentación asociada en el repositorio oficial del CRAN: <https://cran.r-project.org/web/packages/dslabs/index.html>.
+
+Por último, también usaremos los paquetes aprendidos en la clase previa: `{rio}` y `{here}`.
+
+```{r}
+library(tidyverse)  # Tiene {ggplot2}                 
+library(dslabs)     # Tiene bases de datos: gapminder                
+# Cargar paquetes rio y here (escribir código)    
+```
+
+## Importación e inspección de datos
+
+Para esta práctica, vamos a trabajar con tres bases de datos. Las dos primeras son bases da datos `juguetes` que ya se encuentran disponibles en el paquete `{dslabs}`. La última base de datos es externa, está en formato MS Excel (`*.xlsx`) y se denomina `maca_meno_perclin.xlsx`.
+
+**Importar datos juguete:**
+
+Los datos juguetes del paquete `{dslabs}` se pueden descargar usando la función `data()`, colocando el nombre de la base datos e indicando el paquete de procedencia.
+
+Aquí mostramos el ejemplo de los datos `gapminder` descargados:
+
+```{r}
+data(gapminder, package = "dslabs")  
+```
+
+-   *Revisa la documentación del paquete según lo indicado por el instructivo*
+
+Una vez en el `CRAN` de R, podemos ver que tiene un `Manual de Referencia` el cual abriremos:
+
+El enlace del manual es el siguiente: <https://cran.r-project.org/web/packages/dslabs/dslabs.pdf>
+
+Si revisamos en el manual, veremos que hay diversas bases de datos. La base de datos `murders` es la que usaremos también:
+
+```{r}
+# cargar base de datos juguete murders
+```
+
+**Importar datos de Stata:**
+
+En la carpeta compartida tenemos el archivo de Microsoft Excel (extensión `*.xlsx`): `maca_meno_preclin.xlsx`.
+
+```{r}
+# Importar datos 
+```
+
+## Explorar datos importados
+
+Podemos explorar los datos con dos funciones básicas: `head()` de R base y `glimpse()` de `{tidyverse}`.
+
+-   Veamos para el caso de los datos `murders`:
+
+```{r}
+head(murders)
+glimpse(murders)
+```
+
+-   Hagamos lo mismo para gapminder
+
+```{r}
+# Escribir código aquí
+```
+
+-   Y para maca_data:
+
+```{r}
+# Escribir código aquí
+```
+
+## Visualización de datos con ggplot
+
+### Secuencia para crear gráficos con R:
+
+*Vea instructivo*
+
+## Ejercicios
+
+### Ejercicio 1 {.unnumbered}
+
+Crear un gráfico de puntos que muestre cómo la mortalidad infantil ha cambiado a través del tiempo.
+
+```{r}
+# Escribir código aquí
+```
+
+### Ejercicio 2 {.unnumbered}
+
+Crear un gráfico de puntos que muestre cómo la esperanza de vida ha cambiado a través del tiempo y que cada continente tenga un color distinto. Guarde el gráficos como grafico1. Imprímalo.
+
+```{r}
+# Escribir código aquí
+```
+
+### Ejercicio 3 {.unnumbered}
+
+En grafico1 ahora que *x* tenga la etiqueta "Años", *y* tenga la etiqueta "Esperanza de vida" y el título sea "Esperanza de vida en el tiempo". Guardelo como graico2 e imprimalo.
+
+```{r}
+# Escribir código aquí
+```
+
+### Ejercicio 4 {.unnumbered}
+
+Crear un gráfico de dispersión con datos del año 1990 de las variables fertilidad y esperanza de vida. Guarda el grafico como data90
+
+```{r}
+# Este código filtra 1990. La próxima clase lo estudiaremos
+data_1990 <- gapminder %>%
+  filter(year == 1990)
+```
+
+```{r}
+# Escribir código aquí
+```
+
+### Ejercicio 5 {.unnumbered}
+
+Con el mismo gráfico de la pregunta 6, ahora queremos diferenciar los continentes agregándoles un color distinto a cada uno, ¿cómo lo hacemos?
+
+```{r}
+# Escribir código aquí
+```
+
+### Ejercicio 6 {.unnumbered}
+
+Crear un gráfico de puntos que cruce las variables fertilidad(eje x) y esperanza de vida(eje y) solo del continente americano. Además, que cada region del continente tenga un color distinto.
+
+```{r}
+# Este código filtra Américas. La próxima clase lo estudiaremos
+data_americas <- gapminder %>%
+  filter(continent == "Americas")
+```
+
+```{r}
+# Escribir código aquí
+```
+
+### Ejercicio 7 {.unnumbered}
+
+Cambie los temas completos de los gráficos ggplot. Elija 3 temas que le gusten de esta página web: <https://ggplot2.tidyverse.org/reference/ggtheme.html>
+
+-   Tema 1 de elección:
+
+```{r}
+# Escribir código aquí
+```
+
+-   Tema 2 de elección:
+
+```{r}
+# Escribir código aquí
+```
+
+-   Tema 3 de elección:
+
+```{r}
+# Escribir código aquí
+```
+
+### Ejercicio 8 {.unnumbered}
+
+Con los datos `maca_datos`, cree un gráfico de cajas que compare a la glucosa entre los niveles de tratamiento. Haga que el color dependa del tratamiento. Busque la geometría apropiada para este tipo de gráfico en el siguiente enlace: <https://ggplot2.tidyverse.org/reference/>
+
+```{r}
+# Escribir código aquí
+```
+
+### Ejercicio 9 {.unnumbered}
+
+-   Con el gráfico anterior, agregue una geometría de puntos:
+
+```{r}
+# Escribir código aquí
+```
+
+-   ¿Qué pasaría si agrego la geometría de puntos primero y la de cajas después? Discuta con sus compañeros las diferencias encontradas y el por qué de estas.
+
+```{r}
+# Escribir código aquí
+```
+
+### Ejercicio 10 {.unnumbered}
+
+Elija un tema que le guste y agréguelo al gráfico. Edite las etiquetas correspondientes de los ejes, títulos, leyendas, etc.
+
+```{r}
+# Escribir código aquí
+```
+
+## Renderizar
+
+Renderice todo el Quarto.

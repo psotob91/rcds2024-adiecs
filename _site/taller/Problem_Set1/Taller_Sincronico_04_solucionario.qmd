@@ -1,0 +1,227 @@
+---
+title: "Taller RCDS - Semana 4: Réplica de Análisis"
+author: "Percy Soto Becerra"
+---
+
+## Introducción
+
+Analizaremos los datos del artículo titulado "Comorbid Depression and Heart Failure: A
+Community Cohort Study" y publicado en la revista Plos One (doi: <10.1371/journal.pone.0158570>). 
+
+La réplica en este taller será parcial, dado que aún no contamos con todas las herramientas y solo nos centraremos en análisis descriptivo.
+
+## Cargar paquetes
+
+```{r}
+library(tidyverse)     # Varias funciones de tidyverse (dplyr, ggplot2, etc.)
+library(rio)           # Navaja suiza de la importación de datos
+library(janitor)       # Funciones para manejo y limpieza de datos (p. ej, get_dupes)
+library(labelled)      # Funciones para manipular etiquetas: set_variable_labels()
+library(skimr)         # Análisis inicial de datos
+library(gtsummary)     # Tablas reproducibles
+library(survival)      # Análisis de supervivencia
+library(ggsurvfit)     # Gráficos de análisis de supervivencia
+```
+
+## Importar datos
+
+```{r}
+datos_raw <- import("pone.0158570.s002.xlsx")
+```
+
+## Análisis Inicial de Datos
+
+- Vistazo a los datos:
+
+```{r}
+datos_raw %>% 
+  glimpse()
+```
+
+```{r}
+# datos_raw$`Serum sodium (mmol/l)`
+```
+
+- Identificar duplicados de toda la fila:
+
+```{r}
+datos_raw %>% 
+  get_dupes()
+```
+
+- Identificar duplicados de id:
+
+```{r}
+datos_raw %>% 
+  get_dupes(id)
+```
+
+- Análisis descriptivo general de todos los datos:
+
+```{r}
+skim(datos_raw)
+```
+
+## Limpieza de datos
+
+- En un solo pipeline, haremos lo siguiente:
+
+    + Renombrar variables en estilo tidy
+    + Etiquetar valores de variables categóricas.
+    + Crear la variable sintomas depresivos.
+    + Etiquetar a variables de acuerdo a como se presentan en tabla 1.
+
+```{r}
+datos_raw %>% 
+  # 1) Renombrar variables
+  rename(
+    age = `Age (years)`, 
+    male = `Male (1=Yes, 0=No)`, 
+    phq9 = `PHQ-9`, 
+    sbp = `Systolic BP (mm Hg)`, 
+    e_gfr = `Estimated glomerular filtration rate`, 
+    ej_frac = `Ejection fraction (%)`, 
+    sod = `Serum sodium (mmol/l)`, 
+    bun = `Blood urea nitrogen (mg/dl)`, 
+    et_hf = `Etiology HF(1=Yes, 0=No)`, 
+    dm = `Prior diabetes mellitus`, 
+    el_bnp_nt = `Elevated level of BNP/NT-BNP (1=Yes, 0=No)`, 
+    t_hf_death = `Time from HF to Death (days)`, 
+    death = `Death (1=Yes, 0=No)`, 
+    t_hf_hospi = `Time from HF to hospitalization (days)`, 
+    hospi = `Hospitalized (1=Yes, 0=No)`
+  ) %>% 
+  # 2) Etiquetar valores de variables
+  mutate(
+    male = factor(male, levels = c(0, 1), labels = c("No", "Yes")), 
+    et_hf = factor(et_hf, levels = c(0, 1), labels = c("No", "Yes")), 
+    el_bnp_nt = factor(el_bnp_nt, levels = c(0, 1), labels = c("No", "Yes")), 
+    death = factor(death, levels = c(0, 1), labels = c("No", "Yes")), 
+    hospi = factor(hospi, levels = c(0, 1), labels = c("No", "Yes"))
+  ) %>% 
+  # 3) Crear nuevas variables
+  mutate(
+    depre = case_when(phq9 >= 5 ~ "Yes", 
+                      phq9 < 5 ~ "No", 
+                      TRUE ~ as.character(NA))
+  ) %>% 
+  set_variable_labels(
+    id = "ID's patient", 
+    age = "Age", 
+    male = "Male", 
+    sbp = "Systolic BP (mm Hg)", 
+    e_gfr = "Estimated glomerular filtration rate", 
+    ej_frac = "Ejection fraction (%)", 
+    sod = "Serum sodium (mmol/l)", 
+    el_bnp_nt = "Elevated level of BNP/NT-BNP", 
+    et_hf = "Ischemic etiology", 
+    dm = "Prior diabetes mellitus", 
+    depre = "Depressive symptoms"
+  ) -> datos_tidy
+
+datos_tidy
+```
+
+**Notas:** 
+
+- HF = Heart failure
+
+- Depresión no está disponible en la base de datos. De acuerdo con el artículo, el punto de corte fue de PHQ9 > 5 para *presencia de síntomas depresivos*.
+
+## Guardar los datos listos para el analisis
+
+```{r}
+saveRDS(datos_tidy, "datos_tidy.rds")
+```
+
+## Crear tabla reproducible
+
+```{r}
+datos_tidy %>% 
+  mutate(
+    depre2 = factor(depre, levels = c("Yes", "No"))
+  ) -> datos_tidy
+```
+
+```{r}
+datos_tidy %>% 
+  select(age, male, sbp, e_gfr, ej_frac, sod, el_bnp_nt, et_hf, dm, depre2) %>% 
+  tbl_summary()
+```
+
+```{r}
+theme_gtsummary_journal(
+  journal = c("lancet"),
+  set_theme = TRUE
+)
+```
+
+```{r}
+datos_tidy %>% 
+  select(age, male, sbp, e_gfr, ej_frac, sod, el_bnp_nt, et_hf, dm, depre2) %>% 
+  tbl_summary(
+    by = depre2, 
+    statistic = list(c(age, sbp, e_gfr) ~ "{mean} ({sd})"), 
+    digits = list(c(age, sbp, e_gfr, ej_frac, sod) ~ 2, 
+                  c(male, el_bnp_nt, et_hf, dm) ~ c(0, 2)), 
+    label = list(age ~ "Age (years)")
+  ) %>% 
+  modify_header(
+    label ~ "", 
+    stat_1 ~ "Patients with depressive symptoms <br>(N = 179)", 
+    stat_2 ~ "Patients without depressive symptoms <br>(N = 246)" # <br> salto de linea
+  ) %>% 
+  add_p() -> tabla1
+
+tabla1
+```
+
+
+```{r}
+show_header_names(tabla1)
+```
+
+
+**Alternativa con helpers**
+
+
+```{r}
+datos_tidy %>% 
+  select(age, male, sbp, e_gfr, ej_frac, sod, el_bnp_nt, et_hf, dm, depre2) %>% 
+  tbl_summary(
+    by = depre2, 
+    statistic = list(c(age, sbp, e_gfr) ~ "{mean} ({sd})"), 
+    digits = list(all_continuous() ~ 2, 
+                  all_categorical() ~ c(0, 2)), 
+    label = list(age ~ "Age (years)")
+  ) %>% 
+  modify_header(
+    label ~ "", 
+    stat_1 ~ "Patients with depressive symptoms <br>(N = 179)", 
+    stat_2 ~ "Patients without depressive symptoms <br>(N = 246)" # <br> salto de linea
+  ) %>% 
+  add_p() -> tabla1_helpers
+
+tabla1_helpers
+```
+
+
+## Guardar tabla reproducible
+
+- Guardar como MS Word:
+
+```{r}
+library(flextable)
+tabla1 %>% 
+  as_flex_table() %>% 
+  save_as_docx(path = "Tabla1.docx")
+```
+
+- Guardar como MS Excel:
+
+```{r}
+library(huxtable)
+tabla1 %>% 
+  as_hux_xlsx(file = "Tabla1.xlsx")
+```
+

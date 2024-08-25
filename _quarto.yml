@@ -1,0 +1,134 @@
+project:
+  type: website
+  render:
+    - "*.qmd"
+    - "!slides/"
+    - "!taller/"
+    - "!assignment/"
+  resources:
+    - "files/"
+    - "slides/"
+    - "taller/"
+    - "assignment/"
+    # See https://quarto.org/docs/projects/code-execution.html#freeze
+execute:
+  freeze: auto  # Re-render only when source changes
+
+lang: es
+
+website:
+  title: "Fundamentos de R para Ciencia de Datos en Salud"
+  favicon: logo.jpg
+  image: logo.jpg
+  twitter-card: true
+  site-url: https://rcds2024-adiecs.netlify.app/  
+  open-graph: true
+  repo-url: https://github.com/psotob91/rcds2024-adiecs
+  repo-actions: [edit, issue]
+  page-navigation: true
+  reader-mode: true
+
+  navbar:
+    pinned: true
+    background: "#0880BE"
+    right:
+      - syllabus.qmd
+      - schedule.qmd
+      - text: "Contenido"
+        file: content/index.qmd
+      - text: "Problem Sets"
+        file: assignment/index.qmd
+      - text: "Recursos"
+        file: resource/index.qmd
+      - icon: cloud-fill
+        href: "https://drive.google.com/drive/folders/1N9xBJQ_HpazEX0mIspKaxDwcqPIZ_itu?usp=drive_link"
+        aria-label: RStudio.cloud
+
+  sidebar:
+    - title: "Información general"
+      style: "docked"
+      search: true
+      background: dark
+      contents:
+        - section: "Información general"
+          contents:
+            - content/index.qmd
+        - section: "Contenido del curso"
+          contents:
+            - text: "0: Día 0"
+              file: content/00-content.qmd
+            - text: "1: Día 1"
+              file: content/01-content.qmd
+              contents: 
+                - text: "Taller 01: Instructivo"
+                  file: taller/taller01/taller01_instructivo.html
+                - text: "Taller 01: Solucionario"
+                  file: taller/taller01/taller01_instructivo_sol.html
+            - text: "2: Día 2"
+              file: content/02-content.qmd
+              contents: 
+                - text: "Taller 02: Instructivo"
+                  file: taller/taller02/taller02_instructivo_xxx.html
+                - text: "Taller 02: Solucionario"
+                  file: taller/taller02/taller02_instructivo_sol_xxx.html
+            - text: "3: Día 3"
+              file: content/03-content.qmd
+              contents: 
+                - text: "Taller 03: Instructivo"
+                  file: taller/taller03/taller03_instructivo_xxx.html
+                - text: "Taller 03: Solucionario"
+                  file: taller/taller03/taller03_instructivo_sol_xxx.html
+            - text: "4: Día 4"
+              file: content/04-content.qmd
+              contents: 
+                - text: "Taller 04: Instructivo"
+                  file: taller/taller04/taller04_instructivo_xxx.html
+                - text: "Taller 04: Solucionario"
+                  file: taller/taller04/taller04_instructivo_sol_xxx.html
+            - text: "5: Día 5"
+              file: content/05-content.qmd
+              contents: 
+                - text: "Taller 05: Instructivo"
+                  file: taller/taller05/taller05_instructivo_xxx.html
+                - text: "Taller 05: Solucionario"
+                  file: taller/taller05/taller05_instructivo_sol_xxx.html
+
+    - title: "Examen Final"
+      contents:
+        - section: "Examen Final"
+          contents:
+            - assignment/Examen_Final_Instrucciones_xxx.qmd
+
+    - title: "Recursos"
+      contents:
+        - section: "Información general"
+          contents:
+            - resource/index.qmd
+            - resource/r-recursos.qmd
+            - resource/style.qmd
+        - section: "Guías"
+          contents:
+            - resource/manual_installR/install.qmd
+  page-footer:
+    left: |
+      Contenido {{< fa brands creative-commons >}} {{< var course.copyright_year >}} por [{{< var instructor.name_no_title >}}]({{< var instructor.url >}}) <br>
+      Todo el contenido está bajo {{< fa brands creative-commons >}}
+      {{< fa brands creative-commons-by >}} {{< fa brands creative-commons-nc >}}
+      [Creative Commons Attribution-NonCommercial 4.0 International license (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/)
+    right: |
+      Hecho con {{< fa brands r-project >}} y [Quarto](https://quarto.org/)<br>
+      [Ver el código fuente en {{< fa brands github >}} GitHub]({{< var course.github >}})
+    border: true
+    background: light
+
+format:
+  html:
+    theme:
+      - litera
+      - html/custom.scss
+    toc: true
+    highlight-style: monokai
+    code-copy: true
+    code-overflow: wrap
+    link-external-newwindow: true
+

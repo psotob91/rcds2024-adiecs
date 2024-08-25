@@ -1,0 +1,76 @@
+---
+title: "Sesión 00"
+date: "2024-08-20"
+---
+
+## Bievenida al curso
+
+¡Bienvenidos al Curso **Fundamento de R para Ciencia de DAtos en Salud**!
+
+
+## Objetivos
+
+En esta sesión se buscará:
+
+- Presentación de curso y recursos informáticos.
+
+- Verificación de instalación de R, Rstudio y Rtools. 
+
+- Recursos informáticos del curso y recursos de aprendizaje en línea.
+
+
+
+## Presentación del curso
+
+
+**Sesión 00**
+
+```{r slides-videos, echo=FALSE, include=FALSE}
+source(here::here("R", "slide-things.R"))
+```
+
+```{r show-slide-tabs1, echo=FALSE, results="asis"}
+slide_buttons("/slides/dia01/sesion00")
+```
+
+```{=html}
+<iframe width="780" height="500" src="../slides/dia01/sesion00.html" title="Sesión 1"></iframe>
+```
+
+## Instale R
+
+Antes que todo, debe instalar la **última versión** de los programas que usaremos para este curso. Dependiendo su sistema operativo, Ud. debería instalar los siguientes programas:
+
+::: panel-tabset
+
+## Windows
+
+- R
+
+- R Studio
+
+- R tools
+
+## Mac
+
+- R
+
+- R Studio
+
+## Linux (cualquier distro)
+
+- R
+
+- R Studio
+
+:::
+
+Si cuenta con una versión previa, elimínelas y reinstale todo de nuevo: **debe tener la última versión actualizada de todos estos**. Si nunca ha instalado R, ni los demás programa, hemos preparado el siguiente tutorial de instalación, el cual está disponible en la sección [Recursos](https://rcds2024-inkastats.netlify.app/resource/) de la web del curso: [Enlace aquí](https://rcds2024-inkastats.netlify.app/resource/manual_installr/install).
+
+Si tiene alguna duda durante la instalación, no dude en escribir por el Whatssap grupo.
+
+
+## Instale Git
+
+
+## Cree una cuenta en GitHub

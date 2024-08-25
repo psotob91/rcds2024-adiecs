@@ -1,0 +1,242 @@
+---
+format: 
+  revealjs: 
+    embed-resources: true
+    theme: [default, theme/theme.scss]
+    footer: "Fundamentos R para Ciencia de Datos en Salud - Sesión 8"
+    logo: img/logo.png
+    transition: convex
+    background-transition: zoom
+    incremental: false
+    slide-number: c/t
+    preview-links: true
+    # width: 1920
+    # height: 1080
+    height: 900
+    width: 1600
+    # parallax-background-image: images/bg-ietsi-slide-first.png
+    # parallax-background-size: "1920px 1080px"
+    # chalkboard: true
+    code-block-background: true
+    code-block-border-left: "#31BAE9"
+    highlight-style: ayu-dark
+    echo: true
+    multiplex: true
+    touch: true
+    auto-stretch: true
+    link-external-icon: true
+    link-external-newwindow: true
+    self-contained-math: true
+    
+from: markdown+emoji
+execute:
+  echo: true
+filters:
+  - reveal-auto-agenda
+auto-agenda:
+  bullets: numbered
+  heading: Agenda
+---
+
+\
+
+\
+
+<h1>Sesión 9</h1>
+
+<h2>[Curso: Fundamentos R para Ciencia de Datos en Salud]{.plo}</h2>
+
+<hr>
+
+<h3>[Percy Soto-Becerra, M.D., M.Sc(c)]{.negro}</h3>
+
+<h4>[DIS -- IETSI, EsSalud]{.negro}</h4>
+
+<h4>[2024-04-21]{.negro}</h4>
+
+`r fontawesome::fa("github", "black")` &nbsp; [https://github.com/psotob91](https://github.com/psotob91)
+
+![](img/logo_curso.png){.absolute top=340 left=980 width=35%}
+
+```{r}
+#| echo: false
+#| output: false
+
+# Removing all objects including loaded libraries
+rm(list = ls(all = TRUE))
+gc()
+
+# Installing and loading packages
+if (!require("pacman")) {
+  install.packages("pacman")
+}
+
+pacman::p_unload("all") # Unloading all package except base
+
+pacman::p_load(tidyverse, 
+               tibble, 
+               labelled, 
+               pander, 
+               gt, 
+               kableExtra, 
+               DT, 
+               haven, 
+               skimr, 
+               Hmisc, 
+               janitor, 
+               rio, 
+               gtsummary, 
+               gt, 
+               flextable, 
+               kableExtra, 
+               readxl, 
+               rstatix, 
+               medicaldata, 
+               summarytools, 
+               gmodels) # Loading packages
+```
+
+# [Misceláneas]{.blanco}
+
+<h1>[Misceláneas]{.verde-h3}</h1>
+
+## Regresión con R {.scrollable}
+<hr>
+
+-   Hay varios paquetes de R  base para hacer regresiones convencionales
+
+    + lm() para regresión lineal
+    + glm() para modelos lineales generalizados
+    
+- Hay paquetes para generer reportes y compararlos
+
+    + finalfit()
+    + tbl_regression()
+    + model_parameters()
+
+## Opciones adicionales {.scrollable}
+<hr>
+
+- Varianzas robustas, cluster robustas
+
+- Bootstrapping, etc.
+
+## Otras formas de imprimir tablas
+<hr>
+
+- Tablas con `kable()` y `kableExtra()` de paquete `{knitr}`.
+
+- Tablas de `{gt}` y `{flextable}`.
+
+## Reproducibilidad y gráficos
+<hr>
+
+- Crear gráficos de alta calidad con ggplot2
+
+- Guardar gráficos especificando sus parámetros con ggsave
+
+- Ensamblar gráficos con {patchwork}
+
+- Imprimir imágenes en Quarto
+
+## Más gráficos con quarto
+<hr>
+
+- Reportar imágenes en quarto
+
+- Controlar formatos
+
+- Controlar posición
+
+- Otras opciones
+
+## Superpoderes de Quarto
+<hr>
+
+- Código dentro de texto.
+
+- Información extra sobre Quarto
+
+- Configuraciones básicas adicionales.
+
+- Temas de Quarto
+
+## `r fontawesome::fa("mug-saucer", "white")` Hagamos una pausa {background-color="#00817E"}
+<hr>
+
+::: r-fit-text
+
+<center>
+
+Tomemos un descanso de `5 minutos`...
+
+Estire las piernas `r fontawesome::fa("person-walking", "white")`... 
+
+Deje de ver las pantallas `r fontawesome::fa("laptop", "white")`...
+
+... cualquier `r fontawesome::fa("laptop", "white")`, las del celular `r fontawesome::fa("mobile", "white")` también.
+
+</center>
+
+:::
+
+```{r}
+#| echo: false
+library(countdown)
+countdown_timer <- function(
+    minutes = 1, 
+    play_sound = TRUE, 
+    font_size = "2em", 
+    ...
+) {
+  countdown(
+    minutes = minutes,
+    # Fanfare when it's over
+    play_sound = play_sound,
+    # Set timer theme to match solarized colors
+    color_border              = "#404041",
+    color_text                = "white",
+    color_background = "#000000",
+    color_running_background  = "#72994E",
+    color_running_text        = "white",
+    color_finished_background = "#EE6331",
+    color_finished_text       = "white",
+    font_size = font_size,
+    ...
+  )
+}
+```
+
+```{r}
+#| echo: false
+countdown_timer(5)
+```
+
+## 
+
+::: r-fit-text
+<center>¡Gracias!</center>
+
+<center>¿Preguntas?</center>
+
+:::
+
+## 
+
+\
+
+\
+
+\
+
+::: r-fit-text
+
+<center>
+{{< fa brands twitter >}} @psotob91 
+
+{{< fa brands github >}} https://github.com/psotob91
+
+{{< fa inbox >}} percys1991@gmail.com
+</center>
+
+:::
