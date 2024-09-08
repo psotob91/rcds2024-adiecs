@@ -50,9 +50,7 @@ auto-agenda:
 
 <h3>[Percy Soto-Becerra, M.D., M.Sc(c)]{.negro}</h3>
 
-<h4>[DIS -- IETSI, EsSalud]{.negro}</h4>
-
-<h4>[2024-03-23]{.negro}</h4>
+<h4>[ADIECS]{.negro}</h4>
 
 `r fontawesome::fa("github", "black")` &nbsp; [https://github.com/psotob91](https://github.com/psotob91)
 

@@ -1,6 +1,6 @@
 ---
 title: "Día 02"
-date: "2024-03-23"
+date: "2024-09-03"
 ---
 
 
@@ -10,7 +10,13 @@ date: "2024-03-23"
 
 ### Videoclase grabada
 
-[Se subirá a más tardar el día siguiente de realizada la sesión]
+**Sesión 03**
+
+<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1007272407?h=7384494d0b&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Sesión 03"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+
+**Sesión 04**
+
+<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1007334915?h=e617d954ed&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Sesión 4"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
 
 ### Slides
 
@@ -43,7 +49,7 @@ slide_buttons("/slides/dia02/sesion04")
 |                              |                                                                                  |
 |----------------------|--------------------------------------------------|
 | Instructivo en línea         | [Aquí](../taller/taller02/taller02_instructivo.html)                                                 |
-| Instructivo con solucionario | [Aquí](../taller/taller02/taller02_instructivo_sol_xxx.html)                                                                       |
+| Instructivo con solucionario | [Aquí](../taller/taller02/taller02_instructivo_sol.html)                                                                       |
 | Quarto para alumnos          | [Aquí](../taller/taller02/taller02_alumno.qmd)                                                                       |
 | Toda la carpeta del taller   | [Aquí](https://drive.google.com/drive/folders/1f8rf0MwoVvN2RKaVkzmqJBWSgL8Q7ok9) |
 
